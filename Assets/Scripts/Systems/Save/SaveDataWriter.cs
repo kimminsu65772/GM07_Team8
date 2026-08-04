@@ -41,9 +41,21 @@ public class SaveDataWriter
             Directory.CreateDirectory(directoryPath);
         }
 
-        // 주어진 경로가 있다면 해당 경로에 파일을 생성하거나 덮어쓰고
-        // 주어진 경로가 없다면 현재 실행 중인 애플리케이션의 루트 경로에 파일을 생성하거나 덮어쓴다.
-        // JSON 데이터를 파일에 저장한다.
-        File.WriteAllText(saveFilePath, json);
+        // 기존 파일에 안전하게 데이터를 덮어쓸 수 있도록 따로 임시 파일을 생성한다.
+        string tempFilePath = saveFilePath + ".tmp";
+
+        // 임시 파일에 JSON 데이터를 작성한다.
+        File.WriteAllText(tempFilePath, json);
+
+        // 기존 저장 파일이 있다면 임시 저장 데이터를 기존 파일록 교체한다.
+        if (File.Exists(saveFilePath))
+        {
+            File.Replace(tempFilePath, saveFilePath, null);
+        }
+        // 기존 저장 파일이 없다면 임시 저장 데이터 파일을 해당 경로에 옮기고 이름을 변경하여 최종 저장 파일로 만든다.
+        else
+        {
+            File.Move(tempFilePath, saveFilePath);
+        }
     }
 }
