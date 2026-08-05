@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class Cha2 : Hero
 {
-    private void Awake()
+    protected override void Awake()
     {
-        Init(80f, 10f, 7f, 1f, HeroLocationEnum.Back);
+        statTable = new Hero2StatTable();
+        stat = statTable.GetStat(1);
+        Init(1f, HeroLocationEnum.Back);
     }
 }

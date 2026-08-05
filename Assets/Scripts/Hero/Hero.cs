@@ -15,6 +15,8 @@ public abstract class Hero : MonoBehaviour
 
     private HeroLocationEnum location;
     // private HeroAttackTypeEnum attackType;
+    private int heroMaxLv = 3;
+    protected IHeroStatTable statTable;
 
     [SerializeField] private TMP_Text name_T;
 
@@ -27,6 +29,8 @@ public abstract class Hero : MonoBehaviour
     private bool canAttack;
     private float searchRange = 100f;
     private float meleeRange = 1.5f;
+
+    protected HeroStat stat;
 
     public string HeroName => heroName;
     public int HeroLv
@@ -61,14 +65,14 @@ public abstract class Hero : MonoBehaviour
     }
     public bool IsDead => isDead;
 
-    protected virtual void Init(float maxHP, float atk, float def, float attackTime,
+    protected virtual void Awake() { }
+
+    protected virtual void Init(float attackTime,
         HeroLocationEnum location)
     {
-        heroLv = 1;
-        heroMaxHP = maxHP;
-        heroAtk = atk;
+        HeroLv = 1;
+        LvApply(heroLv);
         heroCurrentHP = heroMaxHP;
-        heroDef = def;
         isDead = false;
         this.location = location;
 
@@ -77,7 +81,7 @@ public abstract class Hero : MonoBehaviour
         if (name_T != null) name_T.text = heroName;
     }
 
-    protected virtual void Update()
+    private void Update()
     {
         attackTimer += Time.deltaTime;
 
@@ -86,7 +90,7 @@ public abstract class Hero : MonoBehaviour
         if (targetEnemy != null || location == HeroLocationEnum.Back) Attack(targetEnemy);
     }
 
-    protected void TakeDamage(float amount)
+    public void TakeDamage(float amount)
     {
         // 방어력 적용하기
         heroCurrentHP -= amount;
@@ -97,7 +101,7 @@ public abstract class Hero : MonoBehaviour
         }
     }
 
-    protected virtual void SearchEnemy()
+    private void SearchEnemy()
     {
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, searchRange, enemyLayer);
         Transform nearestEnemy = null;
@@ -118,7 +122,7 @@ public abstract class Hero : MonoBehaviour
         Debug.Log($"{gameObject.name}의 목표 : {targetEnemy.name}");
     }
 
-    protected virtual void MoveToEnemy()
+    private void MoveToEnemy()
     {
         if (location == HeroLocationEnum.Back || targetEnemy == null) return;
 
@@ -151,5 +155,23 @@ public abstract class Hero : MonoBehaviour
     {
         isDead = true;
 
+    }
+
+    // 비용(매개변수) 지불 추가
+    private void LvUp()
+    {
+        if (heroLv >= heroMaxLv) return;
+
+        heroLv++;
+        LvApply(heroLv);
+    }
+
+    private void LvApply(int lv)
+    {
+        stat = statTable.GetStat(lv);
+
+        HeroMaxHP = stat.MaxHP;
+        HeroAtk = stat.Atk;
+        HeroDefence = stat.Def;
     }
 }
