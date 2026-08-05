@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 
 /// <summary>
@@ -9,6 +10,9 @@ public class SaveDataWriter
 {
     // 저장 파일 경로를 생성자에서 받아서 읽기 전용으로 저장한다.
     private readonly string saveFilePath;
+
+    // 저장 방식을 비동기 저장과 동기 저장으로 나누었으므로 두 작업이 충돌나지 않도록 하기 위해 lock 객체를 생성한다.
+    private readonly object saveLock = new object();
     public SaveDataWriter(string saveFilePath)
     {
         if (string.IsNullOrWhiteSpace(saveFilePath))
@@ -18,44 +22,58 @@ public class SaveDataWriter
         this.saveFilePath = saveFilePath;
     }
     
-    public void Save(PlayerSaveData saveData)
+    public UniTask SaveFileAsync(string json)
     {
-        // 잘못된 저장 데이터가 들어왔을 경우 예외를 발생시켜 더이상 진행하지 않도록 한다.
-        if (saveData == null)
+        // 파일 쓰기 작업을 별도의 스레드에서 비동기적으로 수행한다.
+        return UniTask.RunOnThreadPool(() => SaveToFile(json));
+    }
+
+    public void ForceSave(PlayerSaveData data)
+    {
+        if (data == null)
         {
-            throw new ArgumentNullException(nameof(saveData), "저장하려는 세이브 데이터가 비어있는 상태입니다.");
+            throw new ArgumentNullException(nameof(data), "저장할 데이터가 비어있습니다.");
         }
 
-        saveData.LastSavedAtUtc = DateTime.UtcNow.ToString("o");
+        data.LastSavedAtUtc = DateTime.UtcNow.ToString("o");
+        string json = JsonConvert.SerializeObject(data, Formatting.Indented);
+        SaveToFile(json);
+    }
 
-        // 게임 데이터를 직렬화하여 JSON 형식으로 변환한다.
-        string json = JsonConvert.SerializeObject(saveData, Formatting.Indented);
-
-        // 게임 데이터 파일을 제외한 폴더 경로를 조회한다.
-        string directoryPath = Path.GetDirectoryName(saveFilePath);
-
-        // 주어진 경로 주소에 상위 폴더가 포함된 경우라면, 해당 경로에 폴더 생성을 시도하여 저장 폴더의 존재를 보장한다.
-        // 이 때 이미 폴더가 존재한다면 Directory.CreateDirectory 메서드는 아무런 동작도 하지 않는다.
-        if (!string.IsNullOrEmpty(directoryPath))
+    private void SaveToFile(string json)
+    {
+        CheckValidateJson(json);
+        // lock을 사용하여 동기화된 블록을 생성한다.
+        // 이를 통해 동시에 파일 쓰기 작업이 발생하지 않도록 보장한다.
+        lock (saveLock)
         {
-            Directory.CreateDirectory(directoryPath);
+            string directoryPath = Path.GetDirectoryName(saveFilePath);
+            if (!string.IsNullOrEmpty(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+
+            string tempFilePath = saveFilePath + ".tmp";
+            string backupFilePath = saveFilePath + ".bak";
+
+            File.WriteAllText(tempFilePath, json);
+
+            if (File.Exists(saveFilePath))
+            {
+                File.Replace(tempFilePath, saveFilePath, backupFilePath);
+            }
+            else
+            {
+                File.Move(tempFilePath, saveFilePath);
+            }
         }
+    }
 
-        // 기존 파일에 안전하게 데이터를 덮어쓸 수 있도록 따로 임시 파일을 생성한다.
-        string tempFilePath = saveFilePath + ".tmp";
-
-        // 임시 파일에 JSON 데이터를 작성한다.
-        File.WriteAllText(tempFilePath, json);
-
-        // 기존 저장 파일이 있다면 임시 저장 데이터를 기존 파일록 교체한다.
-        if (File.Exists(saveFilePath))
+    private void CheckValidateJson(string json)
+    {
+        if (string.IsNullOrWhiteSpace(json))
         {
-            File.Replace(tempFilePath, saveFilePath, null);
-        }
-        // 기존 저장 파일이 없다면 임시 저장 데이터 파일을 해당 경로에 옮기고 이름을 변경하여 최종 저장 파일로 만든다.
-        else
-        {
-            File.Move(tempFilePath, saveFilePath);
+            throw new ArgumentException("저장할 JSON 데이터가 비어있거나 공백으로만 이루어져 있습니다.", nameof(json));
         }
     }
 }
