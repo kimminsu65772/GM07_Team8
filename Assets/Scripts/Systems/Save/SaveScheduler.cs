@@ -11,7 +11,7 @@ public class SaveScheduler : MonoBehaviour
     [SerializeField, Min(0f)] private float soonToSaveDelay = 5;
 
 
-    private ProgressManager progressManager;
+    private PlayerSaveData saveData;
     private SaveDataWriter saveDataWriter;
 
     // 현재 진행 데이터의 변경 여부를 나타내는 플래그 변수
@@ -33,18 +33,18 @@ public class SaveScheduler : MonoBehaviour
         AutoSaveAsync(schedulerCTS.Token).Forget();
     }
 
-    public void Initialize(ProgressManager progressManager, SaveDataWriter saveDataWriter)
+    public void Initialize(PlayerSaveData saveData, SaveDataWriter saveDataWriter)
     {
-        if (progressManager == null)
+        if (saveData == null)
         {
-            throw new ArgumentNullException(nameof(progressManager), "ProgressManager가 초기화되지 않았습니다.");
+            throw new ArgumentNullException(nameof(saveData), "PlayerSaveData가 초기화되지 않았습니다.");
         }
         if (saveDataWriter == null)
         {
             throw new ArgumentNullException(nameof(saveDataWriter), "SaveDataWriter가 초기화되지 않았습니다.");
         }
 
-        this.progressManager = progressManager;
+        this.saveData = saveData;
         this.saveDataWriter = saveDataWriter;
     }
     private void OnDestroy()
@@ -105,15 +105,17 @@ public class SaveScheduler : MonoBehaviour
     public void RequestSave(SavePolicy policy)
     {
         isDirty = true;
+        Debug.Log($"[SaveScheduler] RequestSave policy={policy}");
 
         if (isSaving)
         {
             saveRequestedWhileSaving = true;
+            Debug.Log("[SaveScheduler] Save requested while saving");
         }
 
         switch (policy)
         {
-            case SavePolicy.Defferred:
+            case SavePolicy.Deferred:
                 // Defferred 정책은 자동 저장 주기 내에서 처리되므로, 별도의 작업 진행 X
                 break;
             case SavePolicy.Soon:
@@ -153,9 +155,9 @@ public class SaveScheduler : MonoBehaviour
             return;
         }
 
-        if (progressManager == null || saveDataWriter == null)
+        if (saveData == null || saveDataWriter == null)
         {
-            Debug.LogError("ProgressManager 또는 SaveDataWriter가 초기화되지 않았습니다. 저장을 수행할 수 없습니다.");
+            Debug.LogError("PlayerSaveData 또는 SaveDataWriter가 초기화되지 않았습니다. 저장을 수행할 수 없습니다.");
             return;
         }
         if (isSaving)
@@ -175,14 +177,14 @@ public class SaveScheduler : MonoBehaviour
                 // 현재 저장 시도는 곧 이전까지의 변경 사항을 모드 저장하는 것이므로 saveRequestedWhileSaving 플래그를 초기화한다.
                 saveRequestedWhileSaving = false;
 
-                PlayerSaveData currentData = progressManager.CurrentData;
-                currentData.LastSavedAtUtc = DateTime.UtcNow.ToString("o");
+                saveData.LastSavedAtUtc = DateTime.UtcNow.ToString("o");
 
-                string json = JsonConvert.SerializeObject(currentData, Formatting.Indented);
+                string json = JsonConvert.SerializeObject(saveData, Formatting.Indented);
 
                 isDirty = false;
 
                 await saveDataWriter.SaveFileAsync(json);
+                Debug.Log($"[SaveScheduler] Save completed at {saveData.LastSavedAtUtc}");
             } while (saveRequestedWhileSaving);
         }
         catch (Exception ex)
@@ -194,6 +196,25 @@ public class SaveScheduler : MonoBehaviour
         finally
         {
             isSaving = false;
+        }
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+        if (pause)
+        {
+            Debug.Log("[SaveScheduler] Application paused. Flush requested");
+            FlushAsync().Forget();
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        // 강제 저장은 Writer에서 즉시 이루어지므로 이곳에서 유효성 검사를 수행해야 한다.
+        if (saveData != null && saveDataWriter != null)
+        {
+            saveDataWriter.ForceSave(saveData);
+            Debug.Log($"[SaveScheduler] ForceSave completed at {saveData.LastSavedAtUtc}");
         }
     }
 }
