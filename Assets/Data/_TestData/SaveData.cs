@@ -30,8 +30,6 @@ public class PlayerProfileSaveData
 [Serializable]
 public class AirshipSaveData
 {
-    public int Level { get; set; }
-    public int Experience { get; set; }
     public int AttackLevel { get; set; }
     public int DefenseLevel { get; set; }
     public int MaxHealthLevel { get; set; }
