@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6334526652385800782}
   - component: {fileID: 5078035350084000420}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cha2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,18 +47,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cha2
   heroName: Archer
+  heroLv: 0
   heroMaxHP: 80
   heroCurrentHP: 0
   heroAtk: 10
   heroDef: 7
-  heroCriticalChance: 0
+  heroCriChance: 0
   isDead: 0
   name_T: {fileID: 5828887954940189376}
   attackTime: 1
   moveSpeed: 8
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 1073741824
+    m_Bits: 64
 --- !u!1 &6029431941264190424
 GameObject:
   m_ObjectHideFlags: 0
