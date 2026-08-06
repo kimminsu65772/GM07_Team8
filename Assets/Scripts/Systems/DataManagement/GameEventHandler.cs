@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class GameEventHandler : MonoBehaviour
 {
-    public static GameEventHandler Instance { get; private set; }
+    [SerializeField] private AirshipUpgradeManager airshipUpgradeManager;
 
+    public static GameEventHandler Instance { get; private set; }
     private RuntimeDataContext dataContext;
     private SaveScheduler saveScheduler;
 
@@ -22,6 +23,23 @@ public class GameEventHandler : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(this.gameObject);
+    }
+
+    private void OnEnable()
+    {
+        if (airshipUpgradeManager != null)
+        {
+            airshipUpgradeManager.OnUpgradeChanged -= HandleAirshipUpgradeChanged;
+            airshipUpgradeManager.OnUpgradeChanged += HandleAirshipUpgradeChanged;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (airshipUpgradeManager != null)
+        {
+            airshipUpgradeManager.OnUpgradeChanged -= HandleAirshipUpgradeChanged;
+        }
     }
 
     public void Initialize(RuntimeDataContext dataContext, SaveScheduler saveScheduler)
@@ -92,23 +110,6 @@ public class GameEventHandler : MonoBehaviour
         saveScheduler.RequestSave(SavePolicy.Soon);
     }
 
-    public bool HandleShipUpgrade(CurrencyCost cost)
-    {
-        if (!CanHandleEvent())
-        {
-            return false;
-        }
-
-        bool success = dataContext.Wallet.TrySpend(cost.Type, cost.Amount);
-        if (success)
-        {
-            // 실제 업그레이드 로직은 업그레이드 담당 시스템이 확정된 뒤 연결한다.
-            saveScheduler.RequestSave(SavePolicy.Deferred);
-        }
-
-        return success;
-    }
-
     public bool HandlePremiumCurrencySpent(int amount)
     {
         if (!CanHandleEvent())
@@ -123,6 +124,16 @@ public class GameEventHandler : MonoBehaviour
 
         saveScheduler.RequestSave(SavePolicy.Immediate);
         return true;
+    }
+
+    public void HandleAirshipUpgradeChanged(AirshipUpgradeState upgradeState)
+    {
+        if (!CanHandleEvent())
+        {
+            return;
+        }
+
+        AirshipUpgradeLevelManager.Instance.SetAirshipLevelData(upgradeState);
     }
 
     private bool CanHandleEvent()
