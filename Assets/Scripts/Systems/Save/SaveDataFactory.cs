@@ -19,12 +19,16 @@ public class SaveDataFactory
             },
             Airship = new AirshipSaveData
             {
+                AttackLevel = 1,
+                DefenseLevel = 1,
+                MaxHealthLevel = 1,
+                CriticalLevel = 1
             },
             Heroes = new Dictionary<string, HeroSaveData>
             {
-                { "BaseKnight", new HeroSaveData { Level = 1, IsOwned = true, FormationType = "Frontline", FormationIndex = 0 } },
-                { "BaseArcher", new HeroSaveData { Level = 1, IsOwned = true, FormationType = "Backline", FormationIndex = 0 } },
-                { "BaseThief", new HeroSaveData { Level = 1, IsOwned = false, FormationType = "None", FormationIndex = -1 } }
+                { "BaseKnight", new HeroSaveData { Level = 1, IsOwned = true, FormationType = FormationType.Frontline, FormationIndex = 0 } },
+                { "BaseArcher", new HeroSaveData { Level = 1, IsOwned = true, FormationType = FormationType.Backline, FormationIndex = 0 } },
+                { "BaseThief", new HeroSaveData { Level = 1, IsOwned = false, FormationType = FormationType.None, FormationIndex = -1 } }
             },
             StageProgress = new StageProgressSaveData
             {
@@ -33,10 +37,10 @@ public class SaveDataFactory
             },
             Wallet = new WalletSaveData
             {
-                Currencies = new Dictionary<string, CurrencySaveData>
+                Currencies = new Dictionary<CurrencyType, CurrencySaveData>
                 {
-                    { "Gold", new CurrencySaveData { Amount = 1000 } },
-                    { "Gems", new CurrencySaveData { Amount = 50 } }
+                    { CurrencyType.Gold, new CurrencySaveData { Amount = 1000 } },
+                    { CurrencyType.Gems, new CurrencySaveData { Amount = 50 } }
                 }
             },
             // 마지막 저장 시간은 단순히 오프라인 보상 계산이나 기타 시간 기반 로직 수행 시 시간 차이를 계산하기 위함이기 때문에
