@@ -1,0 +1,96 @@
+using System;
+using System.Collections.Generic;
+
+public enum CurrencyType
+{
+    Gold = 0,
+    Gear = 1,
+    Gems = 2
+
+    // 나중에 추가될 재화 타입이 있을 수 있음.
+}
+
+public enum FormationType
+{
+    None = -1, // 미배치 상태
+    Frontline = 0,
+    Backline = 1,
+}
+
+/// <summary>
+/// SaveData.cs 파일은 플레이어의 종합적인 세이브 데이터와
+/// 해당 데이터를 구성하는 여러 하위 데이터 구조를 정의해놓은 파일이다.
+/// </summary>
+[Serializable]
+public class  PlayerSaveData
+{
+    // 세이브 기능의 저장 버전
+    // 게임이 확장되어 추가되는 재화나 기타 데이터들이 있을 경우, 이전 버전의 세이브 데이터가 호환되지 않을 수 있음.
+    // 만약 호환되지 않는다면, 이전 버전의 세이브 데이터 + 새로운 버전에서 요구하는 변경사항을 적용하여 데이터를 변환할 수 있도록 구분하는 용도
+    // 지금 당장 사용하는 필드는 아님.
+    public int SaveVersion { get; set; }
+    // 플레이어의 ID와 닉네임을 저장하는 데이터
+    public PlayerProfileSaveData Profile { get; set; }
+    public AirshipSaveData Airship { get; set; }
+    public Dictionary<string, HeroSaveData> Heroes { get; set; }
+    public StageProgressSaveData StageProgress { get; set; }
+    // 플레이어가 보유한 재화 묶음 데이터를 저장하는 데이터
+    public WalletSaveData Wallet { get; set; }
+    // 플레이어가 마지막으로 세이브한 시각을 국제 시간 기준으로 저장하는 데이터
+    public string LastSavedAtUtc { get; set; }
+}
+
+[Serializable]
+public class PlayerProfileSaveData
+{
+    public string PlayerId { get; set; }
+    public string Nickname { get; set; }
+}
+
+[Serializable]
+public class AirshipSaveData
+{
+    public int AttackLevel { get; set; }
+    public int DefenseLevel { get; set; }
+    public int MaxHealthLevel { get; set; }
+    public int CriticalLevel { get; set; }
+
+    // 나중에 비행선의 스탯, 장착 아이템, 업그레이드 상태 등까지 저장하는 데이터가 추가될 수 있음.
+}
+
+/*
+ * 고민사항
+ * 지금 당장은 프로젝트 규모를 고려해서 모든 영웅 유닛의 데이터를 전부 넣고 IsOwned로 소유 여부를 판단하는 방식으로 생각하고 있음.
+ * 추후에 영웅 유닛이 많아질 경우, 과연 이 방법이 괜찮을지, 혹은 IsOwned를 빼고 소유한 영웅 유닛만 저장하는 방식으로 바꾸는 것이 좋을지 고민이 필요함.
+ * 
+ */
+[Serializable]
+public class  HeroSaveData
+{
+    public int Level { get; set; }
+    public bool IsOwned { get; set; }
+    // 캐릭터의 진형 배치 타입을 저장하는 데이터 (미배치 시 None)
+    public FormationType FormationType { get; set; }
+    // 캐릭터가 배치된 위치를 저장하는 데이터 (미배치 시 -1)
+    public int FormationIndex { get; set; }
+}
+
+[Serializable]
+public class StageProgressSaveData
+{
+    public int CurrentStage { get; set; }
+    // 플레이어가 클리어한 최대 스테이지를 저장하는 데이터로 오프라인 보상 계산의 기준이 됨.
+    public int MaxClearedStage { get; set; }
+}
+
+[Serializable]
+public class WalletSaveData
+{
+    public Dictionary<CurrencyType, CurrencySaveData> Currencies { get; set; }
+}
+
+[Serializable]
+public class CurrencySaveData
+{
+    public int Amount { get; set; }
+}
