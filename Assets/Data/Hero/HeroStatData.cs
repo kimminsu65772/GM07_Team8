@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 
 public struct HeroStat
 {
@@ -25,9 +24,9 @@ public class Hero1StatTable : IHeroStatTable
 {
     private readonly Dictionary<int, HeroStat> stats = new()
     {
-        {1, new HeroStat(100, 20, 10) },
-        {2, new HeroStat(120, 25, 12) },
-        {3, new HeroStat(140, 30, 14) }
+        {1, new HeroStat(100f, 20f, 10f) },
+        {2, new HeroStat(120, 25f, 12f) },
+        {3, new HeroStat(140f, 30f, 14f) }
     };
 
     public HeroStat GetStat(int lv)
@@ -41,9 +40,9 @@ public class Hero2StatTable : IHeroStatTable
 {
     private readonly Dictionary<int, HeroStat> stats = new()
     {
-        {1, new HeroStat(80, 10, 7) },
-        {2, new HeroStat(90, 17, 8) },
-        {3, new HeroStat(100, 24, 9) }
+        {1, new HeroStat(80f, 10f, 7f) },
+        {2, new HeroStat(90f, 17f, 8f) },
+        {3, new HeroStat(100f, 24f, 9f) }
     };
 
     public HeroStat GetStat(int lv)

@@ -10,9 +10,10 @@ public abstract class Hero : MonoBehaviour
     [SerializeField] private float heroCurrentHP;
     [SerializeField] private float heroAtk;
     [SerializeField] private float heroDef;
-    [SerializeField] private float heroCriticalChance;
+    [SerializeField] private float heroCriChance;
     [SerializeField] private bool isDead;
 
+    private float heroCriDamage = 2f;
     private HeroLocationEnum location;
     // private HeroAttackTypeEnum attackType;
     private int heroMaxLv = 3;
@@ -28,9 +29,10 @@ public abstract class Hero : MonoBehaviour
     private GameObject targetEnemy;
     private bool canAttack;
     private float searchRange = 100f;
-    private float meleeRange = 1.5f;
+    private float meleeRange = 2f;
 
     protected HeroStat stat;
+    protected HeroStateEnum heroState;
 
     public string HeroName => heroName;
     public int HeroLv
@@ -53,17 +55,23 @@ public abstract class Hero : MonoBehaviour
         get => heroAtk;
         set => heroAtk = Mathf.Max(0f, value);
     }
-    public float HeroDefence
+    public float HeroDef
     {
         get => heroDef;
         set => heroDef = Mathf.Max(0f, value);
     }
-    public float HeroCriticalChance
+    public float HeroCriChance
     {
-        get => heroCriticalChance;
-        set => heroCriticalChance = Mathf.Clamp(value, 0f, 100f);
+        get => heroCriChance;
+        set => heroCriChance = Mathf.Clamp(value, 0f, 100f);
     }
     public bool IsDead => isDead;
+    public float HeroAttackTime
+    {
+        get => attackTime;
+        set => attackTime = Mathf.Max(0f, value);
+    }
+    public HeroStateEnum HeroState => heroState;
 
     protected virtual void Awake() { }
 
@@ -79,6 +87,8 @@ public abstract class Hero : MonoBehaviour
         attackTimer = attackTime;
 
         if (name_T != null) name_T.text = heroName;
+
+        heroState = HeroStateEnum.Idle;
     }
 
     private void Update()
@@ -137,24 +147,35 @@ public abstract class Hero : MonoBehaviour
         }
         else
         {
-            transform.position += (Vector3)direction.normalized * moveSpeed * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(
+                transform.position,
+                targetEnemy.transform.position,
+                moveSpeed * Time.deltaTime);
+            heroState = HeroStateEnum.Move;
         }
     }
 
     protected virtual void Attack(GameObject enemy)
     {
+        float criRan = Random.Range(1f, 100f);
+        float damage = heroAtk; // 적 방어력 적용
+
         if (attackTimer >= attackTime)
         {
             attackTimer = 0f;
-            // 공격
-            Debug.Log(gameObject.name + "의 공격");
+            heroState = HeroStateEnum.Attack;
+
+            if (criRan <= heroCriChance) damage *= heroCriDamage;
+
+            // 공격 적용, 치명타 적용
+            Debug.Log(gameObject.name + "의 공격, 피해량 : " + damage);
         }
     }
 
     protected virtual void Die()
     {
         isDead = true;
-
+        heroState = HeroStateEnum.Die;
     }
 
     // 비용(매개변수) 지불 추가
@@ -172,6 +193,6 @@ public abstract class Hero : MonoBehaviour
 
         HeroMaxHP = stat.MaxHP;
         HeroAtk = stat.Atk;
-        HeroDefence = stat.Def;
+        HeroDef = stat.Def;
     }
 }
