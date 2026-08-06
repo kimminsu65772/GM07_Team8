@@ -19,8 +19,6 @@ public class SaveDataFactory
             },
             Airship = new AirshipSaveData
             {
-                Level = 1,
-                Experience = 0
             },
             Heroes = new Dictionary<string, HeroSaveData>
             {
