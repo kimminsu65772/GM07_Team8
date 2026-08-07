@@ -23,6 +23,11 @@ public class GameBootStrapper : MonoBehaviour
             Debug.Log("세이브 데이터가 없어 새 데이터를 생성합니다.");
         }
 
+        Debug.Log($"세이브 파일 경로: {saveFilePath}");
+
         RuntimeDataContext runtimeDataContext = new RuntimeDataContext(playerSaveData);
+        SaveScheduler.Instance.Initialize(playerSaveData, saveDataWriter);
+
+        OfflineRewardProvider.ProvideOfflineReward(playerSaveData);
     }
 }
