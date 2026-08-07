@@ -4,13 +4,16 @@ using UnityEngine;
 /// <summary>
 /// 비행선의 체력 관련.
 /// </summary>
-public class AirshipHealth : MonoBehaviour
+public class AirshipHealth : MonoBehaviour, IDamageable
 {
     private float maxHealth;
     [SerializeField]private float currentHealth;
     private float shield;
     private bool isDestroyed;
+    [SerializeField] private float hitRadius = 1f;
+    [SerializeField] private bool drawOnlyWhenSelected = false;
 
+    public float HitRadius => hitRadius;
     public float MaxHealth => maxHealth;
     public float CurrentHealth => currentHealth;
     public float Shield => shield;
@@ -130,5 +133,26 @@ public class AirshipHealth : MonoBehaviour
 
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
         OnDestroyed?.Invoke();
+    }
+    private void OnDrawGizmos()
+    {
+        if (drawOnlyWhenSelected)
+            return;
+
+        DrawGizmo();
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (!drawOnlyWhenSelected)
+            return;
+
+        DrawGizmo();
+    }
+
+    private void DrawGizmo()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, hitRadius);
     }
 }
