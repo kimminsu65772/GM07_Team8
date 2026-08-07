@@ -24,12 +24,15 @@ public abstract class Hero : MonoBehaviour
     [SerializeField] private float attackTime;
     private float attackTimer;
 
+    [SerializeField] private Transform heroRoot;
     [SerializeField] private float moveSpeed = 8f;
     [SerializeField] private LayerMask enemyLayer;
     private GameObject targetEnemy;
+    private bool isMoving;
     private bool canAttack;
-    private float searchRange = 100f;
-    private float meleeRange = 2f;
+    private bool isAttacking;
+    private float searchRange = 50f;
+    private float meleeRange;
 
     protected HeroStat stat;
     protected HeroStateEnum heroState;
@@ -85,6 +88,8 @@ public abstract class Hero : MonoBehaviour
         this.location = location;
 
         attackTimer = attackTime;
+        isAttacking = false;
+        meleeRange = transform.localScale.x / 2;
 
         if (name_T != null) name_T.text = heroName;
 
@@ -96,8 +101,10 @@ public abstract class Hero : MonoBehaviour
         attackTimer += Time.deltaTime;
 
         if (targetEnemy == null) SearchEnemy();
-        if (targetEnemy != null || location == HeroLocationEnum.Front) MoveToEnemy();
-        if (targetEnemy != null || location == HeroLocationEnum.Back) Attack(targetEnemy);
+        if (targetEnemy != null && location == HeroLocationEnum.Front) MoveToEnemy();
+        if (targetEnemy != null && location == HeroLocationEnum.Back) Attack(targetEnemy);
+
+        ChangeState();
     }
 
     public void TakeDamage(float amount)
@@ -134,7 +141,11 @@ public abstract class Hero : MonoBehaviour
 
     private void MoveToEnemy()
     {
-        if (location == HeroLocationEnum.Back || targetEnemy == null) return;
+        if (location == HeroLocationEnum.Back || targetEnemy == null)
+        {
+            isMoving = false;
+            return;
+        }
 
         Vector2 direction = targetEnemy.transform.position - transform.position;
 
@@ -143,16 +154,28 @@ public abstract class Hero : MonoBehaviour
 
         if (canAttack)
         {
+            isMoving = false;
             Attack(targetEnemy);
         }
         else
         {
+            isMoving = true;
+            FlipSprite(direction);
+
             transform.position = Vector3.MoveTowards(
                 transform.position,
                 targetEnemy.transform.position,
                 moveSpeed * Time.deltaTime);
-            heroState = HeroStateEnum.Move;
         }
+    }
+
+    private void FlipSprite(Vector2 direction)
+    {
+        if (Mathf.Abs(direction.x) < 0.01f) return;
+
+        Vector3 scale = heroRoot.localScale;
+        scale.x = direction.x > 0 ? -1 : 1;
+        heroRoot.localScale = scale;
     }
 
     protected virtual void Attack(GameObject enemy)
@@ -160,10 +183,10 @@ public abstract class Hero : MonoBehaviour
         float criRan = Random.Range(1f, 100f);
         float damage = heroAtk; // 적 방어력 적용
 
-        if (attackTimer >= attackTime)
+        if (attackTimer >= attackTime && !isAttacking)
         {
+            isAttacking = true;
             attackTimer = 0f;
-            heroState = HeroStateEnum.Attack;
 
             if (criRan <= heroCriChance) damage *= heroCriDamage;
 
@@ -172,10 +195,15 @@ public abstract class Hero : MonoBehaviour
         }
     }
 
+    public void AttackStop()
+    {
+        heroState = HeroStateEnum.Idle;
+        isAttacking = false;
+    }
+
     protected virtual void Die()
     {
         isDead = true;
-        heroState = HeroStateEnum.Die;
     }
 
     // 비용(매개변수) 지불 추가
@@ -194,5 +222,26 @@ public abstract class Hero : MonoBehaviour
         HeroMaxHP = stat.MaxHP;
         HeroAtk = stat.Atk;
         HeroDef = stat.Def;
+    }
+
+    private void ChangeState()
+    {
+        if (isDead) heroState = HeroStateEnum.Die;
+        else if (isMoving) heroState = HeroStateEnum.Move;
+        else if (isAttacking) heroState = HeroStateEnum.Attack;
+        else heroState = HeroStateEnum.Idle;
+    }
+
+    private void OnDrawGizmos()
+    {
+        // 근거리 공격 사거리
+        Gizmos.color = Color.red;
+        if (location == HeroLocationEnum.Front) Gizmos.DrawWireSphere(
+            new Vector3(transform.position.x, transform.position.y, transform.position.z), meleeRange);
+
+        // 적 탐색 사거리
+        Gizmos.color = Color.orange;
+        Gizmos.DrawWireSphere(
+            new Vector3(transform.position.x, transform.position.y, transform.position.z), searchRange);
     }
 }
