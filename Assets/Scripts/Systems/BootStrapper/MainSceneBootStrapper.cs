@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 /// <summary>
@@ -10,6 +9,7 @@ using UnityEngine;
 public class MainSceneBootStrapper : MonoBehaviour
 {
     [SerializeField] AirshipUpgradeManager airshipUpgradeManager;
+    [SerializeField] BattleManager battleManager;
 
     private void Start()
     {
@@ -20,5 +20,6 @@ public class MainSceneBootStrapper : MonoBehaviour
         }
 
         airshipUpgradeManager.Init(AirshipUpgradeLevelManager.Instance.GetAirshipLevelData());
+        battleManager.Initialize();
     }
 }
