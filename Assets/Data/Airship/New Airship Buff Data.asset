@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AirshipBuffData
   buffName: 
   duration: -1
-  modifiers: []
+  modifiers:
+  - statType: 0
+    modifierType: 0
+    value: 0
