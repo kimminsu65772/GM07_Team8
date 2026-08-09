@@ -4,6 +4,7 @@ public class BattleManager : MonoBehaviour
 {    
     [SerializeField] private MapCatalog mapCatalog;
     [SerializeField] private Transform mapRoot;
+    [SerializeField] private StageTestManager stageTestManager;
 
     [Header("시작점 설정")]
     [SerializeField] private Transform airshipStartPoint;
@@ -12,6 +13,8 @@ public class BattleManager : MonoBehaviour
 
     private GameObject currentMap;
 
+    private int currentStage;
+
     public void Initialize()
     {
         if (StageProgressManager.Instance == null)
@@ -19,15 +22,22 @@ public class BattleManager : MonoBehaviour
             Debug.LogError("StageProgressManager 인스턴스가 존재하지 않습니다.");
             return;
         }
-        int currentStage = StageProgressManager.Instance.CurrentStage;
-        ResetPlayerPosition();
-        LoadMap(currentStage);
+        currentStage = StageProgressManager.Instance.CurrentStage;
+        SetUpStage(currentStage);
+        StartStage();
     }
 
     public void SetUpStage(int stageNumber)
     {
+        currentStage = stageNumber;
+        LoadMap(currentStage);
         ResetPlayerPosition();
-        LoadMap(stageNumber);
+        
+    }
+
+    public void StartStage()
+    {
+        stageTestManager.StartStage(currentStage);
     }
 
     private void ResetPlayerPosition()

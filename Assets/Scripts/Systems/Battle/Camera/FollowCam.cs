@@ -12,16 +12,25 @@ public class FollowCam : MonoBehaviour
     [SerializeField] private float targetOffsetY = -0.3f;
     [SerializeField] private float targetOffsetX = -1f;
 
+    private bool isFollowing;
+
     private void Start()
     {
         if (target == null)
         {
             Debug.LogError("FollowCam: 타겟이 설정되지 않았습니다.");
         }
+
+        isFollowing = true;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
+        if (target == null || !isFollowing)
+        {
+            return;
+        }
+
         Camera.main.orthographicSize = lockCameraSize ? 5f : cameraSize;
 
         float targetDistanceY = Camera.main.orthographicSize * targetOffsetY;
@@ -49,4 +58,14 @@ public class FollowCam : MonoBehaviour
             transform.position,
             new Vector3(cameraWidth, cameraHeight, 0f));
     }
+
+    public void StopFollowTarget()
+    {
+        isFollowing = false;
+    }
+
+    public void StartFollowTarget()
+    {
+        isFollowing = true;
+    }   
 }

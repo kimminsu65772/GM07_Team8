@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 3227018448172053116}
   - component: {fileID: 4527213543350081925}
   - component: {fileID: 2952219784427838897}
+  - component: {fileID: 7749152205510843161}
   - component: {fileID: 4053107649118390252}
   m_Layer: 6
-  m_Name: TestEnemy
+  m_Name: DummyTestEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -162,25 +163,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 7931180812232907860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ba251c260f376947814a78a063306f6, type: 3}
+  m_Script: {fileID: 11500000, guid: 49fca63c307448a09d566fa07eb83a21, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
+  m_EditorClassIdentifier: Assembly-CSharp::DummyEnemyAttack
   target: {fileID: 0}
-  attackPerformed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TestAirshipHealth, Assembly-CSharp
-        m_MethodName: TakeDamage
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+--- !u!114 &7749152205510843161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7931180812232907860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ce15e2dccaf405387990a2561dd1ae8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DummyEnemyDamageable
+  enemyStats: {fileID: 4527213543350081925}
+  hitRadius: 0.5
+  dieInOneHit: 1
 --- !u!58 &4053107649118390252
 CircleCollider2D:
   m_ObjectHideFlags: 0

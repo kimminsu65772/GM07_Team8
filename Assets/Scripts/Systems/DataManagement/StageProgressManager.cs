@@ -3,10 +3,12 @@ using UnityEngine;
 
 public class StageProgressManager : MonoBehaviour
 {
+    [SerializeField] private StageCatalog stageCatalog;
+
     public static StageProgressManager Instance { get; private set; }
 
     private StageProgressSaveData stageData;
-    private bool isInitialized;
+    private bool isInitialized; 
 
     public bool IsInitialized => isInitialized;
     public int CurrentStage
@@ -24,6 +26,20 @@ public class StageProgressManager : MonoBehaviour
             CheckInitialized();
             return stageData.MaxClearedStage;
         }
+    }
+    public int LastStage
+    {
+        get
+        {
+            CheckInitialized();
+            return stageCatalog.StageCount;
+        }
+    }
+
+    public int GetLastClearedStage()
+    {
+        CheckInitialized();
+        return stageData.MaxClearedStage;
     }
 
     private void Awake()
@@ -57,6 +73,11 @@ public class StageProgressManager : MonoBehaviour
         {
             throw new ArgumentOutOfRangeException(nameof(stage), "스테이지는 0 이하일 수 없습니다.");
         }
+
+        if (!stageCatalog.HasStage(stage))
+        {
+            throw new ArgumentOutOfRangeException(nameof(stage), $"스테이지 {stage}는 StageCatalog에 존재하지 않습니다.");
+        }   
         stageData.CurrentStage = stage;
     }
 

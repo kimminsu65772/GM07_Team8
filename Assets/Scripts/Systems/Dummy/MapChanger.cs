@@ -14,7 +14,7 @@ public class MapChanger : MonoBehaviour
     public void PreviousMap()
     {
         StageProgressManager.Instance.SetCurrentStage(StageProgressManager.Instance.CurrentStage - 1);
-        if (StageProgressManager.Instance.CurrentStage > 1)
+        if (StageProgressManager.Instance.CurrentStage >= 1)
         {
             battleManager.SetUpStage(StageProgressManager.Instance.CurrentStage);
             SaveScheduler.Instance.RequestSave(SavePolicy.Soon);
