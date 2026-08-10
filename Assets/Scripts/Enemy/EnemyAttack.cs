@@ -56,7 +56,12 @@ public class EnemyAttack : MonoBehaviour
             ResetAttackTimer();
             return;
         }
-
+        // 피격 경직 중에는 공격 타이머를 감소시키지 않는다.
+        // 경직 시간만큼 다음 공격 시점이 자연스럽게 늦어진다.
+        if (enemyStats.IsHitStunned)
+        {
+            return;
+        }
         // 다음 공격까지 남은 시간을 감소시킨다.
         attackTimer -= Time.deltaTime;
 
