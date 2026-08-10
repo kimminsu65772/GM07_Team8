@@ -6,6 +6,7 @@ public class Equipment : ScriptableObject
     [Header("장비 스탯")]
     [SerializeField] private EquipGradeEnum equipGrade;
     [SerializeField] private EquipPartEnum equipPart;
+    [SerializeField] private int equipLv;
     [SerializeField] private float bonusHP;
     [SerializeField] private float bonusAtk;
     [SerializeField] private float bonusDef;
@@ -13,6 +14,7 @@ public class Equipment : ScriptableObject
 
     public EquipGradeEnum EquipGrade => equipGrade;
     public EquipPartEnum EquipPart => equipPart;
+    public int EquipLv => equipLv;
     public float BonusHP
     {
         get => bonusHP;

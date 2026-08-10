@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3227018448172053116}
   - component: {fileID: 4527213543350081925}
   - component: {fileID: 2952219784427838897}
+  - component: {fileID: 8327244351578003406}
   m_Layer: 0
   m_Name: TestBoss
   m_TagString: Untagged
@@ -136,6 +137,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
   target: {fileID: 0}
+  avoidanceRadius: 1.2
+  avoidanceStrength: 1.5
 --- !u!114 &4527213543350081925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,6 +153,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   enemyData: {fileID: 11400000, guid: 436f82232fb53704b9434b37f1e4b7ff, type: 2}
   currentHealth: 0
+  hitStunDuration: 0.4
+  deathDestroyDelay: 1.2
 --- !u!114 &2952219784427838897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,6 +183,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8327244351578003406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7931180812232907860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fe54fc0955938a4f98bfcb3b606af3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAnimationController
+  enemyAnimator: {fileID: 0}
+  movementThreshold: 0.01
 --- !u!1001 &4454409753350547171
 PrefabInstance:
   m_ObjectHideFlags: 0
