@@ -1,9 +1,10 @@
 using TMPro;
 using UnityEngine;
 
-public abstract class Hero : MonoBehaviour
+public abstract class Hero : MonoBehaviour, IDamageable
 {
     [Header("영웅 정보")]
+    [SerializeField] private int heroID;
     [SerializeField] private string heroName;
     [SerializeField] private int heroLv;
     [SerializeField] private float heroMaxHP;
@@ -12,6 +13,7 @@ public abstract class Hero : MonoBehaviour
     [SerializeField] private float heroDef;
     [SerializeField] private float heroCriChance;
     [SerializeField] private bool isDead;
+    [SerializeField] private float hitRadius;
 
     private float heroCriDamage = 2f;
     private HeroLocationEnum location;
@@ -24,16 +26,22 @@ public abstract class Hero : MonoBehaviour
     [SerializeField] private float attackTime;
     private float attackTimer;
 
+    [SerializeField] private Transform heroRoot;
     [SerializeField] private float moveSpeed = 8f;
     [SerializeField] private LayerMask enemyLayer;
     private GameObject targetEnemy;
+    private bool isMoving;
     private bool canAttack;
-    private float searchRange = 100f;
-    private float meleeRange = 2f;
+    private bool isAttacking;
+    private float searchRange = 50f;
+    private float meleeRange = 1.3f;
+    
 
     protected HeroStat stat;
     protected HeroStateEnum heroState;
+    private HeroEquipmentManager heroEquip;
 
+    public int HeroID => heroID;
     public string HeroName => heroName;
     public int HeroLv
     {
@@ -48,7 +56,7 @@ public abstract class Hero : MonoBehaviour
     public float HeroCurrentHP
     {
         get => heroCurrentHP;
-        set => heroCurrentHP = Mathf.Max(0f, value);
+        set => heroCurrentHP = Mathf.Clamp(value, 0f, HeroMaxHP);
     }
     public float HeroAtk
     {
@@ -66,6 +74,11 @@ public abstract class Hero : MonoBehaviour
         set => heroCriChance = Mathf.Clamp(value, 0f, 100f);
     }
     public bool IsDead => isDead;
+    public float HitRadius
+    {
+        get => hitRadius;
+        set => hitRadius = Mathf.Max(0f, value);
+    }
     public float HeroAttackTime
     {
         get => attackTime;
@@ -75,9 +88,10 @@ public abstract class Hero : MonoBehaviour
 
     protected virtual void Awake() { }
 
-    protected virtual void Init(float attackTime,
+    protected virtual void Init(int id, float attackTime,
         HeroLocationEnum location)
     {
+        heroID = id;
         HeroLv = 1;
         LvApply(heroLv);
         heroCurrentHP = heroMaxHP;
@@ -85,10 +99,12 @@ public abstract class Hero : MonoBehaviour
         this.location = location;
 
         attackTimer = attackTime;
+        isAttacking = false;
 
         if (name_T != null) name_T.text = heroName;
 
         heroState = HeroStateEnum.Idle;
+        heroEquip = GetComponent<HeroEquipmentManager>();
     }
 
     private void Update()
@@ -96,14 +112,16 @@ public abstract class Hero : MonoBehaviour
         attackTimer += Time.deltaTime;
 
         if (targetEnemy == null) SearchEnemy();
-        if (targetEnemy != null || location == HeroLocationEnum.Front) MoveToEnemy();
-        if (targetEnemy != null || location == HeroLocationEnum.Back) Attack(targetEnemy);
+        if (targetEnemy != null && location == HeroLocationEnum.Front) MoveToEnemy();
+        if (targetEnemy != null && location == HeroLocationEnum.Back) Attack(targetEnemy);
+
+        ChangeState();
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float damage)
     {
         // 방어력 적용하기
-        heroCurrentHP -= amount;
+        heroCurrentHP -= damage;
 
         if (heroCurrentHP <= 0f)
         {
@@ -134,7 +152,11 @@ public abstract class Hero : MonoBehaviour
 
     private void MoveToEnemy()
     {
-        if (location == HeroLocationEnum.Back || targetEnemy == null) return;
+        if (location == HeroLocationEnum.Back || targetEnemy == null)
+        {
+            isMoving = false;
+            return;
+        }
 
         Vector2 direction = targetEnemy.transform.position - transform.position;
 
@@ -143,16 +165,28 @@ public abstract class Hero : MonoBehaviour
 
         if (canAttack)
         {
+            isMoving = false;
             Attack(targetEnemy);
         }
         else
         {
+            isMoving = true;
+            FlipSprite(direction);
+
             transform.position = Vector3.MoveTowards(
                 transform.position,
                 targetEnemy.transform.position,
                 moveSpeed * Time.deltaTime);
-            heroState = HeroStateEnum.Move;
         }
+    }
+
+    private void FlipSprite(Vector2 direction)
+    {
+        if (Mathf.Abs(direction.x) < 0.01f) return;
+
+        Vector3 scale = heroRoot.localScale;
+        scale.x = direction.x > 0 ? -1 : 1;
+        heroRoot.localScale = scale;
     }
 
     protected virtual void Attack(GameObject enemy)
@@ -160,10 +194,10 @@ public abstract class Hero : MonoBehaviour
         float criRan = Random.Range(1f, 100f);
         float damage = heroAtk; // 적 방어력 적용
 
-        if (attackTimer >= attackTime)
+        if (attackTimer >= attackTime && !isAttacking)
         {
+            isAttacking = true;
             attackTimer = 0f;
-            heroState = HeroStateEnum.Attack;
 
             if (criRan <= heroCriChance) damage *= heroCriDamage;
 
@@ -172,10 +206,15 @@ public abstract class Hero : MonoBehaviour
         }
     }
 
+    public void AttackStop()
+    {
+        heroState = HeroStateEnum.Idle;
+        isAttacking = false;
+    }
+
     protected virtual void Die()
     {
         isDead = true;
-        heroState = HeroStateEnum.Die;
     }
 
     // 비용(매개변수) 지불 추가
@@ -194,5 +233,43 @@ public abstract class Hero : MonoBehaviour
         HeroMaxHP = stat.MaxHP;
         HeroAtk = stat.Atk;
         HeroDef = stat.Def;
+    }
+
+    private void ChangeState()
+    {
+        if (isDead) heroState = HeroStateEnum.Die;
+        else if (isMoving) heroState = HeroStateEnum.Move;
+        else if (isAttacking) heroState = HeroStateEnum.Attack;
+        else heroState = HeroStateEnum.Idle;
+    }
+
+    private void OnDrawGizmos()
+    {
+        // 근거리 공격 사거리
+        Gizmos.color = Color.red;
+        if (location == HeroLocationEnum.Front) Gizmos.DrawWireSphere(
+            new Vector3(transform.position.x, transform.position.y, transform.position.z), meleeRange);
+
+        // 적 탐색 사거리
+        // Gizmos.color = Color.orange;
+        // Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y, transform.position.z), searchRange);
+    }
+
+    public void EquipStatApply(Equipment equip)
+    {
+        HeroMaxHP += equip.BonusHP;
+        HeroCurrentHP += equip.BonusHP;
+        HeroDef += equip.BonusDef;
+        HeroCriChance += equip.BonusCriChance;
+    }
+
+    public Equipment[] EquipInfo()
+    {
+        return new Equipment[]
+        {
+            heroEquip.CurrentWeaponEquip,
+            heroEquip.CurrentBodyEquip,
+            heroEquip.CurrentAccEquip
+        };
     }
 }
