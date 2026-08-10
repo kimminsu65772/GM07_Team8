@@ -13,6 +13,10 @@ public class AirshipEnemyChecker : MonoBehaviour
     [SerializeField] private float immediateStopWidth = 10f;
     [SerializeField] private float immediateStopHeight = 10f;
     
+    [Header("Attack Target Box")]
+    [SerializeField] private float attackTargetWidth = 17f;
+    [SerializeField] private float attackTargetHeight = 10f;
+    
     [SerializeField] private Vector2 pivotOffset;
     [SerializeField] private LayerMask enemyLayer;
 
@@ -39,6 +43,32 @@ public class AirshipEnemyChecker : MonoBehaviour
 
         return hit != null;
     }
+    
+    public Transform FindNearestEnemy()
+    {
+        Collider2D[] hits = Physics2D.OverlapBoxAll(
+            GetBoxCenter(attackTargetWidth),
+            GetBoxSize(attackTargetWidth, attackTargetHeight),
+            0f,
+            enemyLayer
+        );
+
+        Transform nearest = null;
+        float nearestSqrDistance = float.MaxValue;
+
+        foreach (Collider2D hit in hits)
+        {
+            float sqrDistance = ((Vector2)hit.transform.position - (Vector2)transform.position).sqrMagnitude;
+
+            if (sqrDistance < nearestSqrDistance)
+            {
+                nearestSqrDistance = sqrDistance;
+                nearest = hit.transform;
+            }
+        }
+
+        return nearest;
+    }
 
     private Vector2 GetBoxPivot()
     {
@@ -64,6 +94,12 @@ public class AirshipEnemyChecker : MonoBehaviour
         Gizmos.DrawWireCube(
             GetBoxCenter(immediateStopWidth),
             GetBoxSize(immediateStopWidth, immediateStopHeight)
+        );
+        
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(
+            GetBoxCenter(attackTargetWidth),
+            GetBoxSize(attackTargetWidth, attackTargetHeight)
         );
     }
 }

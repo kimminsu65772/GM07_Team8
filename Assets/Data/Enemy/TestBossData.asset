@@ -9,12 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bb71851fb85fbe4690a78be78724f27, type: 3}
-  m_Name: New Airship Buff Data
-  m_EditorClassIdentifier: Assembly-CSharp::AirshipBuffData
-  buffName: 
-  duration: -1
-  modifiers:
-  - statType: 0
-    modifierType: 0
-    value: 0
+  m_Script: {fileID: 11500000, guid: 30173b17adc04634aa724104a20d5a31, type: 3}
+  m_Name: TestBossData
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  maxHealth: 300
+  attackPower: 20
+  moveSpeed: 10
+  attackRange: 2
+  attackInterval: 1.5

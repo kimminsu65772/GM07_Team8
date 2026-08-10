@@ -27,6 +27,7 @@ public class AirshipController : MonoBehaviour
 
     private void Start()
     {
+        // TODO 부트스트랩 생기고 데이터 관리가 생기면 이 테스트용 init은 삭제
         Init(new AirshipSaveData
         {
             AttackLevel = 3,
