@@ -6,6 +6,6 @@ public class Cha1 : Hero
     {
         statTable = new Hero1StatTable();
         stat = statTable.GetStat(1);
-        Init(2f, HeroLocationEnum.Front);
+        Init(-1, 2f, HeroLocationEnum.Front);
     }
 }

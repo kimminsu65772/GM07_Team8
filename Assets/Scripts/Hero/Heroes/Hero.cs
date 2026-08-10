@@ -4,6 +4,7 @@ using UnityEngine;
 public abstract class Hero : MonoBehaviour
 {
     [Header("영웅 정보")]
+    [SerializeField] private int heroID;
     [SerializeField] private string heroName;
     [SerializeField] private int heroLv;
     [SerializeField] private float heroMaxHP;
@@ -32,11 +33,13 @@ public abstract class Hero : MonoBehaviour
     private bool canAttack;
     private bool isAttacking;
     private float searchRange = 50f;
-    private float meleeRange;
+    private float meleeRange = 1.3f;
 
     protected HeroStat stat;
     protected HeroStateEnum heroState;
+    private HeroEquipmentManager heroEquip;
 
+    public int HeroID => heroID;
     public string HeroName => heroName;
     public int HeroLv
     {
@@ -51,7 +54,7 @@ public abstract class Hero : MonoBehaviour
     public float HeroCurrentHP
     {
         get => heroCurrentHP;
-        set => heroCurrentHP = Mathf.Max(0f, value);
+        set => heroCurrentHP = Mathf.Clamp(value, 0f, HeroMaxHP);
     }
     public float HeroAtk
     {
@@ -78,9 +81,10 @@ public abstract class Hero : MonoBehaviour
 
     protected virtual void Awake() { }
 
-    protected virtual void Init(float attackTime,
+    protected virtual void Init(int id, float attackTime,
         HeroLocationEnum location)
     {
+        heroID = id;
         HeroLv = 1;
         LvApply(heroLv);
         heroCurrentHP = heroMaxHP;
@@ -89,11 +93,11 @@ public abstract class Hero : MonoBehaviour
 
         attackTimer = attackTime;
         isAttacking = false;
-        meleeRange = transform.localScale.x / 2;
 
         if (name_T != null) name_T.text = heroName;
 
         heroState = HeroStateEnum.Idle;
+        heroEquip = GetComponent<HeroEquipmentManager>();
     }
 
     private void Update()
@@ -240,8 +244,25 @@ public abstract class Hero : MonoBehaviour
             new Vector3(transform.position.x, transform.position.y, transform.position.z), meleeRange);
 
         // 적 탐색 사거리
-        Gizmos.color = Color.orange;
-        Gizmos.DrawWireSphere(
-            new Vector3(transform.position.x, transform.position.y, transform.position.z), searchRange);
+        // Gizmos.color = Color.orange;
+        // Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y, transform.position.z), searchRange);
+    }
+
+    public void EquipStatApply(Equipment equip)
+    {
+        HeroMaxHP += equip.BonusHP;
+        HeroCurrentHP += equip.BonusHP;
+        HeroDef += equip.BonusDef;
+        HeroCriChance += equip.BonusCriChance;
+    }
+
+    public Equipment[] EquipInfo()
+    {
+        return new Equipment[]
+        {
+            heroEquip.CurrentWeaponEquip,
+            heroEquip.CurrentBodyEquip,
+            heroEquip.CurrentAccEquip
+        };
     }
 }

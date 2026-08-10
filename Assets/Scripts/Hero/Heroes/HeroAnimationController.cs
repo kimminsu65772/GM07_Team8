@@ -15,10 +15,10 @@ public class HeroAnimationController : MonoBehaviour
 
     void Update()
     {
-        ApplyAni(hero.HeroState);
+        AniApply(hero.HeroState);
     }
 
-    private void ApplyAni(HeroStateEnum state)
+    private void AniApply(HeroStateEnum state)
     {
         if (currentState == state) return;
         
