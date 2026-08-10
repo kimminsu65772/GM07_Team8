@@ -15,7 +15,7 @@ public static class OfflineRewardProvider
             for (int i = 0; i < offlineRewards.Length; i++)
             {
                 CurrencyReward reward = offlineRewards[i];
-                WalletManager.Instance.TryAdd(reward.Type, reward.Amount);
+                PlayerInfo.Instance.AddCurrency(reward.Type, reward.Amount, SavePolicy.Immediate);
                 Debug.Log($"{reward.Type}: {reward.Amount}");
             }
         }
@@ -23,8 +23,6 @@ public static class OfflineRewardProvider
         {
             Debug.Log("지급할 보상이 없습니다.");
         }
-
-        SaveScheduler.Instance.RequestSave(SavePolicy.Immediate);
     }
 
     private static TimeSpan CalculateOfflineTime(string lastSavedTime)

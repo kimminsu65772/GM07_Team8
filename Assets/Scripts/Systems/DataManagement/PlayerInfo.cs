@@ -1,5 +1,5 @@
+using System.Collections.Generic;
 using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerInfo : MonoBehaviour
@@ -49,6 +49,14 @@ public class PlayerInfo : MonoBehaviour
         Initialize();
     }
 
+    private void Start()
+    {
+        if (HeroFormationManager.Instance != null)
+        {
+            HeroFormationManager.Instance.Initialize(SaveData.Heroes, SaveData.HeroFormation);
+        }
+    }
+
     public void Initialize()
     {
         if (IsInitialized) return;
@@ -81,7 +89,8 @@ public class PlayerInfo : MonoBehaviour
 
     public int CurrentStage => SaveData.StageProgress.CurrentStage;
     public int MaxClearedStage => SaveData.StageProgress.MaxClearedStage;
-
+    public Dictionary<string, HeroSaveData> Heroes => SaveData.Heroes;
+    public HeroFormationSaveData HeroFormation => SaveData.HeroFormation;
     /// <summary>
     /// 재화 관련 수정 메서드
     /// </summary>
@@ -112,7 +121,7 @@ public class PlayerInfo : MonoBehaviour
 
         currency.Amount += amount;
 
-        SaveScheduler.Instance.RequestSave(savePolicy);
+        RequestSave(savePolicy);
     }
 
     public bool TrySpendCurrency(CurrencyType type, int amount, SavePolicy savePolicy = SavePolicy.Soon)
@@ -135,7 +144,7 @@ public class PlayerInfo : MonoBehaviour
             return false;
         }
         currency.Amount -= amount;
-        SaveScheduler.Instance.RequestSave(savePolicy);
+        RequestSave(savePolicy);
         return true;
     }
 
@@ -161,7 +170,7 @@ public class PlayerInfo : MonoBehaviour
 
         StageProgress.CurrentStage = stage;
 
-        SaveScheduler.Instance.RequestSave(savePolicy);
+        RequestSave(savePolicy);
     }
 
     public bool TryUpdateMaxClearedStage(int stage, SavePolicy savePolicy = SavePolicy.Soon)
@@ -178,7 +187,96 @@ public class PlayerInfo : MonoBehaviour
             return false;
         }
         StageProgress.MaxClearedStage = stage;
-        SaveScheduler.Instance.RequestSave(savePolicy);
+        RequestSave(savePolicy);
+        return true;
+    }
+
+    /// <summary>
+    /// upgradeState를 받아서 AirshipSaveData에 반영하는 메서드
+    /// </summary>
+    /// <param name="upgradeState"></param>
+    /// <param name="savePolicy"></param>
+
+    public void SetAirshipUpgradeState(AirshipUpgradeState upgradeState, SavePolicy savePolicy = SavePolicy.Soon)
+    {
+        if (!CheckInitialized()) return;
+        if (upgradeState == null) return;
+
+        Airship.AttackLevel = upgradeState.AttackLevel;
+        Airship.DefenseLevel = upgradeState.DefenseLevel;
+        Airship.MaxHealthLevel = upgradeState.MaxHealthLevel;
+        Airship.CriticalLevel = upgradeState.CriticalLevel;
+
+        RequestSave(savePolicy);
+    }
+
+    /// <summary>
+    /// 장착된 캐논 ID를 세이브 데이터에 반영하는 메서드
+    /// </summary>
+    /// <param name="cannonId"></param>
+    /// <param name="savePolicy"></param>
+    public void SetEquippedCannonId(string cannonId, SavePolicy savePolicy = SavePolicy.Soon)
+    {
+        if (!CheckInitialized()) return;
+        if (string.IsNullOrWhiteSpace(cannonId))
+        {
+            cannonId = "NormalCannon"; // 기본 캐논 ID로 설정
+        }
+        Airship.EquippedCannonId = cannonId;
+        RequestSave(savePolicy);
+    }
+
+    /// <summary>
+    /// 장착된 기어 ID를 세이브 데이터에 반영하는 메서드
+    /// </summary>
+    /// <param name="gearId"></param>
+    /// <param name="savePolicy"></param>
+    public void SetEquippedGearId(string gearId, SavePolicy savePolicy = SavePolicy.Soon)
+    {
+        if (!CheckInitialized()) return;
+        if (string.IsNullOrWhiteSpace(gearId))
+        {
+            gearId = "MaxHpGear"; // 기본 기어 ID로 설정
+        }
+        Airship.EquippedGearId = gearId;
+        RequestSave(savePolicy);
+    }
+
+    public bool TryGetHeroData(string heroName, out HeroSaveData heroData)
+    {
+        heroData = null;
+
+        if (!CheckInitialized()) return false;
+        if (string.IsNullOrWhiteSpace(heroName)) return false;
+        if (Heroes == null) return false;
+
+        return Heroes.TryGetValue(heroName, out heroData);
+    }
+
+    public bool IsHeroOwned(string heroName)
+    {
+        return TryGetHeroData(heroName, out HeroSaveData heroData)
+            && heroData.IsOwned;
+    }
+
+    public bool SetHeroOwned(string heroName, bool isOwned, SavePolicy savePolicy = SavePolicy.Soon)
+    {
+        if (!TryGetHeroData(heroName, out HeroSaveData heroData)) return false;
+        if (heroData.IsOwned == isOwned) return true;
+
+        heroData.IsOwned = isOwned;
+        RequestSave(savePolicy);
+        return true;
+    }
+
+    public bool SetHeroLevel(string heroName, int level, SavePolicy savePolicy = SavePolicy.Soon)
+    {
+        if (!TryGetHeroData(heroName, out HeroSaveData heroData)) return false;
+        if (level < 1) return false;
+        if (heroData.Level == level) return true;
+
+        heroData.Level = level;
+        RequestSave(savePolicy);
         return true;
     }
 
@@ -190,5 +288,16 @@ public class PlayerInfo : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    private void RequestSave(SavePolicy savePolicy)
+    {
+        if (SaveScheduler.Instance == null)
+        {
+            Debug.LogWarning("SaveScheduler가 없어 저장 요청을 수행하지 못했습니다.");
+            return;
+        }
+
+        SaveScheduler.Instance.RequestSave(savePolicy);
     }
 }
