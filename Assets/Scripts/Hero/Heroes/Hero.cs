@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public abstract class Hero : MonoBehaviour
+public abstract class Hero : MonoBehaviour, IDamageable
 {
     [Header("영웅 정보")]
     [SerializeField] private int heroID;
@@ -13,6 +13,7 @@ public abstract class Hero : MonoBehaviour
     [SerializeField] private float heroDef;
     [SerializeField] private float heroCriChance;
     [SerializeField] private bool isDead;
+    [SerializeField] private float hitRadius;
 
     private float heroCriDamage = 2f;
     private HeroLocationEnum location;
@@ -34,6 +35,7 @@ public abstract class Hero : MonoBehaviour
     private bool isAttacking;
     private float searchRange = 50f;
     private float meleeRange = 1.3f;
+    
 
     protected HeroStat stat;
     protected HeroStateEnum heroState;
@@ -72,6 +74,11 @@ public abstract class Hero : MonoBehaviour
         set => heroCriChance = Mathf.Clamp(value, 0f, 100f);
     }
     public bool IsDead => isDead;
+    public float HitRadius
+    {
+        get => hitRadius;
+        set => hitRadius = Mathf.Max(0f, value);
+    }
     public float HeroAttackTime
     {
         get => attackTime;
@@ -111,10 +118,10 @@ public abstract class Hero : MonoBehaviour
         ChangeState();
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float damage)
     {
         // 방어력 적용하기
-        heroCurrentHP -= amount;
+        heroCurrentHP -= damage;
 
         if (heroCurrentHP <= 0f)
         {
