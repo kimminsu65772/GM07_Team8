@@ -3,27 +3,12 @@ using UnityEngine;
 public class GameEventHandler : MonoBehaviour
 {
     [SerializeField] private AirshipUpgradeManager airshipUpgradeManager;
-
-    public static GameEventHandler Instance { get; private set; }
-    private RuntimeDataContext dataContext;
-    private SaveScheduler saveScheduler;
-
+     
     // 초기화되기 전에는 이벤트를 처리하지 않도록 막는다.
     private bool isInitialized;
 
     // 이벤트 핸들러는 유일성을 보장 받아 중복으로 이벤트를 처리하지 않고 씬 전환 시에도 유지되어야 한다.
     // 따라서 싱글톤 패턴을 적용한다.
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(this.gameObject);
-    }
 
     private void OnEnable()
     {
@@ -42,20 +27,14 @@ public class GameEventHandler : MonoBehaviour
         }
     }
 
-    public void Initialize(RuntimeDataContext dataContext, SaveScheduler saveScheduler)
+    public void Initialize(AirshipUpgradeManager airshipUpgradeManager)
     {
-        if (dataContext == null)
+        if (airshipUpgradeManager == null)
         {
-            throw new System.ArgumentNullException(nameof(dataContext), "RuntimeDataContext가 초기화되지 않았습니다.");
+            Debug.LogError("AirshipUpgradeManager가 할당되지 않았습니다.");
+            return;
         }
-
-        if (saveScheduler == null)
-        {
-            throw new System.ArgumentNullException(nameof(saveScheduler), "SaveScheduler가 초기화되지 않았습니다.");
-        }
-
-        this.dataContext = dataContext;
-        this.saveScheduler = saveScheduler;
+        this.airshipUpgradeManager = airshipUpgradeManager;
         isInitialized = true;
     }
 
@@ -67,7 +46,7 @@ public class GameEventHandler : MonoBehaviour
         }
 
         GrantRewards(rewards);
-        saveScheduler.RequestSave(SavePolicy.Deferred);
+        SaveScheduler.Instance.RequestSave(SavePolicy.Deferred);
     }
 
     public void HandleStageCleared(int clearedStage, CurrencyReward[] clearRewards)
@@ -77,14 +56,14 @@ public class GameEventHandler : MonoBehaviour
             return;
         }
 
-        if (dataContext.Stage.TryUpdateMaxClearedStage(clearedStage))
+        if (StageProgressManager.Instance.TryUpdateMaxClearedStage(clearedStage))
         {
             GrantRewards(clearRewards);
 
             // 현재는 다음 스테이지로 바로 이동시킨다.
             // 갱신하려는 값이 마지막 스테이지를 넘어가는지 확인하는 방어코드 필요.
-            dataContext.Stage.SetCurrentStage(clearedStage + 1);
-            saveScheduler.RequestSave(SavePolicy.Soon);
+            StageProgressManager.Instance.SetCurrentStage(clearedStage + 1);
+            SaveScheduler.Instance.RequestSave(SavePolicy.Soon);
         }
     }
 
@@ -96,7 +75,7 @@ public class GameEventHandler : MonoBehaviour
         }
 
         GrantRewards(offlineRewards);
-        saveScheduler.RequestSave(SavePolicy.Immediate);
+        SaveScheduler.Instance.RequestSave(SavePolicy.Immediate);
     }
 
     public void HandleStageChanged(int newStage)
@@ -106,8 +85,8 @@ public class GameEventHandler : MonoBehaviour
             return;
         }
 
-        dataContext.Stage.SetCurrentStage(newStage);
-        saveScheduler.RequestSave(SavePolicy.Soon);
+        StageProgressManager.Instance.SetCurrentStage(newStage);
+        SaveScheduler.Instance.RequestSave(SavePolicy.Soon);
     }
 
     public bool HandlePremiumCurrencySpent(int amount)
@@ -117,12 +96,12 @@ public class GameEventHandler : MonoBehaviour
             return false;
         }
 
-        if (!dataContext.Wallet.TrySpend(CurrencyType.Gems, amount))
+        if (!WalletManager.Instance.TrySpend(CurrencyType.Gems, amount))
         {
             return false;
         }
 
-        saveScheduler.RequestSave(SavePolicy.Immediate);
+        SaveScheduler.Instance.RequestSave(SavePolicy.Immediate);
         return true;
     }
 
@@ -151,7 +130,7 @@ public class GameEventHandler : MonoBehaviour
         for (int i = 0; i < rewards.Length; i++)
         {
             CurrencyReward reward = rewards[i];
-            dataContext.Wallet.TryAdd(reward.Type, reward.Amount);
+            WalletManager.Instance.TryAdd(reward.Type, reward.Amount);
         }
     }
 }

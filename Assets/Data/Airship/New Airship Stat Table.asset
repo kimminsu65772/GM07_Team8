@@ -29,5 +29,5 @@ MonoBehaviour:
     baseValue: 5
     growthValue: 0
   - statType: 5
-    baseValue: 1
+    baseValue: 2
     growthValue: 0

@@ -13,6 +13,8 @@ public class AirshipMovement : MonoBehaviour
 
     private float currentMoveSpeed;
     private float targetMoveSpeed;
+    public float CurrentMoveSpeed => currentMoveSpeed;
+    public float MaxMoveSpeed => maxMoveSpeed;
     
     public void ApplyStats(AirshipRuntimeStats stats)
     {
