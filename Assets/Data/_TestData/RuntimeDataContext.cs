@@ -7,7 +7,6 @@ using System;
 public class RuntimeDataContext
 {
     public PlayerSaveData SaveData { get; }
-
     public WalletManager Wallet { get; }
     public StageProgressManager Stage { get; }
 

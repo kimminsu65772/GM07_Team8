@@ -10,6 +10,17 @@ public class AirshipUpgradeLevelManager : MonoBehaviour
 
     public bool IsInitialized => isInitialized;
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
     public void Initialize(AirshipSaveData saveData)
     {
         if (saveData == null)

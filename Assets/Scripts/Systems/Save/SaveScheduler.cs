@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 
 public class SaveScheduler : MonoBehaviour
 {
+    public static SaveScheduler Instance { get; private set; }
 
     [SerializeField, Min(1f)] private float autoSaveInterval = 30;
     [SerializeField, Min(0f)] private float soonToSaveDelay = 5;
@@ -27,6 +28,15 @@ public class SaveScheduler : MonoBehaviour
     private void Awake()
     {
         schedulerCTS = new CancellationTokenSource();
+
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
     private void Start()
     {
@@ -60,10 +70,12 @@ public class SaveScheduler : MonoBehaviour
         {
             while (!cancellationToken.IsCancellationRequested)
             {
+                Debug.Log($"[SaveScheduler] AutoSaveAsync: {autoSaveInterval}초 대기");
                 await UniTask.Delay(TimeSpan.FromSeconds(autoSaveInterval), cancellationToken: cancellationToken);
 
                 if (isDirty)
                 {
+                    Debug.Log("[SaveScheduler] AutoSaveAsync: 저장 시작");
                     await SaveAsync();
                 }
             }
@@ -85,9 +97,11 @@ public class SaveScheduler : MonoBehaviour
         isSoonSaveScheduled = true;
         try
         {
+            Debug.Log($"[SaveScheduler] SoonToSaveAsync: {soonToSaveDelay}초 대기");
             await UniTask.Delay(TimeSpan.FromSeconds(soonToSaveDelay), cancellationToken: cancellationToken);
             if (isDirty)
             {
+                Debug.Log("[SaveScheduler] SoonToSaveAsync: 저장 시작");
                 await SaveAsync();
             }
         }
@@ -105,12 +119,12 @@ public class SaveScheduler : MonoBehaviour
     public void RequestSave(SavePolicy policy)
     {
         isDirty = true;
-        Debug.Log($"[SaveScheduler] RequestSave policy={policy}");
+        Debug.Log($"[SaveScheduler] 요청된 저장 정책 타입: {policy}");
 
         if (isSaving)
         {
             saveRequestedWhileSaving = true;
-            Debug.Log("[SaveScheduler] Save requested while saving");
+            Debug.Log("[SaveScheduler] 저장 도중 추가 저장 요청 발생");
         }
 
         switch (policy)
@@ -203,7 +217,7 @@ public class SaveScheduler : MonoBehaviour
     {
         if (pause)
         {
-            Debug.Log("[SaveScheduler] Application paused. Flush requested");
+            Debug.Log("[SaveScheduler] 앱 일시정지 감지. Flush 실행");
             FlushAsync().Forget();
         }
     }

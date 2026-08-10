@@ -19,10 +19,10 @@ public class SaveDataFactory
             },
             Airship = new AirshipSaveData
             {
-                AttackLevel = 1,
-                DefenseLevel = 1,
-                MaxHealthLevel = 1,
-                CriticalLevel = 1
+                AttackLevel = 0,
+                DefenseLevel = 0,
+                MaxHealthLevel = 0,
+                CriticalLevel = 0
             },
             Heroes = new Dictionary<string, HeroSaveData>
             {
