@@ -542,6 +542,7 @@ GameObject:
   - component: {fileID: 6065782831364134342}
   - component: {fileID: 4626290188937191730}
   - component: {fileID: 2430253705024483779}
+  - component: {fileID: 5786310163317347532}
   m_Layer: 0
   m_Name: Airship
   m_TagString: Untagged
@@ -582,6 +583,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AirshipController
   upgradeManager: {fileID: 0}
+  upgradeController: {fileID: 5786310163317347532}
   statController: {fileID: 5200261145840763693}
   health: {fileID: 2751722732999653326}
   attack: {fileID: 340989355314108434}
@@ -757,6 +759,20 @@ MonoBehaviour:
   statController: {fileID: 5200261145840763693}
   barrelRenderer: {fileID: 4639525818923275732}
   gearRenderer: {fileID: 5766562976423797442}
+--- !u!114 &5786310163317347532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3601249629661744666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dbbafe0effc1c441beb901a4634a619, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AirshipUpgradeController
+  upgradeCurrency: 0
+  upgradeCost: 100
 --- !u!1 &4563226412411230586
 GameObject:
   m_ObjectHideFlags: 0
