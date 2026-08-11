@@ -1,65 +1,91 @@
 fileFormatVersion: 2
-guid: 17026eb7ce293644f8ed852822b7a7b2
-AssetOrigin:
-  serializedVersion: 1
-  productId: 238976
-  packageName: SteampunkUI
-  packageVersion: 1.0
-  assetPath: Assets/Gentleland/SteampunkUI/Art/Steampunk_UI_HP_Bars.png
-  uploadId: 559104
+guid: e6fd0e076c5a2734b94622f1548403bc
 TextureImporter:
   internalIDToNameTable:
   - first:
       213: -4435171574924648828
     second: Steampunk_UI_HP_Bars_0
   - first:
-      213: -8038419202229254384
+      213: -4543725098022974809
     second: Steampunk_UI_HP_Bars_1
   - first:
-      213: -8562403017610490672
+      213: -8038419202229254384
     second: Steampunk_UI_HP_Bars_2
   - first:
-      213: -4543725098022974809
+      213: 811450275692543589
     second: Steampunk_UI_HP_Bars_3
   - first:
-      213: 811450275692543589
+      213: -5583711723615110640
     second: Steampunk_UI_HP_Bars_4
   - first:
-      213: 6384525928684987386
+      213: -8562403017610490672
     second: Steampunk_UI_HP_Bars_5
   - first:
-      213: -8362258263938538887
+      213: -2414631188942607625
     second: Steampunk_UI_HP_Bars_6
   - first:
-      213: -8871619828572829403
+      213: 6384525928684987386
     second: Steampunk_UI_HP_Bars_7
   - first:
-      213: -9036669614824182120
+      213: 9041028001226497950
     second: Steampunk_UI_HP_Bars_8
   - first:
-      213: -3244063273821485595
+      213: 5388330536441605421
     second: Steampunk_UI_HP_Bars_9
   - first:
-      213: -5467746469778459622
+      213: 4546129669206926856
     second: Steampunk_UI_HP_Bars_10
   - first:
-      213: 1493230970921902157
+      213: -9080807595922185961
     second: Steampunk_UI_HP_Bars_11
   - first:
-      213: -1501116369539037563
+      213: -3987777257890276305
     second: Steampunk_UI_HP_Bars_12
   - first:
-      213: -5672574732366779016
+      213: -8362258263938538887
     second: Steampunk_UI_HP_Bars_13
   - first:
-      213: 7518163173404267975
+      213: 240705067119767931
     second: Steampunk_UI_HP_Bars_14
   - first:
-      213: -9080807595922185961
+      213: 6367563369532001717
     second: Steampunk_UI_HP_Bars_15
   - first:
-      213: -3987777257890276305
+      213: 7789213984868838411
     second: Steampunk_UI_HP_Bars_16
+  - first:
+      213: 4709474933800203325
+    second: Steampunk_UI_HP_Bars_17
+  - first:
+      213: -8871619828572829403
+    second: Steampunk_UI_HP_Bars_18
+  - first:
+      213: 1219429181356970602
+    second: Steampunk_UI_HP_Bars_19
+  - first:
+      213: -9036669614824182120
+    second: Steampunk_UI_HP_Bars_20
+  - first:
+      213: -1501116369539037563
+    second: Steampunk_UI_HP_Bars_21
+  - first:
+      213: -3244063273821485595
+    second: Steampunk_UI_HP_Bars_22
+  - first:
+      213: -5672574732366779016
+    second: Steampunk_UI_HP_Bars_23
+  - first:
+      213: -5467746469778459622
+    second: Steampunk_UI_HP_Bars_24
+  - first:
+      213: 7518163173404267975
+    second: Steampunk_UI_HP_Bars_25
+  - first:
+      213: 1493230970921902157
+    second: Steampunk_UI_HP_Bars_26
+  - first:
+      213: -3920236624334463325
+    second: Steampunk_UI_HP_Bars_27
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -123,7 +149,7 @@ TextureImporter:
   ignorePngGamma: 0
   applyGammaDecoding: 0
   swizzle: 50462976
-  cookieLightType: 1
+  cookieLightType: 0
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
@@ -140,19 +166,6 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
     buildTarget: Standalone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -197,17 +210,17 @@ TextureImporter:
       name: Steampunk_UI_HP_Bars_0
       rect:
         serializedVersion: 2
-        x: 31
-        y: 868
-        width: 1021
-        height: 192
+        x: 30
+        y: 865
+        width: 1023
+        height: 196
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
       spriteID: 48ed4be73fa1372c0800000000000000
       internalID: -4435171574924648828
@@ -216,20 +229,20 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Steampunk_UI_HP_Bars_3
+      name: Steampunk_UI_HP_Bars_1
       rect:
         serializedVersion: 2
-        x: 1189
-        y: 901
-        width: 629
-        height: 118
+        x: 1188
+        y: 900
+        width: 632
+        height: 121
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 166, y: 56, z: 145, w: 26}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
       spriteID: 7aa4057d81271f0c0800000000000000
       internalID: -4543725098022974809
@@ -238,20 +251,20 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Steampunk_UI_HP_Bars_1
+      name: Steampunk_UI_HP_Bars_2
       rect:
         serializedVersion: 2
-        x: 104
-        y: 773
-        width: 875
-        height: 59
+        x: 103
+        y: 772
+        width: 878
+        height: 61
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
       spriteID: 017427f235cc17090800000000000000
       internalID: -8038419202229254384
@@ -260,20 +273,20 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Steampunk_UI_HP_Bars_4
+      name: Steampunk_UI_HP_Bars_3
       rect:
         serializedVersion: 2
-        x: 1274
-        y: 793
-        width: 489
-        height: 49
+        x: 1261
+        y: 792
+        width: 503
+        height: 51
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
       spriteID: 56efb8bf9b9d24b00800000000000000
       internalID: 811450275692543589
@@ -282,23 +295,23 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Steampunk_UI_HP_Bars_2
+      name: Steampunk_UI_HP_Bars_4
       rect:
         serializedVersion: 2
-        x: 98
-        y: 677
-        width: 874
-        height: 58
+        x: 1277
+        y: 781
+        width: 30
+        height: 7
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 0dc089f22db3c2980800000000000000
-      internalID: -8562403017610490672
+      spriteID: 01abcb965cba282b0800000000000000
+      internalID: -5583711723615110640
       vertices: []
       indices: 
       edges: []
@@ -307,64 +320,20 @@ TextureImporter:
       name: Steampunk_UI_HP_Bars_5
       rect:
         serializedVersion: 2
-        x: 1270
-        y: 687
-        width: 495
-        height: 55
+        x: 87
+        y: 664
+        width: 889
+        height: 75
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: af32a8661846a9850800000000000000
-      internalID: 6384525928684987386
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Steampunk_UI_HP_Bars_15
-      rect:
-        serializedVersion: 2
-        x: 68
-        y: 395
-        width: 98
-        height: 222
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 711a36b8a9d7af180800000000000000
-      internalID: -9080807595922185961
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Steampunk_UI_HP_Bars_16
-      rect:
-        serializedVersion: 2
-        x: 233
-        y: 380
-        width: 186
-        height: 247
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f2c911c46b198a8c0800000000000000
-      internalID: -3987777257890276305
+      spriteID: 0dc089f22db3c2980800000000000000
+      internalID: -8562403017610490672
       vertices: []
       indices: 
       edges: []
@@ -373,20 +342,20 @@ TextureImporter:
       name: Steampunk_UI_HP_Bars_6
       rect:
         serializedVersion: 2
-        x: 722
-        y: 474
-        width: 1080
-        height: 164
+        x: 968
+        y: 722
+        width: 27
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 9726ed10a6a43fb80800000000000000
-      internalID: -8362258263938538887
+      spriteID: 7fa2f771ab18d7ed0800000000000000
+      internalID: -2414631188942607625
       vertices: []
       indices: 
       edges: []
@@ -395,20 +364,20 @@ TextureImporter:
       name: Steampunk_UI_HP_Bars_7
       rect:
         serializedVersion: 2
-        x: 849
-        y: 397
-        width: 902
-        height: 51
+        x: 983
+        y: 704
+        width: 20
+        height: 20
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 529ca9f05cca1e480800000000000000
-      internalID: -8871619828572829403
+      spriteID: af32a8661846a9850800000000000000
+      internalID: 6384525928684987386
       vertices: []
       indices: 
       edges: []
@@ -417,42 +386,20 @@ TextureImporter:
       name: Steampunk_UI_HP_Bars_8
       rect:
         serializedVersion: 2
-        x: 848
-        y: 309
-        width: 902
-        height: 51
+        x: 1256
+        y: 686
+        width: 510
+        height: 57
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 89ea6d71ddc479280800000000000000
-      internalID: -9036669614824182120
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Steampunk_UI_HP_Bars_12
-      rect:
-        serializedVersion: 2
-        x: 28
-        y: 204
-        width: 1031
-        height: 67
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5860a1b7d96fa2be0800000000000000
-      internalID: -1501116369539037563
+      spriteID: e9f1771d01f287d70800000000000000
+      internalID: 9041028001226497950
       vertices: []
       indices: 
       edges: []
@@ -461,42 +408,20 @@ TextureImporter:
       name: Steampunk_UI_HP_Bars_9
       rect:
         serializedVersion: 2
-        x: 1304
-        y: 201
-        width: 374
-        height: 66
+        x: 990
+        y: 696
+        width: 15
+        height: 11
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 5e5caf6e3a5caf2d0800000000000000
-      internalID: -3244063273821485595
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Steampunk_UI_HP_Bars_13
-      rect:
-        serializedVersion: 2
-        x: 30
-        y: 116
-        width: 876
-        height: 40
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 87deb63e557f641b0800000000000000
-      internalID: -5672574732366779016
+      spriteID: d2dedf4031237ca40800000000000000
+      internalID: 5388330536441605421
       vertices: []
       indices: 
       edges: []
@@ -505,42 +430,20 @@ TextureImporter:
       name: Steampunk_UI_HP_Bars_10
       rect:
         serializedVersion: 2
-        x: 1333
-        y: 126
-        width: 306
-        height: 34
+        x: 1273
+        y: 673
+        width: 29
+        height: 7
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: a1475fa1e89ae14b0800000000000000
-      internalID: -5467746469778459622
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Steampunk_UI_HP_Bars_14
-      rect:
-        serializedVersion: 2
-        x: 29
-        y: 26
-        width: 876
-        height: 40
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7c55f22c291e55860800000000000000
-      internalID: 7518163173404267975
+      spriteID: 80661f309d8171f30800000000000000
+      internalID: 4546129669206926856
       vertices: []
       indices: 
       edges: []
@@ -549,20 +452,372 @@ TextureImporter:
       name: Steampunk_UI_HP_Bars_11
       rect:
         serializedVersion: 2
-        x: 1336
-        y: 48
-        width: 306
-        height: 34
+        x: 67
+        y: 393
+        width: 102
+        height: 226
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
+      bones: []
+      spriteID: 711a36b8a9d7af180800000000000000
+      internalID: -9080807595922185961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_HP_Bars_12
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 379
+        width: 224
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2c911c46b198a8c0800000000000000
+      internalID: -3987777257890276305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_HP_Bars_13
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 473
+        width: 1083
+        height: 166
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9726ed10a6a43fb80800000000000000
+      internalID: -8362258263938538887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_HP_Bars_14
+      rect:
+        serializedVersion: 2
+        x: 1852
+        y: 530
+        width: 14
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b717f45bbf7275300800000000000000
+      internalID: 240705067119767931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_HP_Bars_15
+      rect:
+        serializedVersion: 2
+        x: 1893
+        y: 529
+        width: 15
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bd8eb5d5212e5850800000000000000
+      internalID: 6367563369532001717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_HP_Bars_16
+      rect:
+        serializedVersion: 2
+        x: 1906
+        y: 529
+        width: 13
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0cac97a9d8d81c60800000000000000
+      internalID: 7789213984868838411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_HP_Bars_17
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 401
+        width: 7
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3474cb108a6b5140800000000000000
+      internalID: 4709474933800203325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_HP_Bars_18
+      rect:
+        serializedVersion: 2
+        x: 847
+        y: 389
+        width: 905
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 529ca9f05cca1e480800000000000000
+      internalID: -8871619828572829403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_HP_Bars_19
+      rect:
+        serializedVersion: 2
+        x: 831
+        y: 313
+        width: 7
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a62178f21684ce010800000000000000
+      internalID: 1219429181356970602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_HP_Bars_20
+      rect:
+        serializedVersion: 2
+        x: 846
+        y: 301
+        width: 905
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89ea6d71ddc479280800000000000000
+      internalID: -9036669614824182120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_HP_Bars_21
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 207
+        width: 1033
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5860a1b7d96fa2be0800000000000000
+      internalID: -1501116369539037563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_HP_Bars_22
+      rect:
+        serializedVersion: 2
+        x: 1035
+        y: 203
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e5caf6e3a5caf2d0800000000000000
+      internalID: -3244063273821485595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_HP_Bars_23
+      rect:
+        serializedVersion: 2
+        x: 1303
+        y: 200
+        width: 377
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87deb63e557f641b0800000000000000
+      internalID: -5672574732366779016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_HP_Bars_24
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 115
+        width: 879
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1475fa1e89ae14b0800000000000000
+      internalID: -5467746469778459622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_HP_Bars_25
+      rect:
+        serializedVersion: 2
+        x: 1332
+        y: 125
+        width: 308
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c55f22c291e55860800000000000000
+      internalID: 7518163173404267975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_HP_Bars_26
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 25
+        width: 879
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
       bones: []
       spriteID: d40696518a509b410800000000000000
       internalID: 1493230970921902157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_HP_Bars_27
+      rect:
+        serializedVersion: 2
+        x: 1335
+        y: 47
+        width: 308
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ae511b7f858899c0800000000000000
+      internalID: -3920236624334463325
       vertices: []
       indices: 
       edges: []
@@ -571,7 +826,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -582,22 +837,33 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Steampunk_UI_HP_Bars_0: -4435171574924648828
-      Steampunk_UI_HP_Bars_1: -8038419202229254384
-      Steampunk_UI_HP_Bars_10: -5467746469778459622
-      Steampunk_UI_HP_Bars_11: 1493230970921902157
-      Steampunk_UI_HP_Bars_12: -1501116369539037563
-      Steampunk_UI_HP_Bars_13: -5672574732366779016
-      Steampunk_UI_HP_Bars_14: 7518163173404267975
-      Steampunk_UI_HP_Bars_15: -9080807595922185961
-      Steampunk_UI_HP_Bars_16: -3987777257890276305
-      Steampunk_UI_HP_Bars_2: -8562403017610490672
-      Steampunk_UI_HP_Bars_3: -4543725098022974809
-      Steampunk_UI_HP_Bars_4: 811450275692543589
-      Steampunk_UI_HP_Bars_5: 6384525928684987386
-      Steampunk_UI_HP_Bars_6: -8362258263938538887
-      Steampunk_UI_HP_Bars_7: -8871619828572829403
-      Steampunk_UI_HP_Bars_8: -9036669614824182120
-      Steampunk_UI_HP_Bars_9: -3244063273821485595
+      Steampunk_UI_HP_Bars_1: -4543725098022974809
+      Steampunk_UI_HP_Bars_10: 4546129669206926856
+      Steampunk_UI_HP_Bars_11: -9080807595922185961
+      Steampunk_UI_HP_Bars_12: -3987777257890276305
+      Steampunk_UI_HP_Bars_13: -8362258263938538887
+      Steampunk_UI_HP_Bars_14: 240705067119767931
+      Steampunk_UI_HP_Bars_15: 6367563369532001717
+      Steampunk_UI_HP_Bars_16: 7789213984868838411
+      Steampunk_UI_HP_Bars_17: 4709474933800203325
+      Steampunk_UI_HP_Bars_18: -8871619828572829403
+      Steampunk_UI_HP_Bars_19: 1219429181356970602
+      Steampunk_UI_HP_Bars_2: -8038419202229254384
+      Steampunk_UI_HP_Bars_20: -9036669614824182120
+      Steampunk_UI_HP_Bars_21: -1501116369539037563
+      Steampunk_UI_HP_Bars_22: -3244063273821485595
+      Steampunk_UI_HP_Bars_23: -5672574732366779016
+      Steampunk_UI_HP_Bars_24: -5467746469778459622
+      Steampunk_UI_HP_Bars_25: 7518163173404267975
+      Steampunk_UI_HP_Bars_26: 1493230970921902157
+      Steampunk_UI_HP_Bars_27: -3920236624334463325
+      Steampunk_UI_HP_Bars_3: 811450275692543589
+      Steampunk_UI_HP_Bars_4: -5583711723615110640
+      Steampunk_UI_HP_Bars_5: -8562403017610490672
+      Steampunk_UI_HP_Bars_6: -2414631188942607625
+      Steampunk_UI_HP_Bars_7: 6384525928684987386
+      Steampunk_UI_HP_Bars_8: 9041028001226497950
+      Steampunk_UI_HP_Bars_9: 5388330536441605421
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

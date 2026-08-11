@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e5c356a4b721b024daa3ce4df25a2a24
+guid: fc1602518b84ef046bda81c28a4d1cd1
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -19,10 +19,3 @@ TrueTypeFontImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 238976
-  packageName: SteampunkUI
-  packageVersion: 1.0
-  assetPath: Assets/Gentleland/SteampunkUI/Fonts/Arvo/Arvo.ttf
-  uploadId: 559104
