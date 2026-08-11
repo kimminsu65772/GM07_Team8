@@ -7,6 +7,7 @@ using UnityEngine;
 public class AirshipController : MonoBehaviour
 {
     [SerializeField] private AirshipUpgradeManager upgradeManager;
+    [SerializeField] private AirshipUpgradeController upgradeController;
     [SerializeField] private AirshipStatController statController;
     [SerializeField] private AirshipHealth health;
     [SerializeField] private AirshipAttack attack;
@@ -41,10 +42,15 @@ public class AirshipController : MonoBehaviour
     {
         UnbindEvents();
     }
+    
+    // 이걸 씬같은 곳에서 요청하기.
+    // TODO 매니저 완전 삭제 후 데이터 인자 받는거 삭제
     public void Init(AirshipSaveData saveData)
     {
         upgradeManager.Init(saveData);
         statController.Init(upgradeManager.UpgradeState);
+        upgradeController.Init();
+        statController.Init(upgradeController.UpgradeState);
     }
     private void CacheComponents()
     {
@@ -56,6 +62,8 @@ public class AirshipController : MonoBehaviour
 
         if (upgradeManager == null)
             upgradeManager = GetComponent<AirshipUpgradeManager>();
+        if (upgradeController == null)
+            upgradeController = GetComponent<AirshipUpgradeController>();
 
         if (statController == null)
             statController = GetComponent<AirshipStatController>();
@@ -69,6 +77,7 @@ public class AirshipController : MonoBehaviour
     private void BindEvents()
     {
         upgradeManager.OnUpgradeChanged += HandleUpgradeChanged;
+        upgradeController.OnUpgradeChanged += HandleUpgradeChanged;
         statController.OnStatsChanged += HandleStatsChanged;
         health.OnDestroyed += HandleDestroyed;
     }
@@ -76,7 +85,7 @@ public class AirshipController : MonoBehaviour
     private void UnbindEvents()
     {
         upgradeManager.OnUpgradeChanged -= HandleUpgradeChanged;
-
+        upgradeController.OnUpgradeChanged -= HandleUpgradeChanged;
         statController.OnStatsChanged -= HandleStatsChanged;
         health.OnDestroyed -= HandleDestroyed;
     }

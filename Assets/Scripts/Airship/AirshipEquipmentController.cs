@@ -23,8 +23,8 @@ public class AirshipEquipmentController : MonoBehaviour
         if (statController == null)
             statController = GetComponent<AirshipStatController>();
 
-        // ApplyCannonVisual();
-        // ApplyGearVisual();
+        ApplyCannonVisual();
+        ApplyGearVisual();
         ApplyGearBuff();
     }
 
