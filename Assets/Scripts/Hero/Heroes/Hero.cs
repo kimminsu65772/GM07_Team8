@@ -197,6 +197,14 @@ public abstract class Hero : MonoBehaviour, IDamageable
         LvApply(heroLv);
     }
 
+    public void LvSet(int lv)
+    {
+        if (lv >= heroMaxLv) lv = heroMaxLv;
+
+        heroLv = lv;
+        LvApply(heroLv);
+    }
+
     private void LvApply(int lv)
     {
         stat = statTable.GetStat(lv);
