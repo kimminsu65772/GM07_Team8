@@ -1,0 +1,429 @@
+fileFormatVersion: 2
+guid: b2e580888a9ef8247b4eb4362b5a4ba1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6973927914598802740
+    second: Steampunk_UI_Alternative_Colors_2_0
+  - first:
+      213: 7364723915766221615
+    second: Steampunk_UI_Alternative_Colors_2_1
+  - first:
+      213: -3165351047354811190
+    second: Steampunk_UI_Alternative_Colors_2_2
+  - first:
+      213: -2901756460035830365
+    second: Steampunk_UI_Alternative_Colors_2_3
+  - first:
+      213: 2523433363534978046
+    second: Steampunk_UI_Alternative_Colors_2_4
+  - first:
+      213: -4628743648120480564
+    second: Steampunk_UI_Alternative_Colors_2_5
+  - first:
+      213: 4912008270478647685
+    second: Steampunk_UI_Alternative_Colors_2_6
+  - first:
+      213: 466102240273963389
+    second: Steampunk_UI_Alternative_Colors_2_7
+  - first:
+      213: 7421146880627983438
+    second: Steampunk_UI_Alternative_Colors_2_8
+  - first:
+      213: 2083678336397476304
+    second: Steampunk_UI_Alternative_Colors_2_9
+  - first:
+      213: 1875023282170670822
+    second: Steampunk_UI_Alternative_Colors_2_10
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Steampunk_UI_Alternative_Colors_2_0
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 815
+        width: 1043
+        height: 202
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 435a7d62d7e58c060800000000000000
+      internalID: 6973927914598802740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_Alternative_Colors_2_1
+      rect:
+        serializedVersion: 2
+        x: 1451
+        y: 715
+        width: 360
+        height: 217
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2bc114a161c43660800000000000000
+      internalID: 7364723915766221615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_Alternative_Colors_2_2
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 695
+        width: 733
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acc71014ef96214d0800000000000000
+      internalID: -3165351047354811190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_Alternative_Colors_2_3
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 425
+        width: 393
+        height: 161
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ad8edeafd3eab7d0800000000000000
+      internalID: -2901756460035830365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_Alternative_Colors_2_4
+      rect:
+        serializedVersion: 2
+        x: 486
+        y: 430
+        width: 393
+        height: 161
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efb1fdf3649050320800000000000000
+      internalID: 2523433363534978046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_Alternative_Colors_2_5
+      rect:
+        serializedVersion: 2
+        x: 945
+        y: 431
+        width: 393
+        height: 161
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cccde691d2663cfb0800000000000000
+      internalID: -4628743648120480564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_Alternative_Colors_2_6
+      rect:
+        serializedVersion: 2
+        x: 1455
+        y: 436
+        width: 360
+        height: 217
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58129af3f75fa2440800000000000000
+      internalID: 4912008270478647685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_Alternative_Colors_2_7
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 101
+        width: 326
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d791b8c948de77600800000000000000
+      internalID: 466102240273963389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_Alternative_Colors_2_8
+      rect:
+        serializedVersion: 2
+        x: 538
+        y: 104
+        width: 326
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4444ddd4c53df660800000000000000
+      internalID: 7421146880627983438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_Alternative_Colors_2_9
+      rect:
+        serializedVersion: 2
+        x: 929
+        y: 104
+        width: 326
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d1062b3866baec10800000000000000
+      internalID: 2083678336397476304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steampunk_UI_Alternative_Colors_2_10
+      rect:
+        serializedVersion: 2
+        x: 1456
+        y: 175
+        width: 360
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6eeae57adbb650a10800000000000000
+      internalID: 1875023282170670822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Steampunk_UI_Alternative_Colors_2_0: 6973927914598802740
+      Steampunk_UI_Alternative_Colors_2_1: 7364723915766221615
+      Steampunk_UI_Alternative_Colors_2_10: 1875023282170670822
+      Steampunk_UI_Alternative_Colors_2_2: -3165351047354811190
+      Steampunk_UI_Alternative_Colors_2_3: -2901756460035830365
+      Steampunk_UI_Alternative_Colors_2_4: 2523433363534978046
+      Steampunk_UI_Alternative_Colors_2_5: -4628743648120480564
+      Steampunk_UI_Alternative_Colors_2_6: 4912008270478647685
+      Steampunk_UI_Alternative_Colors_2_7: 466102240273963389
+      Steampunk_UI_Alternative_Colors_2_8: 7421146880627983438
+      Steampunk_UI_Alternative_Colors_2_9: 2083678336397476304
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

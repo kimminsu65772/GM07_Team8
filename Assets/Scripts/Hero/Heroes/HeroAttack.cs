@@ -7,6 +7,8 @@ public class HeroAttack : MonoBehaviour
     private bool isAttacking;
     private bool canAttack;
     private float attackTimer;
+
+    [SerializeField] private GameObject projectile;
     
     public bool IsAttacking => isAttacking;
     public bool CanAttack => canAttack;
@@ -22,16 +24,15 @@ public class HeroAttack : MonoBehaviour
     private void Update()
     {
         attackTimer += Time.deltaTime;
-
     }
 
-    public void Attack(GameObject enemy)
+    public void MeleeAttack(GameObject enemy)
     {
-        float criRan = Random.Range(1f, 100f);
-        float damage = hero.HeroAtk; // 적 방어력 적용
-
-        if (attackTimer >= hero.HeroAttackTime && !isAttacking)
+        if (attackTimer >= hero.HeroAttackTime && !isAttacking && hero.Formation == HeroLocationEnum.Front)
         {
+            float criRan = Random.Range(1f, 100f);
+            float damage = hero.HeroAtk; // 적 방어력 적용
+
             isAttacking = true;
             attackTimer = 0f;
 
@@ -43,6 +44,29 @@ public class HeroAttack : MonoBehaviour
             // 공격 적용, 치명타 적용
             Debug.Log(gameObject.name + "의 공격, 피해량 : " + damage);
         }
+    }
+
+    public void RangeAttack(GameObject enemy)
+    {
+        float criRan = Random.Range(1f, 100f);
+        float damage = hero.HeroAtk; // 적 방어력 적용
+
+        isAttacking = true;
+        attackTimer = 0f;
+
+        vfx.PlayAttackEffect();
+        // SFX 적용
+
+        if (criRan <= hero.HeroCriChance) damage *= 2f;
+
+        // 공격 적용, 치명타 적용
+        Debug.Log(gameObject.name + "의 공격, 피해량 : " + damage);
+    }
+
+    private void ThrowProjectile(Transform enemy)
+    {
+        GameObject projec = Instantiate(projectile, transform.position, Quaternion.identity);
+        
     }
 
     public void StopIsAttacking()

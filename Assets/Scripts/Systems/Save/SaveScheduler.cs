@@ -6,7 +6,29 @@ using Newtonsoft.Json;
 
 public class SaveScheduler : MonoBehaviour
 {
-    public static SaveScheduler Instance { get; private set; }
+    private static SaveScheduler instance;
+
+    public static SaveScheduler Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                SaveScheduler scheduler = FindFirstObjectByType<SaveScheduler>();
+                if (scheduler == null)
+                {
+                    GameObject obj = new GameObject("SaveScheduler");
+                    instance = obj.AddComponent<SaveScheduler>();
+                }
+                else
+                {
+                    instance = scheduler;
+                }
+            }
+
+            return instance;
+        }
+    }
 
     [SerializeField, Min(1f)] private float autoSaveInterval = 30;
     [SerializeField, Min(0f)] private float soonToSaveDelay = 5;
@@ -29,13 +51,13 @@ public class SaveScheduler : MonoBehaviour
     {
         schedulerCTS = new CancellationTokenSource();
 
-        if (Instance != null && Instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
             return;
         }
 
-        Instance = this;
+        instance = this;
         DontDestroyOnLoad(gameObject);
     }
     private void Start()
