@@ -28,7 +28,9 @@ public class HeroAttack : MonoBehaviour
 
     public void MeleeAttack(GameObject enemy)
     {
-        if (attackTimer >= hero.HeroAttackTime && !isAttacking && hero.Formation == HeroLocationEnum.Front)
+        if (hero.Location != HeroLocationEnum.Front) return;
+
+        if (attackTimer >= hero.HeroAttackTime && !isAttacking)
         {
             float criRan = Random.Range(1f, 100f);
             float damage = hero.HeroAtk; // 적 방어력 적용
@@ -48,25 +50,31 @@ public class HeroAttack : MonoBehaviour
 
     public void RangeAttack(GameObject enemy)
     {
-        float criRan = Random.Range(1f, 100f);
-        float damage = hero.HeroAtk; // 적 방어력 적용
+        if (hero.Location != HeroLocationEnum.Back) return;
 
-        isAttacking = true;
-        attackTimer = 0f;
+        if (attackTimer >= hero.HeroAttackTime && !isAttacking)
+        {
+            float criRan = Random.Range(1f, 100f);
+            float damage = hero.HeroAtk; // 적 방어력 적용
 
-        vfx.PlayAttackEffect();
-        // SFX 적용
+            isAttacking = true;
+            attackTimer = 0f;
 
-        if (criRan <= hero.HeroCriChance) damage *= 2f;
+            vfx.PlayAttackEffect();
+            // SFX 적용
 
-        // 공격 적용, 치명타 적용
-        Debug.Log(gameObject.name + "의 공격, 피해량 : " + damage);
+            if (criRan <= hero.HeroCriChance) damage *= 2f;
+
+            // 공격 적용, 치명타 적용
+            ThrowProjectile(enemy.transform, damage);
+            Debug.Log(gameObject.name + "의 공격, 피해량 : " + damage);
+        }
     }
 
-    private void ThrowProjectile(Transform enemy)
+    private void ThrowProjectile(Transform enemy, float damage)
     {
         GameObject projec = Instantiate(projectile, transform.position, Quaternion.identity);
-        
+        projec.GetComponent<HeroAttackProjectileController>().Init(enemy, damage);
     }
 
     public void StopIsAttacking()

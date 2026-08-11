@@ -16,7 +16,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
     [SerializeField] private float hitRadius;
     [SerializeField] private float attackTime;
 
-    private HeroLocationEnum formation;
+    private HeroLocationEnum location;
     // private HeroAttackTypeEnum attackType;
     protected IHeroStatTable statTable;
 
@@ -78,22 +78,24 @@ public abstract class Hero : MonoBehaviour, IDamageable
         get => attackTime;
         set => attackTime = Mathf.Max(0f, value);
     }
-    public HeroLocationEnum Formation => formation;
+    public HeroLocationEnum Location => location;
     public HeroStateEnum HeroState => heroState;
 
     protected virtual void Awake() { }
+    protected virtual void Skill() { }
 
     protected virtual void Init(int id, string name, float attackTime,
         HeroLocationEnum location)
     {
         heroID = id;
         heroName = name;
-        HeroSaveData heroData = PlayerInfo.Instance.TryGetHeroData(heroName, out heroData) ? heroData : null;
-        HeroLv = heroData.Level;
+        //HeroSaveData heroData = PlayerInfo.Instance.TryGetHeroData(heroName, out heroData) ? heroData : null;
+        //HeroLv = heroData.Level;
+        HeroLv = 1;
         HeroLvManager.Instance.LvApply(HeroLv, this);
         heroCurrentHP = heroMaxHP;
         isDead = false;
-        this.formation = location;
+        this.location = location;
 
         if (name_T != null) name_T.text = heroName;
 
@@ -105,8 +107,8 @@ public abstract class Hero : MonoBehaviour, IDamageable
     public void Update()
     {
         if (targetEnemy == null) SearchEnemy();
-        if (targetEnemy != null && formation == HeroLocationEnum.Front) MoveToEnemy();
-        if (targetEnemy != null && formation == HeroLocationEnum.Back) attack.MeleeAttack(targetEnemy);
+        if (targetEnemy != null && location == HeroLocationEnum.Front) MoveToEnemy();
+        if (targetEnemy != null && location == HeroLocationEnum.Back) attack.RangeAttack(targetEnemy);
 
         ChangeState();
     }
@@ -145,7 +147,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
     private void MoveToEnemy()
     {
-        if (formation == HeroLocationEnum.Back || targetEnemy == null)
+        if (location == HeroLocationEnum.Back || targetEnemy == null)
         {
             isMoving = false;
             return;
@@ -156,12 +158,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         if (direction.sqrMagnitude <= meleeRange * meleeRange) attack.ChangeCanAttack(true);
         else attack.ChangeCanAttack(false);
 
-        if (attack.CanAttack && formation == HeroLocationEnum.Front)
-        {
-            isMoving = false;
-            attack.MeleeAttack(targetEnemy);
-        }
-        else if (attack.CanAttack && formation == HeroLocationEnum.Back)
+        if (attack.CanAttack && location == HeroLocationEnum.Front)
         {
             isMoving = false;
             attack.MeleeAttack(targetEnemy);
@@ -191,6 +188,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
     protected virtual void Die()
     {
         isDead = true;
+        heroState = HeroStateEnum.Die;
     }
 
     private void ChangeState()
@@ -211,7 +209,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
     {
         // 근거리 공격 사거리
         Gizmos.color = Color.red;
-        if (formation == HeroLocationEnum.Front) Gizmos.DrawWireSphere(
+        if (location == HeroLocationEnum.Front) Gizmos.DrawWireSphere(
             new Vector3(transform.position.x, transform.position.y, transform.position.z), meleeRange);
     }
 
