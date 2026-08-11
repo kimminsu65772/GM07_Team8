@@ -88,7 +88,8 @@ public abstract class Hero : MonoBehaviour, IDamageable
     {
         heroID = id;
         heroName = name;
-        //HeroLv = PlayerInfo.Instance.
+        HeroSaveData heroData = PlayerInfo.Instance.TryGetHeroData(heroName, out heroData) ? heroData : null;
+        HeroLv = heroData.Level;
         HeroLvManager.Instance.LvApply(HeroLv, this);
         heroCurrentHP = heroMaxHP;
         isDead = false;
