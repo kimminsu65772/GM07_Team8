@@ -7,13 +7,21 @@ public class HeroLvManager : MonoBehaviour
     {
         get
         {
-            if (instance == null) instance = new HeroLvManager();
+            if (instance == null)
+            {
+                instance = FindFirstObjectByType<HeroLvManager>();
+                if (instance == null)
+                {
+                    GameObject obj = new GameObject("HeroLvManager");
+                    instance = obj.AddComponent<HeroLvManager>();
+                }
+            }
             return instance;
         }
     }
 
     private Hero hero;
-    private int heroMaxLv;
+    private int heroMaxLv = 3;
     private HeroStat stat;
 
     private void Awake()
@@ -29,7 +37,7 @@ public class HeroLvManager : MonoBehaviour
         }
     }
 
-    public void LvUp()
+    public void LvUp(Hero hero)
     {
         // 비용 지불 조건/기능 추가
         if (hero.HeroLv >= heroMaxLv) return;
@@ -38,7 +46,7 @@ public class HeroLvManager : MonoBehaviour
         LvApply(hero.HeroLv, hero);
     }
 
-    public void LvSet(int lv)
+    public void LvSet(int lv, Hero hero)
     {
         if (lv >= heroMaxLv) lv = heroMaxLv;
 
