@@ -49,8 +49,8 @@ public class AirshipSaveData
     public int DefenseLevel { get; set; }
     public int MaxHealthLevel { get; set; }
     public int CriticalLevel { get; set; }
-
-    // 나중에 비행선의 스탯, 장착 아이템, 업그레이드 상태 등까지 저장하는 데이터가 추가될 수 있음.
+    public string EquippedCannonId { get; set; }
+    public string EquippedGearId { get; set; }
 }
 
 /*

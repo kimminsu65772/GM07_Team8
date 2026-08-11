@@ -22,7 +22,9 @@ public class SaveDataFactory
                 AttackLevel = 0,
                 DefenseLevel = 0,
                 MaxHealthLevel = 0,
-                CriticalLevel = 0
+                CriticalLevel = 0,
+                EquippedCannonId = "NormalCannon",
+                EquippedGearId = "MaxHpGear"
             },
             Heroes = CreateInitialHeroSaveData(heroCatalog),
             HeroFormation = new HeroFormationSaveData
