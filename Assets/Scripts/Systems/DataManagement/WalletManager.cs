@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WalletManager : MonoBehaviour
@@ -20,20 +19,7 @@ public class WalletManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
-        //[UI담당 수정] 초기화가 아직 안 되어 있다면, 테스트용 기본 데이터를 스스로 넣어 초기화합니다.
-        if (!isInitialized)
-        {
-            WalletSaveData defaultWalletData = new WalletSaveData();
-            defaultWalletData.Currencies = new Dictionary<CurrencyType, CurrencySaveData>
-        {
-            { CurrencyType.Gold, new CurrencySaveData { Amount = 10000 } },
-            { CurrencyType.Gear, new CurrencySaveData { Amount = 100 } },
-            { CurrencyType.Gems, new CurrencySaveData { Amount = 50 } }
-        };
-
-            Initialize(defaultWalletData);
-        }
+        DontDestroyOnLoad(gameObject);     
     }
 
     public void Initialize(WalletSaveData walletData)
@@ -72,12 +58,6 @@ public class WalletManager : MonoBehaviour
             throw new ArgumentException("추가할 금액은 음수일 수 없습니다.");
         }
         currency.Amount += amount;
-
-        //[UI담당 수정] 재화가 늘어났을 때 UI 매니저에 즉시 반영 요청
-        if (CurrencyUIManager.Instance != null)
-        {
-            CurrencyUIManager.Instance.UpdateCurrencyUI(type);
-        }
         return true;
     }
 
@@ -98,12 +78,6 @@ public class WalletManager : MonoBehaviour
             return false;
         }
         currency.Amount -= amount;
-
-        //[UI담당 수정] 재화가 줄어들었을 때 UI 매니저에 즉시 반영 요청
-        if (CurrencyUIManager.Instance != null)
-        {
-            CurrencyUIManager.Instance.UpdateCurrencyUI(type);
-        }
         return true;
     }
 
