@@ -7,10 +7,11 @@ public class GachaSystem : MonoBehaviour
 {
     [Header("UI 연결")]
     [SerializeField] private TextMeshProUGUI resultText;   
-    [SerializeField] private TextMeshProUGUI goldText;   
-    [Header("재화 설정")]
-    private int playerGold = 10000;                        // 보유 골드 (테스트용)
-    private int gachaCost = 1000;                          // 1회 뽑기 비용
+    [SerializeField] private TextMeshProUGUI goldText;
+    [SerializeField] private GachaResultDisplay resultDisplay;
+    [Header("뽑기 비용 설정")]
+    [SerializeField] private CurrencyCost singlePullCost = new CurrencyCost(CurrencyType.Gold, 1000);
+    [SerializeField] private CurrencyCost tenPullCost = new CurrencyCost(CurrencyType.Gold, 10000);
 
     // 뽑기 상품 데이터 구조체
     [System.Serializable]
@@ -39,50 +40,31 @@ public class GachaSystem : MonoBehaviour
     //1회 뽑기 버튼에 연결할 함수
     public void PullGachaSingle()
     {
-        Debug.Log("뽑기 버튼 클릭됨! 함수 진입 성공!");
-        if (playerGold < gachaCost)
+        if (!WalletManager.Instance.TrySpend(singlePullCost.Type, singlePullCost.Amount))
         {
-            if (resultText != null) resultText.text = "재화(골드)가 부족합니다!";
+            Debug.Log("재화가 부족합니다.");
             return;
         }
-
-        playerGold -= gachaCost;
-        string pulledItem = GetRandomItem();
-
-        if (resultText != null)
-        {
-            resultText.text = $"🎉 획득 아이템:\n<color=yellow>{pulledItem}</color>";
-        }
-
+        string item = GetRandomItem();
         UpdateUI();
+        if (resultDisplay != null)
+            resultDisplay.ShowResults(new List<string> { item });
     }
 
     //10연차 뽑기 버튼에 연결할 함수
     public void PullGachaTen()
     {
-        int totalCost = gachaCost * 10;
-        if (playerGold < totalCost)
+        if (!WalletManager.Instance.TrySpend(tenPullCost.Type, tenPullCost.Amount))
         {
-            if (resultText != null) resultText.text = "재화가 부족하여 10연차를 할 수 없습니다!";
+            Debug.Log("재화가 부족합니다.");
             return;
         }
-
-        playerGold -= totalCost;
-        List<string> pulledItems = new List<string>();
-
-        for (int i = 0; i < 10; i++)
-        {
-            pulledItems.Add(GetRandomItem());
-        }
-
-        if (resultText != null)
-        {
-            resultText.text = "🎉 10연차 결과:\n" + string.Join("\n", pulledItems);
-        }
-
+        List<string> items = new List<string>();
+        for (int i = 0; i < 10; i++) items.Add(GetRandomItem());
         UpdateUI();
+        if (resultDisplay != null)
+            resultDisplay.ShowResults(items);
     }
-
     // 확률에 따라 아이템을 추첨
     private string GetRandomItem()
     {
@@ -106,12 +88,15 @@ public class GachaSystem : MonoBehaviour
                 return item.itemName;
             }
         }
-
         return gachaPool[0].itemName; 
     }
 
     private void UpdateUI()
     {
-        if (goldText != null) goldText.text = $"보유 골드: {playerGold} G";
+        if (goldText != null && WalletManager.Instance != null)
+        {
+            // CurrencyType.Gold를 넣어 현재 보유한 골드 표시
+            goldText.text = $"{WalletManager.Instance.GetAmount(CurrencyType.Gold)}";
+        }
     }
 }
