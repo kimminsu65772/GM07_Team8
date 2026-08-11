@@ -6,18 +6,18 @@ public class MapChanger : MonoBehaviour
 
     public void NextMap()
     {
-        StageProgressManager.Instance.SetCurrentStage(StageProgressManager.Instance.CurrentStage + 1);
-        battleManager.SetUpStage(StageProgressManager.Instance.CurrentStage);
-        SaveScheduler.Instance.RequestSave(SavePolicy.Soon);
+        int nextStage = PlayerInfo.Instance.CurrentStage + 1;
+        PlayerInfo.Instance.SetCurrentStage(nextStage);
+        battleManager.SetUpStage(nextStage);
     }
 
     public void PreviousMap()
     {
-        StageProgressManager.Instance.SetCurrentStage(StageProgressManager.Instance.CurrentStage - 1);
-        if (StageProgressManager.Instance.CurrentStage >= 1)
+        int previousStage = PlayerInfo.Instance.CurrentStage - 1;
+        if (previousStage >= 1)
         {
-            battleManager.SetUpStage(StageProgressManager.Instance.CurrentStage);
-            SaveScheduler.Instance.RequestSave(SavePolicy.Soon);
+            PlayerInfo.Instance.SetCurrentStage(previousStage);
+            battleManager.SetUpStage(previousStage);
         }
         else
         {

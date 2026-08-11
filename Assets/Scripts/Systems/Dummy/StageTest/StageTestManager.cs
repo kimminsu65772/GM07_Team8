@@ -11,6 +11,7 @@ public class StageTestManager : MonoBehaviour
 
     [Header("Stage")]
     [SerializeField] private StageCatalog stageCatalog;
+    public int LastStage => stageCatalog == null ? 0 : stageCatalog.StageCount;
 
     [Header("Spawn")]
     [SerializeField] private Transform spawnPoint;
