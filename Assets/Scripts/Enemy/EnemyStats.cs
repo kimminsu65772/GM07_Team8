@@ -1,3 +1,4 @@
+using System.Collections;
 using System;
 using UnityEngine;
 
@@ -29,13 +30,16 @@ public class EnemyStats : MonoBehaviour
     public event Action<EnemyStats> EnemyDamaged;
 
     // 적의 체력이 0이 되어 사망했을 때 발생한다.
-    public event Action<EnemyStats> EnemyDied;
+    public event Action<EnemyStats> EnemyDied; 
+    // 사망 모션이 끝나고 시체가 제거될 때 발생한다.
+    // StageManager는 이 이벤트까지 기다린 후 다음 웨이브를 진행한다.
+    public event Action<EnemyStats> EnemyDeathCompleted;
 
     public int CurrentHealth => currentHealth;
 
     public int MaxHealth =>
         enemyData != null ? enemyData.MaxHealth : 0;
-
+     
     public int AttackPower =>
         enemyData != null ? enemyData.AttackPower : 0;
 
@@ -82,10 +86,23 @@ public class EnemyStats : MonoBehaviour
 
     private void Die()
     {
-        // StageManager와 애니메이션 컨트롤러에 사망 사실을 알린다.
+        // 논리적인 사망 처리는 HP가 0이 된 즉시 알린다.
+        // 이동·공격 중단과 사망 애니메이션은 이 이벤트를 사용한다.
         EnemyDied?.Invoke(this);
 
-        // 즉시 제거하지 않고 사망 애니메이션 재생 시간을 확보한다.
-        Destroy(gameObject, deathDestroyDelay);
+        StartCoroutine(CompleteDeath());
     }
+
+    private IEnumerator CompleteDeath()
+    {
+        // 사망 모션이 보이는 동안 오브젝트를 유지한다.
+        yield return new WaitForSeconds(deathDestroyDelay);
+
+        // 시체 제거가 완료될 시점을 StageManager에 알린다.
+        EnemyDeathCompleted?.Invoke(this);
+
+        Destroy(gameObject);
+    }
+
+   
 }
