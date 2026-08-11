@@ -72,7 +72,7 @@ public class BattleEventHandler : MonoBehaviour
         battleManager.SetUpStage(failedStageNumber);
 
         // UI한테 실패 이유를 알려주면 해당 메시지를 UI에서 표시하도록?
-        // 혹은 enum 타입으로 실패 이유를 정의해서 UI에서 해당 enum에 맞는 메시지를 표시하도록 할 수도 있을듯
+        // 혹은 enum 타입으로 실패 이유를 정의해서 UI에서 해당 enum에 맞는 메시지를 표시하도록 할 수도 있을듯.
 
     }
 }
