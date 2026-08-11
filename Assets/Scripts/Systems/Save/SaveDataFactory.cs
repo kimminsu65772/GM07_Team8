@@ -7,7 +7,7 @@ using System.Collections.Generic;
 /// </summary>
 public class SaveDataFactory
 {
-    public static PlayerSaveData CreateNewData()
+    public static PlayerSaveData CreateNewData(HeroCatalog heroCatalog = null)
     {
         PlayerSaveData newData = new PlayerSaveData
         {
@@ -19,16 +19,22 @@ public class SaveDataFactory
             },
             Airship = new AirshipSaveData
             {
-                AttackLevel = 1,
-                DefenseLevel = 1,
-                MaxHealthLevel = 1,
-                CriticalLevel = 1
+                AttackLevel = 0,
+                DefenseLevel = 0,
+                MaxHealthLevel = 0,
+                CriticalLevel = 0
             },
-            Heroes = new Dictionary<string, HeroSaveData>
+            Heroes = CreateInitialHeroSaveData(heroCatalog),
+            HeroFormation = new HeroFormationSaveData
             {
-                { "BaseKnight", new HeroSaveData { Level = 1, IsOwned = true, FormationType = FormationType.Frontline, FormationIndex = 0 } },
-                { "BaseArcher", new HeroSaveData { Level = 1, IsOwned = true, FormationType = FormationType.Backline, FormationIndex = 0 } },
-                { "BaseThief", new HeroSaveData { Level = 1, IsOwned = false, FormationType = FormationType.None, FormationIndex = -1 } }
+                Slots = new List<HeroSaveSlot>
+                {
+                    new HeroSaveSlot { SlotIndex = 0, HeroName = null },
+                    new HeroSaveSlot { SlotIndex = 1, HeroName = null },
+                    new HeroSaveSlot { SlotIndex = 2, HeroName = null },
+                    new HeroSaveSlot { SlotIndex = 3, HeroName = null },
+                    new HeroSaveSlot { SlotIndex = 4, HeroName = null }
+                }
             },
             StageProgress = new StageProgressSaveData
             {
@@ -49,6 +55,27 @@ public class SaveDataFactory
         };
 
         return newData;
+    }
+
+    private static Dictionary<string, HeroSaveData> CreateInitialHeroSaveData(HeroCatalog heroCatalog)
+    {
+        Dictionary<string, HeroSaveData> heroes = new Dictionary<string, HeroSaveData>();
+
+        if (heroCatalog == null)
+        {
+            return heroes;
+        }
+
+        foreach (HeroEntry entry in heroCatalog.GetDefaultOwnedHeroEntries())
+        {
+            heroes[entry.HeroName] = new HeroSaveData
+            {
+                Level = entry.DefaultLevel,
+                IsOwned = true
+            };
+        }
+
+        return heroes;
     }
 }
 

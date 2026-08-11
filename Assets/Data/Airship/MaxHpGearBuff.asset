@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6bb71851fb85fbe4690a78be78724f27, type: 3}
-  m_Name: New Airship Buff Data
+  m_Name: MaxHpGearBuff
   m_EditorClassIdentifier: Assembly-CSharp::AirshipBuffData
-  buffName: 
+  buffName: MaxHp
   duration: -1
   modifiers:
-  - statType: 0
-    modifierType: 0
-    value: 0
+  - statType: 2
+    modifierType: 2
+    value: 4
