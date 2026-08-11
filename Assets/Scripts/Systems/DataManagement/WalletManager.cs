@@ -19,7 +19,7 @@ public class WalletManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);     
     }
 
     public void Initialize(WalletSaveData walletData)
