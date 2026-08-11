@@ -10,13 +10,6 @@ public enum CurrencyType
     // 나중에 추가될 재화 타입이 있을 수 있음.
 }
 
-public enum FormationType
-{
-    None = -1, // 미배치 상태
-    Frontline = 0,
-    Backline = 1,
-}
-
 /// <summary>
 /// SaveData.cs 파일은 플레이어의 종합적인 세이브 데이터와
 /// 해당 데이터를 구성하는 여러 하위 데이터 구조를 정의해놓은 파일이다.
@@ -33,6 +26,8 @@ public class  PlayerSaveData
     public PlayerProfileSaveData Profile { get; set; }
     public AirshipSaveData Airship { get; set; }
     public Dictionary<string, HeroSaveData> Heroes { get; set; }
+
+    public HeroFormationSaveData HeroFormation { get; set; }
     public StageProgressSaveData StageProgress { get; set; }
     // 플레이어가 보유한 재화 묶음 데이터를 저장하는 데이터
     public WalletSaveData Wallet { get; set; }
@@ -65,14 +60,23 @@ public class AirshipSaveData
  * 
  */
 [Serializable]
-public class  HeroSaveData
+public class HeroSaveData
 {
     public int Level { get; set; }
     public bool IsOwned { get; set; }
-    // 캐릭터의 진형 배치 타입을 저장하는 데이터 (미배치 시 None)
-    public FormationType FormationType { get; set; }
-    // 캐릭터가 배치된 위치를 저장하는 데이터 (미배치 시 -1)
-    public int FormationIndex { get; set; }
+}
+
+[Serializable]
+public class HeroFormationSaveData
+{
+    public List<HeroSaveSlot> Slots { get; set; }
+}
+
+[Serializable]
+public class HeroSaveSlot
+{
+    public int SlotIndex { get; set; }
+    public string HeroName { get; set; }
 }
 
 [Serializable]

@@ -791,6 +791,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e43a5d206f6e43f4d8a7550179e12e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameBootStrapper
+  heroCatalog: {fileID: 11400000, guid: f1c7fc4c864c0734394d02b6c8445009, type: 2}
 --- !u!4 &1908726534
 Transform:
   m_ObjectHideFlags: 0
