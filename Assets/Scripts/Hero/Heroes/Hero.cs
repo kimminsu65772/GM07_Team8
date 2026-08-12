@@ -156,7 +156,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
     private void MoveToEnemy()
     {
-        if (location == HeroLocationEnum.Back || targetEnemy == null)
+        if (location == HeroLocationEnum.Back || targetEnemy == null || IsDead)
         {
             isMoving = false;
             return;
