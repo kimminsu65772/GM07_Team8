@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2952219784427838897}
   - component: {fileID: 4053107649118390252}
   - component: {fileID: 8026615743004439352}
+  - component: {fileID: -8656935154043448609}
   m_Layer: 6
   m_Name: TestEnemy
   m_TagString: Untagged
@@ -246,6 +247,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAnimationController
   enemyAnimator: {fileID: 0}
   movementThreshold: 0.01
+--- !u!114 &-8656935154043448609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7931180812232907860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cfffa05328e5f54fa3305220776fefb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyTargetSelector
+  airshipTarget: {fileID: 0}
+  heroLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1001 &5974092406387850647
 PrefabInstance:
   m_ObjectHideFlags: 0

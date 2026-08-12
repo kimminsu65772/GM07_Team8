@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 843d03ef8be16da4d96629804d86d7f3
+guid: 9369e14df4d03444ea73aee15d93cf36
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -19,10 +19,3 @@ TrueTypeFontImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 238976
-  packageName: SteampunkUI
-  packageVersion: 1.0
-  assetPath: Assets/Gentleland/SteampunkUI/Fonts/BebasNeue/BebasNeue.ttf
-  uploadId: 559104

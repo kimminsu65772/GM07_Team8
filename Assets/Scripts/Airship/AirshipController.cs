@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class AirshipController : MonoBehaviour
 {
-    [SerializeField] private AirshipUpgradeManager upgradeManager;
+    [SerializeField] private AirshipUpgradeController upgradeController;
     [SerializeField] private AirshipStatController statController;
     [SerializeField] private AirshipHealth health;
     [SerializeField] private AirshipAttack attack;
@@ -25,26 +25,16 @@ public class AirshipController : MonoBehaviour
         stateMachine.Init(stateMachine.IdleState);
     }
 
-    private void Start()
-    {
-        // TODO 부트스트랩 생기고 데이터 관리가 생기면 이 테스트용 init은 삭제
-        Init(new AirshipSaveData
-        {
-            AttackLevel = 3,
-            DefenseLevel = 2,
-            MaxHealthLevel = 5,
-            CriticalLevel = 1
-        });
-    }
-
     private void OnDestroy()
     {
         UnbindEvents();
     }
-    public void Init(AirshipSaveData saveData)
+    
+    // 이걸 씬같은 곳에서 요청하기.
+    public void Init()
     {
-        upgradeManager.Init(saveData);
-        statController.Init(upgradeManager.UpgradeState);
+        upgradeController.Init();
+        statController.Init(upgradeController.UpgradeState);
     }
     private void CacheComponents()
     {
@@ -53,9 +43,9 @@ public class AirshipController : MonoBehaviour
 
         if (enemyChecker == null)
             enemyChecker = GetComponent<AirshipEnemyChecker>();
-
-        if (upgradeManager == null)
-            upgradeManager = GetComponent<AirshipUpgradeManager>();
+        
+        if (upgradeController == null)
+            upgradeController = GetComponent<AirshipUpgradeController>();
 
         if (statController == null)
             statController = GetComponent<AirshipStatController>();
@@ -68,15 +58,14 @@ public class AirshipController : MonoBehaviour
     }
     private void BindEvents()
     {
-        upgradeManager.OnUpgradeChanged += HandleUpgradeChanged;
+        upgradeController.OnUpgradeChanged += HandleUpgradeChanged;
         statController.OnStatsChanged += HandleStatsChanged;
         health.OnDestroyed += HandleDestroyed;
     }
 
     private void UnbindEvents()
     {
-        upgradeManager.OnUpgradeChanged -= HandleUpgradeChanged;
-
+        upgradeController.OnUpgradeChanged -= HandleUpgradeChanged;
         statController.OnStatsChanged -= HandleStatsChanged;
         health.OnDestroyed -= HandleDestroyed;
     }
@@ -97,7 +86,6 @@ public class AirshipController : MonoBehaviour
     private void Update()
     {
         stateMachine.Tick();
-        Debug.Log(stateMachine.CurrentState.StateType.ToString());
     }
     public void Respawn()
     {

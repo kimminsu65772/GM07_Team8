@@ -19,6 +19,26 @@ public class AirshipUpgradeState
         MaxHealthLevel = maxHealthLevel;
         CriticalLevel = criticalLevel;
     }
+    public int GetLevel(AirshipStatType statType)
+    {
+        switch (statType)
+        {
+            case AirshipStatType.Attack:
+                return AttackLevel;
+
+            case AirshipStatType.Defense:
+                return DefenseLevel;
+
+            case AirshipStatType.MaxHealth:
+                return MaxHealthLevel;
+
+            case AirshipStatType.CriticalChance:
+                return CriticalLevel;
+
+            default:
+                return -1;
+        }
+    }
 
     public void IncreaseStatLevel(AirshipStatType statType)
     {

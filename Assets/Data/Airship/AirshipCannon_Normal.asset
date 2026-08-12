@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1841aacbefae6034cbbe24e1f586365f, type: 3}
   m_Name: AirshipCannon_Normal
   m_EditorClassIdentifier: Assembly-CSharp::AirshipCannonData
-  id: NomalCannon
+  id: NormalCannon
   displayName: "\uAE30\uBCF8\uD0C4"
   uiImage: {fileID: 0}
   barrelImage: {fileID: 9155032272961980998, guid: 00d1b0819e036944b8faa28cef37fe2b, type: 3}

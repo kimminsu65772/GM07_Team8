@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb71851fb85fbe4690a78be78724f27, type: 3}
   m_Name: MaxHpGearBuff
   m_EditorClassIdentifier: Assembly-CSharp::AirshipBuffData
-  buffName: MaxHp
+  buffName: MaxHpBuff
   duration: -1
   modifiers:
   - statType: 2

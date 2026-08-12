@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BattleEventHandler : MonoBehaviour
@@ -30,27 +29,29 @@ public class BattleEventHandler : MonoBehaviour
     {
         // 적이 처치되면 재화 획득 
         // TODO: 스테이지별로 재화 획득량을 다르게 설정할 수 있도록 수정 필요
-        WalletManager.Instance.TryAdd(CurrencyType.Gold, 100);
+        PlayerInfo.Instance.AddCurrency(CurrencyType.Gold, 100);
     }
 
     private void HandleStageCompleted(int clearedStageNumber)
     {
-        bool isAlreadyCleard = clearedStageNumber <= StageProgressManager.Instance.MaxClearedStage;
+        // 매번 PlayerInfo.Instance를 호출하지 않도록 미리 변수에 할당
+        PlayerInfo playerInfo = PlayerInfo.Instance;
+        bool isAlreadyCleard = clearedStageNumber <= playerInfo.MaxClearedStage;
 
         //  첫 클리어시 보상 지급
         if (!isAlreadyCleard)
         {
             int rewardAmount = 100 * clearedStageNumber;
-            WalletManager.Instance.TryAdd(CurrencyType.Gold, rewardAmount);
-            WalletManager.Instance.TryAdd(CurrencyType.Gems, rewardAmount / 10);
-            StageProgressManager.Instance.TryUpdateMaxClearedStage(clearedStageNumber);
+            playerInfo.AddCurrency(CurrencyType.Gold, rewardAmount);
+            playerInfo.AddCurrency(CurrencyType.Gems, rewardAmount / 10);
+            playerInfo.TryUpdateMaxClearedStage(clearedStageNumber);
         }
 
         int nextStageNumber;
 
-        if (clearedStageNumber == StageProgressManager.Instance.LastStage)
+        if (clearedStageNumber == stageTestManager.LastStage)
         {
-            nextStageNumber = StageProgressManager.Instance.LastStage;
+            nextStageNumber = stageTestManager.LastStage;
         }
         else if (isAlreadyCleard)
         {
@@ -60,9 +61,8 @@ public class BattleEventHandler : MonoBehaviour
         {
             nextStageNumber = clearedStageNumber + 1;
         }
-        StageProgressManager.Instance.SetCurrentStage(nextStageNumber);
+        playerInfo.SetCurrentStage(nextStageNumber);
         stageTransitionController.StartTransition(nextStageNumber);
-        SaveScheduler.Instance.RequestSave(SavePolicy.Soon);
     }
 
     private void HandleStageFailed(int failedStageNumber, string failedReason)
@@ -72,7 +72,7 @@ public class BattleEventHandler : MonoBehaviour
         battleManager.SetUpStage(failedStageNumber);
 
         // UI한테 실패 이유를 알려주면 해당 메시지를 UI에서 표시하도록?
-        // 혹은 enum 타입으로 실패 이유를 정의해서 UI에서 해당 enum에 맞는 메시지를 표시하도록 할 수도 있을듯
+        // 혹은 enum 타입으로 실패 이유를 정의해서 UI에서 해당 enum에 맞는 메시지를 표시하도록 할 수도 있을듯.
 
     }
 }

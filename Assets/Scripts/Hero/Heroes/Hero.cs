@@ -18,7 +18,6 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
     private HeroLocationEnum location;
     // private HeroAttackTypeEnum attackType;
-    private int heroMaxLv = 3;
     protected IHeroStatTable statTable;
 
     [SerializeField] private TMP_Text name_T;
@@ -32,8 +31,6 @@ public abstract class Hero : MonoBehaviour, IDamageable
     private float searchRange = 50f;
     private float meleeRange = 1.3f;
     
-
-    protected HeroStat stat;
     protected HeroStateEnum heroState;
     private HeroEquipmentManager heroEquip;
     private HeroAttack attack;
@@ -81,16 +78,21 @@ public abstract class Hero : MonoBehaviour, IDamageable
         get => attackTime;
         set => attackTime = Mathf.Max(0f, value);
     }
+    public HeroLocationEnum Location => location;
     public HeroStateEnum HeroState => heroState;
 
     protected virtual void Awake() { }
+    protected virtual void Skill() { }
 
-    protected virtual void Init(int id, float attackTime,
+    protected virtual void Init(int id, string name, float attackTime,
         HeroLocationEnum location)
     {
         heroID = id;
+        heroName = name;
+        //HeroSaveData heroData = PlayerInfo.Instance.TryGetHeroData(heroName, out heroData) ? heroData : null;
+        //HeroLv = heroData.Level;
         HeroLv = 1;
-        LvApply(heroLv);
+        HeroLvManager.Instance.LvApply(HeroLv, this);
         heroCurrentHP = heroMaxHP;
         isDead = false;
         this.location = location;
@@ -106,7 +108,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
     {
         if (targetEnemy == null) SearchEnemy();
         if (targetEnemy != null && location == HeroLocationEnum.Front) MoveToEnemy();
-        if (targetEnemy != null && location == HeroLocationEnum.Back) attack.Attack(targetEnemy);
+        if (targetEnemy != null && location == HeroLocationEnum.Back) attack.RangeAttack(targetEnemy);
 
         ChangeState();
     }
@@ -139,6 +141,12 @@ public abstract class Hero : MonoBehaviour, IDamageable
             }
         }
 
+        if (nearestEnemy == null)
+        {
+            targetEnemy = null;
+            return;
+        }
+
         targetEnemy = nearestEnemy.gameObject;
         Debug.Log($"{gameObject.name}의 목표 : {targetEnemy.name}");
     }
@@ -156,10 +164,10 @@ public abstract class Hero : MonoBehaviour, IDamageable
         if (direction.sqrMagnitude <= meleeRange * meleeRange) attack.ChangeCanAttack(true);
         else attack.ChangeCanAttack(false);
 
-        if (attack.CanAttack)
+        if (attack.CanAttack && location == HeroLocationEnum.Front)
         {
             isMoving = false;
-            attack.Attack(targetEnemy);
+            attack.MeleeAttack(targetEnemy);
         }
         else
         {
@@ -186,32 +194,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
     protected virtual void Die()
     {
         isDead = true;
-    }
-
-    // 비용(매개변수) 지불 추가
-    public void LvUp()
-    {
-        if (heroLv >= heroMaxLv) return;
-
-        heroLv++;
-        LvApply(heroLv);
-    }
-
-    public void LvSet(int lv)
-    {
-        if (lv >= heroMaxLv) lv = heroMaxLv;
-
-        heroLv = lv;
-        LvApply(heroLv);
-    }
-
-    private void LvApply(int lv)
-    {
-        stat = statTable.GetStat(lv);
-
-        HeroMaxHP = stat.MaxHP;
-        HeroAtk = stat.Atk;
-        HeroDef = stat.Def;
+        heroState = HeroStateEnum.Die;
     }
 
     private void ChangeState()
@@ -252,5 +235,10 @@ public abstract class Hero : MonoBehaviour, IDamageable
             heroEquip.CurrentBodyEquip,
             heroEquip.CurrentAccEquip
         };
+    }
+
+    public HeroStat GetStat(int lv)
+    {
+        return statTable.GetStat(lv);
     }
 }

@@ -19,6 +19,7 @@ public class StageManager : MonoBehaviour
     [SerializeField] private bool isBossTimeOver;
     [SerializeField] private bool isAirshipDestroyed;
     [SerializeField] private bool isStageFinished;
+    [SerializeField] private int remainingEnemyCount;
 
     // 생성한 적을 추적하여 사망 수와 이벤트 연결을 관리한다.
     private readonly List<EnemyStats> trackedEnemies =
@@ -36,15 +37,17 @@ public class StageManager : MonoBehaviour
 
             yield break;
         }
-
+        
         // 스테이지 시작 상태 초기화
         currentWaveIndex = 0;
         aliveEnemyCount = 0;
         remainingBossTime = 0f;
+        remainingEnemyCount = 0;
         isBossTimeOver = false;
         isAirshipDestroyed = false;
         isStageFinished = false;
 
+       
         for (int i = 0; i < stageData.Waves.Count; i++)
         {
             currentWaveIndex = i;
@@ -176,8 +179,8 @@ public class StageManager : MonoBehaviour
             {
                 RefreshAliveEnemyCount();
 
-                if (aliveEnemyCount <= 0 ||
-                    target == null)
+                if (remainingEnemyCount <= 0 ||
+                     target == null)
                 {
                     break;
                 }
@@ -227,9 +230,25 @@ public class StageManager : MonoBehaviour
         }
 
         // 시간이 끝났는데 보스가 살아 있으면 실패한다.
+        // 시간이 끝났는데 보스가 살아 있으면 실패한다.
         if (aliveEnemyCount > 0)
         {
             isBossTimeOver = true;
+            yield break;
+        }
+
+        // 보스의 HP가 0이 된 뒤 사망 모션과 시체 제거가
+        // 끝날 때까지 기다린 다음 웨이브를 완료한다.
+        while (remainingEnemyCount > 0 &&
+               target != null)
+        {
+            RefreshAliveEnemyCount();
+            yield return null;
+        }
+
+        if (target == null)
+        {
+            isAirshipDestroyed = true;
         }
     }
 
@@ -274,7 +293,13 @@ public class StageManager : MonoBehaviour
             Destroy(spawnedEnemy);
             return;
         }
+        aliveEnemyCount++;
+        remainingEnemyCount++;
 
+        trackedEnemies.Add(enemyStats);
+
+        enemyStats.EnemyDied += HandleEnemyDied;
+        enemyStats.EnemyDeathCompleted += HandleEnemyDeathCompleted;
         // 적 이동 스크립트에 비행선 타깃을 전달한다.
         EnemyMovement enemyMovement =
             spawnedEnemy.GetComponent<EnemyMovement>();
@@ -293,31 +318,34 @@ public class StageManager : MonoBehaviour
             enemyAttack.SetTarget(target);
         }
 
-        // 적을 추적하고 사망 이벤트를 구독한다.
-        trackedEnemies.Add(enemyStats);
-        aliveEnemyCount = trackedEnemies.Count;
 
-        enemyStats.EnemyDied +=
-            HandleEnemyDied;
     }
 
-    private void HandleEnemyDied(
-        EnemyStats deadEnemy)
+    private void HandleEnemyDied(EnemyStats deadEnemy)
+    {
+        // HP가 0이 된 적은 전투 가능한 적 수에서 제외한다.
+        deadEnemy.EnemyDied -= HandleEnemyDied;
+
+        aliveEnemyCount = Mathf.Max(
+            aliveEnemyCount - 1,
+            0);
+    }
+    private void HandleEnemyDeathCompleted(EnemyStats deadEnemy)
     {
         if (deadEnemy == null)
         {
             return;
         }
 
-        // 같은 이벤트가 중복 호출되지 않도록 연결을 해제한다.
-        deadEnemy.EnemyDied -=
-            HandleEnemyDied;
+        // 사망 모션과 시체 제거가 끝난 시점의 이벤트 연결을 해제한다.
+        deadEnemy.EnemyDeathCompleted -= HandleEnemyDeathCompleted;
 
         trackedEnemies.Remove(deadEnemy);
-        aliveEnemyCount =
-            trackedEnemies.Count;
-    }
 
+        remainingEnemyCount = Mathf.Max(
+            remainingEnemyCount - 1,
+            0);
+    }
     private void RefreshAliveEnemyCount()
     {
         // 이벤트 없이 외부에서 삭제된 적도 생존 수에서 제외한다.
@@ -331,8 +359,17 @@ public class StageManager : MonoBehaviour
             }
         }
 
-        aliveEnemyCount =
-            trackedEnemies.Count;
+        aliveEnemyCount = 0;
+
+        for (int i = 0; i < trackedEnemies.Count; i++)
+        {
+            EnemyStats enemy = trackedEnemies[i];
+
+            if (enemy != null && !enemy.IsDead)
+            {
+                aliveEnemyCount++;
+            }
+        }
     }
 
     private void CompleteStage()

@@ -47,7 +47,6 @@ public class EffectPlayer : MonoBehaviour
         for (int i = 0; i < frames.Length; i++)
         {
             spriteRenderer.sprite = frames[i];
-            Debug.Log(spriteRenderer.sprite.name);
             yield return new WaitForSeconds(frameTime);
         }
         spriteRenderer.sprite = null;

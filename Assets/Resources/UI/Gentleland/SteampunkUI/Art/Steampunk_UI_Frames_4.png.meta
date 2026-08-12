@@ -1,30 +1,30 @@
 fileFormatVersion: 2
-guid: 02e9d81e4865a9940acc078d7c78bf27
+guid: 01a392491d04ffe4eabc6a05ca432c63
 TextureImporter:
   internalIDToNameTable:
-  - first:
-      213: 3724449664167138902
-    second: Steampunk_UI_Frames_4_4
-  - first:
-      213: -1399299473502573980
-    second: Steampunk_UI_Frames_4_2
-  - first:
-      213: -7233013225744034035
-    second: Steampunk_UI_Frames_4_6
-  - first:
-      213: -6368324688246358924
-    second: Steampunk_UI_Frames_4_3
-  - first:
-      213: 8872498645893814172
-    second: Steampunk_UI_Frames_4_5
   - first:
       213: -8690084411008707491
     second: Steampunk_UI_Frames_4_0
   - first:
       213: -1505503987924120681
     second: Steampunk_UI_Frames_4_1
+  - first:
+      213: -1399299473502573980
+    second: Steampunk_UI_Frames_4_2
+  - first:
+      213: -6368324688246358924
+    second: Steampunk_UI_Frames_4_3
+  - first:
+      213: 3724449664167138902
+    second: Steampunk_UI_Frames_4_4
+  - first:
+      213: 8872498645893814172
+    second: Steampunk_UI_Frames_4_5
+  - first:
+      213: -7233013225744034035
+    second: Steampunk_UI_Frames_4_6
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 13
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -41,11 +41,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMasterTextureLimit: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -84,8 +85,10 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
   platformSettings:
-  - serializedVersion: 3
+  - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -95,9 +98,10 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
+  - serializedVersion: 4
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -107,21 +111,10 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
+  - serializedVersion: 4
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -131,6 +124,20 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -140,16 +147,17 @@ TextureImporter:
       name: Steampunk_UI_Frames_4_0
       rect:
         serializedVersion: 2
-        x: 99
-        y: 784
-        width: 36
-        height: 212
+        x: 98
+        y: 783
+        width: 38
+        height: 214
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
       spriteID: d549aad254e966780800000000000000
       internalID: -8690084411008707491
@@ -161,16 +169,17 @@ TextureImporter:
       name: Steampunk_UI_Frames_4_1
       rect:
         serializedVersion: 2
-        x: 339
-        y: 901
-        width: 488
-        height: 166
+        x: 338
+        y: 900
+        width: 490
+        height: 168
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
       spriteID: 79b49d779106b1be0800000000000000
       internalID: -1505503987924120681
@@ -182,16 +191,17 @@ TextureImporter:
       name: Steampunk_UI_Frames_4_2
       rect:
         serializedVersion: 2
-        x: 1047
-        y: 803
-        width: 36
-        height: 212
+        x: 1046
+        y: 802
+        width: 38
+        height: 214
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
       spriteID: 46aec7bea80b49ce0800000000000000
       internalID: -1399299473502573980
@@ -203,16 +213,17 @@ TextureImporter:
       name: Steampunk_UI_Frames_4_3
       rect:
         serializedVersion: 2
-        x: 72
-        y: 36
-        width: 69
-        height: 285
+        x: 71
+        y: 35
+        width: 71
+        height: 289
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
       spriteID: 47cb9b6df6a2f97a0800000000000000
       internalID: -6368324688246358924
@@ -224,16 +235,17 @@ TextureImporter:
       name: Steampunk_UI_Frames_4_4
       rect:
         serializedVersion: 2
-        x: 199
-        y: 106
-        width: 800
-        height: 740
+        x: 198
+        y: 105
+        width: 802
+        height: 742
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
       spriteID: 65651809c37efa330800000000000000
       internalID: 3724449664167138902
@@ -245,16 +257,17 @@ TextureImporter:
       name: Steampunk_UI_Frames_4_5
       rect:
         serializedVersion: 2
-        x: 1040
-        y: 18
-        width: 69
-        height: 285
+        x: 1039
+        y: 17
+        width: 71
+        height: 288
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
       spriteID: c9792aa8282712b70800000000000000
       internalID: 8872498645893814172
@@ -266,16 +279,17 @@ TextureImporter:
       name: Steampunk_UI_Frames_4_6
       rect:
         serializedVersion: 2
-        x: 1154
-        y: 226
-        width: 707
-        height: 622
+        x: 1153
+        y: 225
+        width: 709
+        height: 624
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
       spriteID: d0713d71bcc2f9b90800000000000000
       internalID: -7233013225744034035
@@ -284,33 +298,28 @@ TextureImporter:
       edges: []
       weights: []
     outline: []
+    customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
     nameFileIdTable:
-      Steampunk_UI_Frames_4_4: 3724449664167138902
-      Steampunk_UI_Frames_4_2: -1399299473502573980
-      Steampunk_UI_Frames_4_6: -7233013225744034035
-      Steampunk_UI_Frames_4_3: -6368324688246358924
-      Steampunk_UI_Frames_4_5: 8872498645893814172
       Steampunk_UI_Frames_4_0: -8690084411008707491
       Steampunk_UI_Frames_4_1: -1505503987924120681
-  spritePackingTag: 
+      Steampunk_UI_Frames_4_2: -1399299473502573980
+      Steampunk_UI_Frames_4_3: -6368324688246358924
+      Steampunk_UI_Frames_4_4: 3724449664167138902
+      Steampunk_UI_Frames_4_5: 8872498645893814172
+      Steampunk_UI_Frames_4_6: -7233013225744034035
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 238976
-  packageName: SteampunkUI
-  packageVersion: 1.0
-  assetPath: Assets/Gentleland/SteampunkUI/Art/Steampunk_UI_Frames_4.png
-  uploadId: 559104
