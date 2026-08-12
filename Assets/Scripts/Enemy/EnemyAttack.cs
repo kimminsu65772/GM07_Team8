@@ -51,11 +51,7 @@ public class EnemyAttack : MonoBehaviour
             return;
         }
 
-        // 피격 경직 중에는 공격하지 않음
-        if (enemyStats.IsHitStunned)
-        {
-            return;
-        }
+       
 
         // 현재 공격 대상을 바라봄
         FaceTarget();
