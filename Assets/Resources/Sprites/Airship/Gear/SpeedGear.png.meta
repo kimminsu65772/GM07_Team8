@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 00d1b0819e036944b8faa28cef37fe2b
+guid: 22fecbe7d840c9a49bbdae93cde62e8e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 9155032272961980998
-    second: steampunk_elevating_barrel_pure_side_0
+      213: -6235897192407884574
+    second: steampunk_side_speed_module_256_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 700
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -126,23 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: steampunk_elevating_barrel_pure_side_0
+      name: steampunk_side_health_gauge_module_0
       rect:
         serializedVersion: 2
-        x: 86
-        y: 321
-        width: 1345
-        height: 384
-      alignment: 9
-      pivot: {x: 0.13440967, y: 0.5}
+        x: 64
+        y: 61
+        width: 895
+        height: 902
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 64ac229c8553d0f70800000000000000
-      internalID: 9155032272961980998
+      spriteID: 00ee1bc8686b18380800000000000000
+      internalID: -8970688293742973440
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: fc5ebc10e77f15c40a3f3c24caa545ec
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      steampunk_elevating_barrel_pure_side_0: 9155032272961980998
+      steampunk_side_health_gauge_module_0: -8970688293742973440
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

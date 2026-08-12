@@ -10,11 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6576d65dbf944184099cafb49ea5dccf, type: 3}
-  m_Name: AirshipGear_SpeedUp
+  m_Name: AirshipGear_MaxHp
   m_EditorClassIdentifier: Assembly-CSharp::AirshipGearData
-  id: SpeedUpGear
-  displayName: "\uC774\uC18D\uC99D\uAC00\uBD80\uD488"
+  displayName: "\uCD5C\uB300\uCCB4\uB825\uC99D\uAC00\uBD80\uD488"
   uiImage: {fileID: 0}
-  gearImage: {fileID: -6496441662836471282, guid: 41106126c267d664497905711d6c18f1, type: 3}
-  gearType: 1
-  buffData: {fileID: 11400000, guid: 5cc1f637e6181bc409dda10a30370f2d, type: 2}
+  gearImage: {fileID: 21300000, guid: 12e43b283b2fd814783637ff3ae86c51, type: 3}
+  gearType: 0
+  buffData: {fileID: 11400000, guid: 1e7fe01efeb09fc4b8c655281c9e7c2c, type: 2}
