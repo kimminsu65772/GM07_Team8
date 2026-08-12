@@ -157,7 +157,6 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: 436f82232fb53704b9434b37f1e4b7ff, type: 2}
   currentHealth: 0
   hitRadius: 1
-  hitStunDuration: 0.4
   deathDestroyDelay: 1.2
 --- !u!114 &2952219784427838897
 MonoBehaviour:
@@ -769,10 +768,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8512492366648040843, guid: 1067c529e6a054081be626ddf02cba8f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 252359331492674394}
   m_SourcePrefab: {fileID: 100100000, guid: 1067c529e6a054081be626ddf02cba8f, type: 3}
 --- !u!224 &3901880342456698857 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 862295766679986442, guid: 1067c529e6a054081be626ddf02cba8f, type: 3}
   m_PrefabInstance: {fileID: 4454409753350547171}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5472802244463786856 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8512492366648040843, guid: 1067c529e6a054081be626ddf02cba8f, type: 3}
+  m_PrefabInstance: {fileID: 4454409753350547171}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &252359331492674394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5472802244463786856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5381ac3b83db130428926f42376f5c6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAnimationEventReceiver
