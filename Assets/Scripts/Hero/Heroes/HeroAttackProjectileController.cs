@@ -11,6 +11,7 @@ public class HeroAttackProjectileController : MonoBehaviour
     {
         this.target = target;
         this.damage = damage;
+        Destroy(gameObject, 3f);
     }
 
     private void Update()

@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -111,6 +112,8 @@ public abstract class Hero : MonoBehaviour, IDamageable
         if (targetEnemy != null && location == HeroLocationEnum.Back) attack.RangeAttack(targetEnemy);
 
         ChangeState();
+
+        if (Input.GetKeyDown(KeyCode.A)) TakeDamage(heroMaxHP);
     }
 
     public void TakeDamage(float damage)
@@ -120,7 +123,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
         if (heroCurrentHP <= 0f)
         {
-            Die();
+            StartCoroutine(DieAndRevive());
         }
     }
 
@@ -191,10 +194,16 @@ public abstract class Hero : MonoBehaviour, IDamageable
     }
 
 
-    protected virtual void Die()
+    protected IEnumerator DieAndRevive()
     {
         isDead = true;
         heroState = HeroStateEnum.Die;
+
+        yield return new WaitForSeconds(3f);
+
+        isDead = false;
+        heroState = HeroStateEnum.Idle;
+        HeroCurrentHP = heroMaxHP;
     }
 
     private void ChangeState()
