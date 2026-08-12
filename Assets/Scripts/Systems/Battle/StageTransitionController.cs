@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +10,8 @@ public class StageTransitionController : MonoBehaviour
 
     [SerializeField] private float fadeDuration;
 
+    private Coroutine transitionRoutine;
+
     private void Awake()
     {
         if (followCam == null)
@@ -19,13 +20,23 @@ public class StageTransitionController : MonoBehaviour
         }
     }
 
-    public void StartTransition(int nextStageNumber)
+    public bool StartTransition(int nextStageNumber)
     {
-        StartCoroutine(TransitionToNextStage(nextStageNumber));
+        if (transitionRoutine != null)
+        {
+            return false;
+        }
+
+        transitionRoutine =
+            StartCoroutine(TransitionToNextStage(nextStageNumber));
+
+        return true;
     }
 
     private IEnumerator TransitionToNextStage(int nextStageNumber)
     {
+        battleManager.StopStage();
+
         // 카메라에게 비행선 추적을 멈출 것을 지시
         //followCam.StopFollowTarget();
 
@@ -38,6 +49,8 @@ public class StageTransitionController : MonoBehaviour
         yield return FadeInScreen();
         battleManager.StartStage();
         //followCam.StartFollowTarget();
+
+        transitionRoutine = null;
     }
 
     private IEnumerator FadeOutScreen()
