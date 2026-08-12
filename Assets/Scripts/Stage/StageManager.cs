@@ -300,24 +300,21 @@ public class StageManager : MonoBehaviour
 
         enemyStats.EnemyDied += HandleEnemyDied;
         enemyStats.EnemyDeathCompleted += HandleEnemyDeathCompleted;
-        // 적 이동 스크립트에 비행선 타깃을 전달한다.
-        EnemyMovement enemyMovement =
-            spawnedEnemy.GetComponent<EnemyMovement>();
+        // 적에게 비행선 타깃을 전달한다.
+        // EnemyTargetSelector가 이동 타깃과 공격 타깃을 함께 설정한다.
+        EnemyTargetSelector targetSelector =
+            spawnedEnemy.GetComponent<EnemyTargetSelector>();
 
-        if (enemyMovement != null)
+        if (targetSelector != null)
         {
-            enemyMovement.SetTarget(target);
+            targetSelector.SetAirshipTarget(target);
         }
-
-        // 적 공격 스크립트에도 같은 타깃을 전달한다.
-        EnemyAttack enemyAttack =
-            spawnedEnemy.GetComponent<EnemyAttack>();
-
-        if (enemyAttack != null)
+        else
         {
-            enemyAttack.SetTarget(target);
+            Debug.LogWarning(
+                $"{spawnedEnemy.name}에 EnemyTargetSelector가 없습니다."
+            );
         }
-
 
     }
 
