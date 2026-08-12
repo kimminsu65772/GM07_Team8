@@ -25,7 +25,7 @@ public class AirshipUpgradeController : MonoBehaviour
     {
         LoadState();
     }
-    
+
     // 세이브 데이터 기준으로 로드.
     // 아마 init할때만 쓸거같지만, 뭔가 씬을 옮길때 쓸수도.
     public void LoadState()

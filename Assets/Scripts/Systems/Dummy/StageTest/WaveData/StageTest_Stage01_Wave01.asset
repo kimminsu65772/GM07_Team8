@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: StageTest_Stage01_Wave01
   m_EditorClassIdentifier: Assembly-CSharp::WaveData
   enemySpawns:
-  - enemyPrefab: {fileID: 7931180812232907860, guid: 86e8dd9dba454205be0f747ecd265c6b, type: 3}
+  - enemyPrefab: {fileID: 7931180812232907860, guid: 4cf911cae5db46c48bd3da6e98dc7c60, type: 3}
     spawnCount: 3
     spawnInterval: 1
   nextWaveDelay: 2

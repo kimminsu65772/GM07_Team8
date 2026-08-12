@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15951fa409c979b4ead191d1d9e3ed31, type: 3}
-  m_Name: War1
+  m_Name: Hero2
   m_EditorClassIdentifier: Assembly-CSharp::HeroEntry
-  heroName: Hero1
-  heroPrefab: {fileID: 5542119879111424239, guid: be5d0e5f76b847d428fd001a3fd381d6, type: 3}
-  heroLocation: 0
+  heroName: Hero2
+  heroPrefab: {fileID: 4136471860748260653, guid: 0d33069a5d850e142a8d0bd29e6040c4, type: 3}
+  heroLocation: 1
   isDefaultOwned: 1
   defaultLevel: 1
