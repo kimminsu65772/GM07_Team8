@@ -83,10 +83,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
             return;
         }
         Debug.Log($"EnemyStats TakeDamage 호출됨: {damageAmount}");
-        hitStunEndTime =
-            Time.time + hitStunDuration;
-
-        EnemyDamaged?.Invoke(this);
+        
     }
 
     private void Die()
