@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 5554a0234e6ed3e4a97fd941e186a803
+guid: f3c24bf251af76540925a84abe05240f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6329511340211919631
-    second: steampunk_dome_turret_full_side_0
+      213: 1662903703954567799
+    second: steampunk_side_mount_plate_256_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 700
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: steampunk_dome_turret_full_side_0
+      name: steampunk_side_health_gauge_module_0
       rect:
         serializedVersion: 2
-        x: 242
-        y: 145
-        width: 1042
-        height: 731
+        x: 64
+        y: 61
+        width: 895
+        height: 902
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1f4acd4a8fe0928a0800000000000000
-      internalID: -6329511340211919631
+      spriteID: 00ee1bc8686b18380800000000000000
+      internalID: -8970688293742973440
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      steampunk_dome_turret_full_side_0: -6329511340211919631
+      steampunk_side_health_gauge_module_0: -8970688293742973440
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
