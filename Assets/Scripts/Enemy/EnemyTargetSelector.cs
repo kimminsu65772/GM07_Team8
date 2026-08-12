@@ -86,23 +86,26 @@ public class EnemyTargetSelector : MonoBehaviour
             {
                 continue;
             }
-            // 죽은 영웅은 타깃에서 제외
-            Hero hero = candidate.GetComponentInParent<Hero>();
-            if (hero == null ||
-                 hero.IsDead ||
-                 hero.HeroCurrentHP <= 0f)
-            {
-                continue;
-            }
-            // 적보다 뒤쪽에 있는 영웅은 제외
-            if (candidate.position.x > enemyPosition.x)
+
+            Hero hero =
+                candidate.GetComponentInParent<Hero>();
+
+            if (hero == null)
             {
                 continue;
             }
 
-            float distance = Vector2.Distance(
-                enemyPosition,
-                candidate.position);
+            // 죽어 있는 영웅은 제외
+            if (hero.IsDead ||
+                hero.HeroCurrentHP <= 0f)
+            {
+                continue;
+            }
+
+            float distance =
+                Vector2.Distance(
+                    enemyPosition,
+                    candidate.position);
 
             if (distance < closestDistance)
             {
@@ -111,8 +114,13 @@ public class EnemyTargetSelector : MonoBehaviour
             }
         }
 
-        return closestHero != null
-            ? closestHero
-            : airshipTarget;
+        // 살아있는 영웅이 하나라도 있으면 무조건 영웅 우선
+        if (closestHero != null)
+        {
+            return closestHero;
+        }
+
+        // 살아있는 영웅이 없을 때만 비행선
+        return airshipTarget;
     }
 }
