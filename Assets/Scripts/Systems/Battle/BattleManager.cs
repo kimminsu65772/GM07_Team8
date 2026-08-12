@@ -30,6 +30,7 @@ public class BattleManager : MonoBehaviour
         }
 
         currentStage = PlayerInfo.Instance.CurrentStage;
+        airship.Init();
         SetUpStage(currentStage);
         StartStage();
 

@@ -14,8 +14,11 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField, Min(0f)]
     private float avoidanceStrength = 1.5f;
 
+    [SerializeField] 
+    private float heroStopRange = 1.3f;
     private Rigidbody2D enemyRigidbody2D;
     private EnemyStats enemyStats;
+    private Transform combatTarget;
 
     // 생성 순서에 따라 회피 방향을 위, 아래로 번갈아 배정한다.
     private static int nextAvoidanceOrder;
@@ -31,9 +34,36 @@ public class EnemyMovement : MonoBehaviour
         avoidanceSide =
             nextAvoidanceOrder++ % 2 == 0 ? 1f : -1f;
     }
-
+    public void SetCombatTarget(Transform newTarget)
+    {
+        combatTarget = newTarget;
+    }
     private void FixedUpdate()
     {
+        if (combatTarget != null)
+        {
+            float combatDistance =
+                Mathf.Abs(
+                    enemyRigidbody2D.position.x -
+                    combatTarget.position.x
+                );
+
+            bool isHero =
+                combatTarget.gameObject.layer ==
+                LayerMask.NameToLayer("Hero");
+
+            float stopRange =
+                isHero
+                    ? heroStopRange
+                    : enemyStats.AttackRange;
+
+            if (combatDistance <= stopRange)
+            {
+                StopMoving();
+                return;
+            }
+        }
+
         if (target == null ||
             enemyStats == null ||
             enemyStats.IsDead ||

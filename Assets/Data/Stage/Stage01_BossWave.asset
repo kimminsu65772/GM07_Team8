@@ -18,4 +18,4 @@ MonoBehaviour:
     spawnInterval: 0
   nextWaveDelay: 0
   isBossWave: 1
-  timeLimit: 60
+  timeLimit: 5
