@@ -141,6 +141,12 @@ public abstract class Hero : MonoBehaviour, IDamageable
             }
         }
 
+        if (nearestEnemy == null)
+        {
+            targetEnemy = null;
+            return;
+        }
+
         targetEnemy = nearestEnemy.gameObject;
         Debug.Log($"{gameObject.name}의 목표 : {targetEnemy.name}");
     }
