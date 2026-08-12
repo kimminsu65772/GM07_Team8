@@ -14,7 +14,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
     [SerializeField, Min(0f)]
     private float hitRadius = 1f;
 
-    [Header("Hit Stun")]
+    /*[Header("Hit Stun")]
     // 피격 후 이동과 공격이 잠시 중단되는 시간
     [SerializeField, Min(0f)]
     private float hitStunDuration = 0.2f;
@@ -22,7 +22,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
     private float hitStunEndTime;
 
     public bool IsHitStunned =>
-        !IsDead && Time.time < hitStunEndTime;
+        !IsDead && Time.time < hitStunEndTime;*/
 
     [Header("Death")]
     [SerializeField, Min(0f)]
