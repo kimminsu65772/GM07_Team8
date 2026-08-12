@@ -94,12 +94,23 @@ public class EnemyAttack : MonoBehaviour
 
         FaceTarget();
 
-        targetDamageable.TakeDamage(
-            enemyStats.AttackPower);
+       
 
         attackPerformed?.Invoke();
     }
+    public void ApplyAttackDamage()
+    {
+        if (target == null ||
+            targetDamageable == null ||
+            enemyStats == null ||
+            enemyStats.IsDead)
+        {
+            return;
+        }
 
+        targetDamageable.TakeDamage(
+            enemyStats.AttackPower);
+    }
     private void FaceTarget()
     {
         if (target == null || spriteRenderer == null)
