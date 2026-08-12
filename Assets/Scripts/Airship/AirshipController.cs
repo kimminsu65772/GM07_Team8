@@ -7,6 +7,7 @@ using UnityEngine;
 public class AirshipController : MonoBehaviour
 {
     [SerializeField] private AirshipUpgradeController upgradeController;
+    [SerializeField] private AirshipEquipmentController equipmentController;
     [SerializeField] private AirshipStatController statController;
     [SerializeField] private AirshipHealth health;
     [SerializeField] private AirshipAttack attack;
@@ -15,6 +16,8 @@ public class AirshipController : MonoBehaviour
     
     private AirshipStateMachine stateMachine;
 
+    public AirshipUpgradeController UpgradeController => upgradeController;
+    public AirshipEquipmentController EquipmentController => equipmentController;
     public AirshipMovement Movement => movement;
     public AirshipEnemyChecker EnemyChecker => enemyChecker;
     private void Awake()
@@ -34,6 +37,7 @@ public class AirshipController : MonoBehaviour
     public void Init()
     {
         upgradeController.Init();
+        equipmentController.Init();
         statController.Init(upgradeController.UpgradeState);
     }
     private void CacheComponents()
@@ -46,6 +50,10 @@ public class AirshipController : MonoBehaviour
         
         if (upgradeController == null)
             upgradeController = GetComponent<AirshipUpgradeController>();
+        
+        if (equipmentController == null)
+            equipmentController =
+                GetComponent<AirshipEquipmentController>();
 
         if (statController == null)
             statController = GetComponent<AirshipStatController>();
@@ -91,16 +99,5 @@ public class AirshipController : MonoBehaviour
     {
         health.ResetHealth();
         stateMachine.ChangeState(stateMachine.IdleState);
-    }
-    [ContextMenu("Test Damage")]
-    private void TestDamage()
-    {
-        health.TakeDamage(150f);
-    }
-
-    [ContextMenu("Test Respawn")]
-    private void TestRespawn()
-    {
-        Respawn();
     }
 }

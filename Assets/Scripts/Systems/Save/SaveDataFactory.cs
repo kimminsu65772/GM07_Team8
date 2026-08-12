@@ -23,8 +23,8 @@ public class SaveDataFactory
                 DefenseLevel = 0,
                 MaxHealthLevel = 0,
                 CriticalLevel = 0,
-                EquippedCannonId = "NormalCannon",
-                EquippedGearId = "MaxHpGear"
+                EquippedCannonType = AirshipCannonType.Normal,
+                EquippedGearType = AirshipGearType.MaxHealth,
             },
             Heroes = CreateInitialHeroSaveData(heroCatalog),
             HeroFormation = new HeroFormationSaveData

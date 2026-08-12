@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 6576d65dbf944184099cafb49ea5dccf, type: 3}
   m_Name: AirshipGear_MaxHp
   m_EditorClassIdentifier: Assembly-CSharp::AirshipGearData
-  id: MaxHpGear
-  displayName: "\uCD5C\uB300\uCCB4\uB825\uBD80\uD488"
+  id: 
+  displayName: "\uCD5C\uB300\uCCB4\uB825\uC99D\uAC00\uBD80\uD488"
   uiImage: {fileID: 0}
   gearImage: {fileID: -6496441662836471282, guid: 41106126c267d664497905711d6c18f1, type: 3}
   gearType: 0
