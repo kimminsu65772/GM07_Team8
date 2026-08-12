@@ -1,34 +1,35 @@
 fileFormatVersion: 2
-guid: e628bb2866c181147aea7b152d8cc9c6
+guid: c1d0056efa7a4f547ac230e6a51f5ffc
+AssetOrigin:
+  serializedVersion: 1
+  productId: 238976
+  packageName: SteampunkUI
+  packageVersion: 1.0
+  assetPath: Assets/Gentleland/SteampunkUI/Art/Steampunk_UI_Dialogue_2.png
+  uploadId: 559104
 TextureImporter:
   internalIDToNameTable:
-  - first:
-      213: 4840479622272537927
-    second: Steampunk_UI_Dialogue_2_0
-  - first:
-      213: -5851565208217216394
-    second: Steampunk_UI_Dialogue_2_1
-  - first:
-      213: -3614974354726202508
-    second: Steampunk_UI_Dialogue_2_2
-  - first:
-      213: -6943641789440722025
-    second: Steampunk_UI_Dialogue_2_3
-  - first:
-      213: -9214730371513360251
-    second: Steampunk_UI_Dialogue_2_4
-  - first:
-      213: 3997123526601970073
-    second: Steampunk_UI_Dialogue_2_5
   - first:
       213: -5502654496703504663
     second: Steampunk_UI_Dialogue_2_6
   - first:
-      213: -1694240107635388535
-    second: Steampunk_UI_Dialogue_2_7
+      213: -3614974354726202508
+    second: Steampunk_UI_Dialogue_2_2
   - first:
-      213: -4892617621336580371
-    second: Steampunk_UI_Dialogue_2_8
+      213: 3997123526601970073
+    second: Steampunk_UI_Dialogue_2_5
+  - first:
+      213: -6943641789440722025
+    second: Steampunk_UI_Dialogue_2_3
+  - first:
+      213: -5851565208217216394
+    second: Steampunk_UI_Dialogue_2_1
+  - first:
+      213: -9214730371513360251
+    second: Steampunk_UI_Dialogue_2_4
+  - first:
+      213: 4840479622272537927
+    second: Steampunk_UI_Dialogue_2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -92,7 +93,7 @@ TextureImporter:
   ignorePngGamma: 0
   applyGammaDecoding: 0
   swizzle: 50462976
-  cookieLightType: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
@@ -109,6 +110,19 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
     buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -153,17 +167,17 @@ TextureImporter:
       name: Steampunk_UI_Dialogue_2_0
       rect:
         serializedVersion: 2
-        x: 50
-        y: 548
-        width: 887
-        height: 502
+        x: 51
+        y: 549
+        width: 885
+        height: 500
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
       spriteID: 745521c0296dc2340800000000000000
       internalID: 4840479622272537927
@@ -175,17 +189,17 @@ TextureImporter:
       name: Steampunk_UI_Dialogue_2_1
       rect:
         serializedVersion: 2
-        x: 984
-        y: 819
-        width: 867
-        height: 153
+        x: 985
+        y: 836
+        width: 865
+        height: 135
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 76, y: 36, z: 77, w: 41}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
       spriteID: 67a9d2032701bcea0800000000000000
       internalID: -5851565208217216394
@@ -197,17 +211,17 @@ TextureImporter:
       name: Steampunk_UI_Dialogue_2_2
       rect:
         serializedVersion: 2
-        x: 1040
-        y: 677
-        width: 752
-        height: 105
+        x: 1045
+        y: 679
+        width: 745
+        height: 99
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 12, y: 11, z: 12, w: 12}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
       spriteID: 473d5623af705ddc0800000000000000
       internalID: -3614974354726202508
@@ -219,17 +233,17 @@ TextureImporter:
       name: Steampunk_UI_Dialogue_2_3
       rect:
         serializedVersion: 2
-        x: 872
-        y: 505
-        width: 7
-        height: 6
+        x: 95
+        y: 107
+        width: 783
+        height: 393
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
       spriteID: 79bf3dcd49a33af90800000000000000
       internalID: -6943641789440722025
@@ -241,17 +255,17 @@ TextureImporter:
       name: Steampunk_UI_Dialogue_2_4
       rect:
         serializedVersion: 2
-        x: 1010
-        y: 422
-        width: 825
-        height: 124
+        x: 1011
+        y: 423
+        width: 822
+        height: 122
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 76, y: 17, z: 101, w: 24}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
       spriteID: 58061f08c83be1080800000000000000
       internalID: -9214730371513360251
@@ -263,17 +277,17 @@ TextureImporter:
       name: Steampunk_UI_Dialogue_2_5
       rect:
         serializedVersion: 2
-        x: 92
-        y: 99
-        width: 788
-        height: 403
+        x: 989
+        y: 228
+        width: 706
+        height: 104
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 26, y: 25, z: 20, w: 20}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
       spriteID: 99197767ba2a87730800000000000000
       internalID: 3997123526601970073
@@ -285,64 +299,20 @@ TextureImporter:
       name: Steampunk_UI_Dialogue_2_6
       rect:
         serializedVersion: 2
-        x: 988
-        y: 227
-        width: 708
-        height: 106
+        x: 1754
+        y: 208
+        width: 108
+        height: 141
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
       spriteID: 9ee184ab3e4a2a3b0800000000000000
       internalID: -5502654496703504663
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Steampunk_UI_Dialogue_2_7
-      rect:
-        serializedVersion: 2
-        x: 1752
-        y: 207
-        width: 111
-        height: 143
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 98f4c2c3999dc78e0800000000000000
-      internalID: -1694240107635388535
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Steampunk_UI_Dialogue_2_8
-      rect:
-        serializedVersion: 2
-        x: 91
-        y: 71
-        width: 17
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: dee9a62123ee91cb0800000000000000
-      internalID: -4892617621336580371
       vertices: []
       indices: 
       edges: []
@@ -351,7 +321,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -368,8 +338,6 @@ TextureImporter:
       Steampunk_UI_Dialogue_2_4: -9214730371513360251
       Steampunk_UI_Dialogue_2_5: 3997123526601970073
       Steampunk_UI_Dialogue_2_6: -5502654496703504663
-      Steampunk_UI_Dialogue_2_7: -1694240107635388535
-      Steampunk_UI_Dialogue_2_8: -4892617621336580371
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
