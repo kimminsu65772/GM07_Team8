@@ -16,6 +16,8 @@ public class AirshipController : MonoBehaviour
     
     private AirshipStateMachine stateMachine;
 
+    public AirshipUpgradeController UpgradeController => upgradeController;
+    public AirshipEquipmentController EquipmentController => equipmentController;
     public AirshipMovement Movement => movement;
     public AirshipEnemyChecker EnemyChecker => enemyChecker;
     private void Awake()
@@ -97,16 +99,5 @@ public class AirshipController : MonoBehaviour
     {
         health.ResetHealth();
         stateMachine.ChangeState(stateMachine.IdleState);
-    }
-    [ContextMenu("Test Damage")]
-    private void TestDamage()
-    {
-        health.TakeDamage(150f);
-    }
-
-    [ContextMenu("Test Respawn")]
-    private void TestRespawn()
-    {
-        Respawn();
     }
 }
