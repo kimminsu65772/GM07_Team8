@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class HeroLvManager : MonoBehaviour
@@ -20,9 +21,11 @@ public class HeroLvManager : MonoBehaviour
         }
     }
 
-    private Hero hero;
+    // private Hero hero;
     private int heroMaxLv = 3;
     private HeroStat stat;
+
+    public event Action<Hero> OnLevelUp;
 
     private void Awake()
     {
@@ -61,5 +64,7 @@ public class HeroLvManager : MonoBehaviour
         hero.HeroMaxHP = stat.MaxHP;
         hero.HeroAtk = stat.Atk;
         hero.HeroDef = stat.Def;
+
+        OnLevelUp?.Invoke(hero);
     }
 }

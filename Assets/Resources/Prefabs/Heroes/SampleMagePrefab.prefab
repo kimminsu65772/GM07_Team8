@@ -329,6 +329,7 @@ Transform:
   m_Children:
   - {fileID: 4550203655308457449}
   - {fileID: 6717697850544587790}
+  - {fileID: 2292950087620158637}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3288610637737451671
@@ -373,6 +374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroAttack
   projectile: {fileID: 1399878655061060014, guid: 00ab1cd3e4bc5794c8cef6307342dc7a, type: 3}
+  firePoint: {fileID: 0}
 --- !u!114 &7368761889589239906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,6 +389,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HeroAnimationController
   hero: {fileID: 3288610637737451671}
   ani: {fileID: 8019615777269675244}
+--- !u!1 &8150609569665478412
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2292950087620158637}
+  m_Layer: 7
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2292950087620158637
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8150609569665478412}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.5, y: 0.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7992600380936150462}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &103910592524395506
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -489,7 +522,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4491417313169970715, guid: 15d6a450fd7f1e44b9f71ad8aedd33de, type: 3}
       propertyPath: m_ConstrainProportionsScale
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7471208376872540613, guid: 15d6a450fd7f1e44b9f71ad8aedd33de, type: 3}
       propertyPath: m_Name

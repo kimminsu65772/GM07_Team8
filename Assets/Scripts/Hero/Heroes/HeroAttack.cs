@@ -9,6 +9,7 @@ public class HeroAttack : MonoBehaviour
     private float attackTimer;
 
     [SerializeField] private GameObject projectile;
+    [SerializeField] private Transform firePoint;
     
     public bool IsAttacking => isAttacking;
     public bool CanAttack => canAttack;
@@ -38,6 +39,9 @@ public class HeroAttack : MonoBehaviour
             isAttacking = true;
             attackTimer = 0f;
 
+            Vector2 direction = enemy.transform.position - transform.position;
+            hero.FlipSprite(direction);
+
             vfx.PlayAttackEffect();
             // SFX 적용
 
@@ -64,6 +68,9 @@ public class HeroAttack : MonoBehaviour
             isAttacking = true;
             attackTimer = 0f;
 
+            Vector2 direction = enemy.transform.position - transform.position;
+            hero.FlipSprite(direction);
+
             vfx.PlayAttackEffect();
             // SFX 적용
 
@@ -77,7 +84,7 @@ public class HeroAttack : MonoBehaviour
 
     private void ThrowProjectile(Transform enemy, float damage)
     {
-        GameObject projec = Instantiate(projectile, transform.position, Quaternion.identity);
+        GameObject projec = Instantiate(projectile, firePoint.position, Quaternion.identity);
         projec.GetComponent<HeroAttackProjectileController>().Init(enemy, damage);
     }
 

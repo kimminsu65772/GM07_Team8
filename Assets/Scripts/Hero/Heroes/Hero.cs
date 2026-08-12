@@ -113,7 +113,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
         ChangeState();
 
-        if (Input.GetKeyDown(KeyCode.A)) TakeDamage(heroMaxHP);
+        // if (Input.GetKeyDown(KeyCode.A)) TakeDamage(heroMaxHP);
     }
 
     public void TakeDamage(float damage)
@@ -184,7 +184,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         }
     }
 
-    private void FlipSprite(Vector2 direction)
+    public void FlipSprite(Vector2 direction)
     {
         if (Mathf.Abs(direction.x) < 0.01f) return;
 
