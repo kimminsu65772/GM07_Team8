@@ -30,8 +30,7 @@ public class AirshipUpgradeController : MonoBehaviour
     // 아마 init할때만 쓸거같지만, 뭔가 씬을 옮길때 쓸수도.
     public void LoadState()
     {
-        PlayerInfo playerInfo = PlayerInfo.Instance;
-        AirshipSaveData saveData = playerInfo.Airship;
+        AirshipSaveData saveData = PlayerInfo.Instance.Airship;
 
         if (saveData == null)
         {
