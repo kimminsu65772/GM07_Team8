@@ -66,8 +66,7 @@ public class EnemyMovement : MonoBehaviour
 
         if (target == null ||
             enemyStats == null ||
-            enemyStats.IsDead ||
-             enemyStats.IsHitStunned)
+            enemyStats.IsDead )
         {
             StopMoving();
             return;

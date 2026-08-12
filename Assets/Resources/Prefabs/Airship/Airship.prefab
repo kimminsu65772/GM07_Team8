@@ -582,8 +582,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f148b3af9417b84eb36894d7d3280ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AirshipController
-  upgradeManager: {fileID: 0}
   upgradeController: {fileID: 5786310163317347532}
+  equipmentController: {fileID: 2430253705024483779}
   statController: {fileID: 5200261145840763693}
   health: {fileID: 2751722732999653326}
   attack: {fileID: 340989355314108434}
@@ -756,6 +756,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AirshipEquipmentController
   equippedCannon: {fileID: 11400000, guid: 88fbdf1c82fecdb4fa2b5269584cd0de, type: 2}
   equippedGear: {fileID: 11400000, guid: a4c221f216a86954686f05d5d8cb34ae, type: 2}
+  cannonDatas:
+  - {fileID: 11400000, guid: 88fbdf1c82fecdb4fa2b5269584cd0de, type: 2}
+  - {fileID: 11400000, guid: 1178340448127f645bf6839e3259f69c, type: 2}
+  gearDatas:
+  - {fileID: 11400000, guid: 414160772b42c304daacb64ebe0b42e3, type: 2}
+  - {fileID: 11400000, guid: f9e9ed2cc71d4a742b29b6c4aa0a46fe, type: 2}
   statController: {fileID: 5200261145840763693}
   barrelRenderer: {fileID: 4639525818923275732}
   gearRenderer: {fileID: 5766562976423797442}
