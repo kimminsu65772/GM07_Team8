@@ -7,6 +7,7 @@ using UnityEngine;
 public class AirshipController : MonoBehaviour
 {
     [SerializeField] private AirshipUpgradeController upgradeController;
+    [SerializeField] private AirshipEquipmentController equipmentController;
     [SerializeField] private AirshipStatController statController;
     [SerializeField] private AirshipHealth health;
     [SerializeField] private AirshipAttack attack;
@@ -34,6 +35,7 @@ public class AirshipController : MonoBehaviour
     public void Init()
     {
         upgradeController.Init();
+        equipmentController.Init();
         statController.Init(upgradeController.UpgradeState);
     }
     private void CacheComponents()
@@ -46,6 +48,10 @@ public class AirshipController : MonoBehaviour
         
         if (upgradeController == null)
             upgradeController = GetComponent<AirshipUpgradeController>();
+        
+        if (equipmentController == null)
+            equipmentController =
+                GetComponent<AirshipEquipmentController>();
 
         if (statController == null)
             statController = GetComponent<AirshipStatController>();

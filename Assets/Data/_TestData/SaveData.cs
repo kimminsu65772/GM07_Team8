@@ -49,8 +49,8 @@ public class AirshipSaveData
     public int DefenseLevel { get; set; }
     public int MaxHealthLevel { get; set; }
     public int CriticalLevel { get; set; }
-    public string EquippedCannonId { get; set; }
-    public string EquippedGearId { get; set; }
+    public AirshipCannonType EquippedCannonType { get; set; }
+    public AirshipGearType EquippedGearType { get; set; }
 }
 
 /*

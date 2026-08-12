@@ -210,32 +210,24 @@ public class PlayerInfo : MonoBehaviour
     /// <summary>
     /// 장착된 캐논 ID를 세이브 데이터에 반영하는 메서드
     /// </summary>
-    /// <param name="cannonId"></param>
+    /// <param name="cannonType"></param>
     /// <param name="savePolicy"></param>
-    public void SetEquippedCannonId(string cannonId, SavePolicy savePolicy = SavePolicy.Soon)
+    public void SetEquippedCannonId(AirshipCannonType cannonType, SavePolicy savePolicy = SavePolicy.Soon)
     {
         if (!CheckInitialized()) return;
-        if (string.IsNullOrWhiteSpace(cannonId))
-        {
-            cannonId = "NormalCannon"; // 기본 캐논 ID로 설정
-        }
-        Airship.EquippedCannonId = cannonId;
+        Airship.EquippedCannonType = cannonType;
         RequestSave(savePolicy);
     }
 
     /// <summary>
     /// 장착된 기어 ID를 세이브 데이터에 반영하는 메서드
     /// </summary>
-    /// <param name="gearId"></param>
+    /// <param name="gearType"></param>
     /// <param name="savePolicy"></param>
-    public void SetEquippedGearId(string gearId, SavePolicy savePolicy = SavePolicy.Soon)
+    public void SetEquippedGearId(AirshipGearType gearType, SavePolicy savePolicy = SavePolicy.Soon)
     {
         if (!CheckInitialized()) return;
-        if (string.IsNullOrWhiteSpace(gearId))
-        {
-            gearId = "MaxHpGear"; // 기본 기어 ID로 설정
-        }
-        Airship.EquippedGearId = gearId;
+        Airship.EquippedGearType = gearType;
         RequestSave(savePolicy);
     }
 
