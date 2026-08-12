@@ -171,10 +171,10 @@ MonoBehaviour:
   attackPerformed:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TestAirshipHealth, Assembly-CSharp
-        m_MethodName: TakeDamage
-        m_Mode: 0
+      - m_Target: {fileID: 8327244351578003406}
+        m_TargetAssemblyTypeName: EnemyAnimationController, Assembly-CSharp
+        m_MethodName: PlayAttack
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
