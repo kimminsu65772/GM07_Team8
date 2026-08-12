@@ -69,7 +69,7 @@ public class BattleEventHandler : MonoBehaviour
     {
         // 스테이지 재시작
         // 혹은 이전 스테이지로 넘어가도 될듯
-        battleManager.SetUpStage(failedStageNumber);
+        stageTransitionController.StartTransition(failedStageNumber);
 
         // UI한테 실패 이유를 알려주면 해당 메시지를 UI에서 표시하도록?
         // 혹은 enum 타입으로 실패 이유를 정의해서 UI에서 해당 enum에 맞는 메시지를 표시하도록 할 수도 있을듯.

@@ -13,9 +13,6 @@ public class HeroEntry : ScriptableObject
     public string HeroName => heroName;
     public GameObject HeroPrefab => heroPrefab;
     public bool IsDefaultOwned => isDefaultOwned;
-
     public HeroLocationEnum HeroLocation => heroLocation;
     public int DefaultLevel => Mathf.Max(1, defaultLevel);
-
-
 }

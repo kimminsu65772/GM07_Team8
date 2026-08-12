@@ -50,6 +50,11 @@ public class BattleManager : MonoBehaviour
         stageTestManager.StartStage(currentStage);
     }
 
+    public void StopStage()
+    {
+        stageTestManager.StopStage();
+    }
+
     private void ResetPlayerPosition()
     {
         if (airshipStartPoint == null || airship == null)

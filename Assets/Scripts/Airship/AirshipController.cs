@@ -98,6 +98,6 @@ public class AirshipController : MonoBehaviour
     public void Respawn()
     {
         health.ResetHealth();
-        stateMachine.ChangeState(stateMachine.IdleState);
+        stateMachine.ChangeState(stateMachine.MoveForwardState);
     }
 }
