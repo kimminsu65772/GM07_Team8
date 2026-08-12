@@ -28,7 +28,7 @@ public class HeroAttack : MonoBehaviour
 
     public void MeleeAttack(GameObject enemy)
     {
-        if (hero.Location != HeroLocationEnum.Front) return;
+        if (hero.Location != HeroLocationEnum.Front || hero.IsDead) return;
 
         if (attackTimer >= hero.HeroAttackTime && !isAttacking)
         {
@@ -44,13 +44,17 @@ public class HeroAttack : MonoBehaviour
             if (criRan <= hero.HeroCriChance) damage *= 2f;
 
             // 공격 적용, 치명타 적용
+            if (enemy.TryGetComponent<IDamageable>(out IDamageable enemyHP))
+            {
+                enemyHP.TakeDamage(damage);
+            }
             Debug.Log(gameObject.name + "의 공격, 피해량 : " + damage);
         }
     }
 
     public void RangeAttack(GameObject enemy)
     {
-        if (hero.Location != HeroLocationEnum.Back) return;
+        if (hero.Location != HeroLocationEnum.Back || hero.IsDead) return;
 
         if (attackTimer >= hero.HeroAttackTime && !isAttacking)
         {
