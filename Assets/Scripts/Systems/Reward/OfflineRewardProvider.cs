@@ -3,19 +3,22 @@ using UnityEngine;
 
 public static class OfflineRewardProvider
 {
-    public static void ProvideOfflineReward(PlayerSaveData playerSaveData)
-    {
-        TimeSpan offlineTime = CalculateOfflineTime(playerSaveData.LastSavedAtUtc);
-        int playerMaxCleardStage = playerSaveData.StageProgress.MaxClearedStage;
+    private static CurrencyReward[] offlineRewards;
+    public static CurrencyReward[] OfflineRewards => offlineRewards;
 
-        CurrencyReward[] offlineRewards = CalculateOfflineRewards(offlineTime, playerMaxCleardStage);
+    public static void ProvideOfflineReward()
+    {
+        TimeSpan offlineTime = CalculateOfflineTime(PlayerInfo.Instance.SaveData.LastSavedAtUtc);
+        int playerMaxCleardStage = PlayerInfo.Instance.MaxClearedStage;
+
+        offlineRewards = CalculateOfflineRewards(offlineTime, playerMaxCleardStage);
 
         if (offlineRewards.Length > 0)
         {
             for (int i = 0; i < offlineRewards.Length; i++)
             {
                 CurrencyReward reward = offlineRewards[i];
-                PlayerInfo.Instance.AddCurrency(reward.Type, reward.Amount, SavePolicy.Immediate);
+                PlayerInfo.Instance.AddCurrency(reward.Type, reward.Amount, SavePolicy.Soon);
                 Debug.Log($"{reward.Type}: {reward.Amount}");
             }
         }

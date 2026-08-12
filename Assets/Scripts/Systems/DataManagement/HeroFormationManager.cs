@@ -4,7 +4,9 @@ using System.Collections.Generic;
 public class HeroFormationManager : MonoBehaviour
 {
     [SerializeField] private HeroCatalog heroCatalog;
-    public static HeroFormationManager Instance { get; private set; }
+
+    private static HeroFormationManager instance;
+    public static HeroFormationManager Instance => instance;
     private HeroFormationSaveData formationData;
     private Dictionary<string, HeroSaveData> heroDataDictionary;
 
@@ -22,11 +24,12 @@ public class HeroFormationManager : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
-        Instance = this;
+        instance = this;
+        instance.Initialize();
         DontDestroyOnLoad(this.gameObject);
     }
 
-    public void Initialize(Dictionary<string, HeroSaveData> heroes, HeroFormationSaveData formationSaveData)
+    public void Initialize()
     {
         if (heroCatalog == null)
         {
@@ -34,25 +37,25 @@ public class HeroFormationManager : MonoBehaviour
             return;
         }
 
-        if (heroes == null)
+        if (PlayerInfo.Instance.Heroes == null)
         {
             Debug.LogError("저장된 영웅 데이터가 비어있습니다.");
             return;
         }
 
-        if (formationSaveData == null)
+        if (PlayerInfo.Instance.HeroFormation == null)
         {
             Debug.LogError("저장된 진형 데이터가 없습니다.");
             return;
         }
 
-        if (formationSaveData.Slots == null)
+        if (PlayerInfo.Instance.HeroFormation.Slots == null)
         {
             Debug.LogError("저장된 진형 슬롯 데이터가 비어있습니다.");
             return;
         }
-        heroDataDictionary = heroes;
-        formationData = formationSaveData;
+        heroDataDictionary = PlayerInfo.Instance.Heroes;
+        formationData = PlayerInfo.Instance.HeroFormation;
         RefreshRuntimeFormation();
     }
 

@@ -51,10 +51,7 @@ public class PlayerInfo : MonoBehaviour
 
     private void Start()
     {
-        if (HeroFormationManager.Instance != null)
-        {
-            HeroFormationManager.Instance.Initialize(SaveData.Heroes, SaveData.HeroFormation);
-        }
+        OfflineRewardProvider.ProvideOfflineReward();
     }
 
     public void Initialize()

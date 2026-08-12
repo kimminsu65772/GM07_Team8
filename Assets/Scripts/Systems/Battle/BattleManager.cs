@@ -88,7 +88,7 @@ public class BattleManager : MonoBehaviour
         }
 
         PlayerInfo playerInfo = PlayerInfo.Instance;
-        formationManager.Initialize(playerInfo.Heroes, playerInfo.HeroFormation);
+        formationManager.Initialize();
 
         PlaceHeroes(formationManager.GetFrontLineSlots(), placementPoints, true);
         PlaceHeroes(formationManager.GetBackLineSlots(), placementPoints, false);
