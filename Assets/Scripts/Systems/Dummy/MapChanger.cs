@@ -12,7 +12,7 @@ public class MapChanger : MonoBehaviour
             return;
         }
 
-        PlayerInfo.Instance.SetCurrentStage(nextStage);
+        PlayerInfo.Instance.TrySetCurrentStage(nextStage);
     }
 
     public void PreviousMap()
@@ -25,7 +25,7 @@ public class MapChanger : MonoBehaviour
                 return;
             }
 
-            PlayerInfo.Instance.SetCurrentStage(previousStage);
+            PlayerInfo.Instance.TrySetCurrentStage(previousStage);
         }
         else
         {
