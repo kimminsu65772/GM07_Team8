@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
-    [SerializeField] private Transform mapRoot;
+    [SerializeField] private FollowCam mainCamera;
     [SerializeField] private StageTestManager stageTestManager;
     [SerializeField] private MapController mapController;
 
@@ -29,6 +29,11 @@ public class BattleManager : MonoBehaviour
             return;
         }
 
+        if (mainCamera == null)
+        {
+            mainCamera = Camera.main.GetComponent<FollowCam>();
+        }
+
         currentStage = PlayerInfo.Instance.CurrentStage;
         airship.Init();
         SetUpStage(currentStage);
@@ -39,10 +44,11 @@ public class BattleManager : MonoBehaviour
 
     public void SetUpStage(int stageNumber)
     {
-        ResetPlayerPosition();
-        PlaceFormationHeroes();
+        mainCamera.ResetCameraPosition();
         currentStage = stageNumber;
         mapController.LoadMap(currentStage);
+        ResetPlayerPosition();
+        PlaceFormationHeroes();
     }
 
     public void StartStage()
@@ -150,27 +156,4 @@ public class BattleManager : MonoBehaviour
 
         spawnedHeroes.Clear();
     }
-
-    //private void LoadMap(int currentStage)
-    //{
-    //    if (mapCatalog == null)
-    //    {
-    //        Debug.LogError("MapCatalog is not assigned.");
-    //        return;
-    //    }
-
-    //    GameObject mapPrefab = mapCatalog.GetMapPrefab(currentStage);
-    //    if (mapPrefab == null)
-    //    {
-    //        Debug.LogError($"MapPrefab for stage {currentStage} does not exist.");
-    //        return;
-    //    }
-
-    //    if (currentMap != null)
-    //    {
-    //        Destroy(currentMap);
-    //    }
-
-    //    currentMap = Instantiate(mapPrefab, mapRoot, false);
-    //}
 }
