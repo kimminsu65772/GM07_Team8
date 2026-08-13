@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -33,6 +34,8 @@ public class PlayerInfo : MonoBehaviour
 
     public PlayerSaveData SaveData { get; private set; }
     public bool IsInitialized { get; private set; }
+
+    public event Action<CurrencyType> OnCurrencyChanged;
 
     private SaveDataWriter saveDataWriter;
 
@@ -117,6 +120,7 @@ public class PlayerInfo : MonoBehaviour
         }
 
         currency.Amount += amount;
+        OnCurrencyChanged?.Invoke(type, currency.Amount);
 
         RequestSave(savePolicy);
     }
@@ -141,6 +145,7 @@ public class PlayerInfo : MonoBehaviour
             return false;
         }
         currency.Amount -= amount;
+        OnCurrencyChanged?.Invoke(type, currency.Amount);
         RequestSave(savePolicy);
         return true;
     }
