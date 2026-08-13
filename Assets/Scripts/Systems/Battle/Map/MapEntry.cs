@@ -4,6 +4,6 @@ using UnityEngine;
 [Serializable]
 public class MapEntry
 {
-    public int StageNumber;
+    public int RegionId;
     public GameObject MapPrefab;
 }
