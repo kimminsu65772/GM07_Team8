@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
-    [SerializeField] private MapCatalog mapCatalog;
     [SerializeField] private Transform mapRoot;
     [SerializeField] private StageTestManager stageTestManager;
+    [SerializeField] private MapController mapController;
 
     [Header("Start Settings")]
     [SerializeField] private Transform airshipStartPoint;
@@ -39,10 +39,10 @@ public class BattleManager : MonoBehaviour
 
     public void SetUpStage(int stageNumber)
     {
-        currentStage = stageNumber;
-        LoadMap(currentStage);
         ResetPlayerPosition();
         PlaceFormationHeroes();
+        currentStage = stageNumber;
+        mapController.LoadMap(currentStage);
     }
 
     public void StartStage()
@@ -151,26 +151,26 @@ public class BattleManager : MonoBehaviour
         spawnedHeroes.Clear();
     }
 
-    private void LoadMap(int currentStage)
-    {
-        if (mapCatalog == null)
-        {
-            Debug.LogError("MapCatalog is not assigned.");
-            return;
-        }
+    //private void LoadMap(int currentStage)
+    //{
+    //    if (mapCatalog == null)
+    //    {
+    //        Debug.LogError("MapCatalog is not assigned.");
+    //        return;
+    //    }
 
-        GameObject mapPrefab = mapCatalog.GetMapPrefab(currentStage);
-        if (mapPrefab == null)
-        {
-            Debug.LogError($"MapPrefab for stage {currentStage} does not exist.");
-            return;
-        }
+    //    GameObject mapPrefab = mapCatalog.GetMapPrefab(currentStage);
+    //    if (mapPrefab == null)
+    //    {
+    //        Debug.LogError($"MapPrefab for stage {currentStage} does not exist.");
+    //        return;
+    //    }
 
-        if (currentMap != null)
-        {
-            Destroy(currentMap);
-        }
+    //    if (currentMap != null)
+    //    {
+    //        Destroy(currentMap);
+    //    }
 
-        currentMap = Instantiate(mapPrefab, mapRoot, false);
-    }
+    //    currentMap = Instantiate(mapPrefab, mapRoot, false);
+    //}
 }
