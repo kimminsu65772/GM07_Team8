@@ -6,8 +6,8 @@ using UnityEngine;
 /// </summary>
 public class AirshipController : MonoBehaviour
 {
-    [SerializeField] private AirshipUpgradeManager upgradeManager;
     [SerializeField] private AirshipUpgradeController upgradeController;
+    [SerializeField] private AirshipEquipmentController equipmentController;
     [SerializeField] private AirshipStatController statController;
     [SerializeField] private AirshipHealth health;
     [SerializeField] private AirshipAttack attack;
@@ -16,6 +16,8 @@ public class AirshipController : MonoBehaviour
     
     private AirshipStateMachine stateMachine;
 
+    public AirshipUpgradeController UpgradeController => upgradeController;
+    public AirshipEquipmentController EquipmentController => equipmentController;
     public AirshipMovement Movement => movement;
     public AirshipEnemyChecker EnemyChecker => enemyChecker;
     private void Awake()
@@ -26,30 +28,16 @@ public class AirshipController : MonoBehaviour
         stateMachine.Init(stateMachine.IdleState);
     }
 
-    private void Start()
-    {
-        // TODO 부트스트랩 생기고 데이터 관리가 생기면 이 테스트용 init은 삭제
-        Init(new AirshipSaveData
-        {
-            AttackLevel = 3,
-            DefenseLevel = 2,
-            MaxHealthLevel = 5,
-            CriticalLevel = 1
-        });
-    }
-
     private void OnDestroy()
     {
         UnbindEvents();
     }
     
     // 이걸 씬같은 곳에서 요청하기.
-    // TODO 매니저 완전 삭제 후 데이터 인자 받는거 삭제
-    public void Init(AirshipSaveData saveData)
+    public void Init()
     {
-        upgradeManager.Init(saveData);
-        statController.Init(upgradeManager.UpgradeState);
         upgradeController.Init();
+        equipmentController.Init();
         statController.Init(upgradeController.UpgradeState);
     }
     private void CacheComponents()
@@ -59,11 +47,13 @@ public class AirshipController : MonoBehaviour
 
         if (enemyChecker == null)
             enemyChecker = GetComponent<AirshipEnemyChecker>();
-
-        if (upgradeManager == null)
-            upgradeManager = GetComponent<AirshipUpgradeManager>();
+        
         if (upgradeController == null)
             upgradeController = GetComponent<AirshipUpgradeController>();
+        
+        if (equipmentController == null)
+            equipmentController =
+                GetComponent<AirshipEquipmentController>();
 
         if (statController == null)
             statController = GetComponent<AirshipStatController>();
@@ -76,7 +66,6 @@ public class AirshipController : MonoBehaviour
     }
     private void BindEvents()
     {
-        upgradeManager.OnUpgradeChanged += HandleUpgradeChanged;
         upgradeController.OnUpgradeChanged += HandleUpgradeChanged;
         statController.OnStatsChanged += HandleStatsChanged;
         health.OnDestroyed += HandleDestroyed;
@@ -84,7 +73,6 @@ public class AirshipController : MonoBehaviour
 
     private void UnbindEvents()
     {
-        upgradeManager.OnUpgradeChanged -= HandleUpgradeChanged;
         upgradeController.OnUpgradeChanged -= HandleUpgradeChanged;
         statController.OnStatsChanged -= HandleStatsChanged;
         health.OnDestroyed -= HandleDestroyed;
@@ -106,22 +94,10 @@ public class AirshipController : MonoBehaviour
     private void Update()
     {
         stateMachine.Tick();
-        Debug.Log(stateMachine.CurrentState.StateType.ToString());
     }
     public void Respawn()
     {
         health.ResetHealth();
-        stateMachine.ChangeState(stateMachine.IdleState);
-    }
-    [ContextMenu("Test Damage")]
-    private void TestDamage()
-    {
-        health.TakeDamage(150f);
-    }
-
-    [ContextMenu("Test Respawn")]
-    private void TestRespawn()
-    {
-        Respawn();
+        stateMachine.ChangeState(stateMachine.MoveForwardState);
     }
 }

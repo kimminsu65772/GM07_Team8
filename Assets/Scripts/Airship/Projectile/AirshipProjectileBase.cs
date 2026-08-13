@@ -18,4 +18,8 @@ public abstract class AirshipProjectileBase : MonoBehaviour
 
         targetRadius = damageable.HitRadius;
     }
+    protected virtual void OnHit()
+    {
+        damageable.TakeDamage(damage);
+    }
 }

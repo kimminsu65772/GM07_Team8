@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6576d65dbf944184099cafb49ea5dccf, type: 3}
+  m_Name: AirshipGear_SpeedUp
+  m_EditorClassIdentifier: Assembly-CSharp::AirshipGearData
+  displayName: "\uC774\uC18D\uC99D\uAC00\uBD80\uD488"
+  uiImage: {fileID: 0}
+  gearImage: {fileID: 21300000, guid: 22fecbe7d840c9a49bbdae93cde62e8e, type: 3}
+  gearType: 1
+  buffData: {fileID: 11400000, guid: 5cc1f637e6181bc409dda10a30370f2d, type: 2}
