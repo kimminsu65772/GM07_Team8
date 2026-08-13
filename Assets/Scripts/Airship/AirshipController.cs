@@ -16,6 +16,7 @@ public class AirshipController : MonoBehaviour
     
     private AirshipStateMachine stateMachine;
 
+    public AirshipHealth Health => health;
     public AirshipUpgradeController UpgradeController => upgradeController;
     public AirshipEquipmentController EquipmentController => equipmentController;
     public AirshipMovement Movement => movement;

@@ -16,18 +16,24 @@ MonoBehaviour:
   - statType: 0
     baseValue: 10
     growthValue: 2
+    maxLevel: 100
   - statType: 1
     baseValue: 1
     growthValue: 1
+    maxLevel: 100
   - statType: 2
     baseValue: 100
     growthValue: 20
+    maxLevel: 100
   - statType: 3
-    baseValue: 0.05
+    baseValue: 0.01
     growthValue: 0.01
+    maxLevel: 100
   - statType: 4
     baseValue: 5
     growthValue: 0
+    maxLevel: 100
   - statType: 5
     baseValue: 1
     growthValue: 0
+    maxLevel: 100
