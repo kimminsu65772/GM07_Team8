@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Hero1
   m_EditorClassIdentifier: Assembly-CSharp::HeroEntry
   heroName: Hero1
+  heroIcon: {fileID: 21300000, guid: f748369105617a14bafedad021f8ccd1, type: 3}
   heroPrefab: {fileID: 5542119879111424239, guid: be5d0e5f76b847d428fd001a3fd381d6, type: 3}
   heroLocation: 0
   isDefaultOwned: 1

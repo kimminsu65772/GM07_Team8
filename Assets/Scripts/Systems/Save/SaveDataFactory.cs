@@ -68,12 +68,12 @@ public class SaveDataFactory
             return heroes;
         }
 
-        foreach (HeroEntry entry in heroCatalog.GetDefaultOwnedHeroEntries())
+        foreach (HeroEntry entry in heroCatalog.InGameHeroEntries)
         {
             heroes[entry.HeroName] = new HeroSaveData
             {
                 Level = entry.DefaultLevel,
-                IsOwned = true
+                IsOwned = entry.IsDefaultOwned,
             };
         }
 
