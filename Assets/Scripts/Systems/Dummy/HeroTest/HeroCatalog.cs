@@ -13,8 +13,21 @@ public class HeroCatalog : ScriptableObject
 
     private Dictionary<string, HeroEntry> heroEntryDictionary;
 
-    public IReadOnlyList<HeroEntry> HeroEntries => heroEntries;
+    public IReadOnlyList<HeroEntry> InGameHeroEntries
+    {
+        get
+        {
+            List<HeroEntry> inGameEntries;
+            BuildHeroEntryDict();
+            inGameEntries = new List<HeroEntry>(heroEntryDictionary.Values);
+            return inGameEntries;
+        }
+    }
 
+    private void OnEnable()
+    {
+        BuildHeroEntryDict();
+    }
     public bool TryGetHeroEntry(string heroName, out HeroEntry heroEntry)
     {
         BuildHeroEntryDict();
@@ -29,58 +42,36 @@ public class HeroCatalog : ScriptableObject
         return false;
     }
 
-    public List<HeroEntry> GetDefaultOwnedHeroEntries()
-    {
-        List<HeroEntry> defaultOwnedHeroEntries = new List<HeroEntry>();
-        BuildHeroEntryDict();
-
-        if (heroEntryDictionary == null)
-        {
-            return defaultOwnedHeroEntries;
-        }
-
-        foreach (HeroEntry entry in heroEntryDictionary.Values)
-        {
-            if (entry.IsDefaultOwned)
-            {
-                defaultOwnedHeroEntries.Add(entry);
-            }
-        }
-
-        return defaultOwnedHeroEntries;
-    }
-
     private void BuildHeroEntryDict()
     {
+        if (heroEntryDictionary != null && heroEntryDictionary.Count > 0)
+        {
+            return;
+        }
+
+        heroEntryDictionary = new Dictionary<string, HeroEntry>();
+
         if (heroEntries == null)
         {
             return;
         }
 
-        if (heroEntryDictionary == null)
+        foreach (HeroEntry entry in heroEntries)
         {
-            heroEntryDictionary = new Dictionary<string, HeroEntry>();
-            foreach (HeroEntry entry in heroEntries)
+            if (entry == null)
             {
-                if (entry == null)
-                {
-                    Debug.LogWarning("Hero entry is empty.");
-                    continue;
-                }
+                continue;
+            }
 
-                if (heroEntryDictionary.ContainsKey(entry.HeroName))
-                {
-                    Debug.LogWarning($"중복된 영웅 등록입니다. {entry.HeroName}");
-                    continue;
-                }
+            if (entry.HeroPrefab == null ||
+                string.IsNullOrWhiteSpace(entry.HeroName))
+            {
+                continue;
+            }
 
-                if (entry.HeroPrefab == null || string.IsNullOrWhiteSpace(entry.HeroName))
-                {
-                    Debug.LogWarning($"영웅 프리팹이 없거나 이름이 비어있습니다.");
-                    continue;
-                }
-
-                heroEntryDictionary.Add(entry.HeroName, entry);
+            if (!heroEntryDictionary.TryAdd(entry.HeroName, entry))
+            {
+                Debug.LogWarning($"중복된 영웅입니다: {entry.HeroName}");
             }
         }
     }
