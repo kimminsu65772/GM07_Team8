@@ -64,9 +64,21 @@ public class BattleManager : MonoBehaviour
 
     public void SetUpStage(int stageNumber)
     {
+        if (stageNumber < 1 || stageNumber > stageManager.LastStage)
+        {
+            Debug.LogError($"유효하지 않은 스테이지입니다: {stageNumber}");
+            return;
+        }
+
+        if (!PlayerInfo.Instance.TrySetCurrentStage(stageNumber))
+        {
+            Debug.LogError($"설정할 수 없는 스테이지입니다: {stageNumber}");
+            return;
+        }
+
         StopStage();
         mainCamera.ResetCameraPosition();
-        currentStage = stageNumber;
+        currentStage = PlayerInfo.Instance.CurrentStage;
         mapController.LoadMap(currentStage);
         ResetPlayerPosition();
         PlaceFormationHeroes();
