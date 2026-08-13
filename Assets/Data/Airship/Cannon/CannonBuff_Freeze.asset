@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6bb71851fb85fbe4690a78be78724f27, type: 3}
-  m_Name: SpeedUpGearBuff
+  m_Name: CannonBuff_Freeze
   m_EditorClassIdentifier: Assembly-CSharp::AirshipBuffData
-  buffName: SpeedUpBuff
+  buffName: "\uBE59\uACB0\uD0C4\uACF5\uACA9\uC18D\uB3C4"
   duration: -1
   modifiers:
-  - statType: 4
-    modifierType: 1
-    value: 0.4
+  - statType: 5
+    modifierType: 2
+    value: 0.5
