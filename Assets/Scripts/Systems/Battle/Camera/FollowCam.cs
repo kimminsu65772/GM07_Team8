@@ -11,8 +11,21 @@ public class FollowCam : MonoBehaviour
     [SerializeField] private float cameraSize = 6f;
     [SerializeField] private float targetOffsetY = -0.3f;
     [SerializeField] private float targetOffsetX = -1f;
+    [SerializeField] private Transform startFollowPoint;
+    [SerializeField] private StageTestManager stageTestManager;
 
     private bool isFollowing;
+
+    private void OnEnable()
+    {
+        stageTestManager.OnStageCompleted -= StopFollowTarget;
+        stageTestManager.OnStageCompleted += StopFollowTarget;
+    }
+
+    private void OnDisable()
+    {
+        stageTestManager.OnStageCompleted -= StopFollowTarget;
+    }
 
     private void Start()
     {
@@ -21,7 +34,22 @@ public class FollowCam : MonoBehaviour
             Debug.LogError("FollowCam: 타겟이 설정되지 않았습니다.");
         }
 
-        isFollowing = true;
+        if (startFollowPoint == null)
+        {
+            Debug.LogError("FollowCam: 카메라 추적 시작 지점이 설정되지 않았습니다.");
+        }
+
+        isFollowing = false;
+    }
+
+    private void Update()
+    {
+        if (target == null || isFollowing)
+        {
+            return;
+        }
+
+        CheckStartFollow();
     }
 
     private void LateUpdate()
@@ -59,13 +87,20 @@ public class FollowCam : MonoBehaviour
             new Vector3(cameraWidth, cameraHeight, 0f));
     }
 
-    public void StopFollowTarget()
+    private void StopFollowTarget(int stageNumber)
     {
         isFollowing = false;
     }
 
-    public void StartFollowTarget()
+    private void CheckStartFollow()
     {
-        isFollowing = true;
+        if (isFollowing) return;
+
+        Vector2 distanceX = new Vector2(target.position.x, 0f) - new Vector2(startFollowPoint.position.x, 0f);
+
+        if (distanceX.sqrMagnitude < 0.01f)
+        {
+            isFollowing = true;
+        }
     }   
 }
