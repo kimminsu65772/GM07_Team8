@@ -7,6 +7,7 @@ public class HeroAttack : MonoBehaviour
     private bool isAttacking;
     private bool canAttack;
     private float attackTimer;
+    private float skillTimer;
 
     [SerializeField] private GameObject projectile;
     [SerializeField] private Transform firePoint;
@@ -24,7 +25,9 @@ public class HeroAttack : MonoBehaviour
 
     private void Update()
     {
-        attackTimer += Time.deltaTime;
+        if (attackTimer < hero.HeroAttackTime) attackTimer += Time.deltaTime;
+        if (skillTimer < hero.HeroSkillTime) skillTimer += Time.deltaTime;
+        UseSkill();
     }
 
     public void MeleeAttack(GameObject enemy)
@@ -86,6 +89,13 @@ public class HeroAttack : MonoBehaviour
     {
         GameObject projec = Instantiate(projectile, firePoint.position, Quaternion.identity);
         projec.GetComponent<HeroAttackProjectileController>().Init(enemy, damage);
+    }
+
+    public void UseSkill()
+    {
+        if (hero.IsDead || IsAttacking || !canAttack || hero.HeroState != HeroStateEnum.Attack) return;
+
+        hero.Skill();
     }
 
     public void StopIsAttacking()

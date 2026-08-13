@@ -16,6 +16,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
     [SerializeField] private bool isDead;
     [SerializeField] private float hitRadius;
     [SerializeField] private float attackTime;
+    [SerializeField] private float skillTime;
 
     private HeroLocationEnum location;
     // private HeroAttackTypeEnum attackType;
@@ -79,13 +80,18 @@ public abstract class Hero : MonoBehaviour, IDamageable
         get => attackTime;
         set => attackTime = Mathf.Max(0f, value);
     }
+    public float HeroSkillTime
+    {
+        get => skillTime;
+        set => skillTime = Mathf.Max(0f, value);
+    }
     public HeroLocationEnum Location => location;
     public HeroStateEnum HeroState => heroState;
 
     protected virtual void Awake() { }
-    protected virtual void Skill() { }
+    public virtual void Skill() { }
 
-    protected virtual void Init(int id, string name, float attackTime,
+    protected virtual void Init(int id, string name, float attackTime, float skillTime,
         HeroLocationEnum location)
     {
         heroID = id;
@@ -95,6 +101,8 @@ public abstract class Hero : MonoBehaviour, IDamageable
         HeroLv = 1;
         HeroLvManager.Instance.LvApply(HeroLv, this);
         heroCurrentHP = heroMaxHP;
+        HeroAttackTime = attackTime;
+        HeroSkillTime = skillTime;
         isDead = false;
         this.location = location;
 
@@ -186,7 +194,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
     public void FlipSprite(Vector2 direction)
     {
-        if (Mathf.Abs(direction.x) < 0.01f) return;
+        if (Mathf.Abs(direction.x) < 0.01f || IsDead) return;
 
         Vector3 scale = heroRoot.localScale;
         scale.x = direction.x > 0 ? -1 : 1;
