@@ -3,6 +3,14 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
+    [SerializeField] private FollowCam mainCamera;
+    [SerializeField] private StageManager stageManager;
+    [SerializeField] private MapController mapController;
+
+    [Header("Start Settings")]
+    [SerializeField] private Transform airshipStartPoint;
+    [SerializeField] private AirshipController airship;
+    
     private static BattleManager instance;
 
     public static BattleManager Instance
@@ -22,13 +30,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    [SerializeField] private FollowCam mainCamera;
-    [SerializeField] private StageManager stageManager;
-    [SerializeField] private MapController mapController;
-
-    [Header("Start Settings")]
-    [SerializeField] private Transform airshipStartPoint;
-    [SerializeField] private AirshipController airship;
+    public AirshipController Airship => airship;
 
     private readonly List<GameObject> spawnedHeroes = new List<GameObject>();
     private int currentStage;
@@ -78,11 +80,6 @@ public class BattleManager : MonoBehaviour
     public void StopStage()
     {
         stageManager.StopStage();
-    }
-
-    public AirshipController GetAirshipInStage()
-    {
-        return airship;
     }
 
     private void ResetPlayerPosition()
