@@ -10,6 +10,9 @@ public class AirshipAttack : MonoBehaviour
     [SerializeField] private Transform aimPoint;
     [SerializeField] private Transform projectileSpawnPoint;
 
+    [Header("조준")]
+    [SerializeField, Min(0f)] private float aimLerpSpeed = 25f;
+
     private AirshipCannonData currentCannon;
 
     private float attackDamage;
@@ -60,12 +63,17 @@ public class AirshipAttack : MonoBehaviour
 
         attackTimer -= Time.deltaTime;
 
+        // 마지막으로 선택한 타겟을 계속 부드럽게 추적
+        if (cachedTarget != null)
+            RotateAimPoint(cachedTarget);
+
         if (attackTimer > 0f)
             return;
 
         if (enemyChecker == null)
             return;
 
+        // 기존 타겟 선정 방식 유지
         Transform target = enemyChecker.FindNearestEnemy();
 
         if (target == null)
@@ -113,6 +121,7 @@ public class AirshipAttack : MonoBehaviour
         if (cachedDamageable == null)
             return;
 
+        // 발사 순간에도 한 번 회전하고 즉시 발사
         RotateAimPoint(target);
 
         AirshipProjectileBase projectile = Instantiate(
@@ -130,6 +139,9 @@ public class AirshipAttack : MonoBehaviour
 
     private void RotateAimPoint(Transform target)
     {
+        if (aimPoint == null || target == null)
+            return;
+
         Vector2 direction =
             (Vector2)target.position -
             (Vector2)aimPoint.position;
@@ -137,6 +149,23 @@ public class AirshipAttack : MonoBehaviour
         if (direction.sqrMagnitude <= 0f)
             return;
 
-        aimPoint.right = direction.normalized;
+        float targetAngle =
+            Mathf.Atan2(direction.y, direction.x) *
+            Mathf.Rad2Deg;
+
+        Quaternion targetRotation =
+            Quaternion.Euler(0f, 0f, targetAngle);
+
+        if (aimLerpSpeed <= 0f)
+        {
+            aimPoint.rotation = targetRotation;
+            return;
+        }
+
+        aimPoint.rotation = Quaternion.Lerp(
+            aimPoint.rotation,
+            targetRotation,
+            aimLerpSpeed * Time.deltaTime
+        );
     }
 }

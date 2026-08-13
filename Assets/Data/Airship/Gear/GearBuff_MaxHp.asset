@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6bb71851fb85fbe4690a78be78724f27, type: 3}
-  m_Name: MaxHpGearBuff
+  m_Name: GearBuff_MaxHp
   m_EditorClassIdentifier: Assembly-CSharp::AirshipBuffData
   buffName: MaxHpBuff
   duration: -1

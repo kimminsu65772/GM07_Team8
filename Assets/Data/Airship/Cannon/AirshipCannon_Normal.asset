@@ -17,3 +17,4 @@ MonoBehaviour:
   barrelImage: {fileID: 21300000, guid: 00d1b0819e036944b8faa28cef37fe2b, type: 3}
   cannonType: 0
   projectilePrefab: {fileID: 193875028588587811, guid: 4672c54b98b02474e92eba6e7b85097d, type: 3}
+  buffData: {fileID: 11400000, guid: 73750686c25ce964d81180a164771464, type: 2}

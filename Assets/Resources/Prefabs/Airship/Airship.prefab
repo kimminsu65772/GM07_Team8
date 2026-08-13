@@ -634,7 +634,7 @@ GameObject:
   - component: {fileID: 6065782831364134342}
   - component: {fileID: 4626290188937191730}
   - component: {fileID: 2430253705024483779}
-  - component: {fileID: 5786310163317347532}
+  - component: {fileID: 5523167347859530982}
   m_Layer: 0
   m_Name: Airship
   m_TagString: Untagged
@@ -674,7 +674,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f148b3af9417b84eb36894d7d3280ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AirshipController
-  upgradeController: {fileID: 5786310163317347532}
+  upgradeController: {fileID: 5523167347859530982}
   equipmentController: {fileID: 2430253705024483779}
   statController: {fileID: 5200261145840763693}
   health: {fileID: 2751722732999653326}
@@ -726,6 +726,7 @@ MonoBehaviour:
   equipmentController: {fileID: 2430253705024483779}
   aimPoint: {fileID: 2617695791087846299}
   projectileSpawnPoint: {fileID: 8275409358988598380}
+  aimLerpSpeed: 25
 --- !u!114 &3859776976768732686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -857,7 +858,7 @@ MonoBehaviour:
   statController: {fileID: 5200261145840763693}
   barrelRenderer: {fileID: 4639525818923275732}
   gearRenderer: {fileID: 2191599688475656542}
---- !u!114 &5786310163317347532
+--- !u!114 &5523167347859530982
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -866,7 +867,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3601249629661744666}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2dbbafe0effc1c441beb901a4634a619, type: 3}
+  m_Script: {fileID: 11500000, guid: cb53f3c102f9b11498d80d97289e81b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AirshipUpgradeController
   upgradeCurrency: 0

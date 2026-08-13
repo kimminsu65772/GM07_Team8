@@ -3,8 +3,8 @@ using UnityEngine;
 public class NormalProjectile : AirshipProjectileBase
 {
     [SerializeField] private float moveSpeed = 10f;
-    [SerializeField] private float projectileRadius = 0.2f;
-    [SerializeField] private bool drawOnlyWhenSelected = false;
+    [SerializeField] protected float projectileRadius = 0.2f;
+    [SerializeField] protected bool drawOnlyWhenSelected = false;
 
     private float combinedRadius;
     private Vector2 offset;
@@ -36,7 +36,7 @@ public class NormalProjectile : AirshipProjectileBase
         if (offset.sqrMagnitude > combinedRadius * combinedRadius)
             return;
 
-        damageable.TakeDamage(damage);
+        OnHit();
         Destroy(gameObject);
     }
 

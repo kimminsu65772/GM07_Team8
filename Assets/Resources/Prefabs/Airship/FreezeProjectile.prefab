@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 9053499512272592717}
   - component: {fileID: 2858570624197215424}
-  - component: {fileID: 193875028588587811}
+  - component: {fileID: -4218226267792731221}
   m_Layer: 0
-  m_Name: TestProjectile
+  m_Name: FreezeProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.7549124, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -92,7 +92,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &193875028588587811
+--- !u!114 &-4218226267792731221
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,9 +101,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 7467100356609528441}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cb7d568cb64f1c4cacd7668a0c19b1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b76f84f5df25b3428865834d1e2692f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NormalProjectile
+  m_EditorClassIdentifier: Assembly-CSharp::FreezeProjectile
   moveSpeed: 10
-  projectileRadius: 0.38
+  projectileRadius: 0.2
   drawOnlyWhenSelected: 0
+  splashRadius: 1.5
+  splashDamageMultiplier: 0.5
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  impactVfx: {fileID: 0}
