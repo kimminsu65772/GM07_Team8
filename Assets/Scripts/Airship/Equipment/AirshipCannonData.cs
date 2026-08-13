@@ -16,10 +16,18 @@ public class AirshipCannonData : ScriptableObject
     [SerializeField] private Sprite barrelImage;
     [SerializeField] private AirshipCannonType cannonType;
     [SerializeField] private AirshipProjectileBase projectilePrefab;
-    
+    [SerializeField] private AirshipBuffData buffData;
+
     public string DisplayName => displayName;
     public Sprite UIImage => uiImage;
     public Sprite BarrelImage => barrelImage;
     public AirshipCannonType CannonType => cannonType;
     public AirshipProjectileBase ProjectilePrefab => projectilePrefab;
+
+    public AirshipBuff CreateBuff(object owner)
+    {
+        return buffData == null
+            ? null
+            : buffData.CreateBuff(owner);
+    }
 }

@@ -28,6 +28,10 @@ public class AirshipEquipmentController : MonoBehaviour
         gearDataDictionary =
         new Dictionary<AirshipGearType, AirshipGearData>();
 
+    // 장비 슬롯별 고유 owner
+    private readonly object cannonBuffOwner = new object();
+    private readonly object gearBuffOwner = new object();
+
     public AirshipCannonData EquippedCannon => equippedCannon;
     public AirshipGearData EquippedGear => equippedGear;
 
@@ -127,7 +131,11 @@ public class AirshipEquipmentController : MonoBehaviour
             return;
         }
 
+        UnequipCannon();
+
         equippedCannon = cannonData;
+
+        ApplyCannonBuff();
         ApplyCannonVisual();
 
         OnCannonChanged?.Invoke(equippedCannon);
@@ -149,23 +157,38 @@ public class AirshipEquipmentController : MonoBehaviour
         UnequipGear();
 
         equippedGear = gearData;
+
         ApplyGearBuff();
         ApplyGearVisual();
 
         OnGearChanged?.Invoke(equippedGear);
     }
 
+    private void UnequipCannon()
+    {
+        if (statController != null)
+            statController.RemoveBuffsByOwner(cannonBuffOwner);
+
+        equippedCannon = null;
+    }
+
     private void UnequipGear()
     {
-        if (equippedGear == null)
-            return;
-
         if (statController != null)
-        {
-            statController.RemoveBuffsByOwner(this);
-        }
+            statController.RemoveBuffsByOwner(gearBuffOwner);
 
         equippedGear = null;
+    }
+
+    private void ApplyCannonBuff()
+    {
+        if (statController == null || equippedCannon == null)
+            return;
+
+        AirshipBuff buff =
+            equippedCannon.CreateBuff(cannonBuffOwner);
+
+        statController.AddBuff(buff);
     }
 
     private void ApplyGearBuff()
@@ -173,7 +196,9 @@ public class AirshipEquipmentController : MonoBehaviour
         if (statController == null || equippedGear == null)
             return;
 
-        AirshipBuff buff = equippedGear.CreateBuff(this);
+        AirshipBuff buff =
+            equippedGear.CreateBuff(gearBuffOwner);
+
         statController.AddBuff(buff);
     }
 
@@ -197,5 +222,12 @@ public class AirshipEquipmentController : MonoBehaviour
             equippedGear == null
                 ? null
                 : equippedGear.GearImage;
+    }
+
+    [ContextMenu("test")]
+    public void TestFreeze()
+    {
+        gameObject.GetComponent<AirshipController>().Init();
+        EquipCannon(AirshipCannonType.Freeze);
     }
 }
