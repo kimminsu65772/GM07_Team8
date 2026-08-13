@@ -51,7 +51,6 @@ public class StageManager : MonoBehaviour
             return;
         }
 
-        StartStage(1);
     }
    
 
