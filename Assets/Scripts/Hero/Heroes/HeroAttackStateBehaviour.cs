@@ -1,7 +1,15 @@
 using UnityEngine;
 
-public class HeroAttackStateBehaviour : StateMachineBehaviour
+public class HeroActionStateBehaviour : StateMachineBehaviour
 {
+    public enum ActionType
+    {
+        Attack,
+        Skill
+    }
+
+    [SerializeField] private ActionType actionType;
+
     public override void OnStateExit(
         Animator animator,
         AnimatorStateInfo stateInfo,
@@ -9,9 +17,18 @@ public class HeroAttackStateBehaviour : StateMachineBehaviour
     {
         Hero hero = animator.GetComponentInParent<Hero>();
 
-        if (hero != null)
+        if (hero == null)
+            return;
+
+        switch (actionType)
         {
-            hero.AttackStop();
+            case ActionType.Attack:
+                hero.AttackStop();
+                break;
+
+            case ActionType.Skill:
+                hero.SkillStop();
+                break;
         }
     }
 }

@@ -96,9 +96,9 @@ public abstract class Hero : MonoBehaviour, IDamageable
     {
         heroID = id;
         heroName = name;
-        HeroSaveData heroData = PlayerInfo.Instance.TryGetHeroData(heroName, out heroData) ? heroData : null;
-        HeroLv = heroData.Level;
-        // HeroLv = 1;
+        //HeroSaveData heroData = PlayerInfo.Instance.TryGetHeroData(heroName, out heroData) ? heroData : null;
+        //HeroLv = heroData.Level;
+        HeroLv = 1;
         HeroLvManager.Instance.LvApply(HeroLv, this);
         heroCurrentHP = heroMaxHP;
         HeroAttackTime = attackTime;
@@ -217,6 +217,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
     private void ChangeState()
     {
         if (isDead) heroState = HeroStateEnum.Die;
+        else if (attack.IsSkilling) heroState = HeroStateEnum.Skill;
         else if (isMoving) heroState = HeroStateEnum.Move;
         else if (attack.IsAttacking) heroState = HeroStateEnum.Attack;
         else heroState = HeroStateEnum.Idle;
@@ -226,6 +227,12 @@ public abstract class Hero : MonoBehaviour, IDamageable
     {
         heroState = HeroStateEnum.Idle;
         attack.StopIsAttacking();
+    }
+
+    public void SkillStop()
+    {
+        heroState = HeroStateEnum.Idle;
+        attack.StopIsSkilling();
     }
 
     private void OnDrawGizmos()
