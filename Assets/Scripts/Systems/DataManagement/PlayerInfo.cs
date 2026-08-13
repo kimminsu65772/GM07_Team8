@@ -120,7 +120,7 @@ public class PlayerInfo : MonoBehaviour
         }
 
         currency.Amount += amount;
-        OnCurrencyChanged?.Invoke(type, currency.Amount);
+        OnCurrencyChanged?.Invoke(type);
 
         RequestSave(savePolicy);
     }
@@ -145,7 +145,7 @@ public class PlayerInfo : MonoBehaviour
             return false;
         }
         currency.Amount -= amount;
-        OnCurrencyChanged?.Invoke(type, currency.Amount);
+        OnCurrencyChanged?.Invoke(type);
         RequestSave(savePolicy);
         return true;
     }
