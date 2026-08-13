@@ -3,7 +3,6 @@ using UnityEngine;
 public class MapChanger : MonoBehaviour
 {
     [SerializeField] private StageTransitionController stageTransitionController;
-
     public void NextMap()
     {
         int nextStage = PlayerInfo.Instance.CurrentStage + 1;

@@ -3,6 +3,25 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
+    private static BattleManager instance;
+
+    public static BattleManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindFirstObjectByType<BattleManager>();
+                if (instance == null)
+                {
+                    GameObject obj = new GameObject("BattleManager");
+                    instance = obj.AddComponent<BattleManager>();
+                }
+            }
+            return instance;
+        }
+    }
+
     [SerializeField] private FollowCam mainCamera;
     [SerializeField] private StageManager stageManager;
     [SerializeField] private MapController mapController;
@@ -18,6 +37,7 @@ public class BattleManager : MonoBehaviour
     private void Start()
     {
         Initialize();
+
     }
 
     public void Initialize()
@@ -58,6 +78,11 @@ public class BattleManager : MonoBehaviour
     public void StopStage()
     {
         stageManager.StopStage();
+    }
+
+    public AirshipController GetAirshipInStage()
+    {
+        return airship;
     }
 
     private void ResetPlayerPosition()
@@ -142,7 +167,6 @@ public class BattleManager : MonoBehaviour
             spawnedHeroes.Add(spawnedHero);
         }
     }
-
     private void ClearSpawnedHeroes()
     {
         for (int i = spawnedHeroes.Count - 1; i >= 0; i--)
