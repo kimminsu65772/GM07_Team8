@@ -1,14 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapCatalog : MonoBehaviour
+[CreateAssetMenu(fileName = "MapCatalog", menuName = "Game/Map/MapCatalog")]
+public class MapCatalog : ScriptableObject
 {
     [SerializeField] private int mapCycle = 5;
     [SerializeField] private MapEntry[] entries;
 
     private readonly Dictionary<int, MapEntry> mapPrefabs = new();
 
-    private void Awake()
+    private void OnEnable()
     {
         FillMapPrefabs();
     }
@@ -27,14 +28,14 @@ public class MapCatalog : MonoBehaviour
             Debug.LogError("mapCycle은 0보다 커야 합니다.");
             return -1;
         }
-        int key = ((currentStage - 1) / mapCycle) + 1;
-        Debug.Log($"currentStage: {currentStage}, mapCycle: {mapCycle}, index: {key}");
-        if (key < 0 || key > entries.Length)
+        int regionId = ((currentStage - 1) / mapCycle) + 1;
+        Debug.Log($"currentStage: {currentStage}, mapCycle: {mapCycle}, RegionId: {regionId}");
+        if (!mapPrefabs.TryGetValue(regionId, out MapEntry mapEntry))
         {
             Debug.LogError($"currentStage {currentStage}에 대한 MapEntry가 존재하지 않습니다.");
             return -1;
         }
-        return key;
+        return regionId;
     }
 
     private void FillMapPrefabs()
@@ -45,7 +46,7 @@ public class MapCatalog : MonoBehaviour
         {
             MapEntry entry = entries[i];
 
-            if (entry.StageNumber <= 0)
+            if (entry.RegionId <= 0)
             {
                 Debug.LogError("MapEntry의 StageNumber는 0보다 커야 합니다.");
                 continue;
@@ -53,17 +54,17 @@ public class MapCatalog : MonoBehaviour
 
             if (entry.MapPrefab == null)
             {
-                Debug.LogError($"StageNumber {entry.StageNumber}에 대한 MapPrefab이 할당되지 않았습니다.");
+                Debug.LogError($"StageNumber {entry.RegionId}에 대한 MapPrefab이 할당되지 않았습니다.");
                 continue;
             }
 
-            if (mapPrefabs.ContainsKey(entry.StageNumber))
+            if (mapPrefabs.ContainsKey(entry.RegionId))
             {
-                Debug.LogError($"StageNumber {entry.StageNumber}에 대한 MapEntry가 이미 존재합니다.");
+                Debug.LogError($"StageNumber {entry.RegionId}에 대한 MapEntry가 이미 존재합니다.");
                 continue;
             }
 
-            mapPrefabs.Add(entry.StageNumber, entry);
+            mapPrefabs.Add(entry.RegionId, entry);
         }
     }
 }

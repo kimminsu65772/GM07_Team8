@@ -6,25 +6,38 @@ public class FollowCam : MonoBehaviour
     [SerializeField] private Transform target;
 
     [SerializeField] private bool smoothCamera = true;
-    [SerializeField] private bool lockVerticalAxis = false;
+    // [SerializeField] private bool lockVerticalAxis = false;
     [SerializeField] private bool lockCameraSize = false;
     [SerializeField] private float cameraSize = 6f;
-    [SerializeField] private float targetOffsetY = -0.3f;
+    // [SerializeField] private float targetOffsetY = -0.3f;
     [SerializeField] private float targetOffsetX = -1f;
     [SerializeField] private Transform startFollowPoint;
-    [SerializeField] private StageTestManager stageTestManager;
+    [SerializeField] private StageManager stageManager;
 
     private bool isFollowing;
+    private Vector3 startPosition;
 
+    private void Awake()
+    {
+        if (target == null)
+        {
+            Debug.LogError("FollowCam: 타겟이 설정되지 않았습니다.");
+        }
+        if (startFollowPoint == null)
+        {
+            Debug.LogError("FollowCam: 카메라 추적 시작 지점이 설정되지 않았습니다.");
+        }
+        startPosition = transform.position;
+    }
     private void OnEnable()
     {
-        stageTestManager.OnStageCompleted -= StopFollowTarget;
-        stageTestManager.OnStageCompleted += StopFollowTarget;
+        stageManager.OnStageCompleted -= StopFollowTarget;
+        stageManager.OnStageCompleted += StopFollowTarget;
     }
 
     private void OnDisable()
     {
-        stageTestManager.OnStageCompleted -= StopFollowTarget;
+        stageManager.OnStageCompleted -= StopFollowTarget;
     }
 
     private void Start()
@@ -61,11 +74,11 @@ public class FollowCam : MonoBehaviour
 
         Camera.main.orthographicSize = lockCameraSize ? 5f : cameraSize;
 
-        float targetDistanceY = Camera.main.orthographicSize * targetOffsetY;
+        //float targetDistanceY = Camera.main.orthographicSize * targetOffsetY;
         float targetDistanceX = Camera.main.orthographicSize * -targetOffsetX;
         float smoothSpeed = 5.0f;
 
-        Vector3 desiredPosition = new Vector3(target.position.x + targetDistanceX, lockVerticalAxis ? targetDistanceY : target.position.y + targetDistanceY, -10f);
+        Vector3 desiredPosition = new Vector3(target.position.x + targetDistanceX, transform.position.y, -10f);
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
 
         transform.position = smoothCamera ? smoothedPosition : desiredPosition;
@@ -96,11 +109,15 @@ public class FollowCam : MonoBehaviour
     {
         if (isFollowing) return;
 
-        Vector2 distanceX = new Vector2(target.position.x, 0f) - new Vector2(startFollowPoint.position.x, 0f);
-
-        if (distanceX.sqrMagnitude < 0.01f)
+        if (target.position.x > startFollowPoint.position.x)
         {
             isFollowing = true;
         }
-    }   
+    }
+
+    public void ResetCameraPosition()
+    {
+        transform.position = startPosition;
+        isFollowing = false;
+    }
 }
