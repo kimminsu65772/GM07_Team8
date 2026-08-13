@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df76d2c87eb71c84ab31b06817918574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapChanger
-  battleManager: {fileID: 0}
+  stageTransitionController: {fileID: 0}

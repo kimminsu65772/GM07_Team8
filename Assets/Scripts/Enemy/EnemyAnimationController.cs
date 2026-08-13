@@ -45,7 +45,7 @@ public class EnemyAnimationController : MonoBehaviour
             enabled = false;
         }
     }
-
+  
     private void OnEnable()
     {
         if (enemyAnimator != null)
