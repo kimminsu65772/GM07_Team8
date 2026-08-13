@@ -12,12 +12,14 @@ public class AirshipStatGrowthData
     [SerializeField] private AirshipStatType statType;
     [SerializeField] private float baseValue;
     [SerializeField] private float growthValue;
+    [SerializeField, Min(1)] private int maxLevel = 100;
 
     public AirshipStatType StatType => statType;
+    public int MaxLevel => maxLevel;
 
     public float GetValue(int level)
     {
-        return baseValue + growthValue * level;
+        return baseValue + growthValue * (level - 1);
     }
 }
 
@@ -47,5 +49,9 @@ public class AirshipStatTable : ScriptableObject
     {
         return stats.Find(stat => stat.StatType == statType);
     }
+    public int GetMaxLevel(AirshipStatType statType)
+    {
+        return FindStat(statType).MaxLevel;
+    }   
 }
 

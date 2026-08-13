@@ -49,7 +49,7 @@ public class AirshipUpgradeManager : MonoBehaviour
 
     private bool SpendUpgradeCost(AirshipStatType statType)
     {
-        // TODO: 재화 시스템 연결 후 비용 차감.
+        // TODO: 재화 시스템 연결 후 비용 확인
         return true;
     }
     

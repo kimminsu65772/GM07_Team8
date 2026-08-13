@@ -3,26 +3,26 @@ using UnityEngine;
 public class BattleEventHandler : MonoBehaviour
 {
     [SerializeField] private BattleManager battleManager;
-    [SerializeField] private StageTestManager stageTestManager;
+    [SerializeField] private StageManager stageManager;
     [SerializeField] private StageTransitionController stageTransitionController;
 
     private void OnEnable()
     {
         // 중복 구독 방지
-        stageTestManager.OnEnemyKilled -= HandleEnemyKilled;
-        stageTestManager.OnStageCompleted -= HandleStageCompleted;
-        stageTestManager.OnStageFailed -= HandleStageFailed;
+        stageManager.OnEnemyKilled -= HandleEnemyKilled;
+        stageManager.OnStageCompleted -= HandleStageCompleted;
+        stageManager.OnStageFailed -= HandleStageFailed;
 
-        stageTestManager.OnEnemyKilled += HandleEnemyKilled;
-        stageTestManager.OnStageCompleted += HandleStageCompleted;
-        stageTestManager.OnStageFailed += HandleStageFailed;
+        stageManager.OnEnemyKilled += HandleEnemyKilled;
+        stageManager.OnStageCompleted += HandleStageCompleted;
+        stageManager.OnStageFailed += HandleStageFailed;
     }
 
     private void OnDisable()
     {
-        stageTestManager.OnEnemyKilled -= HandleEnemyKilled;
-        stageTestManager.OnStageCompleted -= HandleStageCompleted;
-        stageTestManager.OnStageFailed -= HandleStageFailed;
+        stageManager.OnEnemyKilled -= HandleEnemyKilled;
+        stageManager.OnStageCompleted -= HandleStageCompleted;
+        stageManager.OnStageFailed -= HandleStageFailed;
     }
 
     private void HandleEnemyKilled()
@@ -49,9 +49,9 @@ public class BattleEventHandler : MonoBehaviour
 
         int nextStageNumber;
 
-        if (clearedStageNumber == stageTestManager.LastStage)
+        if (clearedStageNumber == stageManager.LastStage)
         {
-            nextStageNumber = stageTestManager.LastStage;
+            nextStageNumber = stageManager.LastStage;
         }
         else if (isAlreadyCleard)
         {

@@ -37,6 +37,9 @@ public class PlayerInfo : MonoBehaviour
 
     public event Action<CurrencyType> OnCurrencyChanged;
 
+    // UI에서 캐싱한 Hero 목록 상태를 갱신할 수 있도록 Hero 소유 여부 변경 시 이벤트 발생
+    public event Action<string, bool> OnHeroOwnedChanged;
+
     private SaveDataWriter saveDataWriter;
 
     private void Awake()
@@ -60,7 +63,13 @@ public class PlayerInfo : MonoBehaviour
     public void Initialize()
     {
         if (IsInitialized) return;
-        
+
+        if (heroCatalog == null)
+        {
+            Debug.LogError("PlayerInfo: HeroCatalog가 할당되지 않았습니다.");
+            return;
+        }
+
         string saveDataPath = Path.Combine(Application.persistentDataPath, "PlayerSaveData.json");
 
         saveDataWriter = new SaveDataWriter(saveDataPath);
@@ -78,6 +87,27 @@ public class PlayerInfo : MonoBehaviour
 
         SaveScheduler.Instance.Initialize(SaveData, saveDataWriter);
 
+        bool isAddedNewHero = false;
+
+        foreach (HeroEntry entry in heroCatalog.InGameHeroEntries)
+        {
+            if (!SaveData.Heroes.ContainsKey(entry.HeroName))
+            {
+                SaveData.Heroes[entry.HeroName] = new HeroSaveData
+                {
+                    IsOwned = entry.IsDefaultOwned,
+                    Level = entry.DefaultLevel
+                };
+
+                isAddedNewHero = true;
+            }
+        }
+
+        if (isAddedNewHero)
+        {
+            saveDataWriter.ForceSave(SaveData);
+        }
+
         IsInitialized = true;
     }
 
@@ -90,6 +120,8 @@ public class PlayerInfo : MonoBehaviour
     public int CurrentStage => SaveData.StageProgress.CurrentStage;
     public int MaxClearedStage => SaveData.StageProgress.MaxClearedStage;
     public Dictionary<string, HeroSaveData> Heroes => SaveData.Heroes;
+
+    public IReadOnlyList<HeroEntry> HeroEntries => heroCatalog.InGameHeroEntries;
     public HeroFormationSaveData HeroFormation => SaveData.HeroFormation;
     /// <summary>
     /// 재화 관련 수정 메서드
@@ -259,6 +291,7 @@ public class PlayerInfo : MonoBehaviour
         if (heroData.IsOwned == isOwned) return true;
 
         heroData.IsOwned = isOwned;
+        OnHeroOwnedChanged?.Invoke(heroName, isOwned);
         RequestSave(savePolicy);
         return true;
     }

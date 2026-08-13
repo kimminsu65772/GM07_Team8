@@ -19,4 +19,8 @@ public class EnemyAnimationEventReceiver : MonoBehaviour
 
         enemyAttack.ApplyAttackDamage();
     }
+          public void AttackStop()
+    {
+    
+}
 }

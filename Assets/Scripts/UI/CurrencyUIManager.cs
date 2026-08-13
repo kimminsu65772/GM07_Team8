@@ -38,19 +38,52 @@ public class CurrencyUIManager : MonoBehaviour
     private void Start()
     {
         // 게임 시작 시 모든 재화 UI 초기 갱신
-        RefreshAllUI();
+        if (PlayerInfo.Instance != null && PlayerInfo.Instance.IsInitialized)
+        {
+            RefreshAllUI();
+        }
+    }
+    private void OnEnable()
+    {
+        // PlayerInfo의 재화 변경 이벤트 구독
+        if (PlayerInfo.Instance != null)
+        {
+            PlayerInfo.Instance.OnCurrencyChanged += OnCurrencyChangedHandler;
+        }
+    }
+    private void OnDisable()
+    {
+        // 이벤트 해제 (메모리 누수 방지)
+        if (PlayerInfo.Instance != null)
+        {
+            PlayerInfo.Instance.OnCurrencyChanged -= OnCurrencyChangedHandler;
+        }
+    }
+
+    private void OnCurrencyChangedHandler(CurrencyType type)
+    {
+        // 값이 바뀐 특정 재화의 UI만 갱신
+        UpdateCurrencyUI(type);
     }
     // 특정 재화의 UI만 갱신
     public void UpdateCurrencyUI(CurrencyType type)
     {
-        if (WalletManager.Instance == null || !WalletManager.Instance.IsInitialized) return;
+        // PlayerInfo가 초기화되었고 지갑 데이터가 있는지 확인
+        if (PlayerInfo.Instance == null || !PlayerInfo.Instance.IsInitialized) return;
 
         if (uiDict.TryGetValue(type, out TextMeshProUGUI textMesh))
         {
             if (textMesh != null)
             {
-                int currentAmount = WalletManager.Instance.GetAmount(type);
-                textMesh.text = currentAmount.ToString("N0"); // 3자리마다 쉼표(,) 추가 (예: 10,000)
+                // PlayerInfo를 통해 세이브 데이터 안의 월드 딕셔너리에서 직접 값 조회
+                if (PlayerInfo.Instance.Wallet.Currencies.TryGetValue(type, out CurrencySaveData currencyData))
+                {
+                    textMesh.text = currencyData.Amount.ToString("N0"); // 3자리 콤마 포맷
+                }
+                else
+                {
+                    textMesh.text = "0";
+                }
             }
         }
     }

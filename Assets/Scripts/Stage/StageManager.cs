@@ -1,54 +1,213 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
+    // 외부 시스템에서 스테이지 진행 상황을 받을 수 있는 이벤트
+    public event Action OnEnemyKilled;
+    public event Action<int> OnStageCompleted;
+    public event Action<int, string> OnStageFailed;
+
     [Header("Stage")]
-    [SerializeField] private StageData stageData;
+    [SerializeField] private StageCatalog stageCatalog;
+    [SerializeField] private float spawnYOffset = 1.6f;
+
+    public int LastStage =>
+        stageCatalog == null
+            ? 0
+            : stageCatalog.StageCount;
 
     [Header("Spawn")]
     [SerializeField] private Transform spawnPoint;
+
+    // 실제 비행선 또는 비행선 공격 위치
     [SerializeField] private Transform target;
 
     [Header("Runtime Information")]
-    // 플레이 중 현재 진행 상황을 Inspector에서 확인하기 위한 값
+    [SerializeField] private int currentStageNumber;
     [SerializeField] private int currentWaveIndex;
     [SerializeField] private int aliveEnemyCount;
+    [SerializeField] private int remainingEnemyCount;
     [SerializeField] private float remainingBossTime;
     [SerializeField] private bool isBossTimeOver;
     [SerializeField] private bool isAirshipDestroyed;
     [SerializeField] private bool isStageFinished;
-    [SerializeField] private int remainingEnemyCount;
 
-    // 생성한 적을 추적하여 사망 수와 이벤트 연결을 관리한다.
+    // 생성한 적 추적
     private readonly List<EnemyStats> trackedEnemies =
         new List<EnemyStats>();
 
-    private IEnumerator Start()
+    private Coroutine stageRoutine;
+    private void Start()
     {
-        if (stageData == null ||
-            spawnPoint == null ||
+        if (stageCatalog == null)
+        {
+            Debug.LogError(
+                "StageManager: StageCatalog가 연결되지 않았습니다."
+            );
+
+            return;
+        }
+
+    }
+   
+
+    public void StartStage(int stageNumber)
+    {
+        StageData stageData =
+            FindStageData(stageNumber);
+
+        if (stageData == null)
+        {
+            Debug.LogError(
+                $"StageManager: Stage {stageNumber}에 해당하는 StageData가 없습니다."
+            );
+
+            return;
+        }
+
+        StartStage(stageData);
+    }
+
+    private void StartStage(StageData stageData)
+    {
+        if (stageData == null)
+        {
+            Debug.LogError(
+                "StageManager: StageData가 없습니다."
+            );
+
+            return;
+        }
+
+        if (spawnPoint == null ||
             target == null)
         {
             Debug.LogError(
-                "StageManager의 StageData, SpawnPoint 또는 Target이 연결되지 않았습니다."
+                "StageManager: SpawnPoint 또는 Target이 연결되지 않았습니다."
             );
 
-            yield break;
+            return;
         }
-        
-        // 스테이지 시작 상태 초기화
-        currentWaveIndex = 0;
-        aliveEnemyCount = 0;
-        remainingBossTime = 0f;
-        remainingEnemyCount = 0;
-        isBossTimeOver = false;
-        isAirshipDestroyed = false;
-        isStageFinished = false;
 
-       
-        for (int i = 0; i < stageData.Waves.Count; i++)
+        StopStage();
+
+        currentStageNumber =
+            stageData.StageNumber;
+
+        stageRoutine =
+            StartCoroutine(
+                RunStage(stageData)
+            );
+    }
+
+    public void StopStage()
+    {
+        if (stageRoutine != null)
+        {
+            StopCoroutine(stageRoutine);
+            stageRoutine = null;
+        }
+
+        ClearTrackedEnemies();
+        ResetRuntimeState();
+    }
+
+    private StageData FindStageData(
+        int stageNumber)
+    {
+        if (stageCatalog == null)
+        {
+            Debug.LogError(
+                "StageManager: StageCatalog가 연결되지 않았습니다."
+            );
+
+            return null;
+        }
+
+        stageCatalog.TryGetStageData(
+            stageNumber,
+            out StageData stageData
+        );
+
+        return stageData;
+    }
+
+    private void SpawnEnemy(
+     GameObject enemyPrefab,
+     int spawnIndex)
+    {
+        // 위, 가운데, 아래 순서로 위치를 나눠서 생성
+        float yOffset =
+            (spawnIndex % 3 - 1) * spawnYOffset;
+
+        Vector3 spawnPosition =
+            spawnPoint.position +
+            new Vector3(
+                0f,
+                yOffset,
+                0f
+            );
+
+        GameObject spawnedEnemy =
+            Instantiate(
+                enemyPrefab,
+                spawnPosition,
+                Quaternion.identity
+            );
+
+        EnemyStats enemyStats =
+            spawnedEnemy.GetComponent<EnemyStats>();
+
+        if (enemyStats == null)
+        {
+            Debug.LogError(
+                $"{spawnedEnemy.name}에 EnemyStats가 없습니다."
+            );
+
+            Destroy(spawnedEnemy);
+            return;
+        }
+
+        aliveEnemyCount++;
+        remainingEnemyCount++;
+
+        trackedEnemies.Add(enemyStats);
+
+        enemyStats.EnemyDied +=
+            HandleEnemyDied;
+
+        enemyStats.EnemyDeathCompleted +=
+            HandleEnemyDeathCompleted;
+
+        // 적한테 비행선 위치 전달
+        EnemyTargetSelector targetSelector =
+            spawnedEnemy.GetComponent<EnemyTargetSelector>();
+
+        if (targetSelector != null)
+        {
+            targetSelector.SetAirshipTarget(target);
+        }
+        else
+        {
+            Debug.LogWarning(
+                $"{spawnedEnemy.name}에 EnemyTargetSelector가 없습니다."
+            );
+        }
+    }
+    private IEnumerator RunStage(
+        StageData stageData)
+    {
+        ResetRuntimeState();
+
+        currentStageNumber =
+            stageData.StageNumber;
+
+        for (int i = 0;
+             i < stageData.Waves.Count;
+             i++)
         {
             currentWaveIndex = i;
             isBossTimeOver = false;
@@ -56,36 +215,44 @@ public class StageManager : MonoBehaviour
             WaveData currentWave =
                 stageData.Waves[i];
 
-            // 데이터에 등록된 적을 순서대로 생성한다.
+            // 웨이브 적 생성
             yield return StartCoroutine(
                 SpawnWave(currentWave)
             );
 
-            // 적을 생성하는 도중 비행선이 파괴되면 즉시 실패한다.
-            if (isAirshipDestroyed || target == null)
+            // 적 생성 중 비행선 HP가 0이 됐다면 실패
+            if (isAirshipDestroyed)
             {
-                FailStage("비행선 파괴: 스테이지 실패");
+                FailStage(
+                    "비행선 파괴: 스테이지 실패"
+                );
+
                 yield break;
             }
 
-            // 적 전멸, 비행선 파괴 또는 제한시간 초과까지 기다린다.
+            // 웨이브 종료 대기
             yield return StartCoroutine(
                 WaitForWaveClear(currentWave)
             );
 
             if (isAirshipDestroyed)
             {
-                FailStage("비행선 파괴: 스테이지 실패");
+                FailStage(
+                    "비행선 파괴: 스테이지 실패"
+                );
+
                 yield break;
             }
 
             if (isBossTimeOver)
             {
-                FailStage("보스 제한시간 초과: 스테이지 실패");
+                FailStage(
+                    "보스 제한시간 초과: 스테이지 실패"
+                );
+
                 yield break;
             }
 
-            // 마지막 웨이브 뒤에는 대기시간이 필요하지 않다.
             bool hasNextWave =
                 i < stageData.Waves.Count - 1;
 
@@ -98,7 +265,6 @@ public class StageManager : MonoBehaviour
                     )
                 );
 
-                // 다음 웨이브 대기 중 비행선이 파괴된 경우
                 if (isAirshipDestroyed)
                 {
                     FailStage(
@@ -113,10 +279,11 @@ public class StageManager : MonoBehaviour
         CompleteStage();
     }
 
+   
+
     private IEnumerator SpawnWave(
         WaveData waveData)
     {
-        // 웨이브에 등록된 적 구성을 순서대로 생성한다.
         foreach (EnemySpawnEntry spawnEntry
                  in waveData.EnemySpawns)
         {
@@ -133,18 +300,16 @@ public class StageManager : MonoBehaviour
                  i < spawnEntry.SpawnCount;
                  i++)
             {
-                // 비행선이 파괴됐다면 더 이상 적을 생성하지 않는다.
-                if (target == null)
+                // 비행선이 파괴되었다면 추가 생성 중단
+                if (isAirshipDestroyed)
                 {
-                    isAirshipDestroyed = true;
                     yield break;
                 }
 
                 SpawnEnemy(
-                    spawnEntry.EnemyPrefab
-                );
-
-                // 마지막 적을 생성한 뒤에는 기다리지 않는다.
+                      spawnEntry.EnemyPrefab,
+                      i
+                        );
                 bool hasNextEnemy =
                     i < spawnEntry.SpawnCount - 1;
 
@@ -166,10 +331,12 @@ public class StageManager : MonoBehaviour
         }
     }
 
+  
+
     private IEnumerator WaitForWaveClear(
         WaveData waveData)
     {
-        // 제한시간이 없는 일반 웨이브
+        // 일반 웨이브
         if (!waveData.IsBossWave ||
             waveData.TimeLimit <= 0f)
         {
@@ -179,8 +346,10 @@ public class StageManager : MonoBehaviour
             {
                 RefreshAliveEnemyCount();
 
+                // 모든 적의 사망 모션 / 제거까지 완료
+                // 또는 비행선 파괴
                 if (remainingEnemyCount <= 0 ||
-                     target == null)
+                    isAirshipDestroyed)
                 {
                     break;
                 }
@@ -188,15 +357,11 @@ public class StageManager : MonoBehaviour
                 yield return null;
             }
 
-            if (target == null)
-            {
-                isAirshipDestroyed = true;
-            }
-
             yield break;
         }
 
-        // 보스 웨이브 제한시간 시작
+      
+
         remainingBossTime =
             waveData.TimeLimit;
 
@@ -206,7 +371,7 @@ public class StageManager : MonoBehaviour
 
             if (aliveEnemyCount <= 0 ||
                 remainingBossTime <= 0f ||
-                target == null)
+                isAirshipDestroyed)
             {
                 break;
             }
@@ -217,40 +382,36 @@ public class StageManager : MonoBehaviour
             yield return null;
         }
 
-        remainingBossTime = Mathf.Max(
-            remainingBossTime,
-            0f
-        );
+        remainingBossTime =
+            Mathf.Max(
+                remainingBossTime,
+                0f
+            );
 
-        // 비행선 파괴를 제한시간 초과보다 먼저 판정한다.
-        if (target == null)
+        // 비행선이 먼저 파괴된 경우
+        if (isAirshipDestroyed)
         {
-            isAirshipDestroyed = true;
             yield break;
         }
 
-        // 시간이 끝났는데 보스가 살아 있으면 실패한다.
-        // 시간이 끝났는데 보스가 살아 있으면 실패한다.
+        // 제한 시간이 끝났는데 보스가 살아있음
         if (aliveEnemyCount > 0)
         {
             isBossTimeOver = true;
             yield break;
         }
 
-        // 보스의 HP가 0이 된 뒤 사망 모션과 시체 제거가
-        // 끝날 때까지 기다린 다음 웨이브를 완료한다.
+        // 보스 HP는 0이되고 시체 제거가 끝날 때까지 기다림
         while (remainingEnemyCount > 0 &&
-               target != null)
+               !isAirshipDestroyed)
         {
             RefreshAliveEnemyCount();
+
             yield return null;
         }
-
-        if (target == null)
-        {
-            isAirshipDestroyed = true;
-        }
     }
+
+   
 
     private IEnumerator WaitForDelay(
         float delay)
@@ -259,27 +420,30 @@ public class StageManager : MonoBehaviour
 
         while (elapsedTime < delay)
         {
-            // 웨이브 사이 또는 생성 간격 도중
-            // 비행선이 파괴되면 대기를 중단한다.
-            if (target == null)
+            // 대기 중 비행선이 파괴되면 즉시 중단
+            if (isAirshipDestroyed)
             {
-                isAirshipDestroyed = true;
                 yield break;
             }
 
-            elapsedTime += Time.deltaTime;
+            elapsedTime +=
+                Time.deltaTime;
+
             yield return null;
         }
     }
 
+    
+
     private void SpawnEnemy(
         GameObject enemyPrefab)
     {
-        GameObject spawnedEnemy = Instantiate(
-            enemyPrefab,
-            spawnPoint.position,
-            Quaternion.identity
-        );
+        GameObject spawnedEnemy =
+            Instantiate(
+                enemyPrefab,
+                spawnPoint.position,
+                Quaternion.identity
+            );
 
         EnemyStats enemyStats =
             spawnedEnemy.GetComponent<EnemyStats>();
@@ -291,23 +455,33 @@ public class StageManager : MonoBehaviour
             );
 
             Destroy(spawnedEnemy);
+
             return;
         }
+
         aliveEnemyCount++;
         remainingEnemyCount++;
 
-        trackedEnemies.Add(enemyStats);
+        trackedEnemies.Add(
+            enemyStats
+        );
 
-        enemyStats.EnemyDied += HandleEnemyDied;
-        enemyStats.EnemyDeathCompleted += HandleEnemyDeathCompleted;
-        // 적에게 비행선 타깃을 전달한다.
-        // EnemyTargetSelector가 이동 타깃과 공격 타깃을 함께 설정한다.
+        enemyStats.EnemyDied +=
+            HandleEnemyDied;
+
+        enemyStats.EnemyDeathCompleted +=
+            HandleEnemyDeathCompleted;
+
+        // 적의 비행선 타깃 연결
+        // 이동 / 공격 타깃 모두 EnemyTargetSelector에서 관리
         EnemyTargetSelector targetSelector =
             spawnedEnemy.GetComponent<EnemyTargetSelector>();
 
         if (targetSelector != null)
         {
-            targetSelector.SetAirshipTarget(target);
+            targetSelector.SetAirshipTarget(
+                target
+            );
         }
         else
         {
@@ -315,38 +489,58 @@ public class StageManager : MonoBehaviour
                 $"{spawnedEnemy.name}에 EnemyTargetSelector가 없습니다."
             );
         }
-
     }
 
-    private void HandleEnemyDied(EnemyStats deadEnemy)
-    {
-        // HP가 0이 된 적은 전투 가능한 적 수에서 제외한다.
-        deadEnemy.EnemyDied -= HandleEnemyDied;
 
-        aliveEnemyCount = Mathf.Max(
-            aliveEnemyCount - 1,
-            0);
-    }
-    private void HandleEnemyDeathCompleted(EnemyStats deadEnemy)
+    private void HandleEnemyDied(
+        EnemyStats deadEnemy)
     {
         if (deadEnemy == null)
         {
             return;
         }
 
-        // 사망 모션과 시체 제거가 끝난 시점의 이벤트 연결을 해제한다.
-        deadEnemy.EnemyDeathCompleted -= HandleEnemyDeathCompleted;
+        deadEnemy.EnemyDied -=
+            HandleEnemyDied;
 
-        trackedEnemies.Remove(deadEnemy);
+        // HP 0이 된 순간 전투 가능한 적 수 감소
+        aliveEnemyCount =
+            Mathf.Max(
+                aliveEnemyCount - 1,
+                0
+            );
 
-        remainingEnemyCount = Mathf.Max(
-            remainingEnemyCount - 1,
-            0);
+        OnEnemyKilled?.Invoke();
     }
+
+    private void HandleEnemyDeathCompleted(
+        EnemyStats deadEnemy)
+    {
+        if (deadEnemy == null)
+        {
+            return;
+        }
+
+        deadEnemy.EnemyDeathCompleted -=
+            HandleEnemyDeathCompleted;
+
+        trackedEnemies.Remove(
+            deadEnemy
+        );
+
+        // 사망 모션과 오브젝트 제거까지 끝난 적 수 감소
+        remainingEnemyCount =
+            Mathf.Max(
+                remainingEnemyCount - 1,
+                0
+            );
+    }
+
     private void RefreshAliveEnemyCount()
     {
-        // 이벤트 없이 외부에서 삭제된 적도 생존 수에서 제외한다.
-        for (int i = trackedEnemies.Count - 1;
+        // 외부에서 직접 Destroy된 적 제거
+        for (int i =
+                 trackedEnemies.Count - 1;
              i >= 0;
              i--)
         {
@@ -358,16 +552,80 @@ public class StageManager : MonoBehaviour
 
         aliveEnemyCount = 0;
 
-        for (int i = 0; i < trackedEnemies.Count; i++)
+        for (int i = 0;
+             i < trackedEnemies.Count;
+             i++)
         {
-            EnemyStats enemy = trackedEnemies[i];
+            EnemyStats enemy =
+                trackedEnemies[i];
 
-            if (enemy != null && !enemy.IsDead)
+            if (enemy != null &&
+                !enemy.IsDead)
             {
                 aliveEnemyCount++;
             }
         }
     }
+
+   
+
+    // 실제 비행선의 HP가 0이 되었을 때 비행선 시스템에서 이 함수를 호출
+    public void NotifyAirshipDestroyed()
+    {
+        if (isAirshipDestroyed)
+        {
+            return;
+        }
+
+        isAirshipDestroyed = true;
+
+        Debug.Log(
+            "비행선 HP가 0이 되었습니다."
+        );
+    }
+
+  
+
+    private void ResetRuntimeState()
+    {
+        currentWaveIndex = 0;
+        aliveEnemyCount = 0;
+        remainingEnemyCount = 0;
+        remainingBossTime = 0f;
+
+        isBossTimeOver = false;
+        isAirshipDestroyed = false;
+        isStageFinished = false;
+    }
+
+    private void ClearTrackedEnemies()
+    {
+        foreach (EnemyStats enemy
+                 in trackedEnemies)
+        {
+            if (enemy == null)
+            {
+                continue;
+            }
+
+            enemy.EnemyDied -=
+                HandleEnemyDied;
+
+            enemy.EnemyDeathCompleted -=
+                HandleEnemyDeathCompleted;
+
+            Destroy(
+                enemy.gameObject
+            );
+        }
+
+        trackedEnemies.Clear();
+
+        aliveEnemyCount = 0;
+        remainingEnemyCount = 0;
+    }
+
+ 
 
     private void CompleteStage()
     {
@@ -377,13 +635,19 @@ public class StageManager : MonoBehaviour
         }
 
         isStageFinished = true;
+        stageRoutine = null;
 
         Debug.Log(
-            "스테이지의 모든 웨이브가 완료되었습니다."
+            $"Stage {currentStageNumber}의 모든 웨이브가 완료되었습니다."
+        );
+
+        OnStageCompleted?.Invoke(
+            currentStageNumber
         );
     }
 
-    private void FailStage(string failureMessage)
+    private void FailStage(
+        string failureMessage)
     {
         if (isStageFinished)
         {
@@ -391,23 +655,20 @@ public class StageManager : MonoBehaviour
         }
 
         isStageFinished = true;
-        Debug.Log(failureMessage);
+        stageRoutine = null;
+
+        Debug.Log(
+            failureMessage
+        );
+
+        OnStageFailed?.Invoke(
+            currentStageNumber,
+            failureMessage
+        );
     }
 
     private void OnDisable()
     {
-        // StageManager가 비활성화되거나 씬이 종료될 때
-        // 남아 있는 적의 이벤트 연결을 모두 해제한다.
-        foreach (EnemyStats enemy
-                 in trackedEnemies)
-        {
-            if (enemy != null)
-            {
-                enemy.EnemyDied -=
-                    HandleEnemyDied;
-            }
-        }
-
-        trackedEnemies.Clear();
+        StopStage();
     }
 }

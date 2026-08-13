@@ -3,23 +3,43 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
-    [SerializeField] private Transform mapRoot;
-    [SerializeField] private StageTestManager stageTestManager;
+    [SerializeField] private FollowCam mainCamera;
+    [SerializeField] private StageManager stageManager;
     [SerializeField] private MapController mapController;
 
     [Header("Start Settings")]
     [SerializeField] private Transform airshipStartPoint;
     [SerializeField] private AirshipController airship;
+    
+    private static BattleManager instance;
+
+    public static BattleManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindFirstObjectByType<BattleManager>();
+                if (instance == null)
+                {
+                    GameObject obj = new GameObject("BattleManager");
+                    instance = obj.AddComponent<BattleManager>();
+                }
+            }
+            return instance;
+        }
+    }
+
+    public AirshipController Airship => airship;
 
     private readonly List<GameObject> spawnedHeroes = new List<GameObject>();
-
-    private GameObject currentMap;
     private int currentStage;
     private bool isInitialized;
 
     private void Start()
     {
         Initialize();
+
     }
 
     public void Initialize()
@@ -27,6 +47,11 @@ public class BattleManager : MonoBehaviour
         if (isInitialized)
         {
             return;
+        }
+
+        if (mainCamera == null)
+        {
+            mainCamera = Camera.main.GetComponent<FollowCam>();
         }
 
         currentStage = PlayerInfo.Instance.CurrentStage;
@@ -39,20 +64,22 @@ public class BattleManager : MonoBehaviour
 
     public void SetUpStage(int stageNumber)
     {
-        ResetPlayerPosition();
-        PlaceFormationHeroes();
+        StopStage();
+        mainCamera.ResetCameraPosition();
         currentStage = stageNumber;
         mapController.LoadMap(currentStage);
+        ResetPlayerPosition();
+        PlaceFormationHeroes();
     }
 
     public void StartStage()
     {
-        stageTestManager.StartStage(currentStage);
+        stageManager.StartStage(currentStage);
     }
 
     public void StopStage()
     {
-        stageTestManager.StopStage();
+        stageManager.StopStage();
     }
 
     private void ResetPlayerPosition()
@@ -137,7 +164,6 @@ public class BattleManager : MonoBehaviour
             spawnedHeroes.Add(spawnedHero);
         }
     }
-
     private void ClearSpawnedHeroes()
     {
         for (int i = spawnedHeroes.Count - 1; i >= 0; i--)
@@ -150,27 +176,4 @@ public class BattleManager : MonoBehaviour
 
         spawnedHeroes.Clear();
     }
-
-    //private void LoadMap(int currentStage)
-    //{
-    //    if (mapCatalog == null)
-    //    {
-    //        Debug.LogError("MapCatalog is not assigned.");
-    //        return;
-    //    }
-
-    //    GameObject mapPrefab = mapCatalog.GetMapPrefab(currentStage);
-    //    if (mapPrefab == null)
-    //    {
-    //        Debug.LogError($"MapPrefab for stage {currentStage} does not exist.");
-    //        return;
-    //    }
-
-    //    if (currentMap != null)
-    //    {
-    //        Destroy(currentMap);
-    //    }
-
-    //    currentMap = Instantiate(mapPrefab, mapRoot, false);
-    //}
 }
