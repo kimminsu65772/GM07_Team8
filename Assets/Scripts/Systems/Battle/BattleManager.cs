@@ -4,7 +4,7 @@ using UnityEngine;
 public class BattleManager : MonoBehaviour
 {
     [SerializeField] private FollowCam mainCamera;
-    [SerializeField] private StageTestManager stageTestManager;
+    [SerializeField] private StageManager stageManager;
     [SerializeField] private MapController mapController;
 
     [Header("Start Settings")]
@@ -12,8 +12,6 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private AirshipController airship;
 
     private readonly List<GameObject> spawnedHeroes = new List<GameObject>();
-
-    private GameObject currentMap;
     private int currentStage;
     private bool isInitialized;
 
@@ -44,6 +42,7 @@ public class BattleManager : MonoBehaviour
 
     public void SetUpStage(int stageNumber)
     {
+        StopStage();
         mainCamera.ResetCameraPosition();
         currentStage = stageNumber;
         mapController.LoadMap(currentStage);
@@ -53,12 +52,12 @@ public class BattleManager : MonoBehaviour
 
     public void StartStage()
     {
-        stageTestManager.StartStage(currentStage);
+        stageManager.StartStage(currentStage);
     }
 
     public void StopStage()
     {
-        stageTestManager.StopStage();
+        stageManager.StopStage();
     }
 
     private void ResetPlayerPosition()

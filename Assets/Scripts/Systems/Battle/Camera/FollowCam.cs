@@ -6,13 +6,13 @@ public class FollowCam : MonoBehaviour
     [SerializeField] private Transform target;
 
     [SerializeField] private bool smoothCamera = true;
-    [SerializeField] private bool lockVerticalAxis = false;
+    // [SerializeField] private bool lockVerticalAxis = false;
     [SerializeField] private bool lockCameraSize = false;
     [SerializeField] private float cameraSize = 6f;
-    [SerializeField] private float targetOffsetY = -0.3f;
+    // [SerializeField] private float targetOffsetY = -0.3f;
     [SerializeField] private float targetOffsetX = -1f;
     [SerializeField] private Transform startFollowPoint;
-    [SerializeField] private StageTestManager stageTestManager;
+    [SerializeField] private StageManager stageManager;
 
     private bool isFollowing;
     private Vector3 startPosition;
@@ -31,13 +31,13 @@ public class FollowCam : MonoBehaviour
     }
     private void OnEnable()
     {
-        stageTestManager.OnStageCompleted -= StopFollowTarget;
-        stageTestManager.OnStageCompleted += StopFollowTarget;
+        stageManager.OnStageCompleted -= StopFollowTarget;
+        stageManager.OnStageCompleted += StopFollowTarget;
     }
 
     private void OnDisable()
     {
-        stageTestManager.OnStageCompleted -= StopFollowTarget;
+        stageManager.OnStageCompleted -= StopFollowTarget;
     }
 
     private void Start()
