@@ -63,39 +63,46 @@ public class AirshipHealth : MonoBehaviour, IDamageable
 
     public void TakeDamage(DamageInfo damageInfo)
     {
-        float damage = damageInfo.Damage;
-        if (isDestroyed || damage <= 0f)
-        {
+        if (isDestroyed || damageInfo.Damage <= 0f)
             return;
-        }
 
-        float remainingDamage = damage;
+        float remainingDamage = damageInfo.Damage;
 
-        // 쉴드가 있으면 먼저 차감.
         if (shield > 0f)
         {
-            float absorbedDamage = Mathf.Min(shield, remainingDamage);
+            float absorbedDamage =
+                Mathf.Min(shield, remainingDamage);
+
             shield -= absorbedDamage;
             remainingDamage -= absorbedDamage;
 
             OnShieldChanged?.Invoke(shield);
         }
 
+        // 보호막이 전부 막았으면 실제 체력 피해 없음
         if (remainingDamage <= 0f)
-        {
-            OnDamaged?.Invoke(damageInfo);
             return;
-        }
 
-        currentHealth = Mathf.Max(0f, currentHealth - remainingDamage);
+        // 실제로 깎이는 체력만 계산
+        float appliedDamage =
+            Mathf.Min(currentHealth, remainingDamage);
 
-        OnDamaged?.Invoke(damageInfo);
-        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        currentHealth -= appliedDamage;
+
+        OnDamaged?.Invoke(
+            new DamageInfo(
+                appliedDamage,
+                damageInfo.IsCritical
+            )
+        );
+
+        OnHealthChanged?.Invoke(
+            currentHealth,
+            maxHealth
+        );
 
         if (currentHealth <= 0f)
-        {
             DestroyAirship();
-        }
     }
 
     public void Heal(float amount)
