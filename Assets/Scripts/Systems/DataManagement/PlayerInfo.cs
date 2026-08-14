@@ -9,28 +9,7 @@ public class PlayerInfo : MonoBehaviour
 
     private static PlayerInfo instance;
 
-    public static PlayerInfo Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                PlayerInfo info = FindFirstObjectByType<PlayerInfo>();
-                if (info == null)
-                {
-                    GameObject obj = new GameObject("PlayerInfo");
-                    instance = obj.AddComponent<PlayerInfo>();
-                }
-                else
-                {
-                    instance = info;
-                }
-            }
-
-            instance.Initialize();
-            return instance;
-        }
-    }
+    public static PlayerInfo Instance => instance;
 
     public PlayerSaveData SaveData { get; private set; }
     public bool IsInitialized { get; private set; }
@@ -86,6 +65,8 @@ public class PlayerInfo : MonoBehaviour
             SaveData = SaveDataFactory.CreateNewData(heroCatalog);
             saveDataWriter.ForceSave(SaveData);
         }
+
+        Debug.Log($"{saveDataPath}");
 
         SaveScheduler.Instance.Initialize(SaveData, saveDataWriter);
 
