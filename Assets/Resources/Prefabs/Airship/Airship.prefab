@@ -872,6 +872,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AirshipUpgradeController
   upgradeCurrency: 0
   upgradeCost: 100
+  statTable: {fileID: 11400000, guid: 426591fd9a782d44d9942558eb8c2033, type: 2}
 --- !u!1 &4563226412411230586
 GameObject:
   m_ObjectHideFlags: 0
