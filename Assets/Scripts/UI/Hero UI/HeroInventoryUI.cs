@@ -19,13 +19,13 @@ public class HeroInventoryUI : MonoBehaviour
         RefreshInventory();
         ClearDetailInfo();
     }
+    //인벤토리 목록 생성 및 갱신
     public void RefreshInventory()
     {
         foreach (Transform child in contentGrid)
         {
             Destroy(child.gameObject);
         }
-
         if (PlayerInfo.Instance == null || heroCatalog == null) return;
 
         Dictionary<string, HeroSaveData> savedHeroes = PlayerInfo.Instance.Heroes;
@@ -51,20 +51,20 @@ public class HeroInventoryUI : MonoBehaviour
             }
         }
     }
+    //영웅 상세 정보 표시
     private void ShowDetailInfo(HeroEntry entry, HeroSaveData saveData)
     {
         if (detailPanelRoot != null) detailPanelRoot.SetActive(true);
-
         if (detailNameText != null)
         {
             detailNameText.text = $"{entry.HeroName} (Lv.{saveData.Level})";
         }
-
         if (detailDescText != null)
         {      
             detailDescText.text = $"영웅 위치: {entry.HeroLocation}\n소유 여부: {(saveData.IsOwned ? "보유 중" : "미보유")}";
         }
     }
+    //상세 정보 초기화
     private void ClearDetailInfo()
     {
         if (detailNameText != null) detailNameText.text = "영웅을 선택해주세요.";

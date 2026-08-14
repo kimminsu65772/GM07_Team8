@@ -8,11 +8,16 @@ public class StageMapUI : MonoBehaviour
     [SerializeField] private StageCatalog stageCatalog;
 
     [Header("UI References")]
-    [SerializeField] private Transform mapContentTransform; 
+    [SerializeField] private Transform mapContentTransform;
     [SerializeField] private GameObject stageSlotPrefab;
 
-    private readonly List<StageMapSlot> spawnedSlots = new List<StageMapSlot>();
+    [Header("Random Spawn Settings (지도 크기 조절)")]
+    [SerializeField] private float minX = -800f;
+    [SerializeField] private float maxX = 800f;
+    [SerializeField] private float minY = -800f;
+    [SerializeField] private float maxY = 800f;
 
+    private readonly List<StageMapSlot> spawnedSlots = new List<StageMapSlot>();
     private void Start()
     {
         GenerateMapSlots();
@@ -41,6 +46,14 @@ public class StageMapUI : MonoBehaviour
 
                 if (mapSlot != null)
                 {
+                    RectTransform rectTrans = slotObj.GetComponent<RectTransform>();
+                    if (rectTrans != null)
+                    {
+                        float randomX = Random.Range(minX, maxX);
+                        float randomY = Random.Range(minY, maxY);
+                        rectTrans.anchoredPosition = new Vector2(randomX, randomY);
+                    }
+
                     int maxCleared = (PlayerInfo.Instance != null && PlayerInfo.Instance.IsInitialized)
                         ? PlayerInfo.Instance.MaxClearedStage
                         : 0;

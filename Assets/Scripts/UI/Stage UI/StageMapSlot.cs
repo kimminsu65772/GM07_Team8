@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class StageMapSlot : MonoBehaviour
 {
     [SerializeField] private int stageNumber;

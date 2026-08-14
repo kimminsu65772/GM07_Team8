@@ -1,62 +1,90 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using TMPro;
+using System;
 
-public class HeroSlotUI : MonoBehaviour
+public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    [Header("UI Components")]
-    [SerializeField] private TextMeshProUGUI nameLevelText;
-    [SerializeField] private TextMeshProUGUI statText;
-    [SerializeField] private GameObject lockOverlay;
-    [SerializeField] private Button slotButton; 
+    [SerializeField] private TMP_Text nameText;
+    [SerializeField] private Image heroIcon;
 
+    private string heroName;
     private HeroEntry currentEntry;
     private HeroSaveData currentSaveData;
-    private System.Action<HeroEntry, HeroSaveData> onClickCallback;
+    private Action<HeroEntry, HeroSaveData> onClickCallback;
 
-    public void SetupSlot(HeroEntry entry, HeroSaveData saveInfo, bool isOwned, System.Action<HeroEntry, HeroSaveData> onClick)
+    // 드래그 관련 변수
+    private Transform originalParent;
+    private CanvasGroup canvasGroup;
+    private Transform canvasTransform;
+
+    private void Awake()
+    {
+        canvasGroup = GetComponent<CanvasGroup>();
+        if (canvasGroup == null) canvasGroup = gameObject.AddComponent<CanvasGroup>();
+
+        Canvas rootCanvas = GetComponentInParent<Canvas>();
+        if (rootCanvas != null)
+        {
+            canvasTransform = rootCanvas.rootCanvas.transform;
+        }
+    }
+    public void SetupSlot(HeroEntry entry, HeroSaveData saveData, bool isOwned, Action<HeroEntry, HeroSaveData> onClick)
     {
         currentEntry = entry;
-        currentSaveData = saveInfo;
+        currentSaveData = saveData;
+        heroName = entry.HeroName;
         onClickCallback = onClick;
 
-        if (slotButton != null)
+        if (nameText != null) nameText.text = $"{heroName} (Lv.{saveData.Level})";
+
+        // 클릭 이벤트 연결 
+        Button btn = GetComponent<Button>();
+        if (btn != null)
         {
-            slotButton.onClick.RemoveAllListeners();
-            slotButton.onClick.AddListener(() => {
-                onClickCallback?.Invoke(currentEntry, currentSaveData);
-            });
+            btn.onClick.AddListener(() => onClickCallback?.Invoke(currentEntry, currentSaveData));
         }
+    }
+    public string GetHeroName() => heroName;
 
-        if (entry == null || !isOwned || saveInfo == null)
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        if (currentSaveData == null || !currentSaveData.IsOwned) return;
+
+        originalParent = transform.parent;
+
+        if (canvasTransform != null)
         {
-            if (nameLevelText != null) nameLevelText.text = "잠김";
-            if (statText != null) statText.text = "";
-            if (lockOverlay != null) lockOverlay.SetActive(true);
-            if (slotButton != null) slotButton.interactable = false; 
-            return;
+            transform.SetParent(canvasTransform);
         }
+        canvasGroup.blocksRaycasts = false;
+    }
+    public void OnDrag(PointerEventData eventData)
+    {
+        if (currentSaveData == null || !currentSaveData.IsOwned) return;
 
-        int level = saveInfo.Level;
-
-        if (nameLevelText != null)
+        RectTransform rect = GetComponent<RectTransform>();
+        if (rect != null && canvasTransform != null)
         {
-            nameLevelText.text = $"{entry.HeroName} LV.{level}";
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                canvasTransform as RectTransform,
+                eventData.position,
+                eventData.pressEventCamera,
+                out Vector2 localPoint
+            );
+            rect.anchoredPosition = localPoint;
         }
+    }
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        if (currentSaveData == null || !currentSaveData.IsOwned) return;
+        canvasGroup.blocksRaycasts = true;
 
-        if (statText != null)
+        if (transform.parent == canvasTransform)
         {
-            statText.text = $"위치: {entry.HeroLocation}";
-        }
-
-        if (lockOverlay != null)
-        {
-            lockOverlay.SetActive(false);
-        }
-
-        if (slotButton != null)
-        {
-            slotButton.interactable = true;
+            transform.SetParent(originalParent);
+            GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
         }
     }
 }
