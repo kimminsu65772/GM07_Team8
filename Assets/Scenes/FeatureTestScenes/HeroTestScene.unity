@@ -1373,11 +1373,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6025787545800134637, guid: be5d0e5f76b847d428fd001a3fd381d6, type: 3}
       propertyPath: m_SortingLayer
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6025787545800134637, guid: be5d0e5f76b847d428fd001a3fd381d6, type: 3}
       propertyPath: m_SortingLayerID
-      value: -985495199
+      value: 696841935
       objectReference: {fileID: 0}
     - target: {fileID: 7128189487482074695, guid: be5d0e5f76b847d428fd001a3fd381d6, type: 3}
       propertyPath: 'attackFrames.Array.data[0]'
@@ -1408,6 +1408,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1631376462221523598, guid: 0d33069a5d850e142a8d0bd29e6040c4, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1631376462221523598, guid: 0d33069a5d850e142a8d0bd29e6040c4, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 696841935
+      objectReference: {fileID: 0}
     - target: {fileID: 2685244125775263853, guid: 0d33069a5d850e142a8d0bd29e6040c4, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

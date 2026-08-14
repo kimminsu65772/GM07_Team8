@@ -753,11 +753,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1716709413101017468, guid: 15d6a450fd7f1e44b9f71ad8aedd33de, type: 3}
       propertyPath: m_SortingLayer
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1716709413101017468, guid: 15d6a450fd7f1e44b9f71ad8aedd33de, type: 3}
       propertyPath: m_SortingLayerID
-      value: -985495199
+      value: 696841935
       objectReference: {fileID: 0}
     - target: {fileID: 4491417313169970715, guid: 15d6a450fd7f1e44b9f71ad8aedd33de, type: 3}
       propertyPath: m_Pivot.x
@@ -859,6 +859,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SPUM_20260807161850606
       objectReference: {fileID: 0}
+    - target: {fileID: 7942744650666202910, guid: 15d6a450fd7f1e44b9f71ad8aedd33de, type: 3}
+      propertyPath: ATTACK_List.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7942744650666202910, guid: 15d6a450fd7f1e44b9f71ad8aedd33de, type: 3}
+      propertyPath: 'ATTACK_List.Array.data[1]'
+      value: 
+      objectReference: {fileID: 7400000, guid: 9a26543e06de846d08fbe01dbfcd13e2, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
