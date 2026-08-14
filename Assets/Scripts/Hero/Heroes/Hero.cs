@@ -124,6 +124,8 @@ public abstract class Hero : MonoBehaviour, IDamageable
         }
 
         ChangeState();
+
+        // if (Input.GetKeyDown(KeyCode.A)) TakeDamage(10f);
     }
 
     public void TakeDamage(float damage)

@@ -87,6 +87,8 @@ public class PlayerInfo : MonoBehaviour
             saveDataWriter.ForceSave(SaveData);
         }
 
+        Debug.Log(saveDataPath);
+
         SaveScheduler.Instance.Initialize(SaveData, saveDataWriter);
 
         bool isAddedNewHero = false;
