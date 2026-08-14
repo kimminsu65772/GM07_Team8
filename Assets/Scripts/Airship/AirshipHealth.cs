@@ -155,4 +155,22 @@ public class AirshipHealth : MonoBehaviour, IDamageable
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, hitRadius);
     }
+    
+    [ContextMenu("TestResetHp")]
+    private void ResetHp()
+    {
+        maxHealth = 100f;
+        currentHealth = maxHealth;
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+    }
+    [ContextMenu("Test Damage")]
+    private void TestDamage()
+    {
+        TakeDamage(10f);
+    }
+    [ContextMenu("Test Heal")]
+    private void TestHeal()
+    {
+        Heal(10f);
+    }
 }
