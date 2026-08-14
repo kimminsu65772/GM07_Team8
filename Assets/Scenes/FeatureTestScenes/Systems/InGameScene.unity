@@ -1263,8 +1263,8 @@ MonoBehaviour:
   stageCatalog: {fileID: 11400000, guid: d91e731294da203459985cca1f398faa, type: 2}
   spawnYOffset: 1
   spawnPoint: {fileID: 303639108}
-  target: {fileID: 806907243}
-  airshipHealth: {fileID: 806907245}
+  target: {fileID: 1882879765}
+  airshipHealth: {fileID: 1882879766}
   currentStageNumber: 0
   currentWaveIndex: 0
   aliveEnemyCount: 0
@@ -1281,12 +1281,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 183848530}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1825.5, y: 1066, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1181137083}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &185308604
 GameObject:
@@ -4736,7 +4736,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c53ab44e34276841bcd7fbeda026982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FollowCam
-  target: {fileID: 806907243}
+  target: {fileID: 1882879765}
   smoothCamera: 1
   lockCameraSize: 0
   cameraSize: 6
@@ -8504,94 +8504,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 794929379}
   m_CullTransparentMesh: 1
---- !u!1001 &806907242
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1619610674}
-    m_Modifications:
-    - target: {fileID: 3601249629661744666, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
-      propertyPath: m_Name
-      value: Airship
-      objectReference: {fileID: 0}
-    - target: {fileID: 5523167347859530982, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
-      propertyPath: statTable
-      value: 
-      objectReference: {fileID: 11400000, guid: 426591fd9a782d44d9942558eb8c2033, type: 2}
-    - target: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -30
-      objectReference: {fileID: 0}
-    - target: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
---- !u!4 &806907243 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
-  m_PrefabInstance: {fileID: 806907242}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &806907244 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4851664543934810972, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
-  m_PrefabInstance: {fileID: 806907242}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f148b3af9417b84eb36894d7d3280ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AirshipController
---- !u!114 &806907245 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2751722732999653326, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
-  m_PrefabInstance: {fileID: 806907242}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85929e5032d740a47a9cd8407998db26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AirshipHealth
 --- !u!1 &809194721
 GameObject:
   m_ObjectHideFlags: 0
@@ -12587,7 +12499,6 @@ Transform:
   - {fileID: 406248693}
   - {fileID: 4857550510079921617}
   - {fileID: 1759111354}
-  - {fileID: 183848532}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1183075964
@@ -17463,8 +17374,8 @@ Transform:
   m_Children:
   - {fileID: 1269773613}
   - {fileID: 1000673317}
-  - {fileID: 806907243}
   - {fileID: 402947801}
+  - {fileID: 1882879765}
   - {fileID: 255850661}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18853,6 +18764,110 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1832948375}
   m_CullTransparentMesh: 1
+--- !u!1001 &1882879763
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1619610674}
+    m_Modifications:
+    - target: {fileID: 3601249629661744666, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_Name
+      value: Airship
+      objectReference: {fileID: 0}
+    - target: {fileID: 4851664543934810972, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: upgradeController
+      value: 
+      objectReference: {fileID: 1882879768}
+    - target: {fileID: 5523167347859530982, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: statTable
+      value: 
+      objectReference: {fileID: 11400000, guid: 426591fd9a782d44d9942558eb8c2033, type: 2}
+    - target: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -30
+      objectReference: {fileID: 0}
+    - target: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5786310163317347532, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+--- !u!114 &1882879764 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4851664543934810972, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+  m_PrefabInstance: {fileID: 1882879763}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f148b3af9417b84eb36894d7d3280ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AirshipController
+--- !u!4 &1882879765 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+  m_PrefabInstance: {fileID: 1882879763}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1882879766 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2751722732999653326, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+  m_PrefabInstance: {fileID: 1882879763}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85929e5032d740a47a9cd8407998db26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AirshipHealth
+--- !u!114 &1882879768 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5523167347859530982, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+  m_PrefabInstance: {fileID: 1882879763}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb53f3c102f9b11498d80d97289e81b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AirshipUpgradeController
 --- !u!1 &1885279139
 GameObject:
   m_ObjectHideFlags: 0
@@ -18873,7 +18888,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1885279140
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18979,7 +18994,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca860559d9f7aa4181c9e0dadd75bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeUIController
-  upgradeController: {fileID: 0}
+  upgradeController: {fileID: 1882879768}
   slots:
   - {fileID: 764575934}
   - {fileID: 1164418881}
@@ -21688,7 +21703,7 @@ MonoBehaviour:
   stageManager: {fileID: 183848531}
   mapController: {fileID: 943786532}
   airshipStartPoint: {fileID: 1269773613}
-  airship: {fileID: 806907244}
+  airship: {fileID: 1882879764}
 --- !u!1 &4290260284094567499
 GameObject:
   m_ObjectHideFlags: 0
@@ -21823,6 +21838,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1619610674}
+  - {fileID: 183848532}
   - {fileID: 943786533}
   - {fileID: 729156443}
   - {fileID: 280974634}
