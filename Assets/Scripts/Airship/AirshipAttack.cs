@@ -13,11 +13,15 @@ public class AirshipAttack : MonoBehaviour
     [Header("조준")]
     [SerializeField, Min(0f)] private float aimLerpSpeed = 25f;
 
+    [Header("타겟 갱신")]
+    [SerializeField, Min(0.01f)] private float targetRefreshInterval = 0.1f;
+
     private AirshipCannonData currentCannon;
 
     private float attackDamage;
     private float attackInterval = 1f;
     private float attackTimer;
+    private float targetRefreshTimer;
 
     private Transform cachedTarget;
     private IDamageable cachedDamageable;
@@ -62,6 +66,13 @@ public class AirshipAttack : MonoBehaviour
             return;
 
         attackTimer -= Time.deltaTime;
+        targetRefreshTimer -= Time.deltaTime;
+
+        if (targetRefreshTimer <= 0f)
+        {
+            RefreshTarget();
+            targetRefreshTimer = targetRefreshInterval;
+        }
 
         // 마지막으로 선택한 타겟을 계속 부드럽게 추적
         if (cachedTarget != null)
@@ -70,16 +81,10 @@ public class AirshipAttack : MonoBehaviour
         if (attackTimer > 0f)
             return;
 
-        if (enemyChecker == null)
+        if (cachedTarget == null)
             return;
 
-        // 기존 타겟 선정 방식 유지
-        Transform target = enemyChecker.FindNearestEnemy();
-
-        if (target == null)
-            return;
-
-        Attack(target);
+        Attack(cachedTarget);
         attackTimer = attackInterval;
     }
 
@@ -99,6 +104,24 @@ public class AirshipAttack : MonoBehaviour
     private void HandleCannonChanged(AirshipCannonData cannon)
     {
         currentCannon = cannon;
+    }
+
+    private void RefreshTarget()
+    {
+        if (enemyChecker == null)
+            return;
+
+        // 기존 타겟 선정 방식 유지
+        Transform target = enemyChecker.FindNearestEnemy();
+
+        if (target == cachedTarget)
+            return;
+
+        cachedTarget = target;
+        cachedDamageable =
+            target == null
+                ? null
+                : target.GetComponentInParent<IDamageable>();
     }
 
     private void Attack(Transform target)
