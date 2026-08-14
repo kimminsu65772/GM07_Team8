@@ -19,6 +19,20 @@ public interface IHeroStatTable
     HeroStat GetStat(int lv);
 }
 
+public static class HeroStats
+{
+    public static readonly Dictionary<int, IHeroStatTable> HeroStatDic = new()
+    {
+        { -1, new Hero1StatTable() },
+        { -2, new Hero2StatTable() }
+    };
+
+    public static IHeroStatTable GetStatTable(int id)
+    {
+        return HeroStatDic[id];
+    }
+}
+
 // 영웅1
 public class Hero1StatTable : IHeroStatTable
 {

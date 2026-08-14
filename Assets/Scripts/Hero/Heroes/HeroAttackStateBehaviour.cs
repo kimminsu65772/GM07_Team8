@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HeroAttackStateBehaviour : StateMachineBehaviour
+public class HeroActionStateBehaviour : StateMachineBehaviour
 {
     public override void OnStateExit(
         Animator animator,
@@ -9,9 +9,18 @@ public class HeroAttackStateBehaviour : StateMachineBehaviour
     {
         Hero hero = animator.GetComponentInParent<Hero>();
 
-        if (hero != null)
+        if (hero == null)
+            return;
+
+        switch (hero.HeroState)
         {
-            hero.AttackStop();
+            case HeroStateEnum.Attack:
+                hero.AttackStop();
+                break;
+
+            case HeroStateEnum.Skill:
+                hero.SkillStop();
+                break;
         }
     }
 }
