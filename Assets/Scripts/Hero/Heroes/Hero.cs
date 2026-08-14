@@ -128,8 +128,10 @@ public abstract class Hero : MonoBehaviour, IDamageable
         // if (Input.GetKeyDown(KeyCode.A)) TakeDamage(10f);
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(DamageInfo damageInfo)
     {
+        float damage = damageInfo.Damage;
+        
         // 방어력 적용하기
         heroCurrentHP -= damage;
 

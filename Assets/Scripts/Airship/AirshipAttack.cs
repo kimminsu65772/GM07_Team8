@@ -156,7 +156,9 @@ public class AirshipAttack : MonoBehaviour
         projectile.Init(
             target,
             cachedDamageable,
-            attackDamage
+            new DamageInfo(
+                attackDamage,
+                false)
         );
     }
 

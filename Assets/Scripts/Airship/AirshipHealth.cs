@@ -61,8 +61,9 @@ public class AirshipHealth : MonoBehaviour, IDamageable
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(DamageInfo damageInfo)
     {
+        float damage = damageInfo.Damage;
         if (isDestroyed || damage <= 0f)
         {
             return;
@@ -166,7 +167,7 @@ public class AirshipHealth : MonoBehaviour, IDamageable
     [ContextMenu("Test Damage")]
     private void TestDamage()
     {
-        TakeDamage(10f);
+        TakeDamage(new DamageInfo(10f));
     }
     [ContextMenu("Test Heal")]
     private void TestHeal()

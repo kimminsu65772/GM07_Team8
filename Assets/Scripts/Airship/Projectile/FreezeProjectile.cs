@@ -58,7 +58,9 @@ public class FreezeProjectile : NormalProjectile
             }
 
             targetDamageable.TakeDamage(
-                damage * splashDamageMultiplier
+                new DamageInfo(
+                    damageInfo.Damage * splashDamageMultiplier,
+                    damageInfo.IsCritical)
             );
         }
     }
