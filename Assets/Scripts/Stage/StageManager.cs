@@ -9,6 +9,7 @@ public class StageManager : MonoBehaviour
     public event Action OnEnemyKilled;
     public event Action<int> OnStageCompleted;   
     public event Action<int> OnWaveCompleted;
+    public event Action<int, int> OnStageStarted;
     public event Action<int, string> OnStageFailed;
     public int CurrentWave => currentWaveIndex + 1;
     public int TotalWaveCount { get; private set; }
@@ -106,6 +107,7 @@ public class StageManager : MonoBehaviour
 
         SubscribeAirshipEvent();
 
+        OnStageStarted?.Invoke(currentStageNumber, TotalWaveCount);
         stageRoutine =  StartCoroutine
             (
                 RunStage(stageData)
