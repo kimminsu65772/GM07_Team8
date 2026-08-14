@@ -1264,6 +1264,7 @@ MonoBehaviour:
   spawnYOffset: 1
   spawnPoint: {fileID: 303639108}
   target: {fileID: 1882879765}
+  airshipHealth: {fileID: 1882879766}
   currentStageNumber: 0
   currentWaveIndex: 0
   aliveEnemyCount: 0
@@ -18845,6 +18846,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
   m_PrefabInstance: {fileID: 1882879763}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1882879766 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2751722732999653326, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+  m_PrefabInstance: {fileID: 1882879763}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85929e5032d740a47a9cd8407998db26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AirshipHealth
 --- !u!114 &1882879768 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5523167347859530982, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}

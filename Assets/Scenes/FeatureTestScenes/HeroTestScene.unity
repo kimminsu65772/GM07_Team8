@@ -1335,6 +1335,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4737223826380022366, guid: be5d0e5f76b847d428fd001a3fd381d6, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4777009829211945337, guid: be5d0e5f76b847d428fd001a3fd381d6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.35
@@ -1367,6 +1371,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cha1
       objectReference: {fileID: 0}
+    - target: {fileID: 6025787545800134637, guid: be5d0e5f76b847d428fd001a3fd381d6, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025787545800134637, guid: be5d0e5f76b847d428fd001a3fd381d6, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -985495199
+      objectReference: {fileID: 0}
     - target: {fileID: 7128189487482074695, guid: be5d0e5f76b847d428fd001a3fd381d6, type: 3}
       propertyPath: 'attackFrames.Array.data[0]'
       value: 
@@ -1379,6 +1391,10 @@ PrefabInstance:
       propertyPath: 'attackFrames.Array.data[2]'
       value: 
       objectReference: {fileID: -3316136795399127397, guid: d9a99715dc1d2d5419fde20750c18c91, type: 3}
+    - target: {fileID: 7728120486174987580, guid: be5d0e5f76b847d428fd001a3fd381d6, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1392,6 +1408,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2685244125775263853, guid: 0d33069a5d850e142a8d0bd29e6040c4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3993062887785085684, guid: 0d33069a5d850e142a8d0bd29e6040c4, type: 3}
       propertyPath: firePoint
       value: 
@@ -1448,13 +1468,14 @@ PrefabInstance:
       propertyPath: 'ATTACK_List.Array.data[1]'
       value: 
       objectReference: {fileID: 7400000, guid: 9a26543e06de846d08fbe01dbfcd13e2, type: 2}
+    - target: {fileID: 8991507465417736786, guid: 0d33069a5d850e142a8d0bd29e6040c4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 41474490346660167, guid: 0d33069a5d850e142a8d0bd29e6040c4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d33069a5d850e142a8d0bd29e6040c4, type: 3}
 --- !u!4 &8550775563927797407 stripped
 Transform:
