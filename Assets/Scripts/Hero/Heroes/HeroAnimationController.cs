@@ -24,22 +24,27 @@ public class HeroAnimationController : MonoBehaviour
         
         currentState = state;
 
-        switch (hero.HeroState)
+        switch (state)
         {
             case HeroStateEnum.Idle:
                 ani.PlayAnimation(PlayerState.IDLE, 0);
                 break;
+
             case HeroStateEnum.Move:
                 ani.PlayAnimation(PlayerState.MOVE, 0);
                 break;
+
             case HeroStateEnum.Attack:
                 ani.PlayAnimation(PlayerState.ATTACK, 0);
                 break;
+
+            case HeroStateEnum.Skill:
+                ani.PlayAnimation(PlayerState.ATTACK, 1);
+                break;
+
             case HeroStateEnum.Die:
                 ani.PlayAnimation(PlayerState.DEATH, 0);
                 break;
-            default:
-                return;
         }
     }
 }

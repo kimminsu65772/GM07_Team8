@@ -26,7 +26,7 @@ public class EffectPlayer : MonoBehaviour
         effectCoroutine = StartCoroutine(PlayEffectCoroutine(attackFrames));
     }
 
-    /*public void PlaySkillEffect()
+    public void PlaySkillEffect()
     {
         if (effectCoroutine != null)
         {
@@ -34,7 +34,7 @@ public class EffectPlayer : MonoBehaviour
         }
 
         effectCoroutine = StartCoroutine(PlayEffectCoroutine(skillFrames));
-    }*/
+    }
 
     private IEnumerator PlayEffectCoroutine(Sprite[] frames)
     {
