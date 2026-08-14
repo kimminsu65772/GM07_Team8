@@ -10,6 +10,19 @@ public class Cha2 : Hero
 
     public override void Skill(GameObject enemy)
     {
-        Debug.Log("원거리 스킬 사용");
+        float criRan = Random.Range(1f, 100f);
+        float damage = HeroAtk * 1.5f;
+
+        Vector2 direction = enemy.transform.position - transform.position;
+        FlipSprite(direction);
+
+        if (criRan <= HeroCriChance)
+            damage *= 2f;
+
+        if (enemy.TryGetComponent<IDamageable>(out IDamageable enemyHP))
+        {
+            enemyHP.TakeDamage(damage);
+        }
+        Debug.Log(gameObject.name + "의 스킬, 피해량 : " + damage);
     }
 }

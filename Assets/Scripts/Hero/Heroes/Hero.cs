@@ -235,6 +235,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
     public void SkillStop()
     {
+        Debug.Log("스킬 중지");
         heroState = HeroStateEnum.Idle;
         attack.StopIsSkilling();
     }
