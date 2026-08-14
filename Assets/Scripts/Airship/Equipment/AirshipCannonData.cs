@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum AirshipProjectileType
+public enum AirshipCannonType
 {
     Normal,
     Freeze,
@@ -11,17 +11,23 @@ public enum AirshipProjectileType
     menuName = "Airship/Equipment/Cannon")]
 public class AirshipCannonData : ScriptableObject
 {
-    [SerializeField] private string id;
     [SerializeField] private string displayName;
     [SerializeField] private Sprite uiImage;
     [SerializeField] private Sprite barrelImage;
-    [SerializeField] private AirshipProjectileType projectileType;
+    [SerializeField] private AirshipCannonType cannonType;
     [SerializeField] private AirshipProjectileBase projectilePrefab;
+    [SerializeField] private AirshipBuffData buffData;
 
-    public string Id => id;
     public string DisplayName => displayName;
     public Sprite UIImage => uiImage;
     public Sprite BarrelImage => barrelImage;
-    public AirshipProjectileType ProjectileType => projectileType;
+    public AirshipCannonType CannonType => cannonType;
     public AirshipProjectileBase ProjectilePrefab => projectilePrefab;
+
+    public AirshipBuff CreateBuff(object owner)
+    {
+        return buffData == null
+            ? null
+            : buffData.CreateBuff(owner);
+    }
 }

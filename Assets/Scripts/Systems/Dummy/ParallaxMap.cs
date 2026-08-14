@@ -8,35 +8,43 @@ public class ParallaxMap : MonoBehaviour
     [SerializeField, Range(0f,1f)] private float parallaxIntensityY;
     [SerializeField, Range(-1f, 1f)] private float independantSpeed;
 
-    private float cameraSize;
     private float spriteWidth;
-    private Vector2 initialPos;
+    private Vector3 cameraStartPosition;
+    private Vector3 layerStartPosition;
     private float translationOffset = 0;
 
     private void Start()
     {
         mainCamera = Camera.main.transform;
-        cameraSize = Camera.main.orthographicSize;
         spriteWidth = GetComponent<SpriteRenderer>().bounds.size.x / 3;
-
-        transform.position = new Vector2(mainCamera.position.x, 0f);
-        initialPos = transform.position;
+        cameraStartPosition = mainCamera.position;
+        layerStartPosition = transform.position;
     }
 
     private void LateUpdate()
     {
+        Vector3 cameraDelta = mainCamera.position - cameraStartPosition;
+
         translationOffset += independantSpeed * Time.deltaTime * parallaxIntensityX;
 
-        float parallaxOffsetX = (mainCamera.position.x * (1 - (parallaxIntensityX / 2))) + translationOffset;
-        float parallaxOffsetY = ((mainCamera.position.y / cameraSize) / 0.7f) * (1 - parallaxIntensityY);
+        float parallaxOffsetX = cameraDelta.x * (1f - parallaxIntensityX * 0.5f);
+        float parallaxOffsetY = cameraDelta.y * (1f - parallaxIntensityY);
 
-        transform.position = new Vector2(initialPos.x + parallaxOffsetX, initialPos.y + parallaxOffsetY);
+        transform.position = new Vector3(
+            layerStartPosition.x + parallaxOffsetX + translationOffset, 
+            layerStartPosition.y + parallaxOffsetY, 
+            layerStartPosition.z);
 
+        HorizontalPallax();
+    }
+
+    private void HorizontalPallax()
+    {
         float cameraOffsetX = mainCamera.position.x - transform.position.x;
 
         if (cameraOffsetX > spriteWidth / 2)
-            initialPos.x += spriteWidth;
+            layerStartPosition.x += spriteWidth;
         else if (cameraOffsetX < -spriteWidth / 2)
-            initialPos.x -= spriteWidth;
+            layerStartPosition.x -= spriteWidth;
     }
 }

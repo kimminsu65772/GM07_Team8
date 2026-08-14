@@ -25,11 +25,18 @@ public class StageTestManager : MonoBehaviour
     [SerializeField] private bool isBossTimeOver;
     [SerializeField] private bool isAirshipDestroyed;
     [SerializeField] private bool isStageFinished;
+    [SerializeField] private int remainingEnemyCount;
 
     private readonly List<EnemyStats> trackedEnemies =
         new List<EnemyStats>();
 
     private Coroutine stageRoutine;
+
+    private void OnEnable()
+    {
+        target.TryGetComponent<AirshipHealth>(out AirshipHealth airshipHealth);
+        airshipHealth.OnDestroyed += HandleAirshipDestroyed;
+    }
 
     public void StartStage(int stageNumber)
     {
@@ -200,7 +207,7 @@ public class StageTestManager : MonoBehaviour
             {
                 RefreshAliveEnemyCount();
 
-                if (aliveEnemyCount <= 0 ||
+                if (remainingEnemyCount <= 0 ||
                     target == null)
                 {
                     break;
@@ -245,6 +252,19 @@ public class StageTestManager : MonoBehaviour
         if (aliveEnemyCount > 0)
         {
             isBossTimeOver = true;
+            yield break;
+        }
+
+        while (remainingEnemyCount > 0 &&
+               target != null)
+        {
+            RefreshAliveEnemyCount();
+            yield return null;
+        }
+
+        if (target == null)
+        {
+            isAirshipDestroyed = true;
         }
     }
 
@@ -284,34 +304,26 @@ public class StageTestManager : MonoBehaviour
             return;
         }
 
-        EnemyMovement enemyMovement =
-            spawnedEnemy.GetComponent<EnemyMovement>();
-
-        if (enemyMovement != null)
-        {
-            enemyMovement.SetTarget(target);
-        }
-
-        EnemyAttack enemyAttack =
-            spawnedEnemy.GetComponent<EnemyAttack>();
-
-        if (enemyAttack != null)
-        {
-            enemyAttack.SetTarget(target);
-        }
-
-        DummyEnemyAttack dummyEnemyAttack =
-            spawnedEnemy.GetComponent<DummyEnemyAttack>();
-
-        if (dummyEnemyAttack != null)
-        {
-            dummyEnemyAttack.SetTarget(target);
-        }
-
+        aliveEnemyCount++;
+        remainingEnemyCount++;
         trackedEnemies.Add(enemyStats);
-        aliveEnemyCount = trackedEnemies.Count;
 
         enemyStats.EnemyDied += HandleEnemyDied;
+        enemyStats.EnemyDeathCompleted += HandleEnemyDeathCompleted;
+
+        EnemyTargetSelector targetSelector =
+            spawnedEnemy.GetComponent<EnemyTargetSelector>();
+
+        if (targetSelector != null)
+        {
+            targetSelector.SetAirshipTarget(target);
+        }
+        else
+        {
+            Debug.LogWarning(
+                $"{spawnedEnemy.name}에 EnemyTargetSelector가 없습니다."
+            );
+        }
     }
 
     private void HandleEnemyDied(EnemyStats deadEnemy)
@@ -322,10 +334,26 @@ public class StageTestManager : MonoBehaviour
         }
 
         deadEnemy.EnemyDied -= HandleEnemyDied;
-        trackedEnemies.Remove(deadEnemy);
-        aliveEnemyCount = trackedEnemies.Count;
+        aliveEnemyCount = Mathf.Max(
+            aliveEnemyCount - 1,
+            0);
 
         OnEnemyKilled?.Invoke();
+    }
+
+    private void HandleEnemyDeathCompleted(EnemyStats deadEnemy)
+    {
+        if (deadEnemy == null)
+        {
+            return;
+        }
+
+        deadEnemy.EnemyDeathCompleted -= HandleEnemyDeathCompleted;
+        trackedEnemies.Remove(deadEnemy);
+
+        remainingEnemyCount = Mathf.Max(
+            remainingEnemyCount - 1,
+            0);
     }
 
     private void RefreshAliveEnemyCount()
@@ -338,13 +366,24 @@ public class StageTestManager : MonoBehaviour
             }
         }
 
-        aliveEnemyCount = trackedEnemies.Count;
+        aliveEnemyCount = 0;
+
+        for (int i = 0; i < trackedEnemies.Count; i++)
+        {
+            EnemyStats enemy = trackedEnemies[i];
+
+            if (enemy != null && !enemy.IsDead)
+            {
+                aliveEnemyCount++;
+            }
+        }
     }
 
     private void ResetRuntimeState()
     {
         currentWaveIndex = 0;
         aliveEnemyCount = 0;
+        remainingEnemyCount = 0;
         remainingBossTime = 0f;
         isBossTimeOver = false;
         isAirshipDestroyed = false;
@@ -361,6 +400,7 @@ public class StageTestManager : MonoBehaviour
             }
 
             enemy.EnemyDied -= HandleEnemyDied;
+            enemy.EnemyDeathCompleted -= HandleEnemyDeathCompleted;
             Destroy(enemy.gameObject);
         }
 
@@ -402,5 +442,11 @@ public class StageTestManager : MonoBehaviour
     private void OnDisable()
     {
         StopStage();
+    }
+
+    private void HandleAirshipDestroyed()
+    {
+        isAirshipDestroyed = true;
+        FailStage("비행선 파괴: 스테이지 실패");
     }
 }

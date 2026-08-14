@@ -2,13 +2,18 @@ using UnityEngine;
 
 public class MapChanger : MonoBehaviour
 {
-    [SerializeField] private BattleManager battleManager;
+    [SerializeField] private StageTransitionController stageTransitionController;
 
     public void NextMap()
     {
         int nextStage = PlayerInfo.Instance.CurrentStage + 1;
+
+        if (!stageTransitionController.StartTransition(nextStage))
+        {
+            return;
+        }
+
         PlayerInfo.Instance.SetCurrentStage(nextStage);
-        battleManager.SetUpStage(nextStage);
     }
 
     public void PreviousMap()
@@ -16,8 +21,12 @@ public class MapChanger : MonoBehaviour
         int previousStage = PlayerInfo.Instance.CurrentStage - 1;
         if (previousStage >= 1)
         {
+            if (!stageTransitionController.StartTransition(previousStage))
+            {
+                return;
+            }
+
             PlayerInfo.Instance.SetCurrentStage(previousStage);
-            battleManager.SetUpStage(previousStage);
         }
         else
         {

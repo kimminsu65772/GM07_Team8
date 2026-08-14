@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -89,9 +90,9 @@ public abstract class Hero : MonoBehaviour, IDamageable
     {
         heroID = id;
         heroName = name;
-        //HeroSaveData heroData = PlayerInfo.Instance.TryGetHeroData(heroName, out heroData) ? heroData : null;
-        //HeroLv = heroData.Level;
-        HeroLv = 1;
+        HeroSaveData heroData = PlayerInfo.Instance.TryGetHeroData(heroName, out heroData) ? heroData : null;
+        HeroLv = heroData.Level;
+        // HeroLv = 1;
         HeroLvManager.Instance.LvApply(HeroLv, this);
         heroCurrentHP = heroMaxHP;
         isDead = false;
@@ -111,6 +112,8 @@ public abstract class Hero : MonoBehaviour, IDamageable
         if (targetEnemy != null && location == HeroLocationEnum.Back) attack.RangeAttack(targetEnemy);
 
         ChangeState();
+
+        // if (Input.GetKeyDown(KeyCode.A)) TakeDamage(heroMaxHP);
     }
 
     public void TakeDamage(float damage)
@@ -120,7 +123,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
         if (heroCurrentHP <= 0f)
         {
-            Die();
+            StartCoroutine(DieAndRevive());
         }
     }
 
@@ -141,13 +144,19 @@ public abstract class Hero : MonoBehaviour, IDamageable
             }
         }
 
+        if (nearestEnemy == null)
+        {
+            targetEnemy = null;
+            return;
+        }
+
         targetEnemy = nearestEnemy.gameObject;
         Debug.Log($"{gameObject.name}의 목표 : {targetEnemy.name}");
     }
 
     private void MoveToEnemy()
     {
-        if (location == HeroLocationEnum.Back || targetEnemy == null)
+        if (location == HeroLocationEnum.Back || targetEnemy == null || IsDead)
         {
             isMoving = false;
             return;
@@ -175,7 +184,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         }
     }
 
-    private void FlipSprite(Vector2 direction)
+    public void FlipSprite(Vector2 direction)
     {
         if (Mathf.Abs(direction.x) < 0.01f) return;
 
@@ -185,10 +194,16 @@ public abstract class Hero : MonoBehaviour, IDamageable
     }
 
 
-    protected virtual void Die()
+    protected IEnumerator DieAndRevive()
     {
         isDead = true;
         heroState = HeroStateEnum.Die;
+
+        yield return new WaitForSeconds(3f);
+
+        isDead = false;
+        heroState = HeroStateEnum.Idle;
+        HeroCurrentHP = heroMaxHP;
     }
 
     private void ChangeState()

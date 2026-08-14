@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 4937224310082285210}
   - component: {fileID: 3227018448172053116}
   - component: {fileID: 4527213543350081925}
-  - component: {fileID: 2952219784427838897}
-  - component: {fileID: 7749152205510843161}
   - component: {fileID: 4053107649118390252}
+  - component: {fileID: 2598561320532420809}
+  - component: {fileID: 4765694748278270380}
+  - component: {fileID: 4106430489268766663}
   m_Layer: 6
   m_Name: DummyTestEnemy
   m_TagString: Untagged
@@ -140,6 +141,7 @@ MonoBehaviour:
   target: {fileID: 0}
   avoidanceRadius: 1.2
   avoidanceStrength: 1.5
+  heroStopRange: 1.3
 --- !u!114 &4527213543350081925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,34 +156,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   enemyData: {fileID: 11400000, guid: eb5498130eff3e746b155a5ec2949a08, type: 2}
   currentHealth: 0
---- !u!114 &2952219784427838897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7931180812232907860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49fca63c307448a09d566fa07eb83a21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DummyEnemyAttack
-  target: {fileID: 0}
---- !u!114 &7749152205510843161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7931180812232907860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ce15e2dccaf405387990a2561dd1ae8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DummyEnemyDamageable
-  enemyStats: {fileID: 4527213543350081925}
-  hitRadius: 0.5
-  dieInOneHit: 1
+  hitStunDuration: 0.2
+  deathDestroyDelay: 1.2
 --- !u!58 &4053107649118390252
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -218,6 +194,53 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0.33}
   m_Radius: 0.42
+--- !u!114 &2598561320532420809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7931180812232907860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ba251c260f376947814a78a063306f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
+  target: {fileID: 0}
+  heroAttackRange: 1.3
+  attackPerformed:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &4765694748278270380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7931180812232907860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fe54fc0955938a4f98bfcb3b606af3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAnimationController
+  enemyAnimator: {fileID: 8939290449129180259}
+  movementThreshold: 0.01
+--- !u!114 &4106430489268766663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7931180812232907860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cfffa05328e5f54fa3305220776fefb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyTargetSelector
+  airshipTarget: {fileID: 0}
+  heroLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1001 &5974092406387850647
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -618,5 +641,10 @@ PrefabInstance:
 --- !u!224 &8469666164768143569 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2837955941800691014, guid: 4010be241b57e4b37b4a2fd2b7087f39, type: 3}
+  m_PrefabInstance: {fileID: 5974092406387850647}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8939290449129180259 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3379529484749779444, guid: 4010be241b57e4b37b4a2fd2b7087f39, type: 3}
   m_PrefabInstance: {fileID: 5974092406387850647}
   m_PrefabAsset: {fileID: 0}

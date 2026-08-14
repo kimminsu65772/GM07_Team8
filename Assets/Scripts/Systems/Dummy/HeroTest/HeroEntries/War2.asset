@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15951fa409c979b4ead191d1d9e3ed31, type: 3}
   m_Name: War2
   m_EditorClassIdentifier: Assembly-CSharp::HeroEntry
-  heroName: Cha2
-  heroPrefab: {fileID: 4026286297419614028, guid: 2a6a37e327eaec646883b51803fff071, type: 3}
+  heroName: Hero2
+  heroPrefab: {fileID: 4136471860748260653, guid: 0d33069a5d850e142a8d0bd29e6040c4, type: 3}
+  heroLocation: 1
   isDefaultOwned: 1
   defaultLevel: 1

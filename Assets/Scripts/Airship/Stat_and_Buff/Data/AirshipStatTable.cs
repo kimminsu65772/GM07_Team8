@@ -17,7 +17,8 @@ public class AirshipStatGrowthData
 
     public float GetValue(int level)
     {
-        return baseValue + growthValue * level;
+        level = Mathf.Max(1, level);
+        return baseValue + growthValue * (level - 1);
     }
 }
 
