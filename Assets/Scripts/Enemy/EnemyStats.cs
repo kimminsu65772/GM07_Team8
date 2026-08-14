@@ -74,6 +74,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
             currentHealth - finalDamage,
             0);
 
+        EnemyDamaged?.Invoke(this);
         Debug.Log(
             $"{gameObject.name} 피격! 피해량: {finalDamage}, 남은 체력: {currentHealth}");
 
