@@ -7,8 +7,12 @@ public class StageManager : MonoBehaviour
 {
     // 외부 시스템에서 스테이지 진행 상황을 받을 수 있는 이벤트
     public event Action OnEnemyKilled;
-    public event Action<int> OnStageCompleted;
+    public event Action<int> OnStageCompleted;   
+    public event Action<int> OnWaveCompleted;
     public event Action<int, string> OnStageFailed;
+    public int CurrentWave => currentWaveIndex + 1;
+    public int TotalWaveCount { get; private set; }
+
 
     [Header("Stage")]
     [SerializeField] private StageCatalog stageCatalog;
@@ -24,6 +28,7 @@ public class StageManager : MonoBehaviour
 
     // 실제 비행선 또는 비행선 공격 위치
     [SerializeField] private Transform target;
+    [SerializeField] private AirshipHealth airshipHealth;
 
     [Header("Runtime Information")]
     [SerializeField] private int currentStageNumber;
@@ -83,7 +88,8 @@ public class StageManager : MonoBehaviour
         }
 
         if (spawnPoint == null ||
-            target == null)
+         target == null  )
+         
         {
             Debug.LogError(
                 "StageManager: SpawnPoint 또는 Target이 연결되지 않았습니다."
@@ -94,11 +100,14 @@ public class StageManager : MonoBehaviour
 
         StopStage();
 
-        currentStageNumber =
-            stageData.StageNumber;
+        currentStageNumber = stageData.StageNumber;
 
-        stageRoutine =
-            StartCoroutine(
+        TotalWaveCount = stageData.Waves.Count;
+
+        SubscribeAirshipEvent();
+
+        stageRoutine =  StartCoroutine
+            (
                 RunStage(stageData)
             );
     }
@@ -110,6 +119,7 @@ public class StageManager : MonoBehaviour
             StopCoroutine(stageRoutine);
             stageRoutine = null;
         }
+        UnsubscribeAirshipEvent();
 
         ClearTrackedEnemies();
         ResetRuntimeState();
@@ -234,7 +244,7 @@ public class StageManager : MonoBehaviour
             yield return StartCoroutine(
                 WaitForWaveClear(currentWave)
             );
-
+            
             if (isAirshipDestroyed)
             {
                 FailStage(
@@ -252,7 +262,7 @@ public class StageManager : MonoBehaviour
 
                 yield break;
             }
-
+            OnWaveCompleted?.Invoke(currentWaveIndex + 1);
             bool hasNextWave =
                 i < stageData.Waves.Count - 1;
 
@@ -567,10 +577,35 @@ public class StageManager : MonoBehaviour
         }
     }
 
-   
+
 
     // 실제 비행선의 HP가 0이 되었을 때 비행선 시스템에서 이 함수를 호출
-    public void NotifyAirshipDestroyed()
+    private void SubscribeAirshipEvent()
+    {
+        if (airshipHealth == null)
+        {
+            return;
+        }
+
+        airshipHealth.OnDestroyed -=
+            HandleAirshipDestroyed;
+
+        airshipHealth.OnDestroyed +=
+            HandleAirshipDestroyed;
+    }
+
+    private void UnsubscribeAirshipEvent()
+    {
+        if (airshipHealth == null)
+        {
+            return;
+        }
+
+        airshipHealth.OnDestroyed -=
+            HandleAirshipDestroyed;
+    }
+
+    private void HandleAirshipDestroyed()
     {
         if (isAirshipDestroyed)
         {
@@ -584,7 +619,7 @@ public class StageManager : MonoBehaviour
         );
     }
 
-  
+
 
     private void ResetRuntimeState()
     {

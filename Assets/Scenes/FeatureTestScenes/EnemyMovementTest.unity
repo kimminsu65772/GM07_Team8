@@ -281,7 +281,7 @@ Transform:
   m_GameObject: {fileID: 1138327407}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9, y: -0.43673, z: 0}
+  m_LocalPosition: {x: 7.25, y: -0.43673, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -469,8 +469,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageManager
   stageCatalog: {fileID: 11400000, guid: d91e731294da203459985cca1f398faa, type: 2}
+  spawnYOffset: 0.6
   spawnPoint: {fileID: 1138327408}
   target: {fileID: 1851584849}
+  airshipHealth: {fileID: 0}
   currentStageNumber: 0
   currentWaveIndex: 0
   aliveEnemyCount: 0
