@@ -15,8 +15,9 @@ public class TestAirshipHealth : MonoBehaviour, IDamageable
         currentHealth = maxHealth;
     }
 
-    public void TakeDamage(float damageAmount)
+    public void TakeDamage(DamageInfo damageInfo)
     {
+        float damageAmount = damageInfo.Damage;
         if (damageAmount <= 0f || currentHealth <= 0)
         {
             return;

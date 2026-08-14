@@ -16,12 +16,17 @@ public class Cha1 : Hero
         Vector2 direction = enemy.transform.position - transform.position;
         FlipSprite(direction);
 
+        bool isCrit = false;
         if (criRan <= HeroCriChance)
+        {
             damage *= 2f;
+            isCrit = true;
+        }
+            
 
         if (enemy.TryGetComponent<IDamageable>(out IDamageable enemyHP))
         {
-            enemyHP.TakeDamage(damage);
+            enemyHP.TakeDamage(new DamageInfo(damage, isCrit));
         }
         Debug.Log(gameObject.name + "의 스킬, 피해량 : " + damage);
     }

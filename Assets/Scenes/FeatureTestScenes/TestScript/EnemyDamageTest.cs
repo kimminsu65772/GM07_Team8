@@ -26,7 +26,7 @@ public class EnemyDamageTest : MonoBehaviour
             // 버튼을 누르는 사이 적이 사망했을 가능성을 확인한다.
             if (enemy != null)
             {
-                enemy.TakeDamage(damageAmount);
+                enemy.TakeDamage(new DamageInfo(damageAmount));
             }
         }
     }

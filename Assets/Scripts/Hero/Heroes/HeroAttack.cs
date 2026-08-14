@@ -59,12 +59,16 @@ public class HeroAttack : MonoBehaviour
 
             vfx.PlayAttackEffect();
 
+            bool isCrit = false;
             if (criRan <= hero.HeroCriChance)
+            {
                 damage *= 2f;
+                isCrit = true;
+            }
 
             if (enemy.TryGetComponent<IDamageable>(out IDamageable enemyHP))
             {
-                enemyHP.TakeDamage(damage);
+                enemyHP.TakeDamage(new DamageInfo(damage, isCrit));
             }
 
             Debug.Log(gameObject.name + "의 공격, 피해량 : " + damage);
@@ -88,16 +92,20 @@ public class HeroAttack : MonoBehaviour
 
             vfx.PlayAttackEffect();
 
+            bool isCrit = false;
             if (criRan <= hero.HeroCriChance)
+            {
                 damage *= 2f;
+                isCrit = true;
+            }
 
-            ThrowProjectile(enemy.transform, damage);
+            ThrowProjectile(enemy.transform, new DamageInfo(damage, isCrit));
 
             Debug.Log(gameObject.name + "의 공격, 피해량 : " + damage);
         }
     }
 
-    private void ThrowProjectile(Transform enemy, float damage)
+    private void ThrowProjectile(Transform enemy, DamageInfo damageInfo)
     {
         GameObject projec = Instantiate(
             projectile,
@@ -106,7 +114,7 @@ public class HeroAttack : MonoBehaviour
         );
 
         projec.GetComponent<HeroAttackProjectileController>()
-            .Init(enemy, damage);
+            .Init(enemy, damageInfo);
     }
 
     public void UseSkill(GameObject enemy)

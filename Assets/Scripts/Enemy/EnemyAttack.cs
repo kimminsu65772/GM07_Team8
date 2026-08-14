@@ -109,7 +109,7 @@ public class EnemyAttack : MonoBehaviour
         }
 
         targetDamageable.TakeDamage(
-            enemyStats.AttackPower);
+            new DamageInfo(enemyStats.AttackPower));
     }
     private void FaceTarget()
     {

@@ -20,7 +20,7 @@ public class AirshipHealth : MonoBehaviour, IDamageable
     public bool IsDestroyed => isDestroyed;
 
     public event Action<float, float> OnHealthChanged;
-    public event Action<float> OnDamaged;
+    public event Action<DamageInfo> OnDamaged;
     public event Action<float> OnHealed;
     public event Action<float> OnShieldChanged;
     public event Action OnDestroyed;
@@ -61,8 +61,9 @@ public class AirshipHealth : MonoBehaviour, IDamageable
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(DamageInfo damageInfo)
     {
+        float damage = damageInfo.Damage;
         if (isDestroyed || damage <= 0f)
         {
             return;
@@ -82,13 +83,13 @@ public class AirshipHealth : MonoBehaviour, IDamageable
 
         if (remainingDamage <= 0f)
         {
-            OnDamaged?.Invoke(damage);
+            OnDamaged?.Invoke(damageInfo);
             return;
         }
 
         currentHealth = Mathf.Max(0f, currentHealth - remainingDamage);
 
-        OnDamaged?.Invoke(damage);
+        OnDamaged?.Invoke(damageInfo);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
 
         if (currentHealth <= 0f)
@@ -166,7 +167,7 @@ public class AirshipHealth : MonoBehaviour, IDamageable
     [ContextMenu("Test Damage")]
     private void TestDamage()
     {
-        TakeDamage(10f);
+        TakeDamage(new DamageInfo(10f));
     }
     [ContextMenu("Test Heal")]
     private void TestHeal()
