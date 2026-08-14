@@ -20,7 +20,7 @@ public class AirshipHealth : MonoBehaviour, IDamageable
     public bool IsDestroyed => isDestroyed;
 
     public event Action<float, float> OnHealthChanged;
-    public event Action<float> OnDamaged;
+    public event Action<DamageInfo> OnDamaged;
     public event Action<float> OnHealed;
     public event Action<float> OnShieldChanged;
     public event Action OnDestroyed;
@@ -83,13 +83,13 @@ public class AirshipHealth : MonoBehaviour, IDamageable
 
         if (remainingDamage <= 0f)
         {
-            OnDamaged?.Invoke(damage);
+            OnDamaged?.Invoke(damageInfo);
             return;
         }
 
         currentHealth = Mathf.Max(0f, currentHealth - remainingDamage);
 
-        OnDamaged?.Invoke(damage);
+        OnDamaged?.Invoke(damageInfo);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
 
         if (currentHealth <= 0f)
