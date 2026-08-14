@@ -61,7 +61,6 @@ public class BattleEventHandler : MonoBehaviour
         {
             nextStageNumber = clearedStageNumber + 1;
         }
-        playerInfo.SetCurrentStage(nextStageNumber);
         stageTransitionController.StartTransition(nextStageNumber);
     }
 

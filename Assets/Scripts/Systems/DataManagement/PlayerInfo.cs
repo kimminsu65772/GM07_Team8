@@ -40,6 +40,8 @@ public class PlayerInfo : MonoBehaviour
     // UI에서 캐싱한 Hero 목록 상태를 갱신할 수 있도록 Hero 소유 여부 변경 시 이벤트 발생
     public event Action<string, bool> OnHeroOwnedChanged;
 
+    public event Action<int> OnCurrentStageChanged;
+
     private SaveDataWriter saveDataWriter;
 
     private void Awake()
@@ -188,23 +190,29 @@ public class PlayerInfo : MonoBehaviour
     /// <param name="stage">갱신하고자하는 스테이지 번호</param>
     /// <param name="savePolicy">저장 정책. 기본 설정은 Soon으로 스테이지 설정 변경 시 약 5초 후에 저장됨.</param>
 
-    public void SetCurrentStage(int stage, SavePolicy savePolicy = SavePolicy.Soon)
+    public bool TrySetCurrentStage(int stage, SavePolicy savePolicy = SavePolicy.Soon)
     {
-        if (!CheckInitialized()) return;
+        if (!CheckInitialized()) return false;
         if (stage < 1)
         {
             Debug.LogError("SetCurrentStage: stage는 1 이상이어야 합니다.");
-            return;
+            return false;
+        }
+        if (stage > SaveData.StageProgress.MaxClearedStage + 1)
+        {
+            Debug.LogWarning("SetCurrentStage: 현재 도전이 불가능한 스테이지를 선택하려고 합니다.");
+            return false;
         }
         if (stage == SaveData.StageProgress.CurrentStage)
         {
-            Debug.LogWarning("SetCurrentStage: 현재 스테이지와 동일한 값을 설정하려고 합니다.");
-            return;
+            return true; // 이미 현재 스테이지와 동일한 값이면 저장 요청 없이 true 반환
         }
 
         StageProgress.CurrentStage = stage;
-
+        OnCurrentStageChanged?.Invoke(stage);
         RequestSave(savePolicy);
+
+        return true;
     }
 
     public bool TryUpdateMaxClearedStage(int stage, SavePolicy savePolicy = SavePolicy.Soon)

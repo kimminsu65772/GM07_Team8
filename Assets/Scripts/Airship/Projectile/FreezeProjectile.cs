@@ -68,11 +68,12 @@ public class FreezeProjectile : NormalProjectile
         if (impactVfx == null)
             return;
 
-        Instantiate(
+        GameObject vfx = Instantiate(
             impactVfx,
             position,
             Quaternion.identity
         );
+        vfx.transform.localScale = Vector3.one * 1.34f;
     }
     
     private void OnDrawGizmos()
