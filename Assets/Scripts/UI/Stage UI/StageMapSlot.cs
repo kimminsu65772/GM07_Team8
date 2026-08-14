@@ -7,7 +7,7 @@ public class StageMapSlot : MonoBehaviour
     [SerializeField] private int stageNumber;
     [SerializeField] private Button slotButton;
     [SerializeField] private TextMeshProUGUI stageText;
-    [SerializeField] private GameObject lockObject; // 잠김 상태 표시용 (자물쇠 등)
+    [SerializeField] private GameObject lockObject; 
 
     private StageMapUI mapUI;
 
