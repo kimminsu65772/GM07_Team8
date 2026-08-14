@@ -43,8 +43,11 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Airship
+    uniqueID: 1653568021
+    locked: 0
   - name: Hero
-    uniqueID: 3309472097
+    uniqueID: 696841935
     locked: 0
   m_RenderingLayers:
   - Default
