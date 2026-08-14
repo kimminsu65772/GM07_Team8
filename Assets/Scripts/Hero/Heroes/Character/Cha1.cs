@@ -8,8 +8,21 @@ public class Cha1 : Hero
         Init(-1, "Hero1", 2f, 5f, HeroLocationEnum.Front);
     }
 
-    public override void Skill()
+    public override void Skill(GameObject enemy)
     {
-        Debug.Log("근거리 스킬 사용");
+        float criRan = Random.Range(1f, 100f);
+        float damage = HeroAtk * 1.5f;
+
+        Vector2 direction = enemy.transform.position - transform.position;
+        FlipSprite(direction);
+
+        if (criRan <= HeroCriChance)
+            damage *= 2f;
+
+        if (enemy.TryGetComponent<IDamageable>(out IDamageable enemyHP))
+        {
+            enemyHP.TakeDamage(damage);
+        }
+        Debug.Log(gameObject.name + "의 스킬, 피해량 : " + damage);
     }
 }

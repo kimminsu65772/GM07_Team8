@@ -2,14 +2,6 @@ using UnityEngine;
 
 public class HeroActionStateBehaviour : StateMachineBehaviour
 {
-    public enum ActionType
-    {
-        Attack,
-        Skill
-    }
-
-    [SerializeField] private ActionType actionType;
-
     public override void OnStateExit(
         Animator animator,
         AnimatorStateInfo stateInfo,
@@ -20,13 +12,13 @@ public class HeroActionStateBehaviour : StateMachineBehaviour
         if (hero == null)
             return;
 
-        switch (actionType)
+        switch (hero.HeroState)
         {
-            case ActionType.Attack:
+            case HeroStateEnum.Attack:
                 hero.AttackStop();
                 break;
 
-            case ActionType.Skill:
+            case HeroStateEnum.Skill:
                 hero.SkillStop();
                 break;
         }

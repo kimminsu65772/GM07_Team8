@@ -19,6 +19,7 @@ public class HeroAttack : MonoBehaviour
     public bool IsAttacking => isAttacking;
     public bool IsSkilling => isSkilling;
     public bool CanAttack => canAttack;
+    public float SkillTimer => skillTimer;
 
     private void Awake()
     {
@@ -39,8 +40,6 @@ public class HeroAttack : MonoBehaviour
 
         if (skillTimer < hero.HeroSkillTime)
             skillTimer += Time.deltaTime;
-
-        UseSkill();
     }
 
     public void MeleeAttack(GameObject enemy)
@@ -110,7 +109,7 @@ public class HeroAttack : MonoBehaviour
             .Init(enemy, damage);
     }
 
-    public void UseSkill()
+    public void UseSkill(GameObject enemy)
     {
         if (hero.IsDead || isAttacking || isSkilling) return;
 
@@ -119,7 +118,8 @@ public class HeroAttack : MonoBehaviour
             isSkilling = true;
             skillTimer = 0f;
 
-            hero.Skill();
+            hero.Skill(enemy);
+            vfx.PlaySkillEffect();
         }
     }
 

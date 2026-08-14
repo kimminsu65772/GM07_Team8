@@ -89,7 +89,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
     public HeroStateEnum HeroState => heroState;
 
     protected virtual void Awake() { }
-    public virtual void Skill() { }
+    public virtual void Skill(GameObject enemy) { }
 
     protected virtual void Init(int id, string name, float attackTime, float skillTime,
         HeroLocationEnum location)
@@ -117,11 +117,13 @@ public abstract class Hero : MonoBehaviour, IDamageable
     {
         if (targetEnemy == null) SearchEnemy();
         if (targetEnemy != null && location == HeroLocationEnum.Front) MoveToEnemy();
-        if (targetEnemy != null && location == HeroLocationEnum.Back) attack.RangeAttack(targetEnemy);
+        if (targetEnemy != null && location == HeroLocationEnum.Back)
+        {
+            if (skillTime <= attack.SkillTimer) attack.UseSkill(targetEnemy);
+            else attack.RangeAttack(targetEnemy);
+        }
 
         ChangeState();
-
-        // if (Input.GetKeyDown(KeyCode.A)) TakeDamage(heroMaxHP);
     }
 
     public void TakeDamage(float damage)
@@ -178,7 +180,9 @@ public abstract class Hero : MonoBehaviour, IDamageable
         if (attack.CanAttack && location == HeroLocationEnum.Front)
         {
             isMoving = false;
-            attack.MeleeAttack(targetEnemy);
+
+            if (skillTime <= attack.SkillTimer) attack.UseSkill(targetEnemy);
+            else attack.MeleeAttack(targetEnemy);
         }
         else
         {
