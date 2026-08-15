@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class HeroFormationManager : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class HeroFormationManager : MonoBehaviour
     // HeroFormationRuntimeSlot을 통해 런타임에서 전방/후방 진형을 구분하여 필요한 컴포넌트에게 전달할 수 있도록 함.
     private readonly List<HeroFormationRuntimeSlot> FrontLineSlots = new();
     private readonly List<HeroFormationRuntimeSlot> BackLineSlots = new();
+
+    public event Action OnFormationChanged;
 
     private void Awake()
     {
@@ -154,6 +157,7 @@ public class HeroFormationManager : MonoBehaviour
         }
 
         RefreshRuntimeFormation();
+        OnFormationChanged?.Invoke();
         SaveScheduler.Instance.RequestSave(SavePolicy.Soon);
         return true;
     }
@@ -171,6 +175,7 @@ public class HeroFormationManager : MonoBehaviour
             {
                 slot.HeroName = null;
                 RefreshRuntimeFormation();
+                OnFormationChanged?.Invoke();
                 SaveScheduler.Instance.RequestSave(SavePolicy.Soon);
                 return true;
             }

@@ -9,6 +9,10 @@ public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private Image heroIcon;
 
+    [Header("영웅 배치시 사용할 UI 요소 설정")]
+    [SerializeField] private Image formationOverlayImage;
+    [SerializeField] private TMP_Text formationStateText;
+
     private string heroName;
     private HeroEntry currentEntry;
     private HeroSaveData currentSaveData;
@@ -30,7 +34,7 @@ public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             canvasTransform = rootCanvas.rootCanvas.transform;
         }
     }
-    public void SetupSlot(HeroEntry entry, HeroSaveData saveData, bool isOwned, Action<HeroEntry, HeroSaveData> onClick)
+    public void SetupSlot(HeroEntry entry, HeroSaveData saveData, bool isOwned, Action<HeroEntry, HeroSaveData> onClick = null)
     {
         currentEntry = entry;
         currentSaveData = saveData;
@@ -39,11 +43,25 @@ public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
         if (nameText != null) nameText.text = $"{heroName} (Lv.{saveData.Level})";
 
+        if (heroIcon != null)
+        {
+            heroIcon.sprite = entry.HeroIcon;
+            heroIcon.color = isOwned ? Color.white : Color.gray; // 소유 여부에 따라 색상 변경
+        }
+
         // 클릭 이벤트 연결 
         Button btn = GetComponent<Button>();
+   
         if (btn != null)
         {
-            btn.onClick.AddListener(() => onClickCallback?.Invoke(currentEntry, currentSaveData));
+            // 기존의 클릭 이벤트를 먼저 정리한다.
+            btn.onClick.RemoveAllListeners();
+
+            // 만약에 전달해야할 콜백이 있다면 연결한다.
+            if (onClickCallback != null)
+            {
+                btn.onClick.AddListener(() => onClickCallback.Invoke(currentEntry, currentSaveData));
+            }
         }
     }
     public string GetHeroName() => heroName;
@@ -67,13 +85,13 @@ public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         RectTransform rect = GetComponent<RectTransform>();
         if (rect != null && canvasTransform != null)
         {
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            RectTransformUtility.ScreenPointToWorldPointInRectangle(
                 canvasTransform as RectTransform,
                 eventData.position,
                 eventData.pressEventCamera,
-                out Vector2 localPoint
+                out Vector3 worldPoint
             );
-            rect.anchoredPosition = localPoint;
+            rect.position = worldPoint;
         }
     }
     public void OnEndDrag(PointerEventData eventData)
@@ -85,6 +103,20 @@ public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         {
             transform.SetParent(originalParent);
             GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+        }
+    }
+
+    public void SetFormationState(bool isInFormation)
+    {
+        if (formationOverlayImage != null)
+        {
+            formationOverlayImage.gameObject.SetActive(isInFormation);
+        }
+
+        if (formationStateText != null)
+        {
+            formationStateText.gameObject.SetActive(isInFormation);
+            formationStateText.text = isInFormation ? "배치중" : string.Empty;
         }
     }
 }
