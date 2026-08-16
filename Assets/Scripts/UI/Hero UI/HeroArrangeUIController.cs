@@ -204,6 +204,7 @@ public class HeroArrangeUIController : MonoBehaviour
             bool isInFormation = HeroFormationManager.Instance.IsHeroInFormation(entry.HeroName);
 
             slotUI.SetFormationState(isInFormation);
+            slotUI.SetDragEnabled(true);
         }
     }
 

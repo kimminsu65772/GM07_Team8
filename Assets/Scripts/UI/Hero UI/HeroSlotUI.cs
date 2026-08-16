@@ -13,6 +13,9 @@ public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     [SerializeField] private Image formationOverlayImage;
     [SerializeField] private TMP_Text formationStateText;
 
+    [Header("영웅 배치 슬롯 사용 구분")]
+    [SerializeField] private bool canDrag = true;
+
     private string heroName;
     private HeroEntry currentEntry;
     private HeroSaveData currentSaveData;
@@ -68,7 +71,7 @@ public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (currentSaveData == null || !currentSaveData.IsOwned) return;
+        if (currentSaveData == null || !currentSaveData.IsOwned || !canDrag) return;
 
         originalParent = transform.parent;
 
@@ -80,7 +83,7 @@ public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     }
     public void OnDrag(PointerEventData eventData)
     {
-        if (currentSaveData == null || !currentSaveData.IsOwned) return;
+        if (currentSaveData == null || !currentSaveData.IsOwned || !canDrag) return;
 
         RectTransform rect = GetComponent<RectTransform>();
         if (rect != null && canvasTransform != null)
@@ -118,5 +121,10 @@ public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             formationStateText.gameObject.SetActive(isInFormation);
             formationStateText.text = isInFormation ? "배치중" : string.Empty;
         }
+    }
+
+    public void SetDragEnabled(bool enabled)
+    {
+        canDrag = enabled;
     }
 }
