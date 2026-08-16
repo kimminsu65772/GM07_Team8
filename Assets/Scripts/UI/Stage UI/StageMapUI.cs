@@ -7,6 +7,9 @@ public class StageMapUI : MonoBehaviour
     [Header("Data Reference")]
     [SerializeField] private StageCatalog stageCatalog;
 
+    [Header("스테이지 변경자 참조")]
+    [SerializeField] private StageTransitionController stageTransitionController;
+
     [Header("UI References")]
     [SerializeField] private Transform mapContentTransform;
     [SerializeField] private GameObject stageSlotPrefab;
@@ -18,6 +21,11 @@ public class StageMapUI : MonoBehaviour
     [SerializeField] private float maxY = 800f;
 
     private readonly List<StageMapSlot> spawnedSlots = new List<StageMapSlot>();
+
+    private void OnEnable()
+    {
+        RefreshMap();
+    }
     private void Start()
     {
         GenerateMapSlots();
@@ -83,6 +91,7 @@ public class StageMapUI : MonoBehaviour
             if (success)
             {
                 Debug.Log($"스테이지 {stageNumber} 선택 완료!");
+                stageTransitionController.StartTransition(stageNumber);
             }
             else
             {

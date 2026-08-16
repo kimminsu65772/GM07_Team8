@@ -36,6 +36,27 @@ public class BattleManager : MonoBehaviour
     private int currentStage;
     private bool isInitialized;
 
+    private HeroFormationManager heroFormationManager;
+
+    private void OnEnable()
+    {
+        heroFormationManager = HeroFormationManager.Instance;
+
+        if (heroFormationManager != null)
+        {
+            heroFormationManager.OnFormationChanged -= HandleFormationChanged;
+            heroFormationManager.OnFormationChanged += HandleFormationChanged;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (heroFormationManager != null)
+        {
+            heroFormationManager.OnFormationChanged -= HandleFormationChanged;
+        }
+    }
+
     private void Start()
     {
         Initialize();
@@ -125,18 +146,14 @@ public class BattleManager : MonoBehaviour
             return;
         }
 
-        HeroFormationManager formationManager = HeroFormationManager.Instance;
-        if (formationManager == null)
+        if (heroFormationManager == null)
         {
             Debug.LogWarning("영웅 배치 매니저를 찾을 수 없습니다.");
             return;
         }
 
-        PlayerInfo playerInfo = PlayerInfo.Instance;
-        formationManager.Initialize();
-
-        PlaceHeroes(formationManager.GetFrontLineSlots(), placementPoints, true);
-        PlaceHeroes(formationManager.GetBackLineSlots(), placementPoints, false);
+        PlaceHeroes(heroFormationManager.GetFrontLineSlots(), placementPoints, true);
+        PlaceHeroes(heroFormationManager.GetBackLineSlots(), placementPoints, false);
     }
 
     // 현재 영웅 배치 정보를 받아와서 배치 포인트에 따라 영웅을 배치하는 메서드
@@ -187,5 +204,10 @@ public class BattleManager : MonoBehaviour
         }
 
         spawnedHeroes.Clear();
+    }
+
+    private void HandleFormationChanged()
+    {
+        PlaceFormationHeroes();
     }
 }
