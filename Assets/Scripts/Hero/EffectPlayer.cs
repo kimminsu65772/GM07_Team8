@@ -4,52 +4,114 @@ using UnityEngine;
 public class EffectPlayer : MonoBehaviour
 {
     [Header("이펙트 설정")]
-    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private SpriteRenderer selfEffect;
+    [SerializeField] private SpriteRenderer targetEffect;
     [SerializeField] private Sprite[] attackFrames;
     [SerializeField] private Sprite[] skillFrames;
+    [SerializeField] private Sprite[] targetFrames;
     [SerializeField] private float frameTime = 0.05f;
 
-    private Coroutine effectCoroutine;
+    private Coroutine selfEffectCoroutine;
+    private Coroutine targetEffectCoroutine;
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (selfEffect == null)
+        {
+            selfEffect = GetComponentInChildren<SpriteRenderer>();
+        }
     }
 
-    public void PlayAttackEffect()
+    public void PlayAttackEffect(Vector2 posPreset, Vector2 scalePreset)
     {
-        if (effectCoroutine != null)
+        SetSelfEffect(posPreset, scalePreset);
+
+        PlaySelfEffect(attackFrames);
+    }
+
+    public void PlaySkillEffect(Vector2 posPreset, Vector2 scalePreset)
+    {
+        SetSelfEffect(posPreset, scalePreset);
+
+        PlaySelfEffect(skillFrames);    
+    }
+
+    // 플레이어 생성 시 awake에서 지정
+    public void PlayTargetEffect(Transform pos, Vector2 posPreset, Vector2 scalePreset)
+    {
+        SetTargetEffect(pos.position, posPreset, scalePreset);  
+
+        PlayTargetEffect(targetFrames);
+    }
+
+    private void SetSelfEffect(Vector2 posPreset, Vector2 scalePreset)
+    {
+        selfEffect.transform.localPosition = new Vector3(posPreset.x, posPreset.y, 0);
+        selfEffect.transform.localScale = new Vector3(scalePreset.x, scalePreset.y, 1);
+    }
+
+    // 스킬 실행 시 지정
+    private void SetTargetEffect(Vector3 targetPosition, Vector2 posPreset, Vector2 scalePreset)
+    {
+        targetEffect.transform.position = targetPosition + new Vector3(posPreset.x, posPreset.y, 0);
+        targetEffect.transform.localScale = new Vector3(scalePreset.x, scalePreset.y, 1);
+    }
+
+    private void PlaySelfEffect(Sprite[] frames)
+    {
+        if (selfEffectCoroutine != null)
         {
-            StopCoroutine(effectCoroutine);
+            StopCoroutine(selfEffectCoroutine);
         }
 
-        effectCoroutine = StartCoroutine(PlayEffectCoroutine(attackFrames));
+        selfEffectCoroutine = StartCoroutine(
+            PlayEffectCoroutine(selfEffect, frames, true)
+        );
     }
 
-    public void PlaySkillEffect()
+    private void PlayTargetEffect(Sprite[] frames)
     {
-        if (effectCoroutine != null)
+        if (targetEffectCoroutine != null)
         {
-            StopCoroutine(effectCoroutine);
+            StopCoroutine(targetEffectCoroutine);
         }
 
-        effectCoroutine = StartCoroutine(PlayEffectCoroutine(skillFrames));
+        targetEffectCoroutine = StartCoroutine(
+            PlayEffectCoroutine(targetEffect, frames, false)
+        );
     }
 
-    private IEnumerator PlayEffectCoroutine(Sprite[] frames)
+    private IEnumerator PlayEffectCoroutine(
+    SpriteRenderer renderer,
+    Sprite[] frames,
+    bool isSelfEffect)
     {
         if (frames == null || frames.Length == 0)
         {
-            Debug.LogWarning($"{gameObject.name}: AttackFrames가 비어 있습니다.");
+            Debug.LogWarning($"{gameObject.name}: 이펙트 프레임이 비어 있습니다.");
+
+            renderer.sprite = null;
+
+            if (isSelfEffect)
+                selfEffectCoroutine = null;
+            else
+                targetEffectCoroutine = null;
+
             yield break;
         }
 
         for (int i = 0; i < frames.Length; i++)
         {
-            spriteRenderer.sprite = frames[i];
+            renderer.sprite = frames[i];
+
             yield return new WaitForSeconds(frameTime);
         }
-        spriteRenderer.sprite = null;
-        effectCoroutine = null;
+
+        renderer.sprite = null;
+
+        if (isSelfEffect)
+            selfEffectCoroutine = null;
+        else
+            targetEffectCoroutine = null;
     }
 }
