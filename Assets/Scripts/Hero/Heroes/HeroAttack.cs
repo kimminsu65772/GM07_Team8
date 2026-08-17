@@ -146,4 +146,10 @@ public class HeroAttack : MonoBehaviour
     {
         canAttack = value;
     }
+
+    public void ClearCoolTime()
+    {
+        attackTimer = 0f;
+        skillTimer = 0f;
+    }
 }
