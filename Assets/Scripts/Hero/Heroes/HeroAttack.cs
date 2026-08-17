@@ -16,6 +16,7 @@ public class HeroAttack : MonoBehaviour
     [SerializeField] private GameObject projectile;
     [SerializeField] private Transform firePoint;
 
+    public EffectPlayer VFX => vfx;
     public bool IsAttacking => isAttacking;
     public bool IsSkilling => isSkilling;
     public bool CanAttack => canAttack;
@@ -57,7 +58,7 @@ public class HeroAttack : MonoBehaviour
             Vector2 direction = enemy.transform.position - transform.position;
             hero.FlipSprite(direction);
 
-            vfx.PlayAttackEffect();
+            vfx.PlayAttackEffect(hero.AtkPosPreset, hero.AtkScalePreset);
 
             bool isCrit = false;
             if (criRan <= hero.HeroCriChance)
@@ -90,7 +91,7 @@ public class HeroAttack : MonoBehaviour
             Vector2 direction = enemy.transform.position - transform.position;
             hero.FlipSprite(direction);
 
-            vfx.PlayAttackEffect();
+            vfx.PlayAttackEffect(hero.AtkPosPreset, hero.AtkScalePreset);
 
             bool isCrit = false;
             if (criRan <= hero.HeroCriChance)
@@ -127,7 +128,7 @@ public class HeroAttack : MonoBehaviour
             skillTimer = 0f;
 
             hero.Skill(enemy);
-            vfx.PlaySkillEffect();
+            vfx.PlaySkillEffect(hero.SkillPosPreset, hero.SkillScalePreset);
         }
     }
 
