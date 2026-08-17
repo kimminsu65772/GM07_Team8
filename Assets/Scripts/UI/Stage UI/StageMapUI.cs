@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class StageMapUI : MonoBehaviour
 {
     [Header("Data Reference")]
@@ -14,18 +13,17 @@ public class StageMapUI : MonoBehaviour
     [SerializeField] private Transform mapContentTransform;
     [SerializeField] private GameObject stageSlotPrefab;
 
-    [Header("Random Spawn Settings (지도 크기 조절)")]
-    [SerializeField] private float minX = -800f;
-    [SerializeField] private float maxX = 800f;
-    [SerializeField] private float minY = -800f;
-    [SerializeField] private float maxY = 800f;
+    [Header("Grid Layout Settings (일정 간격 설정)")]
+    [SerializeField] private float spacingX = 200f; 
+    [SerializeField] private float spacingY = 150f; 
+    [SerializeField] private int columns = 4;      
+
+    [Header("Random Offset Settings (위아래 좌우 흔들림 조절)")]
+    [SerializeField] private float offsetXRange = 30f;
+    [SerializeField] private float offsetYRange = 50f; 
 
     private readonly List<StageMapSlot> spawnedSlots = new List<StageMapSlot>();
 
-    private void OnEnable()
-    {
-        RefreshMap();
-    }
     private void Start()
     {
         GenerateMapSlots();
@@ -34,16 +32,14 @@ public class StageMapUI : MonoBehaviour
     {
         if (stageCatalog == null)
         {
-            Debug.LogError("WorldMapUI: StageCatalog가 연결되지 않았습니다.");
+            Debug.LogError("StageMapUI: StageCatalog가 연결되지 않았습니다.");
             return;
         }
-
         foreach (var slot in spawnedSlots)
         {
             if (slot != null) Destroy(slot.gameObject);
         }
         spawnedSlots.Clear();
-
         int totalStages = stageCatalog.StageCount;
         for (int i = 1; i <= totalStages; i++)
         {
@@ -57,9 +53,17 @@ public class StageMapUI : MonoBehaviour
                     RectTransform rectTrans = slotObj.GetComponent<RectTransform>();
                     if (rectTrans != null)
                     {
-                        float randomX = Random.Range(minX, maxX);
-                        float randomY = Random.Range(minY, maxY);
-                        rectTrans.anchoredPosition = new Vector2(randomX, randomY);
+                        int index = i - 1;
+                        int row = index / columns;
+                        int col = index % columns;
+
+                        float baseX = col * spacingX;
+                        float baseY = -row * spacingY; 
+
+                        float randomX = Random.Range(-offsetXRange, offsetXRange);
+                        float randomY = Random.Range(-offsetYRange, offsetYRange);
+
+                        rectTrans.anchoredPosition = new Vector2(baseX + randomX, baseY + randomY);
                     }
 
                     int maxCleared = (PlayerInfo.Instance != null && PlayerInfo.Instance.IsInitialized)
