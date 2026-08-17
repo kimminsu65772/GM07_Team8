@@ -20,13 +20,8 @@ public class AirshipEquipmentController : MonoBehaviour
     [SerializeField] private SpriteRenderer barrelRenderer;
     [SerializeField] private SpriteRenderer gearRenderer;
 
-    private readonly Dictionary<AirshipCannonType, AirshipCannonData>
-        cannonDataDictionary =
-        new Dictionary<AirshipCannonType, AirshipCannonData>();
-
-    private readonly Dictionary<AirshipGearType, AirshipGearData>
-        gearDataDictionary =
-        new Dictionary<AirshipGearType, AirshipGearData>();
+    private readonly Dictionary<AirshipCannonType, AirshipCannonData> cannonDataDictionary = new Dictionary<AirshipCannonType, AirshipCannonData>();
+    private readonly Dictionary<AirshipGearType, AirshipGearData> gearDataDictionary = new Dictionary<AirshipGearType, AirshipGearData>();
 
     // 장비 슬롯별 고유 owner
     private readonly object cannonBuffOwner = new object();
@@ -43,14 +38,12 @@ public class AirshipEquipmentController : MonoBehaviour
         if (statController == null)
             statController = GetComponent<AirshipStatController>();
     }
-
     public void Init()
     {
         CreateCannonDictionary();
         CreateGearDictionary();
         LoadState();
     }
-
     private void CreateCannonDictionary()
     {
         cannonDataDictionary.Clear();
@@ -76,7 +69,6 @@ public class AirshipEquipmentController : MonoBehaviour
             );
         }
     }
-
     private void CreateGearDictionary()
     {
         gearDataDictionary.Clear();
@@ -102,7 +94,6 @@ public class AirshipEquipmentController : MonoBehaviour
             );
         }
     }
-
     private void LoadState()
     {
         PlayerInfo playerInfo = PlayerInfo.Instance;
@@ -117,7 +108,6 @@ public class AirshipEquipmentController : MonoBehaviour
         EquipCannon(saveData.EquippedCannonType);
         EquipGear(saveData.EquippedGearType);
     }
-
     public void EquipCannon(AirshipCannonType cannonType)
     {
         if (!cannonDataDictionary.TryGetValue(
@@ -140,7 +130,6 @@ public class AirshipEquipmentController : MonoBehaviour
 
         OnCannonChanged?.Invoke(equippedCannon);
     }
-
     public void EquipGear(AirshipGearType gearType)
     {
         if (!gearDataDictionary.TryGetValue(
@@ -163,7 +152,6 @@ public class AirshipEquipmentController : MonoBehaviour
 
         OnGearChanged?.Invoke(equippedGear);
     }
-
     private void UnequipCannon()
     {
         if (statController != null)
@@ -171,7 +159,6 @@ public class AirshipEquipmentController : MonoBehaviour
 
         equippedCannon = null;
     }
-
     private void UnequipGear()
     {
         if (statController != null)
@@ -179,7 +166,6 @@ public class AirshipEquipmentController : MonoBehaviour
 
         equippedGear = null;
     }
-
     private void ApplyCannonBuff()
     {
         if (statController == null || equippedCannon == null)
@@ -190,7 +176,6 @@ public class AirshipEquipmentController : MonoBehaviour
 
         statController.AddBuff(buff);
     }
-
     private void ApplyGearBuff()
     {
         if (statController == null || equippedGear == null)
@@ -201,7 +186,6 @@ public class AirshipEquipmentController : MonoBehaviour
 
         statController.AddBuff(buff);
     }
-
     private void ApplyCannonVisual()
     {
         if (barrelRenderer == null)
@@ -212,7 +196,6 @@ public class AirshipEquipmentController : MonoBehaviour
                 ? null
                 : equippedCannon.BarrelImage;
     }
-
     private void ApplyGearVisual()
     {
         if (gearRenderer == null)
@@ -223,7 +206,6 @@ public class AirshipEquipmentController : MonoBehaviour
                 ? null
                 : equippedGear.GearImage;
     }
-
     [ContextMenu("test")]
     public void TestFreeze()
     {

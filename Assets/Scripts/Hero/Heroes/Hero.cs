@@ -22,8 +22,6 @@ public abstract class Hero : MonoBehaviour, IDamageable
     // private HeroAttackTypeEnum attackType;
     protected IHeroStatTable statTable;
 
-    [SerializeField] private TMP_Text name_T;
-
     [SerializeField] private Transform heroRoot;
     [SerializeField] private float moveSpeed = 8f;
     [SerializeField] private LayerMask enemyLayer;
@@ -35,7 +33,14 @@ public abstract class Hero : MonoBehaviour, IDamageable
     
     protected HeroStateEnum heroState;
     private HeroEquipmentManager heroEquip;
-    private HeroAttack attack;
+    protected HeroAttack attack;
+
+    public Vector2 AtkPosPreset { get; private set; }
+    public Vector2 AtkScalePreset {  get; private set; }
+    public Vector2 SkillPosPreset { get; private set; }
+    public Vector2 SkillScalePreset { get; private set; }
+    public Vector2 TargetPosPreset { get; private set; }
+    public Vector2 TargetScalePreset { get; private set; }
 
     public int HeroID => heroID;
     public string HeroName => heroName;
@@ -105,8 +110,6 @@ public abstract class Hero : MonoBehaviour, IDamageable
         HeroSkillTime = skillTime;
         isDead = false;
         this.location = location;
-
-        if (name_T != null) name_T.text = heroName;
 
         heroState = HeroStateEnum.Idle;
         heroEquip = GetComponent<HeroEquipmentManager>();
@@ -273,5 +276,21 @@ public abstract class Hero : MonoBehaviour, IDamageable
     public HeroStat GetStat(int lv)
     {
         return statTable.GetStat(lv);
+    }
+
+    public void SetAttackEffectPreset(float posX, float posY, float scaleX, float scaleY)
+    {
+        AtkPosPreset = new Vector2(posX, posY);
+        AtkScalePreset = new Vector2(scaleX, scaleY);
+    }
+    public void SetSkillEffectPreset(float posX, float posY, float scaleX, float scaleY)
+    {
+        SkillPosPreset = new Vector2(posX, posY);
+        SkillScalePreset = new Vector2(scaleX, scaleY);
+    }
+    public void SetTargetEffectPreset(float posX, float posY, float scaleX, float scaleY)
+    {
+        TargetPosPreset = new Vector2(posX, posY);
+        TargetScalePreset = new Vector2(scaleX, scaleY);
     }
 }

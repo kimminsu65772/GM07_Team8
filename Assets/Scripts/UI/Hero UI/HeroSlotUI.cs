@@ -21,7 +21,6 @@ public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     private HeroSaveData currentSaveData;
     private Action<HeroEntry, HeroSaveData> onClickCallback;
 
-    // 드래그 관련 변수
     private Transform originalParent;
     private CanvasGroup canvasGroup;
     private Transform canvasTransform;
@@ -49,18 +48,14 @@ public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         if (heroIcon != null)
         {
             heroIcon.sprite = entry.HeroIcon;
-            heroIcon.color = isOwned ? Color.white : Color.gray; // 소유 여부에 따라 색상 변경
+            heroIcon.color = isOwned ? Color.white : Color.gray; 
         }
-
-        // 클릭 이벤트 연결 
         Button btn = GetComponent<Button>();
    
         if (btn != null)
         {
-            // 기존의 클릭 이벤트를 먼저 정리한다.
             btn.onClick.RemoveAllListeners();
 
-            // 만약에 전달해야할 콜백이 있다면 연결한다.
             if (onClickCallback != null)
             {
                 btn.onClick.AddListener(() => onClickCallback.Invoke(currentEntry, currentSaveData));
@@ -68,7 +63,6 @@ public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         }
     }
     public string GetHeroName() => heroName;
-
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (currentSaveData == null || !currentSaveData.IsOwned || !canDrag) return;
@@ -108,7 +102,6 @@ public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
         }
     }
-
     public void SetFormationState(bool isInFormation)
     {
         if (formationOverlayImage != null)
@@ -122,7 +115,6 @@ public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             formationStateText.text = isInFormation ? "배치중" : string.Empty;
         }
     }
-
     public void SetDragEnabled(bool enabled)
     {
         canDrag = enabled;
