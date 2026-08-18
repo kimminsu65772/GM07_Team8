@@ -19907,14 +19907,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Airship
       objectReference: {fileID: 0}
-    - target: {fileID: 4851664543934810972, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
-      propertyPath: upgradeController
-      value: 
-      objectReference: {fileID: 1882879768}
-    - target: {fileID: 5523167347859530982, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
-      propertyPath: statTable
-      value: 
-      objectReference: {fileID: 11400000, guid: 426591fd9a782d44d9942558eb8c2033, type: 2}
     - target: {fileID: 6333519300694953608, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -19922,10 +19914,6 @@ PrefabInstance:
     - target: {fileID: 6333519300694953608, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7154333534637918363, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
-      propertyPath: m_Value
-      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8482100618920807334, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19967,8 +19955,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5786310163317347532, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
