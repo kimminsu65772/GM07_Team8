@@ -117,10 +117,10 @@ public class HeroAttack : MonoBehaviour
         switch(areaShape)
         {
             case 0:
-                enemies = Physics2D.OverlapCircleAll(transform.position, range, hero.EnemyLayer);
+                enemies = Physics2D.OverlapCircleAll(target.transform.position, range, hero.EnemyLayer);
                 break;
             case 1:
-                enemies = Physics2D.OverlapBoxAll(transform.position, new Vector2(range, range), 0f, hero.EnemyLayer);
+                enemies = Physics2D.OverlapBoxAll(target.transform.position, new Vector2(range, range), 0f, hero.EnemyLayer);
                 break;
             default:
                 Debug.Log("잘못된 areaShape 값");
@@ -154,7 +154,7 @@ public class HeroAttack : MonoBehaviour
                 }
 
                 enemyHP.TakeDamage(new DamageInfo(damage, isCrit));
-                Debug.Log($"{gameObject.name} + 의 광역 스킬, {coll.gameObject.name} 피해량 : + {damage}");
+                Debug.Log($"{gameObject.name}의 광역 스킬, {coll.gameObject.name} 피해량 : {damage}");
             }
         }
     }
@@ -205,11 +205,10 @@ public class HeroAttack : MonoBehaviour
         skillTimer = 0f;
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
-            Gizmos.DrawWireCube(
-                transform.position,
-                new Vector3(10, 10, 0f)
-            );
+        if (hero.HeroID != -3) return;
+        Gizmos.color = Color.darkBlue;
+        Gizmos.DrawWireCube(hero.TargetEnemy.transform.position, new Vector3(5f, 5f, 0f));
     }
 }

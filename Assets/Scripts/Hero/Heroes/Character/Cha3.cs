@@ -7,7 +7,7 @@ public class Cha3 : Hero
         statTable = new Hero3StatTable();
         SetAttackEffectPreset(0f, 0.5f, 1.5f, 1.5f);
         SetSkillEffectPreset(0f, 0.5f, 1.5f, 1.7f);
-        SetTargetEffectPreset(0f, 0.4f, 5f, 5f);
+        SetTargetEffectPreset(0f, 1.4f, 7f, 7f);
         Init(-3, 1f, 5f, HeroLocationEnum.Back);
 
         EditSkillText(
@@ -18,6 +18,6 @@ public class Cha3 : Hero
 
     public override void Skill(GameObject enemy)
     {
-        attack.AreaAttack(1, enemy.transform, 10f, 1.2f);
+        attack.AreaAttack(1, enemy.transform, 5f, 1.2f);
     }
 }
