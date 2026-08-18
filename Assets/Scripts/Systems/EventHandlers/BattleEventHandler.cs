@@ -29,7 +29,14 @@ public class BattleEventHandler : MonoBehaviour
     {
         // 적이 처치되면 재화 획득 
         // TODO: 스테이지별로 재화 획득량을 다르게 설정할 수 있도록 수정 필요
-        PlayerInfo.Instance.AddCurrency(CurrencyType.Gold, 100);
+        RewardBundle rewardBundle = StageRewardCalculator.CalculateEnemyKillReward(PlayerInfo.Instance.CurrentStage);
+
+        for (int i = 0; i < rewardBundle.Rewards.Length; i++)
+        {
+            CurrencyReward reward = rewardBundle.Rewards[i];
+            Debug.Log($"적 처치 보상: {reward.Amount} {reward.Type}");
+            PlayerInfo.Instance.AddCurrency(reward.Type, reward.Amount);
+        }
     }
 
     private void HandleStageCompleted(int clearedStageNumber)
@@ -42,8 +49,13 @@ public class BattleEventHandler : MonoBehaviour
         if (!isAlreadyCleard)
         {
             int rewardAmount = 100 * clearedStageNumber;
-            playerInfo.AddCurrency(CurrencyType.Gold, rewardAmount);
-            playerInfo.AddCurrency(CurrencyType.Gems, rewardAmount / 10);
+            RewardBundle rewardBundle = StageRewardCalculator.CalculateFirstClearReward(clearedStageNumber);
+            for (int i = 0; i < rewardBundle.Rewards.Length; i++)
+            {
+                CurrencyReward reward = rewardBundle.Rewards[i];
+                playerInfo.AddCurrency(reward.Type, reward.Amount);
+                Debug.Log($"스테이지 {clearedStageNumber} 첫 클리어 보상: {reward.Amount} {reward.Type}");
+            }
             playerInfo.TryUpdateMaxClearedStage(clearedStageNumber);
         }
 
