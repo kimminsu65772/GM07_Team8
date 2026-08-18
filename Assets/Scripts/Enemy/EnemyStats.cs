@@ -49,6 +49,9 @@ public class EnemyStats : MonoBehaviour, IDamageable
     public float AttackInterval =>
         enemyData != null ? enemyData.AttackInterval : 1f;
 
+    public bool IsBoss =>
+    enemyData != null &&   enemyData.IsBoss;
+
     public bool IsDead => currentHealth <= 0;
 
     // IDamageable 인터페이스 구현
