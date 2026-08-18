@@ -11,7 +11,10 @@ public class BattleManager : MonoBehaviour
     [Header("Start Settings")]
     [SerializeField] private Transform airshipStartPoint;
     [SerializeField] private AirshipController airship;
-    
+
+    [Header("런타임 디버깅")]
+    [SerializeField] private bool runtimeRequestFormationUpdate;
+
     private static BattleManager instance;
 
     public static BattleManager Instance
@@ -37,8 +40,15 @@ public class BattleManager : MonoBehaviour
     private readonly Dictionary<string, GameObject> heroCache = new Dictionary<string, GameObject>();
     private int currentStage;
     private bool isInitialized;
+    private bool requestedFormationUpdate;
 
     private HeroFormationManager heroFormationManager;
+
+    private void Awake()
+    {
+        requestedFormationUpdate = true;
+        runtimeRequestFormationUpdate = requestedFormationUpdate;
+    }
 
     private void OnEnable()
     {
@@ -104,7 +114,15 @@ public class BattleManager : MonoBehaviour
         currentStage = PlayerInfo.Instance.CurrentStage;
         mapController.LoadMap(currentStage);
         ResetPlayerPosition();
-        PlaceFormationHeroes();
+
+        if (requestedFormationUpdate)
+        {
+            PlaceFormationHeroes();
+        }
+        else
+        {
+            InitializeSpawnedHeroes();
+        }
     }
 
     public void StartStage()
@@ -202,10 +220,13 @@ public class BattleManager : MonoBehaviour
             spawnedHero.transform.SetParent(startPoint, false);
             spawnedHero.transform.SetPositionAndRotation(startPoint.position, startPoint.rotation);
             spawnedHero.SetActive(true);
+            spawnedHero.GetComponent<Hero>().Initialize();
 
             Hero hero = spawnedHero.GetComponent<Hero>();
 
             spawnedHeroes.Add(spawnedHero);
+            requestedFormationUpdate = false;
+            runtimeRequestFormationUpdate = requestedFormationUpdate;
         }
     }
     private void DeactivateSpawnedHeroes()
@@ -215,10 +236,28 @@ public class BattleManager : MonoBehaviour
             if (spawnedHeroes[i] != null)
             {
                 Hero hero = spawnedHeroes[i].GetComponent<Hero>();
+                hero.Initialize();
                 spawnedHeroes[i].SetActive(false);
             }
         }
         spawnedHeroes.Clear();
+    }
+
+    private void InitializeSpawnedHeroes()
+    {
+        if (spawnedHeroes == null || spawnedHeroes.Count == 0)
+        {
+            return;
+        }
+
+        for (int i = 0; i < spawnedHeroes.Count; i++)
+        {
+            if (spawnedHeroes[i] != null)
+            {
+                Hero hero = spawnedHeroes[i].GetComponent<Hero>();
+                hero.Initialize();
+            }
+        }
     }
 
     private GameObject GetCachedHeroOrCreate(HeroFormationRuntimeSlot slot)
@@ -244,6 +283,7 @@ public class BattleManager : MonoBehaviour
 
     private void HandleFormationChanged()
     {
-        PlaceFormationHeroes();
+        requestedFormationUpdate = true;
+        runtimeRequestFormationUpdate = requestedFormationUpdate;
     }
 }
