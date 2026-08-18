@@ -977,6 +977,19 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8692541316176613817, guid: 7830841cce2eb604a8de3ab5629e1c1f, type: 3}
   m_PrefabInstance: {fileID: 3197210139591249695}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1648352975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1648352973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 357e856e7b61cfe46800af66c230f48c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::QuitButton
+  quitButton: {fileID: 1925396169}
 --- !u!114 &1925396169 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8027953269407743521, guid: 7830841cce2eb604a8de3ab5629e1c1f, type: 3}
@@ -1019,7 +1032,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TitleUI
   startButton: {fileID: 1194614108}
   settingsButton: {fileID: 43313469}
-  quitButton: {fileID: 1925396169}
   settingsPanel: {fileID: 1648352973}
   inGameSceneName: InGameScene
 --- !u!4 &2025172411
@@ -1148,7 +1160,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1888636644790881807, guid: 7830841cce2eb604a8de3ab5629e1c1f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1648352975}
   m_SourcePrefab: {fileID: 100100000, guid: 7830841cce2eb604a8de3ab5629e1c1f, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

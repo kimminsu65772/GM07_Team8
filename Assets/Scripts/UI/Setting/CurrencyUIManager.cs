@@ -78,7 +78,7 @@ public class CurrencyUIManager : MonoBehaviour
                 // PlayerInfo를 통해 세이브 데이터 안의 월드 딕셔너리에서 직접 값 조회
                 if (PlayerInfo.Instance.Wallet.Currencies.TryGetValue(type, out CurrencySaveData currencyData))
                 {
-                    textMesh.text = currencyData.Amount.ToString("N0"); // 3자리 콤마 포맷
+                    textMesh.text = GameFormatUtils.ToIdleNumber(currencyData.Amount);
                 }
                 else
                 {
