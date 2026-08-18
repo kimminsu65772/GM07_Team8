@@ -220,7 +220,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         if (Mathf.Abs(direction.x) < 0.01f || IsDead) return;
 
         Vector3 scale = heroRoot.localScale;
-        scale.x = direction.x > 0 ? -1 : 1;
+        scale.x = direction.x > 0 ? 1 : -1;
         heroRoot.localScale = scale;
     }
 
@@ -259,6 +259,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         attack.StopIsSkilling();
     }
 
+    /*
     private void OnDrawGizmos()
     {
         // 근거리 공격 사거리
@@ -266,6 +267,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         if (location == HeroLocationEnum.Front) Gizmos.DrawWireSphere(
             new Vector3(transform.position.x, transform.position.y, transform.position.z), meleeRange);
     }
+    */
 
     public void EquipStatApply(Equipment equip)
     {

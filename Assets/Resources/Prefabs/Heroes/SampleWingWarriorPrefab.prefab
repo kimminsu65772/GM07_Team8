@@ -10023,7 +10023,6 @@ MonoBehaviour:
   hitRadius: 0
   attackTime: 2
   skillTime: 0
-  name_T: {fileID: 0}
   heroRoot: {fileID: 8546349006482496353}
   moveSpeed: 5
   enemyLayer:
@@ -11335,7 +11334,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cb707989231a0b40a888083951e5fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EffectPlayer
-  spriteRenderer: {fileID: 178548993061988012}
+  selfEffect: {fileID: 0}
+  targetEffect: {fileID: 0}
   attackFrames:
   - {fileID: 862135401, guid: 3d562a9eb20478c41bfd535a54c32eb1, type: 3}
   - {fileID: 862135401, guid: 3d562a9eb20478c41bfd535a54c32eb1, type: 3}
@@ -11348,6 +11348,7 @@ MonoBehaviour:
   - {fileID: -378470453, guid: 3d562a9eb20478c41bfd535a54c32eb1, type: 3}
   skillFrames:
   - {fileID: 0}
+  targetFrames: []
   frameTime: 0.05
 --- !u!1 &7439718997451522696
 GameObject:
@@ -12116,7 +12117,7 @@ SortingGroup:
   m_GameObject: {fileID: 8829051444278620166}
   m_Enabled: 1
   m_SortingLayerID: 696841935
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 5
   m_SortAtRoot: 0
   m_Sort3DAs2D: 0
