@@ -4,36 +4,20 @@ public class Cha3 : Hero
 {
     protected override void Awake()
     {
-        statTable = new Hero2StatTable();
-        SetAttackEffectPreset(0f, 0.05f, 1.3f, 1.3f);
-        SetSkillEffectPreset(0f, 0.05f, 1.5f, 1.7f);
-        SetTargetEffectPreset(0f, 0.05f, 1.5f, 1.5f);
-        Init(-3, "Hero3", 1f, 5f, HeroLocationEnum.Back);
+        statTable = new Hero3StatTable();
+        SetAttackEffectPreset(0f, 0.5f, 1.5f, 1.5f);
+        SetSkillEffectPreset(0f, 0.5f, 1.5f, 1.7f);
+        SetTargetEffectPreset(0f, 0.4f, 5f, 5f);
+        Init(-3, 1f, 5f, HeroLocationEnum.Back);
+
+        EditSkillText(
+            "물보라",
+            "큰 물보라를 일으켜 대상 주변의 적에게 피해를 입힙니다."
+            );
     }
 
     public override void Skill(GameObject enemy)
     {
-        /*
-        float criRan = Random.Range(1f, 100f);
-        float damage = HeroAtk * 1.5f;
-
-        Vector2 direction = enemy.transform.position - transform.position;
-        FlipSprite(direction);
-
-        attack.VFX.PlayTargetEffect(enemy.transform, TargetPosPreset, TargetScalePreset);
-
-        bool isCrit = false;
-        if (criRan <= HeroCriChance)
-        {
-            damage *= 2f;
-            isCrit = true;
-        }
-
-        if (enemy.TryGetComponent<IDamageable>(out IDamageable enemyHP))
-        {
-            enemyHP.TakeDamage(new DamageInfo(damage, isCrit));
-        }
-        Debug.Log(gameObject.name + "의 스킬, 피해량 : " + damage);
-        */
+        attack.AreaAttack(1, enemy.transform, 10f, 1.2f);
     }
 }

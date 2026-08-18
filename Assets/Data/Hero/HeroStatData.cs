@@ -64,3 +64,19 @@ public class Hero2StatTable : IHeroStatTable
         return stats[lv];
     }
 }
+
+// 영웅3
+public class Hero3StatTable : IHeroStatTable
+{
+    private readonly Dictionary<int, HeroStat> stats = new()
+    {
+        {1, new HeroStat(80f, 10f, 7f) },
+        {2, new HeroStat(90f, 17f, 8f) },
+        {3, new HeroStat(100f, 24f, 9f) }
+    };
+
+    public HeroStat GetStat(int lv)
+    {
+        return stats[lv];
+    }
+}

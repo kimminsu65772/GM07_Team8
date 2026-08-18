@@ -35,6 +35,9 @@ public abstract class Hero : MonoBehaviour, IDamageable
     private HeroEquipmentManager heroEquip;
     protected HeroAttack attack;
 
+    private string skillName;
+    private string skillInfo;
+
     public Vector2 AtkPosPreset { get; private set; }
     public Vector2 AtkScalePreset {  get; private set; }
     public Vector2 SkillPosPreset { get; private set; }
@@ -94,15 +97,16 @@ public abstract class Hero : MonoBehaviour, IDamageable
     public GameObject TargetEnemy => targetEnemy;
     public HeroLocationEnum Location => location;
     public HeroStateEnum HeroState => heroState;
+    public LayerMask EnemyLayer => enemyLayer;
 
     protected virtual void Awake() { }
     public virtual void Skill(GameObject enemy) { }
 
-    protected virtual void Init(int id, string name, float attackTime, float skillTime,
+    protected virtual void Init(int id, float attackTime, float skillTime,
         HeroLocationEnum location)
     {
         heroID = id;
-        heroName = name;
+        heroName = ((HeroNameEnum)id).ToString();
         //HeroSaveData heroData = PlayerInfo.Instance.TryGetHeroData(heroName, out heroData) ? heroData : null;
         //HeroLv = heroData.Level;
         HeroLv = 1;
@@ -180,7 +184,6 @@ public abstract class Hero : MonoBehaviour, IDamageable
         }
 
         targetEnemy = nearestEnemy.gameObject;
-        Debug.Log($"{gameObject.name}의 목표 : {targetEnemy.name}");
     }
 
     private void MoveToEnemy()
@@ -254,7 +257,6 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
     public void SkillStop()
     {
-        Debug.Log("스킬 중지");
         heroState = HeroStateEnum.Idle;
         attack.StopIsSkilling();
     }
@@ -307,4 +309,13 @@ public abstract class Hero : MonoBehaviour, IDamageable
         TargetPosPreset = new Vector2(posX, posY);
         TargetScalePreset = new Vector2(scaleX, scaleY);
     }
+
+    protected void EditSkillText(string name, string info)
+    {
+        skillName = name;
+        skillInfo = info;
+    }
+
+    public string GetSkillName() { return skillName; }
+    public string GetSkillInfo() { return skillInfo; }
 }
