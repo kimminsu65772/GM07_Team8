@@ -6,45 +6,146 @@ using UnityEngine;
 /// </summary>
 public class AirshipHealth : MonoBehaviour, IDamageable
 {
+    [SerializeField]
+    private AirshipEquipmentController equipmentController;
+    
     private float maxHealth;
     [SerializeField]private float currentHealth;
-    private float shield;
+    [SerializeField]private float shield;
     private bool isDestroyed;
     [SerializeField] private float hitRadius = 1f;
     [SerializeField] private bool drawOnlyWhenSelected = false;
+    
+    private bool shieldEnabled;
+    private float shieldRegenTimer;
+    private bool isShieldRegenWaiting;
+    private float shieldRegenDelay = 6f;
 
     public float HitRadius => hitRadius;
     public float MaxHealth => maxHealth;
     public float CurrentHealth => currentHealth;
     public float Shield => shield;
     public bool IsDestroyed => isDestroyed;
+    public bool IsShieldEnabled => shieldEnabled;
 
     public event Action<float, float> OnHealthChanged;
     public event Action<DamageInfo> OnDamaged;
     public event Action<float> OnHealed;
     public event Action<float> OnShieldChanged;
     public event Action OnDestroyed;
+    
+    private void Awake()
+    {
+        if (equipmentController == null)
+            equipmentController =
+                GetComponent<AirshipEquipmentController>();
+    }
+    private void OnEnable()
+    {
+        equipmentController.OnGearChanged += HandleGearChanged;
+        HandleGearChanged(equipmentController.EquippedGear);
+    }
+
+    private void OnDisable()
+    {
+        equipmentController.OnGearChanged -= HandleGearChanged;
+    }
+    private void Update()
+    {
+        if (isDestroyed || !isShieldRegenWaiting)
+            return;
+
+        shieldRegenTimer -= Time.deltaTime;
+
+        if (shieldRegenTimer > 0f)
+            return;
+
+        isShieldRegenWaiting = false;
+
+        if (!shieldEnabled)
+            return;
+
+        shield = maxHealth;
+        OnShieldChanged?.Invoke(shield);
+    }
+    private void HandleGearChanged(AirshipGearData gear)
+    {
+        bool hasShield =
+            gear != null &&
+            gear.GearType == AirshipGearType.Shield;
+
+        SetShieldEnabled(hasShield);
+    }
+    public void SetShieldEnabled(bool enabled)
+    {
+        bool wasShieldEnabled = shieldEnabled;
+        shieldEnabled = enabled;
+
+        if (!enabled)
+        {
+            // 실드가 일부라도 깎인 상태에서 해제하면 쿨타임 시작
+            if (wasShieldEnabled &&
+                shield < maxHealth &&
+                !isShieldRegenWaiting)
+            {
+                shieldRegenTimer = shieldRegenDelay;
+                isShieldRegenWaiting = true;
+            }
+
+            shield = 0f;
+            OnShieldChanged?.Invoke(shield);
+            return;
+        }
+
+        // 같은 실드 부품을 반복 장착해도 현재 상태 유지
+        if (wasShieldEnabled)
+        {
+            OnShieldChanged?.Invoke(shield);
+            return;
+        }
+
+        // 쿨타임 중 재장착이면 충전하지 않음
+        shield = isShieldRegenWaiting
+            ? 0f
+            : maxHealth;
+
+        OnShieldChanged?.Invoke(shield);
+    }
 
     public void ApplyStats(AirshipRuntimeStats stats)
     {
         if (stats == null)
-        {
             return;
-        }
 
         float previousMaxHealth = maxHealth;
+
+        float previousHealthRatio =
+            previousMaxHealth > 0f
+                ? Mathf.Clamp01(currentHealth / previousMaxHealth)
+                : 1f;
+
         maxHealth = stats.MaxHealth;
 
-        // 첫 적용이면 풀피. 안쓸수도 있음.
+        // 최초 스탯 적용
         if (previousMaxHealth <= 0f)
         {
             currentHealth = maxHealth;
         }
-        // 체력 증가분 만큼 현재 체력 증가.
+        // 최대 체력 감소시 현재 체력 비율 유지
+        else if (maxHealth < previousMaxHealth)
+        {
+            currentHealth = maxHealth * previousHealthRatio;
+        }
         else
         {
-            float increasedHealth = maxHealth - previousMaxHealth;
-            currentHealth = Mathf.Clamp(currentHealth + increasedHealth, 0f, maxHealth);
+            float increasedHealth =
+                maxHealth - previousMaxHealth;
+
+            currentHealth = Mathf.Clamp(
+                currentHealth + increasedHealth,
+                0f,
+                maxHealth
+            );
         }
 
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
@@ -54,7 +155,9 @@ public class AirshipHealth : MonoBehaviour, IDamageable
     public void ResetHealth()
     {
         isDestroyed = false;
-        shield = 0f;
+        shieldRegenTimer = 0f;
+        isShieldRegenWaiting = false;
+        shield = shieldEnabled ? maxHealth : 0f;
         currentHealth = maxHealth;
 
         OnShieldChanged?.Invoke(shield);
@@ -68,7 +171,9 @@ public class AirshipHealth : MonoBehaviour, IDamageable
 
         float remainingDamage = damageInfo.Damage;
 
-        if (shield > 0f)
+        float previousShield = shield;
+
+        if (shieldEnabled && shield > 0f)
         {
             float absorbedDamage =
                 Mathf.Min(shield, remainingDamage);
@@ -77,6 +182,12 @@ public class AirshipHealth : MonoBehaviour, IDamageable
             remainingDamage -= absorbedDamage;
 
             OnShieldChanged?.Invoke(shield);
+
+            if (previousShield > 0f && shield <= 0f)
+            {
+                shieldRegenTimer = shieldRegenDelay;
+                isShieldRegenWaiting = true;
+            }
         }
 
         // 보호막이 전부 막았으면 실제 체력 피해 없음
@@ -118,16 +229,18 @@ public class AirshipHealth : MonoBehaviour, IDamageable
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
-    public void AddShield(float amount)
-    {
-        if (isDestroyed || amount <= 0f)
-        {
-            return;
-        }
-
-        shield += amount;
-        OnShieldChanged?.Invoke(shield);
-    }
+    // public void AddShield(float amount)
+    // {
+    //     if (!shieldEnabled ||
+    //         isDestroyed ||
+    //         amount <= 0f)
+    //     {
+    //         return;
+    //     }
+    //
+    //     shield += amount;
+    //     OnShieldChanged?.Invoke(shield);
+    // }
 
     private void DestroyAirship()
     {
@@ -165,11 +278,10 @@ public class AirshipHealth : MonoBehaviour, IDamageable
     }
     
     [ContextMenu("TestResetHp")]
-    private void ResetHp()
+    private void TestResetHp()
     {
         maxHealth = 100f;
-        currentHealth = maxHealth;
-        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        ResetHealth();
     }
     [ContextMenu("Test Damage")]
     private void TestDamage()

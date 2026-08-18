@@ -8,40 +8,48 @@ public class AirshipWorldHealthBar : MonoBehaviour
     [SerializeField] private AirshipHealth health;
     [SerializeField] private Slider currentHealthSlider;
     [SerializeField] private Slider delayedHealthSlider;
+    [SerializeField] private Slider shieldHealthSlider;
     [SerializeField] private TMP_Text healthText;
 
     [Header("연출")]
     [SerializeField] private float currentSmoothTime = 0.1f;
+    [SerializeField] private float shieldSmoothTime = 0.1f;
     [SerializeField] private float delayedHealthDelay = 0.4f;
     [SerializeField] private float delayedSmoothTime = 0.2f;
 
     private float currentTarget;
     private float delayedTarget;
+    private float shieldTarget;
 
     private float currentVelocity;
     private float delayedVelocity;
+    private float shieldVelocity;
 
     private float delayedTimer;
 
     private bool delayedFollowing;
-    // 첫 체력 설정 시 애님 없이 바로 초기화
     private bool initialized;
-    // 최대 체력 변경 감지용 변수. 변경시 애님없이 재설정.
+
+    // 최대 체력 변경 감지용
     private float lastMaxHealth = -1f;
 
     private void OnEnable()
     {
         health.OnHealthChanged += HandleHealthChanged;
+        health.OnShieldChanged += HandleShieldChanged;
 
         HandleHealthChanged(
             health.CurrentHealth,
             health.MaxHealth
         );
+
+        HandleShieldChanged(health.Shield);
     }
 
     private void OnDisable()
     {
         health.OnHealthChanged -= HandleHealthChanged;
+        health.OnShieldChanged -= HandleShieldChanged;
     }
 
     private void Update()
@@ -52,6 +60,14 @@ public class AirshipWorldHealthBar : MonoBehaviour
                 currentTarget,
                 ref currentVelocity,
                 currentSmoothTime
+            );
+
+        shieldHealthSlider.normalizedValue =
+            Mathf.SmoothDamp(
+                shieldHealthSlider.normalizedValue,
+                shieldTarget,
+                ref shieldVelocity,
+                shieldSmoothTime
             );
 
         if (!delayedFollowing)
@@ -83,21 +99,42 @@ public class AirshipWorldHealthBar : MonoBehaviour
         }
     }
 
-    private void HandleHealthChanged(float currentHealth, float maxHealth)
+    private void HandleHealthChanged(
+        float currentHealth,
+        float maxHealth)
     {
         healthText.text =
-            $"{Mathf.RoundToInt(currentHealth)} / {Mathf.RoundToInt(maxHealth)}";
-        
-        float targetRatio =
-            maxHealth <= 0f
-                ? 0f
-                : Mathf.Clamp01(currentHealth / maxHealth);
+            $"{Mathf.RoundToInt(currentHealth)} / " +
+            $"{Mathf.RoundToInt(maxHealth)}";
 
-        // 최초 초기화 또는 최대 체력 변경
-        // 소수 비교 조심할 것.
-        if (!initialized || !Mathf.Approximately(lastMaxHealth, maxHealth))
+        float currentShield = health.Shield;
+
+        float barMax =
+            GetBarMax(
+                currentHealth,
+                maxHealth,
+                currentShield
+            );
+
+        float targetRatio =
+            barMax <= 0f
+                ? 0f
+                : Mathf.Clamp01(currentHealth / barMax);
+
+        UpdateShieldSlider(
+            currentHealth,
+            currentShield,
+            barMax
+        );
+
+        // 최초 초기화 또는 최대 체력 자체가 변경된 경우만 즉시 초기화
+        if (!initialized ||
+            !Mathf.Approximately(lastMaxHealth, maxHealth))
         {
-            SnapTo(targetRatio);
+            SnapTo(
+                targetRatio,
+                shieldTarget
+            );
 
             initialized = true;
             lastMaxHealth = maxHealth;
@@ -132,14 +169,101 @@ public class AirshipWorldHealthBar : MonoBehaviour
         delayedFollowing = true;
     }
 
-    // 애님없이 즉시 변경하는 함수.
-    private void SnapTo(float targetRatio)
+    private void HandleShieldChanged(float currentShield)
+    {
+        float maxHealth = health.MaxHealth;
+        float currentHealth = health.CurrentHealth;
+
+        float barMax =
+            GetBarMax(
+                currentHealth,
+                maxHealth,
+                currentShield
+            );
+
+        float targetRatio =
+            barMax <= 0f
+                ? 0f
+                : Mathf.Clamp01(currentHealth / barMax);
+
+        UpdateShieldSlider(
+            currentHealth,
+            currentShield,
+            barMax
+        );
+
+        if (!initialized)
+        {
+            SnapTo(
+                targetRatio,
+                shieldTarget
+            );
+
+            initialized = true;
+            lastMaxHealth = maxHealth;
+            return;
+        }
+
+        // 현재 체력 비율과 실드 비율을 부드럽게 변경
+        currentTarget = targetRatio;
+        currentVelocity = 0f;
+
+        shieldVelocity = 0f;
+
+        // 실드 변화는 체력 피해 버퍼를 만들지 않음
+        delayedTarget = targetRatio;
+        delayedTimer = 0f;
+        delayedFollowing = true;
+        delayedVelocity = 0f;
+
+        lastMaxHealth = maxHealth;
+    }
+
+    private float GetBarMax(
+        float currentHealth,
+        float maxHealth,
+        float currentShield)
+    {
+        if (!health.IsShieldEnabled)
+            return maxHealth;
+
+        return Mathf.Max(
+            maxHealth,
+            currentHealth + currentShield
+        );
+    }
+
+    private void UpdateShieldSlider(
+        float currentHealth,
+        float currentShield,
+        float barMax)
+    {
+        shieldHealthSlider.gameObject.SetActive(
+            health.IsShieldEnabled
+        );
+
+        float shieldEndRatio =
+            barMax <= 0f
+                ? 0f
+                : Mathf.Clamp01(
+                    (currentHealth + currentShield) / barMax
+                );
+
+        shieldTarget = shieldEndRatio;
+    }
+
+    // 애님 없이 즉시 변경
+    private void SnapTo(
+        float targetRatio,
+        float targetShieldRatio)
     {
         currentTarget = targetRatio;
         delayedTarget = targetRatio;
+        shieldTarget = targetShieldRatio;
 
         currentVelocity = 0f;
         delayedVelocity = 0f;
+        shieldVelocity = 0f;
 
         delayedTimer = 0f;
         delayedFollowing = false;
@@ -149,5 +273,8 @@ public class AirshipWorldHealthBar : MonoBehaviour
 
         delayedHealthSlider.normalizedValue =
             targetRatio;
+
+        shieldHealthSlider.normalizedValue =
+            targetShieldRatio;
     }
 }
