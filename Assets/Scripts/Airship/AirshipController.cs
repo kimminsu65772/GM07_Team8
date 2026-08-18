@@ -38,8 +38,8 @@ public class AirshipController : MonoBehaviour
     public void Init()
     {
         upgradeController.Init();
-        equipmentController.Init();
         statController.Init(upgradeController.UpgradeState);
+        equipmentController.Init();
     }
     private void CacheComponents()
     {
