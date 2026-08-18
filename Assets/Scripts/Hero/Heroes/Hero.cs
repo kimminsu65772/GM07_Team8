@@ -90,6 +90,8 @@ public abstract class Hero : MonoBehaviour, IDamageable
         get => skillTime;
         set => skillTime = Mathf.Max(0f, value);
     }
+
+    public GameObject TargetEnemy => targetEnemy;
     public HeroLocationEnum Location => location;
     public HeroStateEnum HeroState => heroState;
 
@@ -133,7 +135,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         if (targetEnemy != null && location == HeroLocationEnum.Back)
         {
             if (skillTime <= attack.SkillTimer) attack.UseSkill(targetEnemy);
-            else attack.RangeAttack(targetEnemy);
+            else attack.RangeAttack();
         }
 
         ChangeState();
@@ -154,7 +156,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         }
     }
 
-    private void SearchEnemy()
+    public void SearchEnemy()
     {
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, searchRange, enemyLayer);
         Transform nearestEnemy = null;
@@ -218,7 +220,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         if (Mathf.Abs(direction.x) < 0.01f || IsDead) return;
 
         Vector3 scale = heroRoot.localScale;
-        scale.x = direction.x > 0 ? -1 : 1;
+        scale.x = direction.x > 0 ? 1 : -1;
         heroRoot.localScale = scale;
     }
 
@@ -257,6 +259,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         attack.StopIsSkilling();
     }
 
+    /*
     private void OnDrawGizmos()
     {
         // 근거리 공격 사거리
@@ -264,6 +267,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         if (location == HeroLocationEnum.Front) Gizmos.DrawWireSphere(
             new Vector3(transform.position.x, transform.position.y, transform.position.z), meleeRange);
     }
+    */
 
     public void EquipStatApply(Equipment equip)
     {

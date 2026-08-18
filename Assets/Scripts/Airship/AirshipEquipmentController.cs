@@ -209,7 +209,7 @@ public class AirshipEquipmentController : MonoBehaviour
     [ContextMenu("test")]
     public void TestFreeze()
     {
-        gameObject.GetComponent<AirshipController>().Init();
-        EquipCannon(AirshipCannonType.Normal);
+        EquipCannon(AirshipCannonType.Freeze);
+        EquipGear(AirshipGearType.Shield);
     }
 }

@@ -409,7 +409,7 @@ GameObject:
   - component: {fileID: -7637164879160013161}
   - component: {fileID: 8981681246167486618}
   m_Layer: 6
-  m_Name: TestBoss
+  m_Name: NamedMob
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
