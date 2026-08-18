@@ -17,13 +17,22 @@ public class NormalProjectile : AirshipProjectileBase
             return;
         }
 
+        // transform.position = Vector3.MoveTowards(
+        //     transform.position,
+        //     target.position,
+        //     moveSpeed * Time.deltaTime
+        // );
+        // Vector2 direction =
+        //     (Vector2)target.position - (Vector2)transform.position;
         transform.position = Vector3.MoveTowards(
             transform.position,
-            target.position,
+            target.position + Vector3.up * 0.5f,
             moveSpeed * Time.deltaTime
         );
+
         Vector2 direction =
-            (Vector2)target.position - (Vector2)transform.position;
+            (Vector2)(target.position + Vector3.up * 0.5f) -
+            (Vector2)transform.position;
 
         if (direction.sqrMagnitude > 0f)
         {
