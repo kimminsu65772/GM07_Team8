@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(EnemyStats))]
-
 public class EnemyAttack : MonoBehaviour
 {
     private IDamageable targetDamageable;
@@ -13,14 +12,19 @@ public class EnemyAttack : MonoBehaviour
     [Header("Attack Event")]
     [SerializeField]
     private UnityEvent attackPerformed = new UnityEvent();
+
     [SerializeField] private SpriteRenderer spriteRenderer;
 
     private EnemyStats enemyStats;
     private float attackTimer;
 
+    // 기본 1배
+    private float attackSpeedMultiplier = 1f;
+
     private void Awake()
     {
-        enemyStats = GetComponent<EnemyStats>();
+        enemyStats =
+            GetComponent<EnemyStats>();
 
         ResetAttackTimer();
     }
@@ -51,12 +55,11 @@ public class EnemyAttack : MonoBehaviour
             return;
         }
 
-       
-
         // 현재 공격 대상을 바라봄
         FaceTarget();
 
-        attackTimer -= Time.deltaTime;
+        attackTimer -=
+            Time.deltaTime;
 
         if (attackTimer > 0f)
         {
@@ -67,18 +70,37 @@ public class EnemyAttack : MonoBehaviour
         ResetAttackTimer();
     }
 
-    public void SetTarget(Transform newTarget)
+    // 공격속도 배율 변경
+    public void SetAttackSpeedMultiplier(
+        float multiplier)
     {
-        target = newTarget;
+        attackSpeedMultiplier =
+            Mathf.Max(
+                multiplier,
+                0.1f
+            );
 
-        targetDamageable = target != null
-            ? target.GetComponentInParent<IDamageable>()
-            : null;
+        // 변경된 공속 바로 적용
+        ResetAttackTimer();
+    }
 
-        if (target != null && targetDamageable == null)
+    public void SetTarget(
+        Transform newTarget)
+    {
+        target =
+            newTarget;
+
+        targetDamageable =
+            target != null
+                ? target.GetComponentInParent<IDamageable>()
+                : null;
+
+        if (target != null &&
+            targetDamageable == null)
         {
             Debug.LogWarning(
-                $"{name}: {target.name}에서 IDamageable을 찾지 못했습니다.");
+                $"{name}: {target.name}에서 IDamageable을 찾지 못했습니다."
+            );
         }
 
         ResetAttackTimer();
@@ -94,10 +116,10 @@ public class EnemyAttack : MonoBehaviour
 
         FaceTarget();
 
-       
-
         attackPerformed?.Invoke();
     }
+
+    // Animation Event에서 실제 데미지 적용
     public void ApplyAttackDamage()
     {
         if (target == null ||
@@ -109,31 +131,44 @@ public class EnemyAttack : MonoBehaviour
         }
 
         targetDamageable.TakeDamage(
-            new DamageInfo(enemyStats.AttackPower));
+    new DamageInfo(
+        enemyStats.AttackPower));
     }
+
     private void FaceTarget()
     {
-        if (target == null || spriteRenderer == null)
+        if (target == null ||
+            spriteRenderer == null)
         {
             return;
-        } 
+        }
 
         float directionX =
-            target.position.x - transform.position.x;
+            target.position.x -
+            transform.position.x;
 
-        if (Mathf.Abs(directionX) < 0.01f)
+        if (Mathf.Abs(directionX) <
+            0.01f)
         {
             return;
         }
 
         // 기본 캐릭터가 왼쪽을 보는 기준
-        spriteRenderer.flipX = directionX > 0f;
+        spriteRenderer.flipX =
+            directionX > 0f;
     }
 
     private void ResetAttackTimer()
     {
-        attackTimer = enemyStats != null
-            ? enemyStats.AttackInterval
-            : 0f;
+        if (enemyStats == null)
+        {
+            attackTimer = 0f;
+            return;
+        }
+
+        // 공격속도 배율 적용
+        attackTimer =
+            enemyStats.AttackInterval /
+            attackSpeedMultiplier;
     }
 }
