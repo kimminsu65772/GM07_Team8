@@ -119,6 +119,10 @@ public class BattleManager : MonoBehaviour
         {
             PlaceFormationHeroes();
         }
+        else
+        {
+            InitializeSpawnedHeroes();
+        }
     }
 
     public void StartStage()
@@ -237,6 +241,23 @@ public class BattleManager : MonoBehaviour
             }
         }
         spawnedHeroes.Clear();
+    }
+
+    private void InitializeSpawnedHeroes()
+    {
+        if (spawnedHeroes == null || spawnedHeroes.Count == 0)
+        {
+            return;
+        }
+
+        for (int i = 0; i < spawnedHeroes.Count; i++)
+        {
+            if (spawnedHeroes[i] != null)
+            {
+                Hero hero = spawnedHeroes[i].GetComponent<Hero>();
+                hero.Initialize();
+            }
+        }
     }
 
     private GameObject GetCachedHeroOrCreate(HeroFormationRuntimeSlot slot)
