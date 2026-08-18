@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2766377428081565291}
@@ -302,16 +302,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cha2
   heroID: 0
-  heroName: Archer
+  heroName: 
   heroLv: 0
-  heroMaxHP: 80
+  heroMaxHP: 0
   heroCurrentHP: 0
-  heroAtk: 10
-  heroDef: 7
+  heroAtk: 0
+  heroDef: 0
   heroCriChance: 0
   isDead: 0
   hitRadius: 0
-  attackTime: 1
+  attackTime: 0
   skillTime: 0
   heroRoot: {fileID: 8903540859066819979}
   moveSpeed: 8
