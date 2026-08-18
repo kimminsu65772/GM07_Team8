@@ -241,8 +241,10 @@ public class BossChargeSkill : MonoBehaviour
         );
 
         target.TakeDamage(
-            chargeDamage
-        );
+     new DamageInfo(
+         chargeDamage
+     )
+ );
 
         // 한 번 박았으면 추가 데미지 방지
         hasHitTarget = true;
