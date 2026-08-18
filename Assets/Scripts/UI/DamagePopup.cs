@@ -7,9 +7,10 @@ public class DamagePopup : MonoBehaviour
     [SerializeField] private float moveSpeed = 1f;       
     [SerializeField] private float disappearTimer = 0.8f; 
     private Color textColor;
-    public void Setup(int damage)
+    public void Setup(DamageInfo damageInfo)
     {
-        damageText.text = damage.ToString();
+        damageText.text = Mathf.RoundToInt(damageInfo.Damage).ToString();
+
         textColor = damageText.color;
         StartCoroutine(PopupRoutine());
     }
