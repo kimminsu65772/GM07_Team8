@@ -116,6 +116,16 @@ public abstract class Hero : MonoBehaviour, IDamageable
         attack = GetComponent<HeroAttack>();
     }
 
+    public void Initialize()
+    {
+        HeroLvManager.Instance.LvApply(HeroLv, this);
+        heroCurrentHP = heroMaxHP;
+        isDead = false;
+        heroState = HeroStateEnum.Idle;
+        targetEnemy = null;
+        attack.ClearCoolTime();
+    }
+
     public void Update()
     {
         if (targetEnemy == null) SearchEnemy();
