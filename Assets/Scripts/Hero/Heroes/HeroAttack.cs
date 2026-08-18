@@ -76,19 +76,22 @@ public class HeroAttack : MonoBehaviour
         }
     }
 
-    public void RangeAttack(GameObject enemy)
+    public void RangeAttack()
     {
         if (hero.Location != HeroLocationEnum.Back || hero.IsDead || isAttacking || isSkilling) return;
 
         if (attackTimer >= hero.HeroAttackTime)
         {
+            hero.SearchEnemy();
+            if (hero.TargetEnemy == null) return;
+
             float criRan = Random.Range(1f, 100f);
             float damage = hero.HeroAtk;
 
             isAttacking = true;
             attackTimer = 0f;
 
-            Vector2 direction = enemy.transform.position - transform.position;
+            Vector2 direction = hero.TargetEnemy.transform.position - transform.position;
             hero.FlipSprite(direction);
 
             vfx.PlayAttackEffect(hero.AtkPosPreset, hero.AtkScalePreset);
@@ -100,7 +103,7 @@ public class HeroAttack : MonoBehaviour
                 isCrit = true;
             }
 
-            ThrowProjectile(enemy.transform, new DamageInfo(damage, isCrit));
+            ThrowProjectile(hero.TargetEnemy.transform, new DamageInfo(damage, isCrit));
 
             Debug.Log(gameObject.name + "의 공격, 피해량 : " + damage);
         }
