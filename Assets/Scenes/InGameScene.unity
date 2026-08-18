@@ -15490,6 +15490,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 363862196}
+        m_TargetAssemblyTypeName: ToggleController, Assembly-CSharp
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1396348256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22030,6 +22042,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 927942594}
     m_Modifications:
+    - target: {fileID: 716002107221229456, guid: 7830841cce2eb604a8de3ab5629e1c1f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 716002107221229456, guid: 7830841cce2eb604a8de3ab5629e1c1f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 716002107221229456, guid: 7830841cce2eb604a8de3ab5629e1c1f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 363862196}
+    - target: {fileID: 716002107221229456, guid: 7830841cce2eb604a8de3ab5629e1c1f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 716002107221229456, guid: 7830841cce2eb604a8de3ab5629e1c1f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Close
+      objectReference: {fileID: 0}
+    - target: {fileID: 716002107221229456, guid: 7830841cce2eb604a8de3ab5629e1c1f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ToggleController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 716002107221229456, guid: 7830841cce2eb604a8de3ab5629e1c1f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1441783788720884099, guid: 7830841cce2eb604a8de3ab5629e1c1f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -23036,6 +23076,7 @@ MonoBehaviour:
   mapController: {fileID: 943786532}
   airshipStartPoint: {fileID: 1269773613}
   airship: {fileID: 1882879764}
+  runtimeRequestFormationUpdate: 0
 --- !u!1 &4290260284094567499
 GameObject:
   m_ObjectHideFlags: 0
