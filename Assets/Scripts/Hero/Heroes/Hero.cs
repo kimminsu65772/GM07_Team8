@@ -90,6 +90,8 @@ public abstract class Hero : MonoBehaviour, IDamageable
         get => skillTime;
         set => skillTime = Mathf.Max(0f, value);
     }
+
+    public GameObject TargetEnemy => targetEnemy;
     public HeroLocationEnum Location => location;
     public HeroStateEnum HeroState => heroState;
 
@@ -133,7 +135,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         if (targetEnemy != null && location == HeroLocationEnum.Back)
         {
             if (skillTime <= attack.SkillTimer) attack.UseSkill(targetEnemy);
-            else attack.RangeAttack(targetEnemy);
+            else attack.RangeAttack();
         }
 
         ChangeState();
@@ -154,7 +156,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         }
     }
 
-    private void SearchEnemy()
+    public void SearchEnemy()
     {
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, searchRange, enemyLayer);
         Transform nearestEnemy = null;
