@@ -40,8 +40,6 @@ public class PlayerInfo : MonoBehaviour
     // UI에서 캐싱한 Hero 목록 상태를 갱신할 수 있도록 Hero 소유 여부 변경 시 이벤트 발생
     public event Action<string, bool> OnHeroOwnedChanged;
 
-    public event Action<int> OnCurrentStageChanged;
-
     private SaveDataWriter saveDataWriter;
 
     private void Awake()
@@ -86,6 +84,8 @@ public class PlayerInfo : MonoBehaviour
             SaveData = SaveDataFactory.CreateNewData(heroCatalog);
             saveDataWriter.ForceSave(SaveData);
         }
+
+        Debug.Log(saveDataPath);
 
         SaveScheduler.Instance.Initialize(SaveData, saveDataWriter);
 
@@ -209,7 +209,6 @@ public class PlayerInfo : MonoBehaviour
         }
 
         StageProgress.CurrentStage = stage;
-        OnCurrentStageChanged?.Invoke(stage);
         RequestSave(savePolicy);
 
         return true;

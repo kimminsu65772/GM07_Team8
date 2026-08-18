@@ -63,8 +63,9 @@ public class EnemyStats : MonoBehaviour, IDamageable
     }
 
     // IDamageable 인터페이스 구현
-    public void TakeDamage(float damageAmount)
+    public void TakeDamage(DamageInfo damageInfo)
     {
+        float damageAmount = damageInfo.Damage;
         if (damageAmount <= 0f || IsDead)
         {
             return;

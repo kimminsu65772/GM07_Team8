@@ -40,9 +40,9 @@ public class SoundManager : MonoBehaviour
         bgmAudioSource.playOnAwake = false;
         bgmAudioSource.loop = true;
 
-        masterVolume = PlayerPrefs.GetFloat("GameVolume", 1f);
-        sfxVolume = PlayerPrefs.GetFloat("SFX_Volume", 1f);
-        bgmVolume = PlayerPrefs.GetFloat("BGM_Volume", 1f);
+        masterVolume = PlayerPrefs.GetFloat("GameVolume", 0.5f);
+        sfxVolume = PlayerPrefs.GetFloat("SFX_Volume", 0.5f);
+        bgmVolume = PlayerPrefs.GetFloat("BGM_Volume", 0.5f);
 
         if (bgmAudioSource != null)
         {

@@ -16,6 +16,7 @@ public class HeroAttack : MonoBehaviour
     [SerializeField] private GameObject projectile;
     [SerializeField] private Transform firePoint;
 
+    public EffectPlayer VFX => vfx;
     public bool IsAttacking => isAttacking;
     public bool IsSkilling => isSkilling;
     public bool CanAttack => canAttack;
@@ -57,47 +58,58 @@ public class HeroAttack : MonoBehaviour
             Vector2 direction = enemy.transform.position - transform.position;
             hero.FlipSprite(direction);
 
-            vfx.PlayAttackEffect();
+            vfx.PlayAttackEffect(hero.AtkPosPreset, hero.AtkScalePreset);
 
+            bool isCrit = false;
             if (criRan <= hero.HeroCriChance)
+            {
                 damage *= 2f;
+                isCrit = true;
+            }
 
             if (enemy.TryGetComponent<IDamageable>(out IDamageable enemyHP))
             {
-                enemyHP.TakeDamage(damage);
+                enemyHP.TakeDamage(new DamageInfo(damage, isCrit));
             }
 
             Debug.Log(gameObject.name + "의 공격, 피해량 : " + damage);
         }
     }
 
-    public void RangeAttack(GameObject enemy)
+    public void RangeAttack()
     {
         if (hero.Location != HeroLocationEnum.Back || hero.IsDead || isAttacking || isSkilling) return;
 
         if (attackTimer >= hero.HeroAttackTime)
         {
+            hero.SearchEnemy();
+            if (hero.TargetEnemy == null) return;
+
             float criRan = Random.Range(1f, 100f);
             float damage = hero.HeroAtk;
 
             isAttacking = true;
             attackTimer = 0f;
 
-            Vector2 direction = enemy.transform.position - transform.position;
+            Vector2 direction = hero.TargetEnemy.transform.position - transform.position;
             hero.FlipSprite(direction);
 
-            vfx.PlayAttackEffect();
+            vfx.PlayAttackEffect(hero.AtkPosPreset, hero.AtkScalePreset);
 
+            bool isCrit = false;
             if (criRan <= hero.HeroCriChance)
+            {
                 damage *= 2f;
+                isCrit = true;
+            }
 
-            ThrowProjectile(enemy.transform, damage);
+            ThrowProjectile(hero.TargetEnemy.transform, new DamageInfo(damage, isCrit));
 
             Debug.Log(gameObject.name + "의 공격, 피해량 : " + damage);
         }
     }
 
-    private void ThrowProjectile(Transform enemy, float damage)
+    private void ThrowProjectile(Transform enemy, DamageInfo damageInfo)
     {
         GameObject projec = Instantiate(
             projectile,
@@ -106,7 +118,7 @@ public class HeroAttack : MonoBehaviour
         );
 
         projec.GetComponent<HeroAttackProjectileController>()
-            .Init(enemy, damage);
+            .Init(enemy, damageInfo);
     }
 
     public void UseSkill(GameObject enemy)
@@ -119,7 +131,7 @@ public class HeroAttack : MonoBehaviour
             skillTimer = 0f;
 
             hero.Skill(enemy);
-            vfx.PlaySkillEffect();
+            vfx.PlaySkillEffect(hero.SkillPosPreset, hero.SkillScalePreset);
         }
     }
 
@@ -136,5 +148,11 @@ public class HeroAttack : MonoBehaviour
     public void ChangeCanAttack(bool value)
     {
         canAttack = value;
+    }
+
+    public void ClearCoolTime()
+    {
+        attackTimer = 0f;
+        skillTimer = 0f;
     }
 }

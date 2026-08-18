@@ -6,11 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/FeatureTestScenes/Systems/BootStrapperTest.unity
-    guid: 92c205ab595ddd54eb7e3e18a1246dd2
+    path: Assets/Scenes/TitleScene.unity
+    guid: f4ff85c37aeec1b4096afceab266b671
   - enabled: 1
-    path: Assets/Scenes/FeatureTestScenes/Systems/BattleSystemTestScene.unity
-    guid: 4204586366f54f0449ade99413716b82
+    path: Assets/Scenes/InGameScene.unity
+    guid: f330bb2c92dc4d943b2f25c977e70d74
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

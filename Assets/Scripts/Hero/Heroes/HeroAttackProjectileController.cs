@@ -5,12 +5,12 @@ public class HeroAttackProjectileController : MonoBehaviour
     [SerializeField] private float moveSpeed;
 
     private Transform target;
-    private float damage;
+    private DamageInfo damageInfo;
 
-    public void Init(Transform target, float damage)
+    public void Init(Transform target, DamageInfo damageInfo)
     {
         this.target = target;
-        this.damage = damage;
+        this.damageInfo = damageInfo;
         Destroy(gameObject, 3f);
     }
 
@@ -38,7 +38,7 @@ public class HeroAttackProjectileController : MonoBehaviour
 
             if (distance <= enemy.HitRadius)
             {
-                enemy.TakeDamage(damage);
+                enemy.TakeDamage(damageInfo);
                 Destroy(gameObject);
             }
         }

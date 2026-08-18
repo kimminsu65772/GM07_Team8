@@ -22,8 +22,6 @@ public abstract class Hero : MonoBehaviour, IDamageable
     // private HeroAttackTypeEnum attackType;
     protected IHeroStatTable statTable;
 
-    [SerializeField] private TMP_Text name_T;
-
     [SerializeField] private Transform heroRoot;
     [SerializeField] private float moveSpeed = 8f;
     [SerializeField] private LayerMask enemyLayer;
@@ -35,7 +33,14 @@ public abstract class Hero : MonoBehaviour, IDamageable
     
     protected HeroStateEnum heroState;
     private HeroEquipmentManager heroEquip;
-    private HeroAttack attack;
+    protected HeroAttack attack;
+
+    public Vector2 AtkPosPreset { get; private set; }
+    public Vector2 AtkScalePreset {  get; private set; }
+    public Vector2 SkillPosPreset { get; private set; }
+    public Vector2 SkillScalePreset { get; private set; }
+    public Vector2 TargetPosPreset { get; private set; }
+    public Vector2 TargetScalePreset { get; private set; }
 
     public int HeroID => heroID;
     public string HeroName => heroName;
@@ -85,6 +90,8 @@ public abstract class Hero : MonoBehaviour, IDamageable
         get => skillTime;
         set => skillTime = Mathf.Max(0f, value);
     }
+
+    public GameObject TargetEnemy => targetEnemy;
     public HeroLocationEnum Location => location;
     public HeroStateEnum HeroState => heroState;
 
@@ -106,11 +113,19 @@ public abstract class Hero : MonoBehaviour, IDamageable
         isDead = false;
         this.location = location;
 
-        if (name_T != null) name_T.text = heroName;
-
         heroState = HeroStateEnum.Idle;
         heroEquip = GetComponent<HeroEquipmentManager>();
         attack = GetComponent<HeroAttack>();
+    }
+
+    public void Initialize()
+    {
+        HeroLvManager.Instance.LvApply(HeroLv, this);
+        heroCurrentHP = heroMaxHP;
+        isDead = false;
+        heroState = HeroStateEnum.Idle;
+        targetEnemy = null;
+        attack.ClearCoolTime();
     }
 
     public void Update()
@@ -120,14 +135,18 @@ public abstract class Hero : MonoBehaviour, IDamageable
         if (targetEnemy != null && location == HeroLocationEnum.Back)
         {
             if (skillTime <= attack.SkillTimer) attack.UseSkill(targetEnemy);
-            else attack.RangeAttack(targetEnemy);
+            else attack.RangeAttack();
         }
 
         ChangeState();
+
+        // if (Input.GetKeyDown(KeyCode.A)) TakeDamage(10f);
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(DamageInfo damageInfo)
     {
+        float damage = damageInfo.Damage;
+        
         // 방어력 적용하기
         heroCurrentHP -= damage;
 
@@ -137,7 +156,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         }
     }
 
-    private void SearchEnemy()
+    public void SearchEnemy()
     {
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, searchRange, enemyLayer);
         Transform nearestEnemy = null;
@@ -201,7 +220,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         if (Mathf.Abs(direction.x) < 0.01f || IsDead) return;
 
         Vector3 scale = heroRoot.localScale;
-        scale.x = direction.x > 0 ? -1 : 1;
+        scale.x = direction.x > 0 ? 1 : -1;
         heroRoot.localScale = scale;
     }
 
@@ -240,6 +259,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         attack.StopIsSkilling();
     }
 
+    /*
     private void OnDrawGizmos()
     {
         // 근거리 공격 사거리
@@ -247,6 +267,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         if (location == HeroLocationEnum.Front) Gizmos.DrawWireSphere(
             new Vector3(transform.position.x, transform.position.y, transform.position.z), meleeRange);
     }
+    */
 
     public void EquipStatApply(Equipment equip)
     {
@@ -269,5 +290,21 @@ public abstract class Hero : MonoBehaviour, IDamageable
     public HeroStat GetStat(int lv)
     {
         return statTable.GetStat(lv);
+    }
+
+    public void SetAttackEffectPreset(float posX, float posY, float scaleX, float scaleY)
+    {
+        AtkPosPreset = new Vector2(posX, posY);
+        AtkScalePreset = new Vector2(scaleX, scaleY);
+    }
+    public void SetSkillEffectPreset(float posX, float posY, float scaleX, float scaleY)
+    {
+        SkillPosPreset = new Vector2(posX, posY);
+        SkillScalePreset = new Vector2(scaleX, scaleY);
+    }
+    public void SetTargetEffectPreset(float posX, float posY, float scaleX, float scaleY)
+    {
+        TargetPosPreset = new Vector2(posX, posY);
+        TargetScalePreset = new Vector2(scaleX, scaleY);
     }
 }
