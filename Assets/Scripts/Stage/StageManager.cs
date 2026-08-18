@@ -179,10 +179,19 @@ public class StageManager : MonoBehaviour
         bool isBossWave)
     {
         // 위, 가운데, 아래 순서로 위치를 나눠서 생성
-        float yOffset =
-            (spawnIndex % 3 - 1) *
-            spawnYOffset;
-
+        float yOffset ;
+        // 보스는 가운데에서 생성
+        if (isBossWave)
+        {
+            yOffset = 0f;
+        }
+        else
+        {
+            // 일반 적은 아래 → 가운데 → 위 순서
+            yOffset =
+                (spawnIndex % 3 - 1) *
+                spawnYOffset;
+        }
         Vector3 spawnPosition =
             spawnPoint.position +
             new Vector3(

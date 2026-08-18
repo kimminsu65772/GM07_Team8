@@ -8,10 +8,7 @@ public class BossTopHpUI : MonoBehaviour
 
     private EnemyStats bossStats;
 
-    private void Awake()
-    {
-        HideBossHp();
-    }
+    
 
     public void SetBoss(EnemyStats newBoss)
     {
