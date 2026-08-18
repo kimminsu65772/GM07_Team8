@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 public class BattleManager : MonoBehaviour
 {
@@ -33,6 +34,7 @@ public class BattleManager : MonoBehaviour
     public AirshipController Airship => airship;
 
     private readonly List<GameObject> spawnedHeroes = new List<GameObject>();
+    private readonly Dictionary<string, GameObject> heroCache = new Dictionary<string, GameObject>();
     private int currentStage;
     private bool isInitialized;
 
@@ -129,35 +131,47 @@ public class BattleManager : MonoBehaviour
 
     private void PlaceFormationHeroes()
     {
-        ClearSpawnedHeroes();
+        Profiler.BeginSample("BattleManager.PlaceFormationHeroes");
 
-        if (airship == null)
+        try
         {
-            Debug.LogError("비행선이 설정되지 않았습니다.");
-            return;
+            if (airship == null)
+            {
+                Debug.LogError("비행선이 설정되지 않았습니다.");
+                return;
+            }
+
+            // 비행선 영웅 배치 클래스에서 배치 포인트 가져오기
+            AirshipHeroPlacementPoints placementPoints = airship.GetComponent<AirshipHeroPlacementPoints>();
+
+            if (placementPoints == null)
+            {
+                Debug.LogError("배치 지점이 설정되지 않았습니다.");
+                return;
+            }
+
+            if (heroFormationManager == null)
+            {
+                Debug.LogWarning("영웅 배치 매니저를 찾을 수 없습니다.");
+                return;
+            }
+
+            DeactivateSpawnedHeroes();
+
+            PlaceHeroes(heroFormationManager.GetFrontLineSlots(), placementPoints, true);
+            PlaceHeroes(heroFormationManager.GetBackLineSlots(), placementPoints, false);
         }
-
-        // 비행선 영웅 배치 클래스에서 배치 포인트 가져오기
-        AirshipHeroPlacementPoints placementPoints = airship.GetComponent<AirshipHeroPlacementPoints>();
-
-        if (placementPoints == null)
+        finally
         {
-            Debug.LogError("배치 지점이 설정되지 않았습니다.");
-            return;
+            Profiler.EndSample();
         }
-
-        if (heroFormationManager == null)
-        {
-            Debug.LogWarning("영웅 배치 매니저를 찾을 수 없습니다.");
-            return;
-        }
-
-        PlaceHeroes(heroFormationManager.GetFrontLineSlots(), placementPoints, true);
-        PlaceHeroes(heroFormationManager.GetBackLineSlots(), placementPoints, false);
     }
 
     // 현재 영웅 배치 정보를 받아와서 배치 포인트에 따라 영웅을 배치하는 메서드
-    private void PlaceHeroes(IReadOnlyList<HeroFormationRuntimeSlot> slots, AirshipHeroPlacementPoints placementPoints, bool isFront)
+    private void PlaceHeroes(
+        IReadOnlyList<HeroFormationRuntimeSlot> slots, 
+        AirshipHeroPlacementPoints placementPoints, 
+        bool isFront)
     {
         if (slots == null || slots.Count == 0)
         {
@@ -183,27 +197,49 @@ public class BattleManager : MonoBehaviour
                 continue;
             }
 
-            GameObject spawnedHero = Instantiate(
-                slot.HeroEntry.HeroPrefab,
-                startPoint.position,
-                startPoint.rotation,
-                startPoint
-            );
+            GameObject spawnedHero = GetCachedHeroOrCreate(slot);
+
+            spawnedHero.transform.SetParent(startPoint, false);
+            spawnedHero.transform.SetPositionAndRotation(startPoint.position, startPoint.rotation);
+            spawnedHero.SetActive(true);
+
+            Hero hero = spawnedHero.GetComponent<Hero>();
 
             spawnedHeroes.Add(spawnedHero);
         }
     }
-    private void ClearSpawnedHeroes()
+    private void DeactivateSpawnedHeroes()
     {
-        for (int i = spawnedHeroes.Count - 1; i >= 0; i--)
+        for (int i = 0; i < spawnedHeroes.Count; i++)
         {
             if (spawnedHeroes[i] != null)
             {
-                Destroy(spawnedHeroes[i]);
+                Hero hero = spawnedHeroes[i].GetComponent<Hero>();
+                spawnedHeroes[i].SetActive(false);
             }
         }
-
         spawnedHeroes.Clear();
+    }
+
+    private GameObject GetCachedHeroOrCreate(HeroFormationRuntimeSlot slot)
+    {
+        if (heroCache.TryGetValue(slot.HeroName, out GameObject cachedHero))
+        {
+            return cachedHero;
+        }
+
+        Profiler.BeginSample("BattleManager.CacheMiss.InstantiateHero");
+
+        try
+        {
+            GameObject newHero = Instantiate(slot.HeroEntry.HeroPrefab);
+            heroCache.Add(slot.HeroName, newHero);
+            return newHero;
+        }
+        finally
+        {
+            Profiler.EndSample();
+        }
     }
 
     private void HandleFormationChanged()

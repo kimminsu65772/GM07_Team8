@@ -1,5 +1,6 @@
-using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.Profiling;
+using System.Collections.Generic;
 
 public class MapController : MonoBehaviour
 {
@@ -9,18 +10,61 @@ public class MapController : MonoBehaviour
 
     private GameObject currentMap;
 
+    // key: 맵 프리팹, value: 인스턴스화된 맵 오브젝트
+    private readonly Dictionary<GameObject, GameObject> mapCache = new Dictionary<GameObject, GameObject>();
     public void LoadMap(int stageNumber)
     {
-        GameObject mapPrefab = mapCatalog.GetMapPrefab(stageNumber);
+        Profiler.BeginSample("MapController.LoadMap");
 
-        if (currentMap != null)
+        try
         {
-            Destroy(currentMap);
-        }
+            GameObject mapPrefab = mapCatalog.GetMapPrefab(stageNumber);
 
-        currentMap = Instantiate(mapPrefab, mapRoot, false);
-        
-        AlignMapBottomToCamera(currentMap);
+            if (mapPrefab == null)
+            {
+                Debug.LogError($"Stage {stageNumber}에 해당하는 맵 프리팹을 찾을 수 없습니다.");
+                return;
+            }
+
+            if (!mapCache.TryGetValue(mapPrefab, out GameObject cachedMap))
+            {
+                Profiler.BeginSample("MapController.CacheMiss.InstantiateMap");
+
+                try
+                {
+                    cachedMap = Instantiate(mapPrefab, mapRoot, false);
+                    AlignMapBottomToCamera(cachedMap);
+                }
+                finally
+                {
+                    Profiler.EndSample();
+                }
+
+                mapCache.Add(mapPrefab, cachedMap);
+            }
+            else
+            {
+                Profiler.BeginSample("MapController.CacheHit.ReuseMap");
+                Profiler.EndSample();
+            }
+
+            if (cachedMap == currentMap)
+            {
+                return;
+            }
+
+            if (currentMap != null)
+            {
+                currentMap.SetActive(false);
+            }
+
+            cachedMap.SetActive(true);
+            currentMap = cachedMap;
+        }
+        finally
+        {
+            Profiler.EndSample();
+        }
     }
 
     // 맵을 카메라 촬영 범위에 맞게 조정하는 메서드
