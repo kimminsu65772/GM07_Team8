@@ -13,10 +13,9 @@ public class DamageManager : MonoBehaviour
     }
     public void ShowDamage(DamageInfo damageInfo, Vector3 position)
     {
-        if (damagePopupPrefab == null) return;
+        if (damagePopupPrefab == null)return;
 
-        Vector3 spawnPos = position + new Vector3(Random.Range(-0.3f, 0.3f),Random.Range(0.5f, 1f), 0);
-        GameObject popup = Instantiate(damagePopupPrefab,spawnPos,Quaternion.identity,worldCanvasTransform);
+        GameObject popup = Instantiate(damagePopupPrefab, position, Quaternion.identity, worldCanvasTransform);
         DamagePopup popupScript = popup.GetComponent<DamagePopup>();
 
         if (popupScript != null)

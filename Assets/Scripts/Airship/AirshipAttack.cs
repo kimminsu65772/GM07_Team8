@@ -176,8 +176,11 @@ public class AirshipAttack : MonoBehaviour
         if (aimPoint == null || target == null)
             return;
 
+        // Vector2 direction =
+        //     (Vector2)target.position -
+        //     (Vector2)aimPoint.position;
         Vector2 direction =
-            (Vector2)target.position -
+            (Vector2)(target.position + Vector3.up * 0.5f) -
             (Vector2)aimPoint.position;
 
         if (direction.sqrMagnitude <= 0f)

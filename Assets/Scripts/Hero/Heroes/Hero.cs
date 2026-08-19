@@ -19,7 +19,6 @@ public abstract class Hero : MonoBehaviour, IDamageable
     [SerializeField] private float skillTime;
 
     private HeroLocationEnum location;
-    // private HeroAttackTypeEnum attackType;
     protected IHeroStatTable statTable;
 
     [SerializeField] private Transform heroRoot;
@@ -37,6 +36,8 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
     private string skillName;
     private string skillInfo;
+
+    public bool IsStunned { get; private set; }
 
     public Vector2 AtkPosPreset { get; private set; }
     public Vector2 AtkScalePreset {  get; private set; }
@@ -318,4 +319,9 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
     public string GetSkillName() { return skillName; }
     public string GetSkillInfo() { return skillInfo; }
+
+    public void Stun(float duration)
+    {
+        IsStunned = true;
+    }
 }
