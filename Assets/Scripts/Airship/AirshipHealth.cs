@@ -242,7 +242,7 @@ public class AirshipHealth : MonoBehaviour, IDamageable
     //     OnShieldChanged?.Invoke(shield);
     // }
 
-    public void Stun()
+    public void Stun(float duration)
     {
         
     }
