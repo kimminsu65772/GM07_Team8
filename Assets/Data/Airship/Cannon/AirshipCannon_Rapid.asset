@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1841aacbefae6034cbbe24e1f586365f, type: 3}
+  m_Name: AirshipCannon_Rapid
+  m_EditorClassIdentifier: Assembly-CSharp::AirshipCannonData
+  displayName: "\uC5F0\uC0AC\uD0C4"
+  uiImage: {fileID: 0}
+  barrelImage: {fileID: 21300000, guid: 1d234179085d9774fbacf448cb8e772c, type: 3}
+  cannonType: 2
+  projectilePrefab: {fileID: 193875028588587811, guid: 54351d19f9be66541909aa8de035a6af, type: 3}
+  buffData: {fileID: 11400000, guid: bfabb41626e1ef043ad3702a95e9014b, type: 2}

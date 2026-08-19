@@ -100,7 +100,7 @@ public class AirshipAttack : MonoBehaviour
         cachedTarget = null;
         cachedDamageable = null;
 
-        aimPoint.localRotation = Quaternion.identity;
+        aimPoint.localRotation = Quaternion.Euler(Vector3.zero);
     }
 
     public void ApplyStats(AirshipRuntimeStats stats)
