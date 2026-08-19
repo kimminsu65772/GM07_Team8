@@ -23,7 +23,17 @@ public class EnemyAnimationEventReceiver : MonoBehaviour
 
         enemyAttack.ApplyAttackDamage();
     }
+    public void FireProjectile()
+    {
+        Debug.Log($"{name}: FireProjectile 수신");
+        EnemyRangedAttack rangedAttack =
+            GetComponentInParent<EnemyRangedAttack>();
 
+        if (rangedAttack != null)
+        {
+            rangedAttack.FireProjectile();
+        }
+    }
     public void StartCharge()
     {
         if (bossChargeSkill == null)

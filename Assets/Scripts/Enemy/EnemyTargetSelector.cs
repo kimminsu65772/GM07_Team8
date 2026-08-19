@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyMovement))]
-[RequireComponent(typeof(EnemyAttack))]
+
 public class EnemyTargetSelector : MonoBehaviour
 {
     [Header("Fallback Target")]
@@ -13,11 +13,13 @@ public class EnemyTargetSelector : MonoBehaviour
     private EnemyMovement enemyMovement;
     private EnemyAttack enemyAttack;
     private Transform currentTarget;
+    private EnemyRangedAttack enemyRangedAttack;
 
     private void Awake()
     {
         enemyMovement = GetComponent<EnemyMovement>();
         enemyAttack = GetComponent<EnemyAttack>();
+        enemyRangedAttack = GetComponent<EnemyRangedAttack>();
     }
 
     private void Start()
@@ -39,6 +41,7 @@ public class EnemyTargetSelector : MonoBehaviour
 
         // 영웅 또는 비행선으로 공격 대상만 변경
         enemyAttack?.SetTarget(currentTarget);
+        enemyRangedAttack?.SetTarget(currentTarget);
         enemyMovement?.SetCombatTarget(currentTarget);
     }
 
@@ -59,6 +62,7 @@ public class EnemyTargetSelector : MonoBehaviour
             GetPriorityTarget(transform.position);
 
         enemyAttack?.SetTarget(currentTarget);
+        enemyRangedAttack?.SetTarget(currentTarget);
         enemyMovement?.SetCombatTarget(currentTarget);
     }
 
