@@ -7,7 +7,10 @@ public class AirshipItemSlotUI : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private Image iconImage;
     [SerializeField] private TextMeshProUGUI nameText;  
-    [SerializeField] private TextMeshProUGUI descText; 
+    [SerializeField] private TextMeshProUGUI descText;
+
+    [Header("Equip Effect")]
+    [SerializeField] private GameObject goldGlowObject;
     // 대포
     public void SetCannonInfo(AirshipCannonData data)
     {
@@ -26,6 +29,13 @@ public class AirshipItemSlotUI : MonoBehaviour
             if (iconImage != null) iconImage.sprite = data.GearImage;
             if (nameText != null) nameText.text = data.DisplayName;
             if (descText != null) descText.text = $"타입: {data.GearType}";
+        }
+    }
+    public void SetEquippedState(bool isEquipped)
+    {
+        if (goldGlowObject != null)
+        {
+            goldGlowObject.SetActive(isEquipped);
         }
     }
 }
