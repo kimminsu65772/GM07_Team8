@@ -42,6 +42,10 @@ public class HeroAnimationController : MonoBehaviour
                 ani.PlayAnimation(PlayerState.ATTACK, 1);
                 break;
 
+            case HeroStateEnum.Stunned:
+                ani.PlayAnimation(PlayerState.DEBUFF, 0);
+                break;
+
             case HeroStateEnum.Die:
                 ani.PlayAnimation(PlayerState.DEATH, 0);
                 break;

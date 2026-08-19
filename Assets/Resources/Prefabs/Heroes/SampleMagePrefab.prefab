@@ -910,7 +910,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2457041594951768192, guid: 15d6a450fd7f1e44b9f71ad8aedd33de, type: 3}
       propertyPath: m_LocalScale.x
-      value: -0.8
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 4491417313169970715, guid: 15d6a450fd7f1e44b9f71ad8aedd33de, type: 3}
       propertyPath: m_Pivot.x
