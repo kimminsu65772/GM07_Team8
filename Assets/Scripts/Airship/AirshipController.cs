@@ -103,7 +103,10 @@ public class AirshipController : MonoBehaviour
     }
     public void Respawn()
     {
+        statController.ResetTemporaryBuffs();
         health.ResetHealth();
+        movement.StopImmediately();
+        attack.ResetAttack();
         stateMachine.ChangeState(stateMachine.MoveForwardState);
     }
 }

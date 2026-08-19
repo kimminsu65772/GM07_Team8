@@ -92,6 +92,17 @@ public class AirshipAttack : MonoBehaviour
         attackTimer = attackInterval;
     }
 
+    public void ResetAttack()
+    {
+        attackTimer = 0f;
+        targetRefreshTimer = 0f;
+
+        cachedTarget = null;
+        cachedDamageable = null;
+
+        aimPoint.localRotation = Quaternion.identity;
+    }
+
     public void ApplyStats(AirshipRuntimeStats stats)
     {
         if (stats == null)

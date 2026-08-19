@@ -62,6 +62,16 @@ public class AirshipStatController : MonoBehaviour
         activeBuffs.RemoveAll(buff => buff.Owner == owner);
         Recalculate();
     }
+    
+    // 리스폰이나 스테이지 진입시 영구버프를 제외하고 버프제거
+    public void ResetTemporaryBuffs()
+    {
+        if (activeBuffs.RemoveAll(
+                buff => !buff.HasInfiniteDuration) > 0)
+        {
+            Recalculate();
+        }
+    }
 
     public void Recalculate()
     {
