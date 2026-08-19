@@ -94,11 +94,19 @@ public class AirshipController : MonoBehaviour
     }
     private void Update()
     {
+        if (health.IsStunned)
+        {
+            movement.StopImmediately();
+            return;
+        }
         stateMachine.Tick();
     }
     public void Respawn()
     {
+        statController.ResetTemporaryBuffs();
         health.ResetHealth();
+        movement.StopImmediately();
+        attack.ResetAttack();
         stateMachine.ChangeState(stateMachine.MoveForwardState);
     }
 }

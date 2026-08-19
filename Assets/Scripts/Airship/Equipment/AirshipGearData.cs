@@ -2,6 +2,7 @@ using UnityEngine;
 
 public enum AirshipGearType
 {
+    Normal,
     MaxHealth,
     MoveSpeed,
     Shield,

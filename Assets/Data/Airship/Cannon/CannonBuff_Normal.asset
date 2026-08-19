@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb71851fb85fbe4690a78be78724f27, type: 3}
   m_Name: CannonBuff_Normal
   m_EditorClassIdentifier: Assembly-CSharp::AirshipBuffData
-  buffName: "\uAE30\uBCF8\uD0C4\uACF5\uACA9\uC18D\uB3C4"
+  buffName: "\uAE30\uBCF8\uD0C4\uBC84\uD504"
   duration: -1
   modifiers:
   - statType: 5

@@ -103,9 +103,11 @@ public class AirshipWorldHealthBar : MonoBehaviour
         float currentHealth,
         float maxHealth)
     {
-        healthText.text =
-            $"{Mathf.RoundToInt(currentHealth)} / " +
-            $"{Mathf.RoundToInt(maxHealth)}";
+        UpdateHealthText(
+            currentHealth,
+            maxHealth,
+            health.Shield
+        );
 
         float currentShield = health.Shield;
 
@@ -171,6 +173,11 @@ public class AirshipWorldHealthBar : MonoBehaviour
 
     private void HandleShieldChanged(float currentShield)
     {
+        UpdateHealthText(
+            health.CurrentHealth,
+            health.MaxHealth,
+            currentShield
+        );
         float maxHealth = health.MaxHealth;
         float currentHealth = health.CurrentHealth;
 
@@ -217,6 +224,20 @@ public class AirshipWorldHealthBar : MonoBehaviour
         delayedVelocity = 0f;
 
         lastMaxHealth = maxHealth;
+    }
+    private void UpdateHealthText(
+        float currentHealth,
+        float maxHealth,
+        float currentShield)
+    {
+        string shieldText =
+            currentShield > 0f
+                ? $"(<color=#4DA6FF>+{Mathf.RoundToInt(currentShield)}</color>) "
+                : string.Empty;
+
+        healthText.text =
+            $"{Mathf.RoundToInt(currentHealth)}{shieldText}/ " +
+            $"{Mathf.RoundToInt(maxHealth)}";
     }
 
     private float GetBarMax(

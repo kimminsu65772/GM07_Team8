@@ -15,3 +15,4 @@ MonoBehaviour:
   heroEntries:
   - {fileID: 11400000, guid: 8c08083df1a110e438a86121281042b3, type: 2}
   - {fileID: 11400000, guid: d12631742ae6eb6449d4af59020ec28c, type: 2}
+  - {fileID: 11400000, guid: 902e30ac622a5154fada82770e7c84a6, type: 2}

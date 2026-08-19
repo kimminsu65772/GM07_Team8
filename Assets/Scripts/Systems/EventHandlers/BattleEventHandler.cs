@@ -29,21 +29,33 @@ public class BattleEventHandler : MonoBehaviour
     {
         // 적이 처치되면 재화 획득 
         // TODO: 스테이지별로 재화 획득량을 다르게 설정할 수 있도록 수정 필요
-        PlayerInfo.Instance.AddCurrency(CurrencyType.Gold, 100);
+        RewardBundle rewardBundle = StageRewardCalculator.CalculateEnemyKillReward(PlayerInfo.Instance.CurrentStage);
+
+        for (int i = 0; i < rewardBundle.Rewards.Length; i++)
+        {
+            CurrencyReward reward = rewardBundle.Rewards[i];
+            Debug.Log($"적 처치 보상: {reward.Amount} {reward.Type}");
+            PlayerInfo.Instance.AddCurrency(reward.Type, reward.Amount);
+        }
     }
 
     private void HandleStageCompleted(int clearedStageNumber)
     {
         // 매번 PlayerInfo.Instance를 호출하지 않도록 미리 변수에 할당
         PlayerInfo playerInfo = PlayerInfo.Instance;
-        bool isAlreadyCleard = clearedStageNumber <= playerInfo.MaxClearedStage;
+        bool isAlreadyCleared = clearedStageNumber <= playerInfo.MaxClearedStage;
 
         //  첫 클리어시 보상 지급
-        if (!isAlreadyCleard)
+        if (!isAlreadyCleared)
         {
             int rewardAmount = 100 * clearedStageNumber;
-            playerInfo.AddCurrency(CurrencyType.Gold, rewardAmount);
-            playerInfo.AddCurrency(CurrencyType.Gems, rewardAmount / 10);
+            RewardBundle rewardBundle = StageRewardCalculator.CalculateFirstClearReward(clearedStageNumber);
+            for (int i = 0; i < rewardBundle.Rewards.Length; i++)
+            {
+                CurrencyReward reward = rewardBundle.Rewards[i];
+                playerInfo.AddCurrency(reward.Type, reward.Amount);
+                Debug.Log($"스테이지 {clearedStageNumber} 첫 클리어 보상: {reward.Amount} {reward.Type}");
+            }
             playerInfo.TryUpdateMaxClearedStage(clearedStageNumber);
         }
 
@@ -53,7 +65,7 @@ public class BattleEventHandler : MonoBehaviour
         {
             nextStageNumber = stageManager.LastStage;
         }
-        else if (isAlreadyCleard)
+        else if (isAlreadyCleared && playerInfo.RepeatClearedStage)
         {
             nextStageNumber = clearedStageNumber;
         }

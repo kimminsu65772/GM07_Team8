@@ -15,5 +15,5 @@ MonoBehaviour:
   displayName: "\uC274\uB4DC\uBD80\uD488"
   uiImage: {fileID: 0}
   gearImage: {fileID: 21300000, guid: 30e15b0c0496b4147a62428550a33ab0, type: 3}
-  gearType: 2
+  gearType: 3
   buffData: {fileID: 0}

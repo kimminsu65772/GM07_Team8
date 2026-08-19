@@ -19,6 +19,16 @@ public struct CurrencyReward
 }
 
 [Serializable]
+public struct RewardBundle
+{
+    public CurrencyReward[] Rewards;
+    public RewardBundle(CurrencyReward[] rewards)
+    {
+        Rewards = rewards;
+    }
+}
+
+[Serializable]
 public struct CurrencyCost
 {
     public CurrencyType Type;
