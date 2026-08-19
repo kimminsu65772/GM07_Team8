@@ -1204,7 +1204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AirshipEquipmentController
   equippedCannon: {fileID: 11400000, guid: 88fbdf1c82fecdb4fa2b5269584cd0de, type: 2}
-  equippedGear: {fileID: 11400000, guid: f9e9ed2cc71d4a742b29b6c4aa0a46fe, type: 2}
+  equippedGear: {fileID: 11400000, guid: e6e55b3743fe3e14f82e3c7041fb38b3, type: 2}
   cannonDatas:
   - {fileID: 11400000, guid: 88fbdf1c82fecdb4fa2b5269584cd0de, type: 2}
   - {fileID: 11400000, guid: 1178340448127f645bf6839e3259f69c, type: 2}
@@ -1212,6 +1212,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 414160772b42c304daacb64ebe0b42e3, type: 2}
   - {fileID: 11400000, guid: f9e9ed2cc71d4a742b29b6c4aa0a46fe, type: 2}
   - {fileID: 11400000, guid: 43bd96ec78f6fe84099650c61f363691, type: 2}
+  - {fileID: 11400000, guid: e6e55b3743fe3e14f82e3c7041fb38b3, type: 2}
   statController: {fileID: 5200261145840763693}
   barrelRenderer: {fileID: 4639525818923275732}
   gearRenderer: {fileID: 2191599688475656542}
@@ -1248,6 +1249,7 @@ MonoBehaviour:
   shieldHealthSlider: {fileID: 8202866264047835204}
   healthText: {fileID: 6838413921640117928}
   currentSmoothTime: 0.1
+  shieldSmoothTime: 0.1
   delayedHealthDelay: 0.4
   delayedSmoothTime: 0.2
 --- !u!1 &3932589623452372227
