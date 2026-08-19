@@ -37,6 +37,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
     private string skillName;
     private string skillInfo;
 
+    private bool canStun = true;
     public bool IsStunned { get; private set; }
 
     public Vector2 AtkPosPreset { get; private set; }
@@ -115,6 +116,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         heroCurrentHP = heroMaxHP;
         HeroAttackTime = attackTime;
         HeroSkillTime = skillTime;
+        IsStunned = false;
         isDead = false;
         this.location = location;
 
@@ -127,6 +129,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
     {
         HeroLvManager.Instance.LvApply(HeroLv, this);
         heroCurrentHP = heroMaxHP;
+        IsStunned = false;
         isDead = false;
         heroState = HeroStateEnum.Idle;
         targetEnemy = null;
@@ -145,7 +148,15 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
         ChangeState();
 
-        // if (Input.GetKeyDown(KeyCode.A)) TakeDamage(10f);
+        /*
+        if (Input.GetKeyDown(KeyCode.A)) TakeDamage(new DamageInfo(10, false));
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            Stun(3f);
+            Debug.Log("3초 스턴 적용");
+        }
+        */
     }
 
     public void TakeDamage(DamageInfo damageInfo)
@@ -189,7 +200,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
     private void MoveToEnemy()
     {
-        if (location == HeroLocationEnum.Back || targetEnemy == null || IsDead)
+        if (location == HeroLocationEnum.Back || targetEnemy == null || IsDead || IsStunned)
         {
             isMoving = false;
             return;
@@ -224,7 +235,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         if (Mathf.Abs(direction.x) < 0.01f || IsDead) return;
 
         Vector3 scale = heroRoot.localScale;
-        scale.x = direction.x > 0 ? 1 : -1;
+        scale.x = direction.x > 0 ? -1 : 1;
         heroRoot.localScale = scale;
     }
 
@@ -232,33 +243,36 @@ public abstract class Hero : MonoBehaviour, IDamageable
     protected IEnumerator DieAndRevive()
     {
         isDead = true;
-        heroState = HeroStateEnum.Die;
+        attack.StopIsAttacking();
+        attack.StopIsSkilling();
 
         yield return new WaitForSeconds(3f);
 
         isDead = false;
-        heroState = HeroStateEnum.Idle;
         HeroCurrentHP = heroMaxHP;
+
+        targetEnemy = null;
+        SearchEnemy();
     }
 
     private void ChangeState()
     {
         if (isDead) heroState = HeroStateEnum.Die;
+        else if (IsStunned) heroState = HeroStateEnum.Stunned;
         else if (attack.IsSkilling) heroState = HeroStateEnum.Skill;
         else if (isMoving) heroState = HeroStateEnum.Move;
         else if (attack.IsAttacking) heroState = HeroStateEnum.Attack;
-        else heroState = HeroStateEnum.Idle;
+        else if (targetEnemy != null) heroState = HeroStateEnum.Idle;
+        else heroState = HeroStateEnum.Move;
     }
 
     public void AttackStop()
     {
-        heroState = HeroStateEnum.Idle;
         attack.StopIsAttacking();
     }
 
     public void SkillStop()
     {
-        heroState = HeroStateEnum.Idle;
         attack.StopIsSkilling();
     }
 
@@ -322,6 +336,18 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
     public void Stun(float duration)
     {
+        if (canStun) StartCoroutine(StunApply(duration));
+    }
+
+    private IEnumerator StunApply(float duration)
+    {
+        canStun = false;
         IsStunned = true;
+
+        yield return new WaitForSeconds(duration);
+        IsStunned = false;
+
+        yield return new WaitForSeconds(duration * 2);
+        canStun = true;
     }
 }

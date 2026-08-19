@@ -7,7 +7,7 @@ public enum HeroLocationEnum
 
 public enum HeroStateEnum
 {
-    Idle, Move, Attack, Skill, Die
+    Idle, Move, Attack, Skill, Stunned, Die
 }
 
 public enum HeroNameEnum
