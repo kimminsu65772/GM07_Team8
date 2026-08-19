@@ -44,6 +44,10 @@ public class AirshipEquipmentListUI : MonoBehaviour
                 TextMeshProUGUI btnText = btn != null ? btn.GetComponentInChildren<TextMeshProUGUI>() : null;
 
                 bool isEquipped = (equipmentController.EquippedCannon == data);
+                if (slotUI != null)
+                {
+                    slotUI.SetEquippedState(isEquipped);
+                }
                 if (btnText != null)
                 {
                     btnText.text = isEquipped ? "해제" : "장착";
@@ -80,6 +84,10 @@ public class AirshipEquipmentListUI : MonoBehaviour
                 TextMeshProUGUI btnText = btn != null ? btn.GetComponentInChildren<TextMeshProUGUI>() : null;
 
                 bool isEquipped = (equipmentController.EquippedGear == data);
+                if (slotUI != null)
+                {
+                    slotUI.SetEquippedState(isEquipped);
+                }
                 if (btnText != null)
                 {
                     btnText.text = isEquipped ? "해제" : "장착";
