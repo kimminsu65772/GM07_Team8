@@ -13,4 +13,5 @@ public interface IDamageable
 {
     float HitRadius { get; }
     void TakeDamage(DamageInfo damageInfo);
+    void Stun(float duration);
 }

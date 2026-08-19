@@ -61,7 +61,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
     {
         currentHealth = MaxHealth;
     }
-    public void Stun()
+    public void Stun(float duration)
     {
         // 추후 스턴 처리
     }
