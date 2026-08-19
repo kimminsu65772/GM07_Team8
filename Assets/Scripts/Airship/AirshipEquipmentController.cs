@@ -129,6 +129,7 @@ public class AirshipEquipmentController : MonoBehaviour
         ApplyCannonVisual();
 
         OnCannonChanged?.Invoke(equippedCannon);
+        PlayerInfo.Instance.SetEquippedCannonId(equippedCannon.CannonType);
     }
     public void EquipGear(AirshipGearType gearType)
     {
@@ -151,6 +152,7 @@ public class AirshipEquipmentController : MonoBehaviour
         ApplyGearVisual();
 
         OnGearChanged?.Invoke(equippedGear);
+        PlayerInfo.Instance.SetEquippedGearId(equippedGear.GearType);
     }
     private void UnequipCannon()
     {

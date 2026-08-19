@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class FreezeProjectile : NormalProjectile
 {
+    [SerializeField] private float stunDuration = 2f;
     [Header("Splash")]
     [SerializeField]
     private float splashRadius = 1.5f;
@@ -20,17 +21,17 @@ public class FreezeProjectile : NormalProjectile
     {
         base.OnHit();
 
-        ApplyFreezeStatus(target);
+        ApplyFreezeStatus(damageable);
         ApplySplashDamage(transform.position);
         SpawnImpactVfx(transform.position);
     }
 
-    private void ApplyFreezeStatus(Transform hitTarget)
+    private void ApplyFreezeStatus(IDamageable targetDamageable)
     {
-        if (hitTarget == null)
+        if (targetDamageable == null)
             return;
 
-        // TODO: 적 상태이상 시스템 구현 후 빙결 버프 적용
+        targetDamageable.Stun(stunDuration);
     }
 
     private void ApplySplashDamage(Vector2 center)
@@ -62,6 +63,7 @@ public class FreezeProjectile : NormalProjectile
                     damageInfo.Damage * splashDamageMultiplier,
                     damageInfo.IsCritical)
             );
+            ApplyFreezeStatus(targetDamageable);
         }
     }
 
@@ -94,6 +96,7 @@ public class FreezeProjectile : NormalProjectile
         DrawSplashGizmo();
     }
 
+    // 스플래시 vfx 크기 설정하기 위한 용도
     private void DrawSplashGizmo()
     {
         Gizmos.color = Color.cyan;

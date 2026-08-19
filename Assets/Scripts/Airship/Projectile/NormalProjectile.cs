@@ -24,15 +24,17 @@ public class NormalProjectile : AirshipProjectileBase
         // );
         // Vector2 direction =
         //     (Vector2)target.position - (Vector2)transform.position;
+        Vector3 targetPosition =
+            target.position + Vector3.up * targetHeightOffset;
+
         transform.position = Vector3.MoveTowards(
             transform.position,
-            target.position + Vector3.up * 0.5f,
+            targetPosition,
             moveSpeed * Time.deltaTime
         );
 
         Vector2 direction =
-            (Vector2)(target.position + Vector3.up * 0.5f) -
-            (Vector2)transform.position;
+            (Vector2)targetPosition - (Vector2)transform.position;
 
         if (direction.sqrMagnitude > 0f)
         {
@@ -40,7 +42,7 @@ public class NormalProjectile : AirshipProjectileBase
         }
         
         combinedRadius = projectileRadius + targetRadius;
-        offset = (Vector2)transform.position - (Vector2)target.position;
+        offset = (Vector2)transform.position - (Vector2)targetPosition;
 
         if (offset.sqrMagnitude > combinedRadius * combinedRadius)
             return;

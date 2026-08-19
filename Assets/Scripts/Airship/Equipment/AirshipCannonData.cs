@@ -4,6 +4,7 @@ public enum AirshipCannonType
 {
     Normal,
     Freeze,
+    Rapid,
 }
 
 [CreateAssetMenu(
