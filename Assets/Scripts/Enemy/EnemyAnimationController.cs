@@ -144,6 +144,11 @@ public class EnemyAnimationController : MonoBehaviour
         {
             return;
         }
+        // 보스는 피격 모션을 재생하지 않는다.
+        if (damagedEnemy.IsBoss)
+        {
+            return;
+        }
 
         enemyAnimator.SetTrigger(
             DamagedParameter
