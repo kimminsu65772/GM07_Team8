@@ -43,10 +43,10 @@ public class BattleEventHandler : MonoBehaviour
     {
         // 매번 PlayerInfo.Instance를 호출하지 않도록 미리 변수에 할당
         PlayerInfo playerInfo = PlayerInfo.Instance;
-        bool isAlreadyCleard = clearedStageNumber <= playerInfo.MaxClearedStage;
+        bool isAlreadyCleared = clearedStageNumber <= playerInfo.MaxClearedStage;
 
         //  첫 클리어시 보상 지급
-        if (!isAlreadyCleard)
+        if (!isAlreadyCleared)
         {
             int rewardAmount = 100 * clearedStageNumber;
             RewardBundle rewardBundle = StageRewardCalculator.CalculateFirstClearReward(clearedStageNumber);
@@ -65,7 +65,7 @@ public class BattleEventHandler : MonoBehaviour
         {
             nextStageNumber = stageManager.LastStage;
         }
-        else if (isAlreadyCleard)
+        else if (isAlreadyCleared && playerInfo.RepeatClearedStage)
         {
             nextStageNumber = clearedStageNumber;
         }

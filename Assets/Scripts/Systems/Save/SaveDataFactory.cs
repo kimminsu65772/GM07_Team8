@@ -41,7 +41,8 @@ public class SaveDataFactory
             StageProgress = new StageProgressSaveData
             {
                 CurrentStage = 1,
-                MaxClearedStage = 0
+                MaxClearedStage = 0,
+                RepeatClearedStage = false
             },
             Wallet = new WalletSaveData
             {
@@ -85,5 +86,5 @@ public class SaveDataFactory
 // 나중에 데이터 구조가 변경되었을 때 버전 관리 및 비교 후 보정 작업을 위해 현재 세이브 데이터의 버전을 상수로 정의한다.
 public static class SaveDataVersion
 {
-    public const int CurrentVersion = 1;
+    public const int CurrentVersion = 2;
 }

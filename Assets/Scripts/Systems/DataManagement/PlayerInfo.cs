@@ -85,6 +85,8 @@ public class PlayerInfo : MonoBehaviour
             saveDataWriter.ForceSave(SaveData);
         }
 
+        bool isMigratedSaveData = MigrateSaveDataIfNeeded();
+
         Debug.Log(saveDataPath);
 
         SaveScheduler.Instance.Initialize(SaveData, saveDataWriter);
@@ -105,7 +107,7 @@ public class PlayerInfo : MonoBehaviour
             }
         }
 
-        if (isAddedNewHero)
+        if (isAddedNewHero || isMigratedSaveData)
         {
             saveDataWriter.ForceSave(SaveData);
         }
@@ -121,6 +123,7 @@ public class PlayerInfo : MonoBehaviour
 
     public int CurrentStage => SaveData.StageProgress.CurrentStage;
     public int MaxClearedStage => SaveData.StageProgress.MaxClearedStage;
+    public bool RepeatClearedStage => SaveData.StageProgress.RepeatClearedStage;
     public Dictionary<string, HeroSaveData> Heroes => SaveData.Heroes;
 
     public IReadOnlyList<HeroEntry> HeroEntries => heroCatalog.InGameHeroEntries;
@@ -232,6 +235,16 @@ public class PlayerInfo : MonoBehaviour
         return true;
     }
 
+    public bool SetRepeatClearedStage(bool repeatClearedStage, SavePolicy savePolicy = SavePolicy.Soon)
+    {
+        if (!CheckInitialized()) return false;
+        if (StageProgress.RepeatClearedStage == repeatClearedStage) return true;
+
+        StageProgress.RepeatClearedStage = repeatClearedStage;
+        RequestSave(savePolicy);
+        return true;
+    }
+
     /// <summary>
     /// upgradeState를 받아서 AirshipSaveData에 반영하는 메서드
     /// </summary>
@@ -333,5 +346,18 @@ public class PlayerInfo : MonoBehaviour
         }
 
         SaveScheduler.Instance.RequestSave(savePolicy);
+    }
+
+    private bool MigrateSaveDataIfNeeded()
+    {
+        if (SaveData.SaveVersion >= SaveDataVersion.CurrentVersion) return false;
+
+        if (SaveData.SaveVersion < 2)
+        {
+            SaveData.StageProgress.RepeatClearedStage = true;
+        }
+
+        SaveData.SaveVersion = SaveDataVersion.CurrentVersion;
+        return true;
     }
 }
