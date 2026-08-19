@@ -120,7 +120,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         isDead = false;
         this.location = location;
 
-        heroState = HeroStateEnum.Idle;
+        heroState = HeroStateEnum.Move;
         heroEquip = GetComponent<HeroEquipmentManager>();
         attack = GetComponent<HeroAttack>();
     }
@@ -131,7 +131,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         heroCurrentHP = heroMaxHP;
         IsStunned = false;
         isDead = false;
-        heroState = HeroStateEnum.Idle;
+        heroState = HeroStateEnum.Move;
         targetEnemy = null;
         attack.ClearCoolTime();
     }
@@ -142,7 +142,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         if (targetEnemy != null && location == HeroLocationEnum.Front) MoveToEnemy();
         if (targetEnemy != null && location == HeroLocationEnum.Back)
         {
-            if (skillTime <= attack.SkillTimer) attack.UseSkill(targetEnemy);
+            if (attack.IsAutoSkill && skillTime <= attack.SkillTimer) attack.UseSkill(targetEnemy);
             else attack.RangeAttack();
         }
 
@@ -200,7 +200,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
     private void MoveToEnemy()
     {
-        if (location == HeroLocationEnum.Back || targetEnemy == null || IsDead || IsStunned)
+        if (attack.IsAutoSkill && location == HeroLocationEnum.Back || targetEnemy == null || IsDead || IsStunned)
         {
             isMoving = false;
             return;
@@ -262,7 +262,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         else if (attack.IsSkilling) heroState = HeroStateEnum.Skill;
         else if (isMoving) heroState = HeroStateEnum.Move;
         else if (attack.IsAttacking) heroState = HeroStateEnum.Attack;
-        else if (targetEnemy != null) heroState = HeroStateEnum.Idle;
+        else if (targetEnemy != null || location == HeroLocationEnum.Back) heroState = HeroStateEnum.Idle;
         else heroState = HeroStateEnum.Move;
     }
 
