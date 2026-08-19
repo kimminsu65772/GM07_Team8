@@ -8,7 +8,7 @@ public class Cha2 : Hero
         SetAttackEffectPreset(0f, 0.05f, 1.3f, 1.3f);
         SetSkillEffectPreset(0f, 0.05f, 1.5f, 1.7f);
         SetTargetEffectPreset(0f, 0.1f, 1.5f, 1.5f);
-        Init(-2, 1f, 6f, HeroLocationEnum.Back);
+        Init(2, 1f, 6f, HeroLocationEnum.Back);
 
         EditSkillText(
             "암석 찌르기",

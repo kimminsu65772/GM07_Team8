@@ -12,7 +12,8 @@ public enum HeroStateEnum
 
 public enum HeroNameEnum
 {
-    Warrior = -1,
-    Mage = -2,
-    Sorcery = -3
+    None = 0,
+    Warrior,
+    Mage,
+    Sorcery
 }
