@@ -322,6 +322,6 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
     public void Stun()
     {
-
+        IsStunned = true;
     }
 }
