@@ -12,6 +12,7 @@ public class AirshipAttack : MonoBehaviour
 
     [Header("조준")]
     [SerializeField, Min(0f)] private float aimLerpSpeed = 25f;
+    [SerializeField] private float targetHeightOffset = 0.5f;
 
     [Header("타겟 갱신")]
     [SerializeField, Min(0.01f)] private float targetRefreshInterval = 0.1f;
@@ -169,7 +170,8 @@ public class AirshipAttack : MonoBehaviour
             cachedDamageable,
             new DamageInfo(
                 finalDamage,
-                isCritical)
+                isCritical),
+            targetHeightOffset
         );
     }
 
@@ -182,8 +184,7 @@ public class AirshipAttack : MonoBehaviour
         //     (Vector2)target.position -
         //     (Vector2)aimPoint.position;
         Vector2 direction =
-            (Vector2)(target.position + Vector3.up * 0.5f) -
-            (Vector2)aimPoint.position;
+            (Vector2)(target.position + Vector3.up * targetHeightOffset) - (Vector2)aimPoint.position;
 
         if (direction.sqrMagnitude <= 0f)
             return;
