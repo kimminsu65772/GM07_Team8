@@ -85,15 +85,7 @@ public class EnemyMovement : MonoBehaviour
         if (horizontalDistanceToTarget <=
             enemyStats.AttackRange)
         {
-            float limitPositionX =
-                targetPosition.x +
-                enemyStats.AttackRange;
-
-            enemyRigidbody2D.position =
-                new Vector2(
-                    limitPositionX,
-                    moveLineY
-                );
+            
 
             StopMoving();
             return;

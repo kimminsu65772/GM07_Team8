@@ -50,6 +50,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamagePopup
   damageText: {fileID: 4520985963297663447}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  criticalColor: {r: 1, g: 0, b: 0, a: 1}
   moveSpeed: 1
   disappearTimer: 0.8
 --- !u!1 &4764216159591920201
