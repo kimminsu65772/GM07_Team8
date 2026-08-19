@@ -216,7 +216,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
     private void MoveToEnemy()
     {
-        if (attack.IsAutoSkill && location == HeroLocationEnum.Back || targetEnemy == null || IsDead || IsStunned)
+        if (location == HeroLocationEnum.Back || targetEnemy == null || IsDead || IsStunned)
         {
             isMoving = false;
             return;
@@ -231,7 +231,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         {
             isMoving = false;
 
-            if (skillTime <= attack.SkillTimer) attack.UseSkill(targetEnemy);
+            if (attack.IsAutoSkill && skillTime <= attack.SkillTimer) attack.UseSkill(targetEnemy);
             else attack.MeleeAttack(targetEnemy);
         }
         else
