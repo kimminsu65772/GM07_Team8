@@ -186,10 +186,9 @@ public class BattleManager : MonoBehaviour
                 spawnedHero.transform.SetParent(startPoint, false);
             }
             spawnedHero.transform.SetPositionAndRotation(startPoint.position, startPoint.rotation);
-            spawnedHero.SetActive(true);
-            spawnedHero.GetComponent<Hero>().Initialize();
-
             Hero hero = spawnedHero.GetComponent<Hero>();
+            spawnedHero.SetActive(true);
+            hero.Initialize(startPoint, airship.Movement);
 
             spawnedHeroes.Add(spawnedHero);
         }
