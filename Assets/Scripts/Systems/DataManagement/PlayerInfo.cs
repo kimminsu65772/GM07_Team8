@@ -38,7 +38,7 @@ public class PlayerInfo : MonoBehaviour
     public event Action<CurrencyType> OnCurrencyChanged;
 
     // UI에서 캐싱한 Hero 목록 상태를 갱신할 수 있도록 Hero 소유 여부 변경 시 이벤트 발생
-    public event Action<string, bool> OnHeroOwnedChanged;
+    public event Action<HeroNameEnum, bool> OnHeroOwnedChanged;
 
     private SaveDataWriter saveDataWriter;
 
@@ -95,9 +95,9 @@ public class PlayerInfo : MonoBehaviour
 
         foreach (HeroEntry entry in heroCatalog.InGameHeroEntries)
         {
-            if (!SaveData.Heroes.ContainsKey(entry.HeroName))
+            if (!SaveData.Heroes.ContainsKey(entry.HeroId))
             {
-                SaveData.Heroes[entry.HeroName] = new HeroSaveData
+                SaveData.Heroes[entry.HeroId] = new HeroSaveData
                 {
                     IsOwned = entry.IsDefaultOwned,
                     Level = entry.DefaultLevel
@@ -124,7 +124,7 @@ public class PlayerInfo : MonoBehaviour
     public int CurrentStage => SaveData.StageProgress.CurrentStage;
     public int MaxClearedStage => SaveData.StageProgress.MaxClearedStage;
     public bool RepeatClearedStage => SaveData.StageProgress.RepeatClearedStage;
-    public Dictionary<string, HeroSaveData> Heroes => SaveData.Heroes;
+    public Dictionary<HeroNameEnum, HeroSaveData> Heroes => SaveData.Heroes;
 
     public IReadOnlyList<HeroEntry> HeroEntries => heroCatalog.InGameHeroEntries;
     public HeroFormationSaveData HeroFormation => SaveData.HeroFormation;
@@ -288,37 +288,37 @@ public class PlayerInfo : MonoBehaviour
         RequestSave(savePolicy);
     }
 
-    public bool TryGetHeroData(string heroName, out HeroSaveData heroData)
+    public bool TryGetHeroData(HeroNameEnum heroId, out HeroSaveData heroData)
     {
         heroData = null;
 
         if (!CheckInitialized()) return false;
-        if (string.IsNullOrWhiteSpace(heroName)) return false;
+        if (heroId == HeroNameEnum.None) return false;
         if (Heroes == null) return false;
 
-        return Heroes.TryGetValue(heroName, out heroData);
+        return Heroes.TryGetValue(heroId, out heroData);
     }
 
-    public bool IsHeroOwned(string heroName)
+    public bool IsHeroOwned(HeroNameEnum heroId)
     {
-        return TryGetHeroData(heroName, out HeroSaveData heroData)
+        return TryGetHeroData(heroId, out HeroSaveData heroData)
             && heroData.IsOwned;
     }
 
-    public bool SetHeroOwned(string heroName, bool isOwned, SavePolicy savePolicy = SavePolicy.Soon)
+    public bool SetHeroOwned(HeroNameEnum heroId, bool isOwned, SavePolicy savePolicy = SavePolicy.Soon)
     {
-        if (!TryGetHeroData(heroName, out HeroSaveData heroData)) return false;
+        if (!TryGetHeroData(heroId, out HeroSaveData heroData)) return false;
         if (heroData.IsOwned == isOwned) return true;
 
         heroData.IsOwned = isOwned;
-        OnHeroOwnedChanged?.Invoke(heroName, isOwned);
+        OnHeroOwnedChanged?.Invoke(heroId, isOwned);
         RequestSave(savePolicy);
         return true;
     }
 
-    public bool SetHeroLevel(string heroName, int level, SavePolicy savePolicy = SavePolicy.Soon)
+    public bool SetHeroLevel(HeroNameEnum heroId, int level, SavePolicy savePolicy = SavePolicy.Soon)
     {
-        if (!TryGetHeroData(heroName, out HeroSaveData heroData)) return false;
+        if (!TryGetHeroData(heroId, out HeroSaveData heroData)) return false;
         if (level < 1) return false;
         if (heroData.Level == level) return true;
 

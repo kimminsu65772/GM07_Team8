@@ -28,14 +28,14 @@ public class HeroInventoryUI : MonoBehaviour
         }
         if (PlayerInfo.Instance == null || heroCatalog == null) return;
 
-        Dictionary<string, HeroSaveData> savedHeroes = PlayerInfo.Instance.Heroes;
+        Dictionary<HeroNameEnum, HeroSaveData> savedHeroes = PlayerInfo.Instance.Heroes;
 
         foreach (var pair in savedHeroes)
         {
-            string heroName = pair.Key;
+            HeroNameEnum heroId = pair.Key;
             HeroSaveData heroData = pair.Value;
 
-            if (heroCatalog.TryGetHeroEntry(heroName, out HeroEntry entry))
+            if (heroCatalog.TryGetHeroEntry(heroId, out HeroEntry entry))
             {
                 GameObject slotObj = Instantiate(heroSlotPrefab, contentGrid);
                 HeroSlotUI slotUI = slotObj.GetComponent<HeroSlotUI>();

@@ -173,7 +173,7 @@ public class HeroInventoryUIController : MonoBehaviour
                 continue;
             }
 
-            if (playerInfo.TryGetHeroData(entry.HeroName, out HeroSaveData heroSaveData))
+            if (playerInfo.TryGetHeroData(entry.HeroId, out HeroSaveData heroSaveData))
             {
                 Heroes.Add((entry, heroSaveData));
             }
