@@ -204,11 +204,4 @@ public class HeroAttack : MonoBehaviour
         attackTimer = 0f;
         skillTimer = 0f;
     }
-
-    private void OnDrawGizmos()
-    {
-        if (hero.HeroID != -3) return;
-        Gizmos.color = Color.darkBlue;
-        Gizmos.DrawWireCube(hero.TargetEnemy.transform.position, new Vector3(5f, 5f, 0f));
-    }
 }
