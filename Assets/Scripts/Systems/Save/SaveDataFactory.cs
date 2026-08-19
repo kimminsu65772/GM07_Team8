@@ -24,7 +24,7 @@ public class SaveDataFactory
                 MaxHealthLevel = 1,
                 CriticalLevel = 1,
                 EquippedCannonType = AirshipCannonType.Normal,
-                EquippedGearType = AirshipGearType.MaxHealth,
+                EquippedGearType = AirshipGearType.Normal,
             },
             Heroes = CreateInitialHeroSaveData(heroCatalog),
             HeroFormation = new HeroFormationSaveData
