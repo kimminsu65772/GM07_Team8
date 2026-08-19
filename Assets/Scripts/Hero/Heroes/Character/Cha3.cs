@@ -8,7 +8,7 @@ public class Cha3 : Hero
         SetAttackEffectPreset(0f, 0.5f, 1.5f, 1.5f);
         SetSkillEffectPreset(0f, 0.5f, 1.5f, 1.7f);
         SetTargetEffectPreset(0f, 1.4f, 7f, 7f);
-        Init(-3, 1f, 5f, HeroLocationEnum.Back);
+        Init(3, 1f, 5f, HeroLocationEnum.Back);
 
         EditSkillText(
             "물보라",

@@ -7,7 +7,7 @@ public class Cha1 : Hero
         statTable = new Hero1StatTable();
         SetAttackEffectPreset(0.6f, 0.5f, 1.4f, 1.7f);
         SetSkillEffectPreset(0.6f, 0.5f, -1.5f, 1.7f);
-        Init(-1, 2f, 5f, HeroLocationEnum.Front);
+        Init(1, 2f, 5f, HeroLocationEnum.Front);
 
         EditSkillText(
             "강타",
