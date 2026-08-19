@@ -320,7 +320,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
     public string GetSkillName() { return skillName; }
     public string GetSkillInfo() { return skillInfo; }
 
-    public void Stun()
+    public void Stun(float duration)
     {
         IsStunned = true;
     }
