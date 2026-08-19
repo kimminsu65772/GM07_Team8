@@ -12,6 +12,8 @@ public class HeroAttack : MonoBehaviour
     private float attackTimer;
     private float skillTimer;
 
+    private bool isAutoSkill = true;
+    
     [Header("원거리 공격 시")]
     [SerializeField] private GameObject projectile;
     [SerializeField] private Transform firePoint;
@@ -21,6 +23,7 @@ public class HeroAttack : MonoBehaviour
     public bool IsSkilling => isSkilling;
     public bool CanAttack => canAttack;
     public float SkillTimer => skillTimer;
+    public bool IsAutoSkill => isAutoSkill;
 
     private void Awake()
     {
@@ -203,5 +206,10 @@ public class HeroAttack : MonoBehaviour
     {
         attackTimer = 0f;
         skillTimer = 0f;
+    }
+
+    public void SetAutoSkill(bool value)
+    {
+        isAutoSkill = value;
     }
 }
