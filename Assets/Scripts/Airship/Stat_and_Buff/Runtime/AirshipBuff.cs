@@ -52,4 +52,8 @@ public class AirshipBuff
 
         RemainingTime -= deltaTime;
     }
+    public void RefreshDuration()
+    {
+        RemainingTime = Duration;
+    }
 }
