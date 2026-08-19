@@ -85,6 +85,8 @@ public class StageProgressSaveData
     public int CurrentStage { get; set; }
     // 플레이어가 클리어한 최대 스테이지를 저장하는 데이터로 오프라인 보상 계산의 기준이 됨.
     public int MaxClearedStage { get; set; }
+    // 스테이지 반복 설정 저장
+    public bool RepeatClearedStage { get; set; }
 }
 
 [Serializable]

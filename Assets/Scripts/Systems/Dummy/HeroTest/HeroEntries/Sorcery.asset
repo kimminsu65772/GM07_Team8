@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15951fa409c979b4ead191d1d9e3ed31, type: 3}
-  m_Name: Hero1
+  m_Name: Sorcery
   m_EditorClassIdentifier: Assembly-CSharp::HeroEntry
-  heroName: Hero1
-  heroIcon: {fileID: 21300000, guid: f748369105617a14bafedad021f8ccd1, type: 3}
-  heroPrefab: {fileID: 2057144907884187506, guid: 7df9a69e1db650b45ae77885dd47f203, type: 3}
-  heroLocation: 0
-  isDefaultOwned: 1
+  heroName: Sorcery
+  heroIcon: {fileID: 21300000, guid: 95a49f927de7a4732ab70827aedd4332, type: 3}
+  heroPrefab: {fileID: 7245292273247505057, guid: 5a5118adc21b5d84980691c9b1f16ea5, type: 3}
+  heroLocation: 1
+  isDefaultOwned: 0
   defaultLevel: 1

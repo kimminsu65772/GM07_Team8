@@ -24,7 +24,10 @@ public abstract class Hero : MonoBehaviour, IDamageable
     [SerializeField] private Transform heroRoot;
     [SerializeField] private float moveSpeed = 8f;
     [SerializeField] private LayerMask enemyLayer;
+    private const float PlacementFollowSpeedMultiplier = 1.2f;
     private GameObject targetEnemy;
+    private Transform placementPoint;
+    private AirshipMovement airshipMovement;
     private bool isMoving;
     
     private float searchRange = 50f;
@@ -125,8 +128,20 @@ public abstract class Hero : MonoBehaviour, IDamageable
         attack = GetComponent<HeroAttack>();
     }
 
-    public void Initialize()
+    public void Initialize(
+        Transform newPlacementPoint = null,
+        AirshipMovement newAirshipMovement = null)
     {
+        if (newPlacementPoint != null)
+        {
+            placementPoint = newPlacementPoint;
+        }
+
+        if (newAirshipMovement != null)
+        {
+            airshipMovement = newAirshipMovement;
+        }
+
         HeroLvManager.Instance.LvApply(HeroLv, this);
         heroCurrentHP = heroMaxHP;
         IsStunned = false;
@@ -139,6 +154,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
     public void Update()
     {
         if (targetEnemy == null) SearchEnemy();
+        if (targetEnemy == null && location == HeroLocationEnum.Front) MoveToPlacementPoint();
         if (targetEnemy != null && location == HeroLocationEnum.Front) MoveToEnemy();
         if (targetEnemy != null && location == HeroLocationEnum.Back)
         {
@@ -230,6 +246,38 @@ public abstract class Hero : MonoBehaviour, IDamageable
         }
     }
 
+    private void MoveToPlacementPoint()
+    {
+        if (placementPoint == null || airshipMovement == null || IsDead || IsStunned)
+        {
+            isMoving = false;
+            return;
+        }
+
+        Vector3 targetPosition = placementPoint.position;
+
+        if (targetPosition.x < transform.position.x)
+        {
+            isMoving = false;
+            return;
+        }
+
+        float sqrDistance = (targetPosition - transform.position).sqrMagnitude;
+        if (sqrDistance <= 0.0001f)
+        {
+            isMoving = false;
+            return;
+        }
+
+        isMoving = true;
+        float followSpeed = airshipMovement.CurrentMoveSpeed * PlacementFollowSpeedMultiplier;
+
+        transform.position = Vector3.MoveTowards(
+            transform.position,
+            targetPosition,
+            followSpeed * Time.deltaTime);
+    }
+
     public void FlipSprite(Vector2 direction)
     {
         if (Mathf.Abs(direction.x) < 0.01f || IsDead) return;
@@ -260,10 +308,9 @@ public abstract class Hero : MonoBehaviour, IDamageable
         if (isDead) heroState = HeroStateEnum.Die;
         else if (IsStunned) heroState = HeroStateEnum.Stunned;
         else if (attack.IsSkilling) heroState = HeroStateEnum.Skill;
-        else if (isMoving) heroState = HeroStateEnum.Move;
         else if (attack.IsAttacking) heroState = HeroStateEnum.Attack;
-        else if (targetEnemy != null) heroState = HeroStateEnum.Idle;
-        else heroState = HeroStateEnum.Move;
+        else if (isMoving) heroState = HeroStateEnum.Move;
+        else heroState = HeroStateEnum.Idle;
     }
 
     public void AttackStop()

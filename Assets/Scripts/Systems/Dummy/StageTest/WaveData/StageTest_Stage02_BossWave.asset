@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: StageTest_Stage02_BossWave
   m_EditorClassIdentifier: Assembly-CSharp::WaveData
   enemySpawns:
-  - enemyPrefab: {fileID: 7931180812232907860, guid: 9cd69cc29160c9e46ad082a4534600a4, type: 3}
-    spawnCount: 2
+  - enemyPrefab: {fileID: 7931180812232907860, guid: 98d06ce4626d5e0478e5bee9ec7db8ed, type: 3}
+    spawnCount: 1
     spawnInterval: 0.5
   nextWaveDelay: 0
   isBossWave: 1
