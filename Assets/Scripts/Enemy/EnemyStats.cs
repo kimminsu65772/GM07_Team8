@@ -80,6 +80,8 @@ public class EnemyStats : MonoBehaviour, IDamageable
         currentHealth = Mathf.Max(
             currentHealth - finalDamage,
             0);
+        //데미지 팝업
+        DamageManager.Instance.ShowDamage(damageInfo,transform.position);
 
         EnemyDamaged?.Invoke(this);
         Debug.Log(

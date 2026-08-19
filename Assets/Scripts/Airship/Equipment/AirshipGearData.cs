@@ -4,6 +4,7 @@ public enum AirshipGearType
 {
     MaxHealth,
     MoveSpeed,
+    Shield,
 }
 
 

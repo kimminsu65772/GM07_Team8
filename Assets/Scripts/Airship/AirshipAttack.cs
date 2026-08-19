@@ -19,6 +19,7 @@ public class AirshipAttack : MonoBehaviour
     private AirshipCannonData currentCannon;
 
     private float attackDamage;
+    private float criticalChance;
     private float attackInterval = 1f;
     private float attackTimer;
     private float targetRefreshTimer;
@@ -94,6 +95,7 @@ public class AirshipAttack : MonoBehaviour
             return;
 
         attackDamage = stats.Attack;
+        criticalChance = stats.CriticalChance;
 
         attackInterval =
             stats.AttackSpeed <= 0f
@@ -153,12 +155,19 @@ public class AirshipAttack : MonoBehaviour
             aimPoint.rotation
         );
 
+        bool isCritical =
+            criticalChance >= 1f ||
+            (criticalChance > 0f &&
+             Random.value < criticalChance);
+        float finalDamage =
+            attackDamage * (isCritical ? 2f : 1f);
+        
         projectile.Init(
             target,
             cachedDamageable,
             new DamageInfo(
-                attackDamage,
-                false)
+                finalDamage,
+                isCritical)
         );
     }
 
@@ -167,8 +176,11 @@ public class AirshipAttack : MonoBehaviour
         if (aimPoint == null || target == null)
             return;
 
+        // Vector2 direction =
+        //     (Vector2)target.position -
+        //     (Vector2)aimPoint.position;
         Vector2 direction =
-            (Vector2)target.position -
+            (Vector2)(target.position + Vector3.up * 0.5f) -
             (Vector2)aimPoint.position;
 
         if (direction.sqrMagnitude <= 0f)

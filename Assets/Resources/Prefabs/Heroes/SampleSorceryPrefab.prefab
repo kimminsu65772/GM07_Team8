@@ -101,8 +101,8 @@ Transform:
   m_GameObject: {fileID: 1430610737348641485}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.919577, y: 3.2000213, z: 0.17299469}
-  m_LocalScale: {x: 1.5000002, y: 1.5, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 51710713912452836}
@@ -123,15 +123,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EffectPlayer
   selfEffect: {fileID: 972622691645010162}
   targetEffect: {fileID: 3556322576635746208}
-  attackFrames: []
-  skillFrames:
+  attackFrames:
   - {fileID: 259538753, guid: 7a274fc95e7084b4b96382ee7a7a920d, type: 3}
   - {fileID: 539053932, guid: 7a274fc95e7084b4b96382ee7a7a920d, type: 3}
   - {fileID: -1883572016, guid: 7a274fc95e7084b4b96382ee7a7a920d, type: 3}
   - {fileID: 698808654, guid: 7a274fc95e7084b4b96382ee7a7a920d, type: 3}
   - {fileID: 1366909064, guid: 7a274fc95e7084b4b96382ee7a7a920d, type: 3}
   - {fileID: -1421726030, guid: 7a274fc95e7084b4b96382ee7a7a920d, type: 3}
-  targetFrames: []
+  skillFrames:
+  - {fileID: -1358962526, guid: 0672e8ecb7e158546a4585d00193e3ad, type: 3}
+  - {fileID: -1082707318, guid: 0672e8ecb7e158546a4585d00193e3ad, type: 3}
+  - {fileID: -797661438, guid: 0672e8ecb7e158546a4585d00193e3ad, type: 3}
+  - {fileID: -1871263807, guid: 0672e8ecb7e158546a4585d00193e3ad, type: 3}
+  - {fileID: 1722893653, guid: 0672e8ecb7e158546a4585d00193e3ad, type: 3}
+  - {fileID: -813721524, guid: 0672e8ecb7e158546a4585d00193e3ad, type: 3}
+  targetFrames:
+  - {fileID: 259538753, guid: 7a274fc95e7084b4b96382ee7a7a920d, type: 3}
+  - {fileID: 539053932, guid: 7a274fc95e7084b4b96382ee7a7a920d, type: 3}
+  - {fileID: -1883572016, guid: 7a274fc95e7084b4b96382ee7a7a920d, type: 3}
+  - {fileID: 698808654, guid: 7a274fc95e7084b4b96382ee7a7a920d, type: 3}
+  - {fileID: 1366909064, guid: 7a274fc95e7084b4b96382ee7a7a920d, type: 3}
+  - {fileID: -1421726030, guid: 7a274fc95e7084b4b96382ee7a7a920d, type: 3}
   frameTime: 0.05
 --- !u!1 &1628858406844692461
 GameObject:
@@ -608,9 +620,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa5d943753c30324d9013f837235a323, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cha3
-  heroID: -3
-  heroName: Sorcery
-  heroLv: 1
+  heroID: 0
+  heroName: 0
+  heroLv: 0
   heroMaxHP: 0
   heroCurrentHP: 0
   heroAtk: 0
@@ -968,6 +980,26 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5162828477151334311, guid: 7c1e3d19ef4acb8489bffc0b1a3e362e, type: 3}
+      propertyPath: 'ATTACK_List.Array.data[1]'
+      value: 
+      objectReference: {fileID: 7400000, guid: 9a26543e06de846d08fbe01dbfcd13e2, type: 2}
+    - target: {fileID: 5162828477151334311, guid: 7c1e3d19ef4acb8489bffc0b1a3e362e, type: 3}
+      propertyPath: 'ATTACK_List.Array.data[2]'
+      value: 
+      objectReference: {fileID: 7400000, guid: b2c5fb441f4ac42c2a2e051601eea60a, type: 2}
+    - target: {fileID: 5162828477151334311, guid: 7c1e3d19ef4acb8489bffc0b1a3e362e, type: 3}
+      propertyPath: 'ATTACK_List.Array.data[3]'
+      value: 
+      objectReference: {fileID: 7400000, guid: ccc66609eaae7425f967209ab0b3935f, type: 2}
+    - target: {fileID: 5162828477151334311, guid: 7c1e3d19ef4acb8489bffc0b1a3e362e, type: 3}
+      propertyPath: 'ATTACK_List.Array.data[4]'
+      value: 
+      objectReference: {fileID: 7400000, guid: 473ddbc57c00b45f1a93b0b519bea522, type: 2}
+    - target: {fileID: 5162828477151334311, guid: 7c1e3d19ef4acb8489bffc0b1a3e362e, type: 3}
+      propertyPath: 'ATTACK_List.Array.data[5]'
+      value: 
+      objectReference: {fileID: 7400000, guid: 6fb0d327821de4ca19ea0fcf940b27ee, type: 2}
     - target: {fileID: 5203820339371940805, guid: 7c1e3d19ef4acb8489bffc0b1a3e362e, type: 3}
       propertyPath: m_Name
       value: SPUM_20260818111710457

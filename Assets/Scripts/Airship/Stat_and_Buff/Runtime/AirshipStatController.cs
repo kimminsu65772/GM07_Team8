@@ -29,10 +29,26 @@ public class AirshipStatController : MonoBehaviour
         TickBuffs();
     }
 
+    // 중복 버프 방지
     public void AddBuff(AirshipBuff buff)
     {
         if (buff == null)
         {
+            return;
+        }
+
+        for (int i = 0; i < activeBuffs.Count; i++)
+        {
+            AirshipBuff activeBuff = activeBuffs[i];
+
+            if (!ReferenceEquals(activeBuff.Owner, buff.Owner) ||
+                activeBuff.BuffName != buff.BuffName)
+            {
+                continue;
+            }
+
+            activeBuff.RefreshDuration();
+            Recalculate();
             return;
         }
 
