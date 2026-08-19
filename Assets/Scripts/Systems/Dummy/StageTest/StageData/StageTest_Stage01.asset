@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StageData
   stageNumber: 1
   waves:
+  - {fileID: 11400000, guid: 388ed8812e0b44d89367935626b07d75, type: 2}
   - {fileID: 11400000, guid: c841c7e615104090a5bede8a26ef6d54, type: 2}
   - {fileID: 11400000, guid: 9f10dff9901a4b599136128794830113, type: 2}
