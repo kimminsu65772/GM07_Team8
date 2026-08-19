@@ -65,6 +65,8 @@ public class AirshipAttack : MonoBehaviour
     {
         if (health != null && health.IsDestroyed)
             return;
+        if (health != null && health.IsStunned)
+            return;
 
         attackTimer -= Time.deltaTime;
         targetRefreshTimer -= Time.deltaTime;

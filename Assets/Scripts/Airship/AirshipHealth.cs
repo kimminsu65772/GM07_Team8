@@ -20,6 +20,10 @@ public class AirshipHealth : MonoBehaviour, IDamageable
     private float shieldRegenTimer;
     private bool isShieldRegenWaiting;
     private float shieldRegenDelay = 6f;
+    
+    private bool isStunned;
+    private float stunRemainingTime;
+    private float stunImmunityRemainingTime;
 
     public float HitRadius => hitRadius;
     public float MaxHealth => maxHealth;
@@ -27,6 +31,7 @@ public class AirshipHealth : MonoBehaviour, IDamageable
     public float Shield => shield;
     public bool IsDestroyed => isDestroyed;
     public bool IsShieldEnabled => shieldEnabled;
+    public bool IsStunned => isStunned;
 
     public event Action<float, float> OnHealthChanged;
     public event Action<DamageInfo> OnDamaged;
@@ -52,7 +57,34 @@ public class AirshipHealth : MonoBehaviour, IDamageable
     }
     private void Update()
     {
-        if (isDestroyed || !isShieldRegenWaiting)
+        if (isDestroyed)
+        {
+            return;
+        }
+
+        if (isStunned)
+        {
+            stunRemainingTime -= Time.deltaTime;
+
+            if (stunRemainingTime <= 0f)
+            {
+                isStunned = false;
+            }
+        }
+
+        if (stunImmunityRemainingTime > 0f)
+        {
+            stunImmunityRemainingTime -= Time.deltaTime;
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        if (!isShieldRegenWaiting)
             return;
 
         shieldRegenTimer -= Time.deltaTime;
@@ -155,10 +187,18 @@ public class AirshipHealth : MonoBehaviour, IDamageable
     public void ResetHealth()
     {
         isDestroyed = false;
+        
+        // 쉴드 초기화
         shieldRegenTimer = 0f;
         isShieldRegenWaiting = false;
         shield = shieldEnabled ? maxHealth : 0f;
+        
         currentHealth = maxHealth;
+        
+        // 스턴 초기화
+        isStunned = false;
+        stunRemainingTime = 0f;
+        stunImmunityRemainingTime = 0f;
 
         OnShieldChanged?.Invoke(shield);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
@@ -244,7 +284,16 @@ public class AirshipHealth : MonoBehaviour, IDamageable
 
     public void Stun(float duration)
     {
-        
+        if (isDestroyed ||
+            duration <= 0f ||
+            stunImmunityRemainingTime > 0f)
+        {
+            return;
+        }
+
+        isStunned = true;
+        stunRemainingTime = duration;
+        stunImmunityRemainingTime = duration * 3f;
     }
 
     private void DestroyAirship()
