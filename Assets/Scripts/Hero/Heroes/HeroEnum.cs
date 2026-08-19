@@ -10,9 +10,9 @@ public enum HeroStateEnum
     Idle, Move, Attack, Skill, Die
 }
 
-/*
-public enum HeroAttackTypeEnum
+public enum HeroNameEnum
 {
-    Physical, Magical
+    Warrior = -1,
+    Mage = -2,
+    Sorcery = -3
 }
-*/

@@ -5,9 +5,14 @@ public class Cha1 : Hero
     protected override void Awake()
     {
         statTable = new Hero1StatTable();
-        SetAttackEffectPreset(-0.6f, 0.5f, -1.4f, 1.7f);
-        SetSkillEffectPreset(-0.6f, 0.5f, 1.5f, 1.7f);
-        Init(-1, "Hero1", 2f, 5f, HeroLocationEnum.Front);
+        SetAttackEffectPreset(0.6f, 0.5f, 1.4f, 1.7f);
+        SetSkillEffectPreset(0.6f, 0.5f, -1.5f, 1.7f);
+        Init(-1, 2f, 5f, HeroLocationEnum.Front);
+
+        EditSkillText(
+            "강타",
+            "적을 세게 내리쳐 큰 피해를 입힙니다."
+            );
     }
 
     public override void Skill(GameObject enemy)
@@ -30,6 +35,6 @@ public class Cha1 : Hero
         {
             enemyHP.TakeDamage(new DamageInfo(damage, isCrit));
         }
-        Debug.Log(gameObject.name + "의 스킬, 피해량 : " + damage);
+        // Debug.Log(gameObject.name + "의 스킬, 피해량 : " + damage);
     }
 }

@@ -72,7 +72,7 @@ public class HeroAttack : MonoBehaviour
                 enemyHP.TakeDamage(new DamageInfo(damage, isCrit));
             }
 
-            Debug.Log(gameObject.name + "의 공격, 피해량 : " + damage);
+            // Debug.Log(gameObject.name + "의 근접 공격, 피해량 : " + damage);
         }
     }
 
@@ -105,7 +105,57 @@ public class HeroAttack : MonoBehaviour
 
             ThrowProjectile(hero.TargetEnemy.transform, new DamageInfo(damage, isCrit));
 
-            Debug.Log(gameObject.name + "의 공격, 피해량 : " + damage);
+            // Debug.Log(gameObject.name + "의 원거리 공격, 피해량 : " + damage);
+        }
+    }
+
+    // areaShape = 0(원), 1(사각형)
+    public void AreaAttack(int areaShape, Transform target, float range, float damageBonus)
+    {
+        Collider2D[] enemies = null;
+
+        switch(areaShape)
+        {
+            case 0:
+                enemies = Physics2D.OverlapCircleAll(target.transform.position, range, hero.EnemyLayer);
+                break;
+            case 1:
+                enemies = Physics2D.OverlapBoxAll(target.transform.position, new Vector2(range, range), 0f, hero.EnemyLayer);
+                break;
+            default:
+                Debug.Log("잘못된 areaShape 값");
+                break;
+        }
+
+        if (enemies == null)
+        {
+            Debug.Log("광역 공격 감지 실패");
+            return;
+        }
+        Debug.Log($"광역 공격 감지 적 수: {enemies.Length}");
+
+        Vector2 direction = target.position - transform.position;
+        hero.FlipSprite(direction);
+
+        vfx.PlayTargetEffect(target, hero.TargetPosPreset, hero.TargetScalePreset);
+
+        foreach (Collider2D coll in enemies)
+        {
+            if (coll.gameObject.TryGetComponent<IDamageable>(out IDamageable enemyHP))
+            {
+                float criRan = Random.Range(1f, 100f);
+                float damage = hero.HeroAtk * damageBonus;
+
+                bool isCrit = false;
+                if (criRan <= hero.HeroCriChance)
+                {
+                    damage *= 2f;
+                    isCrit = true;
+                }
+
+                enemyHP.TakeDamage(new DamageInfo(damage, isCrit));
+                Debug.Log($"{gameObject.name}의 광역 스킬, {coll.gameObject.name} 피해량 : {damage}");
+            }
         }
     }
 
@@ -117,8 +167,7 @@ public class HeroAttack : MonoBehaviour
             Quaternion.identity
         );
 
-        projec.GetComponent<HeroAttackProjectileController>()
-            .Init(enemy, damageInfo);
+        projec.GetComponent<HeroAttackProjectileController>().Init(enemy, damageInfo);
     }
 
     public void UseSkill(GameObject enemy)
@@ -154,5 +203,12 @@ public class HeroAttack : MonoBehaviour
     {
         attackTimer = 0f;
         skillTimer = 0f;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (hero.HeroID != -3) return;
+        Gizmos.color = Color.darkBlue;
+        Gizmos.DrawWireCube(hero.TargetEnemy.transform.position, new Vector3(5f, 5f, 0f));
     }
 }
