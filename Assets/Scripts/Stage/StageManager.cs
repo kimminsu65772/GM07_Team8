@@ -444,6 +444,13 @@ public class StageManager : MonoBehaviour
 
         remainingBossTime =
             waveData.TimeLimit;
+        if (bossTopHpUI != null)
+        {
+            bossTopHpUI.SetBossTime(
+                remainingBossTime,
+                waveData.TimeLimit
+            );
+        }
 
         while (true)
         {
@@ -458,7 +465,13 @@ public class StageManager : MonoBehaviour
 
             remainingBossTime -=
                 Time.deltaTime;
-
+            if (bossTopHpUI != null)
+            {
+                bossTopHpUI.SetBossTime(
+                    remainingBossTime,
+                    waveData.TimeLimit
+                );
+            }
             yield return null;
         }
 
