@@ -245,6 +245,20 @@ public class PlayerInfo : MonoBehaviour
         return true;
     }
 
+    public int GetAirshipUpgradeLevel(AirshipStatType statType)
+    {
+        if (!CheckInitialized()) return -1;
+
+        return statType switch
+        {
+            AirshipStatType.Attack => Airship.AttackLevel,
+            AirshipStatType.Defense => Airship.DefenseLevel,
+            AirshipStatType.MaxHealth => Airship.MaxHealthLevel,
+            AirshipStatType.CriticalChance => Airship.CriticalLevel,
+            _ => -1
+        };
+    }
+
     /// <summary>
     /// upgradeState를 받아서 AirshipSaveData에 반영하는 메서드
     /// </summary>
