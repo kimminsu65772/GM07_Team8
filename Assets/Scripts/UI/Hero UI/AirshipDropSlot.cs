@@ -11,7 +11,7 @@ public class AirshipDropSlot : MonoBehaviour, IDropHandler
     private Button btn;
 
     // 영웅이 슬롯에 드롭되었을 때, 슬롯의 인덱스와 드롭된 영웅의 이름을 전달하여 배치를 처리할 수 있도록 함.
-    public event Action<int, string> OnHeroDropped;
+    public event Action<int, HeroNameEnum> OnHeroDropped;
     // 슬롯 비우기 요청 이벤트
     public event Action<int> OnSlotClearRequested;
 
@@ -54,15 +54,15 @@ public class AirshipDropSlot : MonoBehaviour, IDropHandler
             return;
         }
 
-        string heroName = heroSlotUI.GetHeroName();
+        HeroNameEnum heroId = heroSlotUI.GetHeroId();
         
-        if (string.IsNullOrWhiteSpace(heroName))
+        if (heroId == HeroNameEnum.None)
         {
-            Debug.LogError("배치하려는 영웅의 이름이 없습니다.");
+            Debug.LogError("배치하려는 영웅의 Id가 없습니다.");
             return;
         }
 
-        OnHeroDropped?.Invoke(slotIndex, heroName); 
+        OnHeroDropped?.Invoke(slotIndex, heroId); 
     }
 
     // 슬롯 채우기

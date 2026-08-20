@@ -9975,6 +9975,7 @@ GameObject:
   - component: {fileID: 6887790152069959502}
   - component: {fileID: 4187762034146166282}
   - component: {fileID: 6725523641625019733}
+  - component: {fileID: 2870421020086844291}
   m_Layer: 7
   m_Name: SampleWingWarriorPrefab
   m_TagString: Untagged
@@ -10040,6 +10041,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c1597d6a7af774caac878217c021c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroAttack
+  skillTimer: 0
   projectile: {fileID: 0}
   firePoint: {fileID: 0}
 --- !u!114 &4187762034146166282
@@ -10069,6 +10071,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroHPBar
   hpBar: {fileID: 796267703763250018}
+--- !u!114 &2870421020086844291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5542119879111424239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c64a2c56d9f880f4880f549499c15fc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeroEquipmentManager
+  currentWeaponEquip: {fileID: 0}
+  currentBodyEquip: {fileID: 0}
+  currentAccEquip: {fileID: 0}
+  selectedEquip: {fileID: 0}
 --- !u!1 &5676666728749031068
 GameObject:
   m_ObjectHideFlags: 0

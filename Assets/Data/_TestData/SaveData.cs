@@ -15,7 +15,7 @@ public enum CurrencyType
 /// 해당 데이터를 구성하는 여러 하위 데이터 구조를 정의해놓은 파일이다.
 /// </summary>
 [Serializable]
-public class  PlayerSaveData
+public class PlayerSaveData
 {
     // 세이브 기능의 저장 버전
     // 게임이 확장되어 추가되는 재화나 기타 데이터들이 있을 경우, 이전 버전의 세이브 데이터가 호환되지 않을 수 있음.
@@ -25,7 +25,7 @@ public class  PlayerSaveData
     // 플레이어의 ID와 닉네임을 저장하는 데이터
     public PlayerProfileSaveData Profile { get; set; }
     public AirshipSaveData Airship { get; set; }
-    public Dictionary<string, HeroSaveData> Heroes { get; set; }
+    public Dictionary<HeroNameEnum, HeroSaveData> Heroes { get; set; }
 
     public HeroFormationSaveData HeroFormation { get; set; }
     public StageProgressSaveData StageProgress { get; set; }
@@ -76,7 +76,7 @@ public class HeroFormationSaveData
 public class HeroSaveSlot
 {
     public int SlotIndex { get; set; }
-    public string HeroName { get; set; }
+    public HeroNameEnum HeroId { get; set; }
 }
 
 [Serializable]

@@ -264,6 +264,7 @@ GameObject:
   - component: {fileID: 3993062887785085684}
   - component: {fileID: 7368761889589239906}
   - component: {fileID: 1172658508862056650}
+  - component: {fileID: 5071125624310665983}
   m_Layer: 7
   m_Name: SampleMagePrefab
   m_TagString: Untagged
@@ -329,7 +330,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c1597d6a7af774caac878217c021c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroAttack
-  projectile: {fileID: 1399878655061060014, guid: 00ab1cd3e4bc5794c8cef6307342dc7a, type: 3}
+  skillTimer: 0
+  projectileType: 1
   firePoint: {fileID: 2292950087620158637}
 --- !u!114 &7368761889589239906
 MonoBehaviour:
@@ -358,6 +360,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroHPBar
   hpBar: {fileID: 4117906098089113739}
+--- !u!114 &5071125624310665983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4136471860748260653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c64a2c56d9f880f4880f549499c15fc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeroEquipmentManager
+  currentWeaponEquip: {fileID: 0}
+  currentBodyEquip: {fileID: 0}
+  currentAccEquip: {fileID: 0}
+  selectedEquip: {fileID: 0}
 --- !u!1 &4387312951727401991
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,4 @@
 using DG.Tweening;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,8 +6,6 @@ public class StageRepeatModeButton : MonoBehaviour
 {
     [SerializeField] private Button modeButton;
     [SerializeField] private RectTransform rotationArrow;
-    [SerializeField] private Image buttonStateText;
-    [SerializeField] private Sprite[] textImages;
 
     private Tween rotationTween;
 
@@ -68,18 +65,10 @@ public class StageRepeatModeButton : MonoBehaviour
     private void Refresh()
     {
         PlayerInfo playerInfo = PlayerInfo.Instance;
-        if (buttonStateText == null || playerInfo == null || !playerInfo.IsInitialized)
+        if (playerInfo == null || !playerInfo.IsInitialized)
         {
             return;
         }
-
-        if (textImages == null || textImages.Length < 2)
-        {
-            Debug.LogWarning("StageRepeatModeButton: 텍스트 이미지가 할당되지 않았습니다.");
-            return;
-        }
-
-        buttonStateText.sprite = !playerInfo.RepeatClearedStage ? textImages[0] : textImages[1];
 
         if (playerInfo.RepeatClearedStage)
         {

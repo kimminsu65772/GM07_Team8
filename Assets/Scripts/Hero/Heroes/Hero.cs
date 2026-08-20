@@ -276,6 +276,8 @@ public abstract class Hero : MonoBehaviour, IDamageable
             transform.position,
             targetPosition,
             followSpeed * Time.deltaTime);
+
+        FlipSprite(new Vector2(1, 0));
     }
 
     public void FlipSprite(Vector2 direction)

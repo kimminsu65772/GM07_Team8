@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 
@@ -35,6 +36,7 @@ public class SaveDataLoader
         // 이때 형식이 잘못되거나, 역직렬화를 실패할 수 있으므로 예외를 처리한다.
         try
         {
+            json = MigrateJsonIfNeeded(json);
             saveData = JsonConvert.DeserializeObject<PlayerSaveData>(json);
         }
         catch (JsonException ex)
@@ -52,5 +54,99 @@ public class SaveDataLoader
         // 데이터 저장 구조 확정 후 DataMigration 메서드 구현 예정
 
         return saveData;
+    }
+
+    private static string MigrateJsonIfNeeded(string json)
+    {
+        // JSON 데이터를 JObject로 파싱하여 수정가능한 형태로 만든다.
+        JObject root = JObject.Parse(json);
+
+        // json 데이터에서 SaveVersion이라는 항목의 값을 가져온다.
+        int saveVersion = root["SaveVersion"]?.Value<int>() ?? 0;
+
+        // string 방식에서 enum 방식으로 바뀐 버전이 세이브 버전 3이므로, 세이브 버전이 3보다 낮으면 마이그레이션을 수행한다.
+        if (saveVersion < 3)
+        {
+            MigrateHeroes(root);
+            MigrateHeroFormation(root);
+            root["SaveVersion"] = SaveDataVersion.CurrentVersion;
+        }
+
+        return root.ToString(Formatting.None);
+    }
+
+    private static void MigrateHeroes(JObject root)
+    {
+        // Heroes 항목을 가져와서 JObject로 변환한다.
+        JObject heroes = root["Heroes"] as JObject;
+
+        // 만약 Heroes 항목이 없으면 null이 반환되므로, null 체크를 수행한다.
+        if (heroes == null)
+        {
+            return;
+        }
+
+        // 마이그레이션된 영웅 데이터를 담을 새로운 JObject를 생성한다.
+        JObject migratedHeroes = new JObject();
+
+        // Properties() 메서드를 사용하여 Heroes 항목의 각 속성을 순회한다.
+        foreach (JProperty heroProperty in heroes.Properties())
+        {
+            string migratedHeroName = ConvertLegacyHeroName(heroProperty.Name);
+
+            if (migratedHeroName == nameof(HeroNameEnum.None))
+            {
+                continue;
+            }
+
+            migratedHeroes[migratedHeroName] = heroProperty.Value;
+        }
+
+        root["Heroes"] = migratedHeroes;
+    }
+
+    private static void MigrateHeroFormation(JObject root)
+    {
+        // HeroFormation 항목을 가져와서 JObject로 변환한다.
+        JObject heroFormation = root["HeroFormation"] as JObject;
+
+        // Slots 항목은 배열 형태이므로 JArray로 변환하여 가져온다.
+        JArray slots = heroFormation?["Slots"] as JArray;
+
+        if (slots == null)
+        {
+            return;
+        }
+
+        // 슬롯을 순회하면서 string 방식의 HeroName을 enum 방식의 HeroId로 변환한다.
+        foreach (JObject slot in slots)
+        {
+            string legacyHeroName = slot["HeroName"]?.Value<string>();
+            string migratedHeroName = ConvertLegacyHeroName(legacyHeroName);
+
+            slot["HeroId"] = migratedHeroName;
+            slot.Remove("HeroName");
+        }
+    }
+
+    private static string ConvertLegacyHeroName(string heroName)
+    {
+        return heroName switch
+        {
+            "Hero1" => nameof(HeroNameEnum.Warrior),
+            "War1" => nameof(HeroNameEnum.Warrior),
+            "Warrior" => nameof(HeroNameEnum.Warrior),
+
+            "Hero2" => nameof(HeroNameEnum.Mage),
+            "War2" => nameof(HeroNameEnum.Mage),
+            "Mage" => nameof(HeroNameEnum.Mage),
+
+            "Sorcery" => nameof(HeroNameEnum.Sorcery),
+
+            null => nameof(HeroNameEnum.None),
+            "" => nameof(HeroNameEnum.None),
+
+            _ => nameof(HeroNameEnum.None)
+        };
     }
 }

@@ -13,7 +13,7 @@ public class NormalProjectile : AirshipProjectileBase
     {
         if (target == null || damageable == null)
         {
-            Destroy(gameObject);
+            ReturnToPool();
             return;
         }
 
@@ -48,7 +48,7 @@ public class NormalProjectile : AirshipProjectileBase
             return;
 
         OnHit();
-        Destroy(gameObject);
+        ReturnToPool();
     }
 
     private void OnDrawGizmos()
