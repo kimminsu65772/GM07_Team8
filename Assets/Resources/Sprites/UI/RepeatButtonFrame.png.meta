@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: 8a7d52fd6ffd06f49a95c9a5c0228006
+guid: 81ebd9a6365fe0b479ab19cce75a14d1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7504738089163039124
-    second: Repeat_0
-  - first:
-      213: 519530988522137155
-    second: Repeat_1
-  - first:
-      213: 8344496626488776289
-    second: Repeat_2
+      213: 4357940827803278612
+    second: RepeatButtonFrame_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -132,35 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Repeat_0
+      name: RepeatButtonFrame_0
       rect:
         serializedVersion: 2
-        x: 104
-        y: 578
-        width: 998
-        height: 640
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c6ed71f3870d9d790800000000000000
-      internalID: -7504738089163039124
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Repeat_1
-      rect:
-        serializedVersion: 2
-        x: 145
+        x: 0
         y: 0
-        width: 1070
-        height: 753
+        width: 1179
+        height: 1254
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,30 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3466ba47eaeb53700800000000000000
-      internalID: 519530988522137155
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Repeat_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 71
-        width: 44
-        height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1661f43887b9dc370800000000000000
-      internalID: 8344496626488776289
+      spriteID: 41dd261f7148a7c30800000000000000
+      internalID: 4357940827803278612
       vertices: []
       indices: 
       edges: []
@@ -211,9 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Repeat_0: -7504738089163039124
-      Repeat_1: 519530988522137155
-      Repeat_2: 8344496626488776289
+      RepeatButtonFrame_0: 4357940827803278612
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

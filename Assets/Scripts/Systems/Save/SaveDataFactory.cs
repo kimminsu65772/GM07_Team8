@@ -24,18 +24,18 @@ public class SaveDataFactory
                 MaxHealthLevel = 1,
                 CriticalLevel = 1,
                 EquippedCannonType = AirshipCannonType.Normal,
-                EquippedGearType = AirshipGearType.MaxHealth,
+                EquippedGearType = AirshipGearType.Normal,
             },
             Heroes = CreateInitialHeroSaveData(heroCatalog),
             HeroFormation = new HeroFormationSaveData
             {
                 Slots = new List<HeroSaveSlot>
                 {
-                    new HeroSaveSlot { SlotIndex = 0, HeroName = null },
-                    new HeroSaveSlot { SlotIndex = 1, HeroName = null },
-                    new HeroSaveSlot { SlotIndex = 2, HeroName = null },
-                    new HeroSaveSlot { SlotIndex = 3, HeroName = null },
-                    new HeroSaveSlot { SlotIndex = 4, HeroName = null }
+                    new HeroSaveSlot { SlotIndex = 0, HeroId = HeroNameEnum.None },
+                    new HeroSaveSlot { SlotIndex = 1, HeroId = HeroNameEnum.None },
+                    new HeroSaveSlot { SlotIndex = 2, HeroId = HeroNameEnum.None },
+                    new HeroSaveSlot { SlotIndex = 3, HeroId = HeroNameEnum.None },
+                    new HeroSaveSlot { SlotIndex = 4, HeroId = HeroNameEnum.None }
                 }
             },
             StageProgress = new StageProgressSaveData
@@ -60,9 +60,9 @@ public class SaveDataFactory
         return newData;
     }
 
-    private static Dictionary<string, HeroSaveData> CreateInitialHeroSaveData(HeroCatalog heroCatalog)
+    private static Dictionary<HeroNameEnum, HeroSaveData> CreateInitialHeroSaveData(HeroCatalog heroCatalog)
     {
-        Dictionary<string, HeroSaveData> heroes = new Dictionary<string, HeroSaveData>();
+        Dictionary<HeroNameEnum, HeroSaveData> heroes = new Dictionary<HeroNameEnum, HeroSaveData>();
 
         if (heroCatalog == null)
         {
@@ -71,7 +71,7 @@ public class SaveDataFactory
 
         foreach (HeroEntry entry in heroCatalog.InGameHeroEntries)
         {
-            heroes[entry.HeroName] = new HeroSaveData
+            heroes[entry.HeroId] = new HeroSaveData
             {
                 Level = entry.DefaultLevel,
                 IsOwned = entry.IsDefaultOwned,
@@ -82,9 +82,8 @@ public class SaveDataFactory
     }
 }
 
-
 // 나중에 데이터 구조가 변경되었을 때 버전 관리 및 비교 후 보정 작업을 위해 현재 세이브 데이터의 버전을 상수로 정의한다.
 public static class SaveDataVersion
 {
-    public const int CurrentVersion = 2;
+    public const int CurrentVersion = 3;
 }

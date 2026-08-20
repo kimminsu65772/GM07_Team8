@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 영웅의 이름과 프리팹이 연결된 HeroEntry를 Dictionary로 관리하고
-/// 외부에서 영웅 이름으로 entry와 매핑하여 프리팹을 가져오는 역할을 한다.
+/// 영웅의 ID와 프리팹이 연결된 HeroEntry를 Dictionary로 관리하고
+/// 외부에서는 영웅의 ID를 통해 HeroEntry를 가져올 수 있도록 한다.
 /// </summary>
 
 [CreateAssetMenu(fileName = "HeroCatalog", menuName = "Game/Hero/HeroCatalog")]
@@ -11,7 +11,7 @@ public class HeroCatalog : ScriptableObject
 {
     [SerializeField] private List<HeroEntry> heroEntries;
 
-    private Dictionary<string, HeroEntry> heroEntryDictionary;
+    private Dictionary<HeroNameEnum, HeroEntry> heroEntryDictionary;
 
     public IReadOnlyList<HeroEntry> InGameHeroEntries
     {
@@ -28,11 +28,11 @@ public class HeroCatalog : ScriptableObject
     {
         BuildHeroEntryDict();
     }
-    public bool TryGetHeroEntry(string heroName, out HeroEntry heroEntry)
+    public bool TryGetHeroEntry(HeroNameEnum heroId, out HeroEntry heroEntry)
     {
         BuildHeroEntryDict();
 
-        if (heroEntryDictionary != null && heroEntryDictionary.TryGetValue(heroName, out heroEntry))
+        if (heroEntryDictionary != null && heroEntryDictionary.TryGetValue(heroId, out heroEntry))
         {
             return true;
         }
@@ -49,7 +49,7 @@ public class HeroCatalog : ScriptableObject
             return;
         }
 
-        heroEntryDictionary = new Dictionary<string, HeroEntry>();
+        heroEntryDictionary = new Dictionary<HeroNameEnum, HeroEntry>();
 
         if (heroEntries == null)
         {
@@ -64,14 +64,14 @@ public class HeroCatalog : ScriptableObject
             }
 
             if (entry.HeroPrefab == null ||
-                string.IsNullOrWhiteSpace(entry.HeroName))
+                entry.HeroId == HeroNameEnum.None)
             {
                 continue;
             }
 
-            if (!heroEntryDictionary.TryAdd(entry.HeroName, entry))
+            if (!heroEntryDictionary.TryAdd(entry.HeroId, entry))
             {
-                Debug.LogWarning($"중복된 영웅입니다: {entry.HeroName}");
+                Debug.LogWarning($"중복된 영웅 Id입니다.: {entry.HeroId.ToString()}");
             }
         }
     }

@@ -15,7 +15,7 @@ public class GachaResultDisplay : MonoBehaviour
         }
     }
     //뽑기 결과를 받아와서 화면에 쭈루룩 생성하는 함수
-    public void ShowResults(List<string> pulledItems)
+    public void ShowResults(List<HeroNameEnum> pulledItems)
     {
         foreach (Transform child in contentGrid)
         {
@@ -25,14 +25,14 @@ public class GachaResultDisplay : MonoBehaviour
         {
             resultPanel.SetActive(true);
         }
-        foreach (string itemName in pulledItems)
+        foreach (HeroNameEnum itemId in pulledItems)
         {
-            Debug.Log("아이콘 생성 시도: " + itemName);
+            Debug.Log("아이콘 생성 시도: " + itemId);
             GameObject slot = Instantiate(itemSlotPrefab, contentGrid);
             GachaResultUI slotUI = slot.GetComponent<GachaResultUI>();
             if (slotUI != null)
             {
-                slotUI.SetUp(itemName);
+                slotUI.SetUp(itemId);
             }
         }
     }
