@@ -10131,7 +10131,6 @@ GameObject:
   - component: {fileID: 584291136}
   - component: {fileID: 584291138}
   - component: {fileID: 584291137}
-  - component: {fileID: 584291139}
   - component: {fileID: 584291140}
   m_Layer: 5
   m_Name: Hero arrange Panel
@@ -10200,19 +10199,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 584291135}
   m_CullTransparentMesh: 1
---- !u!114 &584291139
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 584291135}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc4d33628a31d54408fde67f40dfbe2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ToggleController
-  targetUI: {fileID: 584291135}
 --- !u!114 &584291140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10559,13 +10545,13 @@ MonoBehaviour:
   singlePullCost: 1000
   tenPullCost: 10000
   gachaPool:
-  - heroName: 
+  - heroId: 0
     dropRate: 60
-  - heroName: 
+  - heroId: 0
     dropRate: 30
-  - heroName: 
+  - heroId: 0
     dropRate: 8
-  - heroName: 
+  - heroId: 0
     dropRate: 2
 --- !u!4 &610710272
 Transform:
@@ -20988,7 +20974,6 @@ GameObject:
   - component: {fileID: 1271251241}
   - component: {fileID: 1271251240}
   - component: {fileID: 1271251239}
-  - component: {fileID: 1271251238}
   m_Layer: 5
   m_Name: Hero arrange Panel
   m_TagString: Untagged
@@ -21018,27 +21003,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1271251238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1271251236}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00602d1565f84c94bad324c3859c85e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HeroArrangeUIController
-  heroArrangeSlots:
-  - {fileID: 919057421}
-  - {fileID: 1915978343}
-  - {fileID: 385432287}
-  - {fileID: 232608725}
-  - {fileID: 2126661478}
-  heroListContent: {fileID: 1577140222}
-  heroSlotPrefab: {fileID: 100000, guid: 08dfd122da3e429a9f09a0c30502456f, type: 3}
-  heroCatalog: {fileID: 11400000, guid: f1c7fc4c864c0734394d02b6c8445009, type: 2}
 --- !u!114 &1271251239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31338,7 +31302,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 584291139}
+      - m_Target: {fileID: 1271251239}
         m_TargetAssemblyTypeName: ToggleController, Assembly-CSharp
         m_MethodName: Close
         m_Mode: 1
