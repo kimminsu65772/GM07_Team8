@@ -62,7 +62,7 @@ public class HeroArrangeUIController : MonoBehaviour
         }
     }
 
-    private void HandleHeroDropped(int slotIndex, string heroName)
+    private void HandleHeroDropped(int slotIndex, HeroNameEnum heroId)
     {
         if (HeroFormationManager.Instance == null)
         {
@@ -70,15 +70,15 @@ public class HeroArrangeUIController : MonoBehaviour
             return;
         }
 
-        bool result = HeroFormationManager.Instance.TrySetHeroToSlot(slotIndex, heroName);
+        bool result = HeroFormationManager.Instance.TrySetHeroToSlot(slotIndex, heroId);
 
         if (!result)
         {
-            Debug.LogWarning($"영웅 {heroName}를 슬롯 {slotIndex}에 배치할 수 없습니다.");
+            Debug.LogWarning($"영웅 {heroId}를 슬롯 {slotIndex}에 배치할 수 없습니다.");
             return;
         }
 
-        Debug.Log($"영웅 {heroName}가 슬롯 {slotIndex}에 성공적으로 배치되었습니다.");
+        Debug.Log($"영웅 {heroId}가 슬롯 {slotIndex}에 성공적으로 배치되었습니다.");
         //  UI 갱신
         RefreshUI();
     }
@@ -119,12 +119,12 @@ public class HeroArrangeUIController : MonoBehaviour
 
             HeroSaveSlot saveSlot = FindFormationSlot(slot.SlotIndex);
 
-            if (saveSlot == null || string.IsNullOrWhiteSpace(saveSlot.HeroName))
+            if (saveSlot == null || saveSlot.HeroId == HeroNameEnum.None)
             {
                 slot.ClearHero();
                 continue;
             }
-            if (heroCatalog == null || !heroCatalog.TryGetHeroEntry(saveSlot.HeroName, out HeroEntry heroEntry))
+            if (heroCatalog == null || !heroCatalog.TryGetHeroEntry(saveSlot.HeroId, out HeroEntry heroEntry))
             {
                 slot.ClearHero();
                 continue;
@@ -201,7 +201,7 @@ public class HeroArrangeUIController : MonoBehaviour
                 Debug.LogError("캐싱된 HeroFormationManager가 없습니다.");
                 continue;
             }
-            bool isInFormation = HeroFormationManager.Instance.IsHeroInFormation(entry.HeroName);
+            bool isInFormation = HeroFormationManager.Instance.IsHeroInFormation(entry.HeroId);
 
             slotUI.SetFormationState(isInFormation);
             slotUI.SetDragEnabled(true);
@@ -220,7 +220,7 @@ public class HeroArrangeUIController : MonoBehaviour
                 continue;
             }
 
-            if (playerInfo.TryGetHeroData(entry.HeroName, out HeroSaveData heroSaveData) && heroSaveData.IsOwned)
+            if (playerInfo.TryGetHeroData(entry.HeroId, out HeroSaveData heroSaveData) && heroSaveData.IsOwned)
             {
                 ownedHeroes.Add((entry, heroSaveData));
             }

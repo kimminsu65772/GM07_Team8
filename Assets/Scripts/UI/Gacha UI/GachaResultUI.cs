@@ -7,11 +7,11 @@ public class GachaResultUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI itemNameText;
     [SerializeField] private Image itemIconImage;
 
-    public void SetUp(string itemName)
+    public void SetUp(HeroNameEnum itemId)
     {
         if (itemNameText != null)
         {
-            itemNameText.text = itemName;
+            itemNameText.text = itemId.ToString();
         }
     }
 }

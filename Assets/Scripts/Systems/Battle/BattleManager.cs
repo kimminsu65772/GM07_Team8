@@ -33,8 +33,8 @@ public class BattleManager : MonoBehaviour
 
     public AirshipController Airship => airship;
 
-    private readonly List<GameObject> spawnedHeroes = new List<GameObject>();
-    private readonly Dictionary<string, GameObject> heroCache = new Dictionary<string, GameObject>();
+    private readonly List<Hero> spawnedHeroes = new();
+    private readonly Dictionary<HeroNameEnum, Hero> heroCache = new();
     private int currentStage;
     private bool isInitialized;
 
@@ -179,16 +179,21 @@ public class BattleManager : MonoBehaviour
                 continue;
             }
 
-            GameObject spawnedHero = GetCachedHeroOrCreate(slot);
+            Hero spawnedHero = GetCachedHeroOrCreate(slot);
+
+            if (spawnedHero == null)
+            {
+                Debug.LogError($"영웅을 생성할 수 없습니다: {slot.HeroId}");
+                continue;
+            }
 
             if (!isFront)
             {
                 spawnedHero.transform.SetParent(startPoint, false);
             }
             spawnedHero.transform.SetPositionAndRotation(startPoint.position, startPoint.rotation);
-            Hero hero = spawnedHero.GetComponent<Hero>();
-            spawnedHero.SetActive(true);
-            hero.Initialize(startPoint, airship.Movement);
+            spawnedHero.gameObject.SetActive(true);
+            spawnedHero.Initialize(startPoint, airship.Movement);
 
             spawnedHeroes.Add(spawnedHero);
         }
@@ -199,17 +204,16 @@ public class BattleManager : MonoBehaviour
         {
             if (spawnedHeroes[i] != null)
             {
-                Hero hero = spawnedHeroes[i].GetComponent<Hero>();
-                hero.Initialize();
-                spawnedHeroes[i].SetActive(false);
+                spawnedHeroes[i].Initialize();
+                spawnedHeroes[i].gameObject.SetActive(false);
             }
         }
         spawnedHeroes.Clear();
     }
 
-    private GameObject GetCachedHeroOrCreate(HeroFormationRuntimeSlot slot)
+    private Hero GetCachedHeroOrCreate(HeroFormationRuntimeSlot slot)
     {
-        if (heroCache.TryGetValue(slot.HeroName, out GameObject cachedHero))
+        if (heroCache.TryGetValue(slot.HeroId, out Hero cachedHero))
         {
             return cachedHero;
         }
@@ -218,8 +222,16 @@ public class BattleManager : MonoBehaviour
 
         try
         {
-            GameObject newHero = Instantiate(slot.HeroEntry.HeroPrefab);
-            heroCache.Add(slot.HeroName, newHero);
+            GameObject newHeroObj = Instantiate(slot.HeroEntry.HeroPrefab);
+            Hero newHero = newHeroObj.GetComponent<Hero>();
+
+            if (newHero == null)
+            {
+                Debug.LogError($"영웅 프리팹에 Hero 컴포넌트가 없습니다: {slot.HeroEntry.HeroPrefab.name}");
+                Destroy(newHeroObj);
+                return null;
+            }
+            heroCache.Add(slot.HeroId, newHero);
             return newHero;
         }
         finally
