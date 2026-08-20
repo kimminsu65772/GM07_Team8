@@ -650,7 +650,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroAttack
   skillTimer: 0
-  projectile: {fileID: 1399878655061060014, guid: 05890600abc9e0d47a5c4d82ca251c7f, type: 3}
+  projectileType: 2
   firePoint: {fileID: 6392207175502832563}
 --- !u!114 &4521085678098890739
 MonoBehaviour:
