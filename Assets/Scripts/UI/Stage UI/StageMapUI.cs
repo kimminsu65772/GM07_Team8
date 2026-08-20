@@ -23,68 +23,76 @@ public class StageMapUI : MonoBehaviour
     [SerializeField] private float offsetYRange = 50f; 
 
     private readonly List<StageMapSlot> spawnedSlots = new List<StageMapSlot>();
-
-    private void Start()
+    private void OnEnable()
     {
-        GenerateMapSlots();
+        RefreshMap();
     }
-    private void GenerateMapSlots()
+    private void GenerateMapSlots(int maxCleared)
     {
-        if (stageCatalog == null)
-        {
-            Debug.LogError("StageMapUI: StageCatalog가 연결되지 않았습니다.");
-            return;
-        }
-        foreach (var slot in spawnedSlots)
-        {
-            if (slot != null) Destroy(slot.gameObject);
-        }
-        spawnedSlots.Clear();
         int totalStages = stageCatalog.StageCount;
+
         for (int i = 1; i <= totalStages; i++)
         {
-            if (stageCatalog.TryGetStageData(i, out StageData stageData))
+            if(!stageCatalog.TryGetStageData(i,out StageData stageData)) continue;
+            GameObject slotObj = Instantiate(stageSlotPrefab,mapContentTransform);
+            StageMapSlot mapSlot = slotObj.GetComponent<StageMapSlot>();
+
+            if (mapSlot == null)
             {
-                GameObject slotObj = Instantiate(stageSlotPrefab, mapContentTransform);
-                StageMapSlot mapSlot = slotObj.GetComponent<StageMapSlot>();
-
-                if (mapSlot != null)
-                {
-                    RectTransform rectTrans = slotObj.GetComponent<RectTransform>();
-                    if (rectTrans != null)
-                    {
-                        int index = i - 1;
-                        int row = index / columns;
-                        int col = index % columns;
-
-                        float baseX = col * spacingX;
-                        float baseY = -row * spacingY; 
-
-                        float randomX = Random.Range(-offsetXRange, offsetXRange);
-                        float randomY = Random.Range(-offsetYRange, offsetYRange);
-
-                        rectTrans.anchoredPosition = new Vector2(baseX + randomX, baseY + randomY);
-                    }
-
-                    int maxCleared = (PlayerInfo.Instance != null && PlayerInfo.Instance.IsInitialized)
-                        ? PlayerInfo.Instance.MaxClearedStage
-                        : 0;
-
-                    mapSlot.Init(this, i, maxCleared);
-                    spawnedSlots.Add(mapSlot);
-                }
+                Destroy(slotObj);
+                continue;
             }
+            RectTransform rectTrans = slotObj.GetComponent<RectTransform>();
+
+            if (rectTrans != null)
+            {
+                int index = i - 1;
+                int row = index / columns;
+                int col = index % columns;
+                float baseX = col * spacingX;
+                float baseY = -row * spacingY;
+
+                float randomX = Random.Range(-offsetXRange,offsetXRange);
+
+                float randomY = Random.Range( -offsetYRange,offsetYRange);
+
+                rectTrans.anchoredPosition = new Vector2( baseX + randomX,baseY + randomY);
+            }
+
+            mapSlot.Init(this, i,maxCleared);
+            spawnedSlots.Add(mapSlot);
         }
     }
+
     public void RefreshMap()
     {
-        int maxCleared = (PlayerInfo.Instance != null && PlayerInfo.Instance.IsInitialized)
-            ? PlayerInfo.Instance.MaxClearedStage
-            : 0;
+        if (stageCatalog == null) return;
+        if (mapContentTransform == null) return;
+        if (stageSlotPrefab == null) return;
+        ClearMapSlots();
 
-        foreach (var slot in spawnedSlots)
+        int maxCleared = 0;
+
+        if (PlayerInfo.Instance != null &&
+            PlayerInfo.Instance.IsInitialized)
         {
-            slot.RefreshState(maxCleared);
+            maxCleared = PlayerInfo.Instance.MaxClearedStage;
+        }
+        GenerateMapSlots(maxCleared);
+    }
+    private void ClearMapSlots()
+    {
+        foreach (StageMapSlot slot in spawnedSlots)
+        {
+            if (slot != null)
+            {
+                Destroy(slot.gameObject);
+            }
+        }
+        spawnedSlots.Clear();
+        for (int i = mapContentTransform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(mapContentTransform.GetChild(i).gameObject);
         }
     }
     public void OnStageSelected(int stageNumber)
@@ -94,12 +102,7 @@ public class StageMapUI : MonoBehaviour
             bool success = PlayerInfo.Instance.TrySetCurrentStage(stageNumber);
             if (success)
             {
-                Debug.Log($"스테이지 {stageNumber} 선택 완료!");
                 stageTransitionController.StartTransition(stageNumber);
-            }
-            else
-            {
-                Debug.LogWarning($"스테이지 {stageNumber} 선택 실패: 아직 도전할 수 없는 스테이지이거나 잘못된 요청입니다.");
             }
         }
     }

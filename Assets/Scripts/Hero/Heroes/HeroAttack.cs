@@ -10,12 +10,12 @@ public class HeroAttack : MonoBehaviour
     private bool canAttack;
 
     private float attackTimer;
-    private float skillTimer;
+    [SerializeField] private float skillTimer;
 
     private bool isAutoSkill = true;
     
     [Header("원거리 공격 시")]
-    [SerializeField] private GameObject projectile;
+    [SerializeField] private HeroProjectileType projectileType;
     [SerializeField] private Transform firePoint;
 
     public EffectPlayer VFX => vfx;
@@ -30,20 +30,20 @@ public class HeroAttack : MonoBehaviour
         hero = GetComponent<Hero>();
         vfx = GetComponentInChildren<EffectPlayer>();
 
-        attackTimer = hero.HeroAttackTime;
-        skillTimer = hero.HeroSkillTime;
-
         isAttacking = false;
         isSkilling = false;
     }
 
+    private void Start()
+    {
+        attackTimer = hero.HeroAttackTime;
+        skillTimer = hero.HeroSkillTime;
+    }
+
     private void Update()
     {
-        if (attackTimer < hero.HeroAttackTime)
-            attackTimer += Time.deltaTime;
-
-        if (skillTimer < hero.HeroSkillTime)
-            skillTimer += Time.deltaTime;
+        if (attackTimer < hero.HeroAttackTime) attackTimer += Time.deltaTime;
+        if (skillTimer < hero.HeroSkillTime) skillTimer += Time.deltaTime;
     }
 
     public void MeleeAttack(GameObject enemy)
@@ -162,15 +162,33 @@ public class HeroAttack : MonoBehaviour
         }
     }
 
-    private void ThrowProjectile(Transform enemy, DamageInfo damageInfo)
+    private void ThrowProjectile(
+        Transform enemy,
+        DamageInfo damageInfo)
     {
-        GameObject projec = Instantiate(
-            projectile,
-            firePoint.position,
-            Quaternion.identity
-        );
+        if (projectileType == HeroProjectileType.None ||
+            firePoint == null ||
+            PoolingManager.Instance == null)
+        {
+            return;
+        }
 
-        projec.GetComponent<HeroAttackProjectileController>().Init(enemy, damageInfo);
+        HeroAttackProjectileController projectile =
+            PoolingManager.Instance.GetHeroProjectile(
+                projectileType
+            );
+
+        if (projectile == null)
+        {
+            return;
+        }
+
+        projectile.Init(
+            firePoint.position,
+            Quaternion.identity,
+            enemy,
+            damageInfo
+        );
     }
 
     public void UseSkill(GameObject enemy)

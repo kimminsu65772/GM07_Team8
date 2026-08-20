@@ -16,6 +16,7 @@ public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     [Header("영웅 배치 슬롯 사용 구분")]
     [SerializeField] private bool canDrag = true;
 
+    private HeroNameEnum heroId;
     private string heroName;
     private HeroEntry currentEntry;
     private HeroSaveData currentSaveData;
@@ -40,6 +41,7 @@ public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     {
         currentEntry = entry;
         currentSaveData = saveData;
+        heroId = entry.HeroId;
         heroName = entry.HeroName;
         onClickCallback = onClick;
 
@@ -62,7 +64,7 @@ public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             }
         }
     }
-    public string GetHeroName() => heroName;
+    public HeroNameEnum GetHeroId() => heroId;
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (currentSaveData == null || !currentSaveData.IsOwned || !canDrag) return;

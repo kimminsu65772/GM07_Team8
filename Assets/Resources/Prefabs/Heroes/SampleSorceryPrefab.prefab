@@ -583,6 +583,7 @@ GameObject:
   - component: {fileID: 6479186620136238849}
   - component: {fileID: 4521085678098890739}
   - component: {fileID: 9140440116478194214}
+  - component: {fileID: 40990562345974146}
   m_Layer: 7
   m_Name: SampleSorceryPrefab
   m_TagString: Untagged
@@ -648,7 +649,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c1597d6a7af774caac878217c021c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroAttack
-  projectile: {fileID: 1399878655061060014, guid: 05890600abc9e0d47a5c4d82ca251c7f, type: 3}
+  skillTimer: 0
+  projectileType: 2
   firePoint: {fileID: 6392207175502832563}
 --- !u!114 &4521085678098890739
 MonoBehaviour:
@@ -677,6 +679,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroHPBar
   hpBar: {fileID: 5996041701944011195}
+--- !u!114 &40990562345974146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7245292273247505057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c64a2c56d9f880f4880f549499c15fc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeroEquipmentManager
+  currentWeaponEquip: {fileID: 0}
+  currentBodyEquip: {fileID: 0}
+  currentAccEquip: {fileID: 0}
+  selectedEquip: {fileID: 0}
 --- !u!1 &7583711370096473414
 GameObject:
   m_ObjectHideFlags: 0
@@ -978,6 +996,14 @@ PrefabInstance:
     - target: {fileID: 498382947848417844, guid: 7c1e3d19ef4acb8489bffc0b1a3e362e, type: 3}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3296764845016085387, guid: 7c1e3d19ef4acb8489bffc0b1a3e362e, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3296764845016085387, guid: 7c1e3d19ef4acb8489bffc0b1a3e362e, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 696841935
       objectReference: {fileID: 0}
     - target: {fileID: 5162828477151334311, guid: 7c1e3d19ef4acb8489bffc0b1a3e362e, type: 3}
       propertyPath: 'ATTACK_List.Array.data[1]'

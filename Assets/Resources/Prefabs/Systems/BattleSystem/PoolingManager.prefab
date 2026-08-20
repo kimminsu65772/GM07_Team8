@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3539799984384903640
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2138403280020800683}
+  - component: {fileID: 6544001011428186228}
+  m_Layer: 0
+  m_Name: PoolingManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2138403280020800683
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3539799984384903640}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6544001011428186228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3539799984384903640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57638907bb7439745b7988f6e9277bfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PoolingManager
+  normalProjectilePrefab: {fileID: 193875028588587811, guid: 4672c54b98b02474e92eba6e7b85097d, type: 3}
+  normalInitialSize: 20
+  freezeProjectilePrefab: {fileID: -4218226267792731221, guid: 2e258cc4bb28c9448b808f70147497c1, type: 3}
+  freezeInitialSize: 5
+  rapidProjectilePrefab: {fileID: 193875028588587811, guid: 54351d19f9be66541909aa8de035a6af, type: 3}
+  rapidInitialSize: 30
+  freezeImpactVfxPrefab: {fileID: 3391895794129409543, guid: 7de74a08c40e78941975622b05d0225c, type: 3}
+  freezeImpactVfxInitialSize: 5
+  heroProjectile1Prefab: {fileID: 2817707393459148996, guid: 00ab1cd3e4bc5794c8cef6307342dc7a, type: 3}
+  heroProjectile1InitialSize: 5
+  heroProjectile2Prefab: {fileID: 2817707393459148996, guid: 05890600abc9e0d47a5c4d82ca251c7f, type: 3}
+  heroProjectile2InitialSize: 5

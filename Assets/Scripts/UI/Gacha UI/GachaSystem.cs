@@ -16,7 +16,7 @@ public class GachaSystem : MonoBehaviour
     [System.Serializable]
     public class HeroGachaItem
     {
-        public string heroName; 
+        public HeroNameEnum heroId; 
         [Range(0f, 100f)] public float dropRate;
     }
 
@@ -52,19 +52,19 @@ public class GachaSystem : MonoBehaviour
             return;
         }
 
-        List<string> pulledNames = new List<string>();
+        List<HeroNameEnum> pulledNames = new();
 
         for (int i = 0; i < count; i++)
         {
-            string pickedName = GetRandomHeroName();
-            pulledNames.Add(pickedName);
-            if (heroCatalog.TryGetHeroEntry(pickedName, out HeroEntry entry))
+            HeroNameEnum pickedHeroId = GetRandomHeroId();
+            pulledNames.Add(pickedHeroId);
+            if (heroCatalog.TryGetHeroEntry(pickedHeroId, out HeroEntry entry))
             {
-                PlayerInfo.Instance.SetHeroOwned(pickedName, true);
+                PlayerInfo.Instance.SetHeroOwned(pickedHeroId, true);
             }
             else
             {
-                Debug.LogWarning($"카탈로그에서 영웅을 찾을 수 없습니다: {pickedName}");
+                Debug.LogWarning($"카탈로그에서 영웅을 찾을 수 없습니다: {pickedHeroId}");
             }
         }
         UpdateUI();
@@ -73,7 +73,7 @@ public class GachaSystem : MonoBehaviour
             resultDisplay.ShowResults(pulledNames);
         }
     }
-    private string GetRandomHeroName()
+    private HeroNameEnum GetRandomHeroId()
     {
         float totalWeight = 0f;
         foreach (var item in gachaPool) totalWeight += item.dropRate;
@@ -84,9 +84,9 @@ public class GachaSystem : MonoBehaviour
         foreach (var item in gachaPool)
         {
             currentWeightSum += item.dropRate;
-            if (randomValue <= currentWeightSum) return item.heroName;
+            if (randomValue <= currentWeightSum) return item.heroId;
         }
-        return gachaPool[0].heroName;
+        return gachaPool[0].heroId;
     }
     private void UpdateUI()
     {
