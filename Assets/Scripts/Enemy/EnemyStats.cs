@@ -81,7 +81,10 @@ public class EnemyStats : MonoBehaviour, IDamageable
             currentHealth - finalDamage,
             0);
         //데미지 팝업
-        DamageManager.Instance.ShowDamage(damageInfo,transform.position);
+        if (DamageManager.Instance != null)
+        {
+            DamageManager.Instance.ShowDamage(damageInfo, transform.position);
+        }
 
         EnemyDamaged?.Invoke(this);
         Debug.Log(

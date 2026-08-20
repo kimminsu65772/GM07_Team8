@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30173b17adc04634aa724104a20d5a31, type: 3}
-  m_Name: TestBossData
+  m_Name: EnemyData
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  maxHealth: 300
-  attackPower: 20
-  moveSpeed: 10
-  attackRange: 9
-  attackInterval: 1.5
+  maxHealth: 100
+  attackPower: 10
+  moveSpeed: 3
+  attackRange: 4
+  attackInterval: 1
+  isBoss: 0
