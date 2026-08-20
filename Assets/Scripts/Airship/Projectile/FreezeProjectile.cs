@@ -13,10 +13,6 @@ public class FreezeProjectile : NormalProjectile
     [SerializeField]
     private LayerMask enemyLayer;
 
-    [Header("VFX")]
-    [SerializeField]
-    private GameObject impactVfx;
-
     protected override void OnHit()
     {
         base.OnHit();
@@ -69,15 +65,24 @@ public class FreezeProjectile : NormalProjectile
 
     private void SpawnImpactVfx(Vector2 position)
     {
-        if (impactVfx == null)
+        if (PoolingManager.Instance == null)
+        {
             return;
+        }
 
-        GameObject vfx = Instantiate(
-            impactVfx,
-            position,
-            Quaternion.identity
-        );
-        vfx.transform.localScale = Vector3.one * 1.34f;
+        GameObject vfx =
+            PoolingManager.Instance.GetFreezeImpactVfx(
+                position,
+                Quaternion.identity
+            );
+
+        if (vfx == null)
+        {
+            return;
+        }
+
+        vfx.transform.localScale =
+            Vector3.one * 1.34f;
     }
     
     private void OnDrawGizmos()
