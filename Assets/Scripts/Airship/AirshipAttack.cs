@@ -142,10 +142,14 @@ public class AirshipAttack : MonoBehaviour
 
     private void Attack(Transform target)
     {
+        PoolingManager poolingManager =
+            PoolingManager.Instance;
+
         if (currentCannon == null ||
             currentCannon.ProjectilePrefab == null ||
             aimPoint == null ||
-            projectileSpawnPoint == null)
+            projectileSpawnPoint == null ||
+            poolingManager == null)
         {
             return;
         }
@@ -158,30 +162,52 @@ public class AirshipAttack : MonoBehaviour
         }
 
         if (cachedDamageable == null)
+        {
             return;
+        }
 
-        // 발사 순간에도 한 번 회전하고 즉시 발사
+        if (!poolingManager.IsProjectilePrefabMatch(
+                currentCannon.CannonType,
+                currentCannon.ProjectilePrefab))
+        {
+            Debug.LogError(
+                $"{currentCannon.CannonType}의 투사체 프리팹과 " +
+                "PoolingManager의 프리팹이 다릅니다.",
+                this
+            );
+
+            return;
+        }
+
         RotateAimPoint(target);
 
-        AirshipProjectileBase projectile = Instantiate(
-            currentCannon.ProjectilePrefab,
-            projectileSpawnPoint.position,
-            aimPoint.rotation
-        );
+        AirshipProjectileBase projectile =
+            poolingManager.GetAirshipProjectile(
+                currentCannon.CannonType
+            );
+
+        if (projectile == null)
+        {
+            return;
+        }
 
         bool isCritical =
             criticalChance >= 1f ||
             (criticalChance > 0f &&
              Random.value < criticalChance);
+
         float finalDamage =
             attackDamage * (isCritical ? 2f : 1f);
-        
+
         projectile.Init(
+            projectileSpawnPoint.position,
+            aimPoint.rotation,
             target,
             cachedDamageable,
             new DamageInfo(
                 finalDamage,
-                isCritical),
+                isCritical
+            ),
             targetHeightOffset
         );
     }
