@@ -25,7 +25,7 @@ public class EnemyAnimationEventReceiver : MonoBehaviour
     }
     public void FireProjectile()
     {
-        Debug.Log($"{name}: FireProjectile 수신");
+       
         EnemyRangedAttack rangedAttack =
             GetComponentInParent<EnemyRangedAttack>();
 

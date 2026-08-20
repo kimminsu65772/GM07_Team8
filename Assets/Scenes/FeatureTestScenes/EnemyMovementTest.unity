@@ -733,6 +733,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4617442354390890304, guid: 704c14735ff1f0b4eb0636eb535cf01f, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 1024
+      objectReference: {fileID: 0}
     - target: {fileID: 8284160051389188607, guid: 704c14735ff1f0b4eb0636eb535cf01f, type: 3}
       propertyPath: m_Name
       value: BossTopHpRoot
