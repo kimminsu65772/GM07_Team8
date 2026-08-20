@@ -979,6 +979,14 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3296764845016085387, guid: 7c1e3d19ef4acb8489bffc0b1a3e362e, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3296764845016085387, guid: 7c1e3d19ef4acb8489bffc0b1a3e362e, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 696841935
+      objectReference: {fileID: 0}
     - target: {fileID: 5162828477151334311, guid: 7c1e3d19ef4acb8489bffc0b1a3e362e, type: 3}
       propertyPath: 'ATTACK_List.Array.data[1]'
       value: 
