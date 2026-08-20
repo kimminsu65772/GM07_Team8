@@ -12,4 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15273c1c63d3a2742b27c115df27f171, type: 3}
   m_Name: HeroUnlockCatalog
   m_EditorClassIdentifier: Assembly-CSharp::HeroUnlockCatalog
-  heroUnlocks: []
+  heroUnlocks:
+  - heroId: 3
+    currencyCost:
+      Type: 2
+      Amount: 3000
+    unlockRequirement:
+      isNeedUnlockRequirement: 0
+      requiredMaxClearedStage: 0
