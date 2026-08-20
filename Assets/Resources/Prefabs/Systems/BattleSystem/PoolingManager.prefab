@@ -52,3 +52,7 @@ MonoBehaviour:
   rapidInitialSize: 30
   freezeImpactVfxPrefab: {fileID: 3391895794129409543, guid: 7de74a08c40e78941975622b05d0225c, type: 3}
   freezeImpactVfxInitialSize: 5
+  heroProjectile1Prefab: {fileID: 2817707393459148996, guid: 00ab1cd3e4bc5794c8cef6307342dc7a, type: 3}
+  heroProjectile1InitialSize: 5
+  heroProjectile2Prefab: {fileID: 2817707393459148996, guid: 05890600abc9e0d47a5c4d82ca251c7f, type: 3}
+  heroProjectile2InitialSize: 5
