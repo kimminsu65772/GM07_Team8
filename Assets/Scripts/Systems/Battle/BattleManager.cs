@@ -31,14 +31,15 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    public AirshipController Airship => airship;
-
     private readonly List<Hero> spawnedHeroes = new();
     private readonly Dictionary<HeroNameEnum, Hero> heroCache = new();
     private int currentStage;
     private bool isInitialized;
 
     private HeroFormationManager heroFormationManager;
+
+    public AirshipController Airship => airship;
+    public IReadOnlyList<Hero> SpawnedHeroes => spawnedHeroes;
 
     private void Start()
     {
