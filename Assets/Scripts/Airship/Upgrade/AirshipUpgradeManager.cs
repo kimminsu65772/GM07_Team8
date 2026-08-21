@@ -62,7 +62,7 @@ public class AirshipUpgradeManager : MonoBehaviour
 
         upgradeState.SetLevels(
             saveData.AttackLevel,
-            saveData.DefenseLevel,
+            saveData.RecoveryLevel,
             saveData.MaxHealthLevel,
             saveData.CriticalLevel
         );
@@ -78,7 +78,7 @@ public class AirshipUpgradeManager : MonoBehaviour
         }
 
         saveData.AttackLevel = upgradeState.AttackLevel;
-        saveData.DefenseLevel = upgradeState.DefenseLevel;
+        saveData.RecoveryLevel = upgradeState.RecoveryLevel;
         saveData.MaxHealthLevel = upgradeState.MaxHealthLevel;
         saveData.CriticalLevel = upgradeState.CriticalLevel;
     }

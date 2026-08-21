@@ -1059,11 +1059,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85929e5032d740a47a9cd8407998db26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AirshipHealth
-  equipmentController: {fileID: 0}
+  equipmentController: {fileID: 2430253705024483779}
   currentHealth: 0
   shield: 0
   hitRadius: 3.95
   drawOnlyWhenSelected: 1
+  recoveryInterval: 1
 --- !u!114 &340989355314108434
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -35,7 +35,7 @@ public static class GameFormatUtils
                 return ToPercent(rawValue);
 
             case AirshipStatType.Attack:
-            case AirshipStatType.Defense:
+            case AirshipStatType.Recovery:
             case AirshipStatType.MaxHealth:
                 return ToIdleNumber(rawValue);
 

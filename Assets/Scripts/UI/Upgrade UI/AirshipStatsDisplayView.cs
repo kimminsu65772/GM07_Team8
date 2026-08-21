@@ -1,11 +1,12 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class AirshipStatsDisplayView : MonoBehaviour
 {
     [Header("UI 텍스트 연결 (최종 수치)")]
     [SerializeField] private TextMeshProUGUI attackValueText;
-    [SerializeField] private TextMeshProUGUI defenseValueText;
+    [FormerlySerializedAs("defenseValueText")] [SerializeField] private TextMeshProUGUI recoveryValueText;
     [SerializeField] private TextMeshProUGUI maxHealthValueText;
     [SerializeField] private TextMeshProUGUI criticalValueText;
     private AirshipStatController statController;
@@ -35,7 +36,7 @@ public class AirshipStatsDisplayView : MonoBehaviour
         if (stats == null) return;
 
         UpdateStatUI(AirshipStatType.Attack, stats.Attack, attackValueText);
-        UpdateStatUI(AirshipStatType.Defense, stats.Defense, defenseValueText);
+        UpdateStatUI(AirshipStatType.Recovery, stats.Recovery, recoveryValueText);
         UpdateStatUI(AirshipStatType.MaxHealth, stats.MaxHealth, maxHealthValueText);
         UpdateStatUI(AirshipStatType.CriticalChance, stats.CriticalChance, criticalValueText);
     }
