@@ -139,7 +139,6 @@ public class AirshipEquipmentListUI : MonoBehaviour
         if (equipmentController != null)
         {
             equipmentController.EquipCannon(cannonType);
-            SaveCannonState(cannonType);
         }
     }
     public void OnClickEquipGearButton(AirshipGearType gearType)
@@ -147,7 +146,6 @@ public class AirshipEquipmentListUI : MonoBehaviour
         if (equipmentController != null)
         {
             equipmentController.EquipGear(gearType);
-            SaveGearState(gearType); 
         }
     }
     private void ToggleUnequipCannon()
@@ -166,7 +164,6 @@ public class AirshipEquipmentListUI : MonoBehaviour
                 del?.Invoke(null);
             }
             equipmentController.EquipCannon(AirshipCannonType.Normal);
-            SaveCannonState(AirshipCannonType.Normal);
         }
     }
     private void ToggleUnequipGear()
@@ -185,26 +182,6 @@ public class AirshipEquipmentListUI : MonoBehaviour
                 del?.Invoke(null);
             }
             equipmentController.EquipGear(AirshipGearType.Normal);
-            SaveGearState(AirshipGearType.Normal);
-        }
-    }
-    //세이브 데이터 실시간 반영
-    private void SaveCannonState(AirshipCannonType cannonType)
-    {
-        var playerInfo = PlayerInfo.Instance;
-        if (playerInfo != null && playerInfo.Airship != null)
-        {
-            FieldInfo saveField = playerInfo.Airship.GetType().GetField("EquippedCannonType");
-            if (saveField != null) saveField.SetValue(playerInfo.Airship, cannonType);
-        }
-    }
-    private void SaveGearState(AirshipGearType gearType)
-    {
-        var playerInfo = PlayerInfo.Instance;
-        if (playerInfo != null && playerInfo.Airship != null)
-        {
-            FieldInfo saveField = playerInfo.Airship.GetType().GetField("EquippedGearType");
-            if (saveField != null) saveField.SetValue(playerInfo.Airship, gearType);
         }
     }
 }
