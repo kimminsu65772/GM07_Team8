@@ -979,9 +979,10 @@ GameObject:
   - component: {fileID: 4851664543934810972}
   - component: {fileID: 5200261145840763693}
   - component: {fileID: 2751722732999653326}
-  - component: {fileID: 340989355314108434}
   - component: {fileID: 3859776976768732686}
+  - component: {fileID: 340989355314108434}
   - component: {fileID: 246650095237226947}
+  - component: {fileID: 6135318061004324761}
   - component: {fileID: 6065782831364134342}
   - component: {fileID: 4626290188937191730}
   - component: {fileID: 2430253705024483779}
@@ -1065,26 +1066,6 @@ MonoBehaviour:
   hitRadius: 3.95
   drawOnlyWhenSelected: 1
   recoveryInterval: 1
---- !u!114 &340989355314108434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3601249629661744666}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6190817e96c805a4a88d6422abdc92b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AirshipAttack
-  enemyChecker: {fileID: 246650095237226947}
-  health: {fileID: 2751722732999653326}
-  equipmentController: {fileID: 2430253705024483779}
-  aimPoint: {fileID: 2617695791087846299}
-  projectileSpawnPoint: {fileID: 8275409358988598380}
-  aimLerpSpeed: 25
-  targetHeightOffset: 0.5
-  targetRefreshInterval: 0.1
 --- !u!114 &3859776976768732686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1101,6 +1082,28 @@ MonoBehaviour:
   accelerationTime: 0.7
   decelerationTime: 0.7
   moveDir: {x: 1, y: 0, z: 0}
+--- !u!114 &340989355314108434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3601249629661744666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6190817e96c805a4a88d6422abdc92b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AirshipAttack
+  heroChecker: {fileID: 6135318061004324761}
+  enemyChecker: {fileID: 246650095237226947}
+  health: {fileID: 2751722732999653326}
+  equipmentController: {fileID: 2430253705024483779}
+  aimPoint: {fileID: 2617695791087846299}
+  projectileSpawnPoint: {fileID: 8275409358988598380}
+  aimLerpSpeed: 25
+  targetHeightOffset: 0.5
+  targetRefreshInterval: 0.1
+  noTargetDelay: 0.7
 --- !u!114 &246650095237226947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1123,6 +1126,18 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &6135318061004324761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3601249629661744666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 481c90d70a76b0846a5b3b713c8d8ffe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AirshipHeroChecker
 --- !u!61 &6065782831364134342
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1211,6 +1226,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 88fbdf1c82fecdb4fa2b5269584cd0de, type: 2}
   - {fileID: 11400000, guid: 1178340448127f645bf6839e3259f69c, type: 2}
   - {fileID: 11400000, guid: 0dfeca2a632c43e41bdf1f40be9fb5e0, type: 2}
+  - {fileID: 11400000, guid: 3fc69043653c4834ea3fc9f550da928e, type: 2}
   gearDatas:
   - {fileID: 11400000, guid: e6e55b3743fe3e14f82e3c7041fb38b3, type: 2}
   - {fileID: 11400000, guid: 414160772b42c304daacb64ebe0b42e3, type: 2}

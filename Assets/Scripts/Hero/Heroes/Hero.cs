@@ -184,6 +184,27 @@ public abstract class Hero : MonoBehaviour, IDamageable
             StartCoroutine(DieAndRevive());
         }
     }
+    public void Heal(DamageInfo damageInfo)
+    {
+        if (isDead || damageInfo.Damage <= 0f)
+        {
+            return;
+        }
+
+        // 나중에 데미지 텍스트랑 연결할때 이벤트로 넘겨주려면 실제 힐량이 필요
+        float actualHeal =
+            Mathf.Min(
+                damageInfo.Damage,
+                HeroMaxHP - HeroCurrentHP
+            );
+
+        if (actualHeal <= 0f)
+        {
+            return;
+        }
+
+        HeroCurrentHP += actualHeal;
+    }
 
     public void SearchEnemy()
     {

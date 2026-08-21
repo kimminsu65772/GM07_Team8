@@ -5,6 +5,7 @@ public enum AirshipCannonType
     Normal,
     Freeze,
     Rapid,
+    Heal,
 }
 
 [CreateAssetMenu(
