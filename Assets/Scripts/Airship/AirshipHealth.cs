@@ -24,6 +24,12 @@ public class AirshipHealth : MonoBehaviour, IDamageable
     private bool isStunned;
     private float stunRemainingTime;
     private float stunImmunityRemainingTime;
+    
+    
+    
+    [SerializeField] private float recoveryInterval = 1f;
+    private float recoveryAmount;
+    private float recoveryTimer;
 
     public float HitRadius => hitRadius;
     public float MaxHealth => maxHealth;
@@ -35,7 +41,7 @@ public class AirshipHealth : MonoBehaviour, IDamageable
 
     public event Action<float, float> OnHealthChanged;
     public event Action<DamageInfo> OnDamaged;
-    public event Action<float> OnHealed;
+    public event Action<DamageInfo> OnHealed;
     public event Action<float> OnShieldChanged;
     public event Action OnDestroyed;
     
@@ -79,7 +85,17 @@ public class AirshipHealth : MonoBehaviour, IDamageable
         
         
         
-        
+        recoveryTimer -= Time.deltaTime;
+
+        if (recoveryTimer <= 0f)
+        {
+            if (currentHealth < maxHealth)
+            {
+                Heal(new DamageInfo(recoveryAmount, isHeal: true));
+            }
+
+            recoveryTimer = recoveryInterval;
+        }
         
         
         
@@ -157,6 +173,7 @@ public class AirshipHealth : MonoBehaviour, IDamageable
                 : 1f;
 
         maxHealth = stats.MaxHealth;
+        recoveryAmount = stats.Recovery;
 
         // 최초 스탯 적용
         if (previousMaxHealth <= 0f)
@@ -194,6 +211,8 @@ public class AirshipHealth : MonoBehaviour, IDamageable
         shield = shieldEnabled ? maxHealth : 0f;
         
         currentHealth = maxHealth;
+        
+        recoveryTimer = recoveryInterval;
         
         // 스턴 초기화
         isStunned = false;
@@ -256,16 +275,21 @@ public class AirshipHealth : MonoBehaviour, IDamageable
             DestroyAirship();
     }
 
-    public void Heal(float amount)
+    public void Heal(DamageInfo healInfo)
     {
-        if (isDestroyed || amount <= 0f)
+        if (isDestroyed || healInfo.Damage <= 0f || currentHealth >= maxHealth)
         {
             return;
         }
 
-        currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
+        float actualHeal = Mathf.Min(
+            healInfo.Damage,
+            maxHealth - currentHealth
+        );
+        currentHealth += actualHeal;
 
-        OnHealed?.Invoke(amount);
+        OnHealed?.Invoke(new DamageInfo(actualHeal, isHeal: true));
+
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
@@ -345,6 +369,6 @@ public class AirshipHealth : MonoBehaviour, IDamageable
     [ContextMenu("Test Heal")]
     private void TestHeal()
     {
-        Heal(10f);
+        Heal(new DamageInfo(10f, isHeal: true));
     }
 }

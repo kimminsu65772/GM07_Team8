@@ -81,7 +81,7 @@ public class AirshipStatController : MonoBehaviour
         }
 
         CalculateStat(AirshipStatType.Attack, upgradeState.AttackLevel);
-        CalculateStat(AirshipStatType.Defense, upgradeState.DefenseLevel);
+        CalculateStat(AirshipStatType.Recovery, upgradeState.RecoveryLevel);
         CalculateStat(AirshipStatType.MaxHealth, upgradeState.MaxHealthLevel);
         CalculateStat(AirshipStatType.CriticalChance, upgradeState.CriticalLevel);
         CalculateStat(AirshipStatType.MoveSpeed, 0);
