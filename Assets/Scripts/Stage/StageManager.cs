@@ -178,10 +178,17 @@ public class StageManager : MonoBehaviour
         int spawnIndex,
         bool isBossWave)
     {
+        EnemyStats prefabStats =
+        enemyPrefab.GetComponent<EnemyStats>();
+
+        bool isBoss =
+            prefabStats != null &&
+            prefabStats.IsBoss;
         // 위, 가운데, 아래 순서로 위치를 나눠서 생성
         float yOffset ;
+       
         // 보스는 가운데에서 생성
-        if (isBossWave)
+        if (isBoss)
         {
             yOffset = 0f;
         }
@@ -189,16 +196,13 @@ public class StageManager : MonoBehaviour
         {
             // 일반 적은 아래 → 가운데 → 위 순서
             yOffset =
-                (spawnIndex % 3 - 1) *
-                spawnYOffset;
+                (spawnIndex % 3 - 1) * spawnYOffset;
+
+           
         }
         Vector3 spawnPosition =
             spawnPoint.position +
-            new Vector3(
-                0f,
-                yOffset,
-                0f
-            );
+            new Vector3( 0, yOffset, 0f );
 
         GameObject spawnedEnemy =
             Instantiate(

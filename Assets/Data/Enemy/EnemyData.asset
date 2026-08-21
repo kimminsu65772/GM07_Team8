@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: EnemyData
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   maxHealth: 100
-  attackPower: 10
+  attackPower: 5
   moveSpeed: 3
-  attackRange: 4
+  attackRange: 6
   attackInterval: 1
   isBoss: 0

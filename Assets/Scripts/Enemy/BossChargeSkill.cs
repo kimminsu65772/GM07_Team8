@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(EnemyStats))]
@@ -14,7 +15,7 @@ public class BossChargeSkill : MonoBehaviour
     [Header("Damage")]
     [SerializeField] private float chargeDamageMultiplier = 2f;
     [SerializeField] private float hitRadius = 1.2f;
-   // [SerializeField] private LayerMask targetLayer;
+    [SerializeField] private LayerMask targetLayer;
 
     private Rigidbody2D enemyRigidbody2D;
     private EnemyStats enemyStats;
@@ -199,17 +200,16 @@ public class BossChargeSkill : MonoBehaviour
             return;
         }
 
-        // 돌진 시작점부터 끝까지 판정
-        RaycastHit2D hit =
-            Physics2D.CircleCast(
+        RaycastHit2D[] hits =
+            Physics2D.CircleCastAll(
                 originPosition,
                 hitRadius,
                 Vector2.left,
-                chargeDistance
-               // targetLayer
+                chargeDistance,
+                targetLayer
             );
 
-        if (hit.collider == null)
+        if (hits.Length == 0)
         {
             Debug.Log(
                 "몸통박치기 대상 없음"
@@ -218,36 +218,49 @@ public class BossChargeSkill : MonoBehaviour
             return;
         }
 
-        // 충돌한 대상에서 IDamageable 탐색
-        IDamageable target =
-            hit.collider.GetComponentInParent<IDamageable>();
-
-        if (target == null)
-        {
-            Debug.Log(
-                $"몸통박치기 충돌은 했지만 IDamageable 없음: {hit.collider.name}"
-            );
-
-            return;
-        }
-
-        // 기본 공격력에 스킬 배율 적용
         float chargeDamage =
             enemyStats.AttackPower *
             chargeDamageMultiplier;
 
-        Debug.Log(
-            $"몸통박치기 적중! 대상: {hit.collider.name}, 데미지: {chargeDamage}"
-        );
+        // 콜라이더가 여러 개인 대상을 중복 공격하지 않도록 저장
+        HashSet<IDamageable> damagedTargets =
+            new HashSet<IDamageable>();
 
-        target.TakeDamage(
-     new DamageInfo(
-         chargeDamage
-     )
- );
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (hit.collider == null)
+            {
+                continue;
+            }
 
-        // 한 번 박았으면 추가 데미지 방지
-        hasHitTarget = true;
+            IDamageable target =
+                hit.collider.GetComponentInParent<IDamageable>();
+
+            if (target == null ||
+                damagedTargets.Contains(target))
+            {
+                continue;
+            }
+
+            damagedTargets.Add(target);
+
+            target.TakeDamage(
+                new DamageInfo(
+                    chargeDamage
+                )
+            );
+
+            Debug.Log(
+                $"몸통박치기 적중! 대상: " +
+                $"{hit.collider.name}, " +
+                $"데미지: {chargeDamage}"
+            );
+        }
+
+        if (damagedTargets.Count > 0)
+        {
+            hasHitTarget = true;
+        }
     }
 
     private void OnDrawGizmosSelected()

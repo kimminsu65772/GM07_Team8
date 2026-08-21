@@ -216,7 +216,7 @@ MonoBehaviour:
   airshipTarget: {fileID: 0}
   heroLayerMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 129
 --- !u!58 &8981681246167486618
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -271,6 +271,9 @@ MonoBehaviour:
   teleportDelay: 0.04
   chargeDamageMultiplier: 2
   hitRadius: 1.2
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 129
 --- !u!114 &-4246649044039315807
 MonoBehaviour:
   m_ObjectHideFlags: 0

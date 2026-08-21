@@ -8,7 +8,6 @@ public class EnemyRangedAttack : MonoBehaviour
     [SerializeField] private Transform target;
 
     [Header("Projectile")]
-    [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform firePoint;
 
     [Header("Attack Event")]
@@ -75,30 +74,28 @@ public class EnemyRangedAttack : MonoBehaviour
     // 공격 애니메이션 이벤트에서 호출
     public void FireProjectile()
     {
-        if (projectilePrefab == null ||
-            firePoint == null ||
-            target == null)
+        if (firePoint == null ||
+            target == null ||
+            enemyStats == null ||
+            PoolingManager.Instance == null)
         {
             return;
         }
 
-        GameObject projectile =
-            Instantiate(
-                projectilePrefab,
-                firePoint.position,
-                Quaternion.identity
-            );
+        EnemyProjectile projectile =
+            PoolingManager.Instance.GetEnemyProjectile();
 
-        EnemyProjectile enemyProjectile =
-            projectile.GetComponent<EnemyProjectile>();
-
-        if (enemyProjectile != null)
+        if (projectile == null)
         {
-            enemyProjectile.Init(
-                target,
-                enemyStats.AttackPower
-            );
+            return;
         }
+
+        projectile.Init(
+            firePoint.position,
+            Quaternion.identity,
+            target,
+            enemyStats.AttackPower
+        );
     }
 
     private void ResetAttackTimer()

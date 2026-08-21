@@ -15,4 +15,5 @@ MonoBehaviour:
   stageNumber: 10
   waves:
   - {fileID: 11400000, guid: 388ed8812e0b44d89367935626b07d75, type: 2}
-  - {fileID: 11400000, guid: 84e560081de34ffa825b0214869c9857, type: 2}
+  - {fileID: 11400000, guid: 945ba84e37914694f8ed5a7a3233bbe8, type: 2}
+  - {fileID: 11400000, guid: 1885290fea7e4fa41b4a5e834f322d13, type: 2}
