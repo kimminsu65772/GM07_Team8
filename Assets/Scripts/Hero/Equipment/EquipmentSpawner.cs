@@ -56,9 +56,8 @@ public class EquipmentSpawner : MonoBehaviour
         string dicLog = "";
         foreach (var equip in EquipmentManager.EquipDic)
         {
-            dicLog += $"ID: {equip.Key}, Equipment: {equip.Value}\n";
+            Debug.Log($"ID: {equip.Key}, Equipment: {equip.Value}\n");
         }
-        Debug.Log($"생성 완료\n{dicLog}");
     }
 
     private void RandomInfo()
@@ -101,7 +100,7 @@ public class EquipmentSpawner : MonoBehaviour
         }
     }
 
-    public int SetEquipID()
+    private int SetEquipID()
     {
         int n = 1;
         int equipID;
