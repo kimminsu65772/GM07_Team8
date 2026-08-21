@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c48f0724917842144801363b193cf7b0, type: 3}
+  m_Name: AirshipPartsUnlockCatalog
+  m_EditorClassIdentifier: Assembly-CSharp::AirshipPartsUnlockCatalog
+  cannonUnlocks:
+  - cannonType: 1
+    currencyType: 1
+    unlockCost: 10000
+    unlockRequirement:
+      requiredMaxClearedStage: 5
+      requiredAirshipUpgradeStat: 0
+      requiredAirshipUpgradeLevel: 10
+  - cannonType: 2
+    currencyType: 1
+    unlockCost: 20000
+    unlockRequirement:
+      requiredMaxClearedStage: 10
+      requiredAirshipUpgradeStat: 0
+      requiredAirshipUpgradeLevel: 20
+  gearUnlocks:
+  - gearType: 1
+    currencyType: 2
+    unlockCost: 20000
+    unlockRequirement:
+      requiredMaxClearedStage: 5
+      requiredAirshipUpgradeStat: 2
+      requiredAirshipUpgradeLevel: 20
+  - gearType: 2
+    currencyType: 1
+    unlockCost: 10000
+    unlockRequirement:
+      requiredMaxClearedStage: 0
+      requiredAirshipUpgradeStat: 0
+      requiredAirshipUpgradeLevel: 0
+  - gearType: 3
+    currencyType: 1
+    unlockCost: 40000
+    unlockRequirement:
+      requiredMaxClearedStage: 10
+      requiredAirshipUpgradeStat: 2
+      requiredAirshipUpgradeLevel: 20

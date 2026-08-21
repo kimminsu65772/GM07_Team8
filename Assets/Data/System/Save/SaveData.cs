@@ -51,6 +51,8 @@ public class AirshipSaveData
     public int CriticalLevel { get; set; }
     public AirshipCannonType EquippedCannonType { get; set; }
     public AirshipGearType EquippedGearType { get; set; }
+    public HashSet<AirshipCannonType> OwnedCannons { get; set; }
+    public HashSet<AirshipGearType> OwnedGears { get; set; }
 }
 
 /*
