@@ -12,6 +12,11 @@ public class HeroEntry : ScriptableObject
     [SerializeField] private bool isDefaultOwned;
     [SerializeField, Min(1)] private int defaultLevel = 1;
 
+    [Header("스킬 관련 설정")]
+    [SerializeField] private Sprite skillIcon;
+    [SerializeField] private string skillName;
+    [SerializeField] private string skillDescription;
+
     public HeroNameEnum HeroId => heroId;
     public string HeroName => heroId.ToString();
     public Sprite HeroIcon => heroIcon;
@@ -19,4 +24,7 @@ public class HeroEntry : ScriptableObject
     public bool IsDefaultOwned => isDefaultOwned;
     public HeroLocationEnum HeroLocation => heroLocation;
     public int DefaultLevel => Mathf.Max(1, defaultLevel);
+    public Sprite SkillIcon => skillIcon;
+    public string SkillName => skillName;
+    public string SkillDescription => skillDescription;
 }
