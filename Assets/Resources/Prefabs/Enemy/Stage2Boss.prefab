@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 5527924309406029220}
   - component: {fileID: -4246649044039315807}
   m_Layer: 6
-  m_Name: Stage1Boss
+  m_Name: Stage2Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6613ecf97aab4b84d9a2d5eb21ea8f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
-  enemyData: {fileID: 11400000, guid: 9c4e501976d665f4fb258ff6a176f0ba, type: 2}
+  enemyData: {fileID: 11400000, guid: c99cf89c7ac85bb499016a60b03ff1dd, type: 2}
   currentHealth: 0
   hitRadius: 1
   deathDestroyDelay: 1.2

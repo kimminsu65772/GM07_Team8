@@ -10,12 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 26d8ad8942967f0489b443454c35a2ae, type: 3}
-  m_Name: StageTest_Stage02_Wave01
+  m_Name: NamedWave
   m_EditorClassIdentifier: Assembly-CSharp::WaveData
   enemySpawns:
   - enemyPrefab: {fileID: 7931180812232907860, guid: 4cf911cae5db46c48bd3da6e98dc7c60, type: 3}
     spawnCount: 5
-    spawnInterval: 0.75
+    spawnInterval: 0.5
+  - enemyPrefab: {fileID: 7931180812232907860, guid: 2d9687bbb1af7054eac23976dcc68c51, type: 3}
+    spawnCount: 3
+    spawnInterval: 0.5
+  - enemyPrefab: {fileID: 7931180812232907860, guid: 9cd69cc29160c9e46ad082a4534600a4, type: 3}
+    spawnCount: 2
+    spawnInterval: 0.5
   nextWaveDelay: 2
   isBossWave: 0
-  timeLimit: 0
+  timeLimit: 75
