@@ -18,6 +18,7 @@ public class AirshipHeroChecker : MonoBehaviour
             if (hero == null ||
                 !hero.isActiveAndEnabled ||
                 hero.IsDead ||
+                hero.Location != HeroLocationEnum.Front ||
                 hero.HeroMaxHP <= 0f ||
                 hero.HeroCurrentHP <= 0f ||
                 hero.HeroCurrentHP >= hero.HeroMaxHP)
