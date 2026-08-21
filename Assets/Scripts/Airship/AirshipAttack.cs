@@ -16,6 +16,11 @@ public class AirshipAttack : MonoBehaviour
 
     [Header("타겟 갱신")]
     [SerializeField, Min(0.01f)] private float targetRefreshInterval = 0.1f;
+    
+    [Header("타겟 없으면 복귀")]
+    [SerializeField, Min(0f)] private float noTargetDelay = 0.7f;
+
+    private float noTargetTimer;
 
     private AirshipCannonData currentCannon;
 
@@ -80,7 +85,15 @@ public class AirshipAttack : MonoBehaviour
 
         // 마지막으로 선택한 타겟을 계속 부드럽게 추적
         if (cachedTarget != null)
+        {
+            noTargetTimer = 0f;
+
             RotateAimPoint(cachedTarget);
+        }
+        else
+        {
+            UpdateAimReturn();
+        }
 
         if (attackTimer > 0f)
             return;
@@ -99,6 +112,8 @@ public class AirshipAttack : MonoBehaviour
 
         cachedTarget = null;
         cachedDamageable = null;
+        
+        noTargetTimer = 0f;
 
         aimPoint.localRotation = Quaternion.Euler(Vector3.zero);
     }
@@ -244,5 +259,28 @@ public class AirshipAttack : MonoBehaviour
             targetRotation,
             aimLerpSpeed * Time.deltaTime
         );
+    }
+    private void UpdateAimReturn()
+    {
+        if (aimPoint == null)
+            return;
+
+        noTargetTimer += Time.deltaTime;
+
+        if (noTargetTimer < noTargetDelay)
+            return;
+
+        if (aimLerpSpeed <= 0f)
+        {
+            aimPoint.localRotation = Quaternion.identity;
+            return;
+        }
+
+        aimPoint.localRotation =
+            Quaternion.Lerp(
+                aimPoint.localRotation,
+                Quaternion.identity,
+                aimLerpSpeed * Time.deltaTime
+            );
     }
 }
