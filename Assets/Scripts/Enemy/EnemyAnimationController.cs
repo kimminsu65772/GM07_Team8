@@ -12,7 +12,9 @@ public class EnemyAnimationController : MonoBehaviour
 
     private static readonly int DeathParameter =  Animator.StringToHash("4_Death");
 
-    private static readonly int ChargeParameter =  Animator.StringToHash("5_Other");
+    private static readonly int OtherParameter5 = Animator.StringToHash("5_Other");
+
+    private static readonly int OtherParameter6 =  Animator.StringToHash("6_Other");
     // 풀에서 재사용할 때 복구할 SPUM 내부 Transform 정보
     private Transform[] animatedTransforms;
     private Vector3[] initialLocalPositions;
@@ -154,9 +156,13 @@ public class EnemyAnimationController : MonoBehaviour
             false
         );
 
-        enemyAnimator.SetTrigger(
-            ChargeParameter
-        );
+        // 현재 캐릭터에 존재하는 Other 파라미터로 스킬을 실행한다.
+        int otherParameter = GetOtherParameter();
+
+        if (otherParameter != 0)
+        {
+            enemyAnimator.SetTrigger(otherParameter);
+        }
     }
 
     private void HandleEnemyDamaged(
@@ -245,12 +251,8 @@ public class EnemyAnimationController : MonoBehaviour
             return;
         }
 
-        // 사망 상태에 고정된 Animator를 기본 상태로 되돌린다.
-        RuntimeAnimatorController animatorController =
-            enemyAnimator.runtimeAnimatorController;
-
-        enemyAnimator.runtimeAnimatorController = null;
-        enemyAnimator.runtimeAnimatorController = animatorController;
+        // Animator Controller를 유지한 채 상태와 본래 포즈를 초기화한다.
+        enemyAnimator.Rebind();
 
         // 사망 애니메이션이 변경한 SPUM 내부 Transform을 기본값으로 복구한다.
         if (animatedTransforms != null)
@@ -268,11 +270,18 @@ public class EnemyAnimationController : MonoBehaviour
             }
         }
 
-        // 이전 사용에서 남은 공격·피격·사망·스킬 트리거를 제거한다.
+        // 이전 사용에서 남은 공통 트리거를 제거한다.
         enemyAnimator.ResetTrigger(AttackParameter);
         enemyAnimator.ResetTrigger(DamagedParameter);
         enemyAnimator.ResetTrigger(DeathParameter);
-        enemyAnimator.ResetTrigger(ChargeParameter);
+
+        // 현재 Animator에 존재하는 Other 트리거만 초기화한다.
+        int otherParameter = GetOtherParameter();
+
+        if (otherParameter != 0)
+        {
+            enemyAnimator.ResetTrigger(otherParameter);
+        }
 
         // 이동 및 사망 상태를 살아 있는 기본 상태로 변경한다.
         enemyAnimator.SetBool(MoveParameter, false);
@@ -280,5 +289,40 @@ public class EnemyAnimationController : MonoBehaviour
 
         // 변경한 애니메이션 상태를 즉시 반영한다.
         enemyAnimator.Update(0f);
+    }
+
+    // 현재 Animator에 해당 파라미터가 있는지 확인한다.
+    private bool HasAnimatorParameter(int parameterHash)
+    {
+        if (enemyAnimator == null)
+        {
+            return false;
+        }
+
+        foreach (AnimatorControllerParameter parameter in enemyAnimator.parameters)
+        {
+            if (parameter.nameHash == parameterHash)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // 캐릭터 Animator에 맞는 Other 파라미터를 반환한다.
+    private int GetOtherParameter()
+    {
+        if (HasAnimatorParameter(OtherParameter5))
+        {
+            return OtherParameter5;
+        }
+
+        if (HasAnimatorParameter(OtherParameter6))
+        {
+            return OtherParameter6;
+        }
+
+        return 0;
     }
 }

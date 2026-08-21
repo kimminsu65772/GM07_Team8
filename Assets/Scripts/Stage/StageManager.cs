@@ -214,12 +214,7 @@ public class StageManager : MonoBehaviour
             return;
         }
 
-        EnemyStats enemyStats =
-            enemyPoolManager.GetEnemy(
-                enemyPrefab,
-                spawnPosition,
-                Quaternion.identity
-            );
+        EnemyStats enemyStats =  enemyPoolManager.GetEnemy(enemyPrefab,spawnPosition,Quaternion.identity );
 
         if (enemyStats == null)
         {
@@ -400,11 +395,7 @@ public class StageManager : MonoBehaviour
                     yield break;
                 }
 
-                SpawnEnemy(
-                    spawnEntry.EnemyPrefab,
-                    i,
-                    waveData.IsBossWave
-                );
+                SpawnEnemy(  spawnEntry.EnemyPrefab,i, waveData.IsBossWave);
 
                 bool hasNextEnemy =
                     i < spawnEntry.SpawnCount - 1;
