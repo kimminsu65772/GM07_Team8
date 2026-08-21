@@ -11,6 +11,10 @@ public class AirshipItemSlotUI : MonoBehaviour
 
     [Header("Equip Effect")]
     [SerializeField] private GameObject goldGlowObject;
+
+    [Header("Lock Effect")]
+    [SerializeField] private GameObject lockObject;
+
     // 대포
     public void SetCannonInfo(AirshipCannonData data)
     {
@@ -31,11 +35,20 @@ public class AirshipItemSlotUI : MonoBehaviour
             if (descText != null) descText.text = $"타입: {data.GearType}";
         }
     }
+    //장착
     public void SetEquippedState(bool isEquipped)
     {
         if (goldGlowObject != null)
         {
             goldGlowObject.SetActive(isEquipped);
+        }
+    }
+    //잠금
+    public void SetLockedState(bool isLocked)
+    {
+        if (lockObject != null)
+        {
+            lockObject.SetActive(isLocked);
         }
     }
 }
