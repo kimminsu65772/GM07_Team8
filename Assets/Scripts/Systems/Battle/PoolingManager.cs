@@ -57,6 +57,21 @@ public class PoolingManager : MonoBehaviour
     private readonly List<HeroAttackProjectileController>
         inactiveHeroProjectile2 =
             new List<HeroAttackProjectileController>();
+    
+    
+    
+    
+    [Space]
+    [Header("적 투사체")]
+    [SerializeField]
+    private EnemyProjectile enemyProjectilePrefab;
+
+    [SerializeField, Min(0)]
+    private int enemyProjectileInitialSize = 10;
+
+    private readonly List<EnemyProjectile>
+        inactiveEnemyProjectiles =
+            new List<EnemyProjectile>();
 
     private void Awake()
     {
@@ -107,6 +122,11 @@ public class PoolingManager : MonoBehaviour
             inactiveHeroProjectile2,
             HeroProjectileType.PlayerAttackProjectile2
         );
+        
+        
+        
+        
+        PrewarmEnemyProjectile();
     }
 
     private void OnDestroy()
@@ -538,5 +558,98 @@ public class PoolingManager : MonoBehaviour
             default:
                 return null;
         }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    private void PrewarmEnemyProjectile()
+    {
+        if (enemyProjectilePrefab == null)
+        {
+            Debug.LogError(
+                "적 투사체 프리팹이 지정되지 않았습니다.",
+                this
+            );
+            return;
+        }
+
+        for (int i = 0; i < enemyProjectileInitialSize; i++)
+        {
+            inactiveEnemyProjectiles.Add(
+                CreateEnemyProjectile()
+            );
+        }
+    }
+
+    private EnemyProjectile CreateEnemyProjectile()
+    {
+        EnemyProjectile projectile =
+            Instantiate(
+                enemyProjectilePrefab,
+                transform
+            );
+
+        projectile.SetPoolingManager(this);
+        projectile.gameObject.SetActive(false);
+
+        return projectile;
+    }
+
+    public EnemyProjectile GetEnemyProjectile()
+    {
+        EnemyProjectile projectile;
+
+        if (inactiveEnemyProjectiles.Count > 0)
+        {
+            int lastIndex =
+                inactiveEnemyProjectiles.Count - 1;
+
+            projectile =
+                inactiveEnemyProjectiles[lastIndex];
+
+            inactiveEnemyProjectiles.RemoveAt(lastIndex);
+        }
+        else
+        {
+            projectile = CreateEnemyProjectile();
+        }
+
+        return projectile;
+    }
+
+    public void ReleaseEnemyProjectile(
+        EnemyProjectile projectile)
+    {
+        if (projectile == null ||
+            !projectile.gameObject.activeSelf)
+        {
+            return;
+        }
+
+        projectile.gameObject.SetActive(false);
+        inactiveEnemyProjectiles.Add(projectile);
     }
 }
