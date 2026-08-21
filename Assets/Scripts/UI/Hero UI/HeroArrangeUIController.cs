@@ -211,7 +211,6 @@ public class HeroArrangeUIController : MonoBehaviour
     private List<(HeroEntry entry, HeroSaveData heroSaveData)> GetOwnedHeroes()
     {
         List<(HeroEntry entry, HeroSaveData heroSaveData)> ownedHeroes = new();
-        HashSet<string> addedHeroNames = new(); // 중복 방지용 세트 추가
 
         foreach (HeroEntry entry in playerInfo.HeroEntries)
         {
@@ -224,7 +223,6 @@ public class HeroArrangeUIController : MonoBehaviour
             if (playerInfo.TryGetHeroData(entry.HeroId, out HeroSaveData heroSaveData) && heroSaveData.IsOwned)
             {
                 ownedHeroes.Add((entry, heroSaveData));
-                addedHeroNames.Add(entry.HeroName); // 추가된 영웅 기록
             }
         }
 
