@@ -8,4 +8,5 @@ public class TestEnemy : MonoBehaviour, IDamageable
         Debug.Log($"{gameObject.name} 피격, {damageInfo.Damage} 피해");
     }
     public void Stun(float duration){}
+    public void Heal(DamageInfo damageInfo){}
 }

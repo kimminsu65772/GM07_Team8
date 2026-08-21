@@ -11,7 +11,10 @@ public class NormalProjectile : AirshipProjectileBase
 
     private void Update()
     {
-        if (target == null || damageable == null)
+        if (target == null ||
+            damageable == null ||
+            (damageable is Hero hero && hero.IsDead) ||
+            (damageable is EnemyStats enemy && enemy.IsDead))
         {
             ReturnToPool();
             return;

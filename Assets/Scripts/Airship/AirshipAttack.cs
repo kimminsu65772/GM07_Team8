@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class AirshipAttack : MonoBehaviour
 {
+    [SerializeField] private AirshipHeroChecker heroChecker;
     [SerializeField] private AirshipEnemyChecker enemyChecker;
     [SerializeField] private AirshipHealth health;
     [SerializeField] private AirshipEquipmentController equipmentController;
@@ -35,6 +36,8 @@ public class AirshipAttack : MonoBehaviour
 
     private void Awake()
     {
+        if (heroChecker == null) 
+            heroChecker = GetComponent<AirshipHeroChecker>();
         if (enemyChecker == null)
             enemyChecker = GetComponent<AirshipEnemyChecker>();
 
@@ -135,24 +138,46 @@ public class AirshipAttack : MonoBehaviour
     private void HandleCannonChanged(AirshipCannonData cannon)
     {
         currentCannon = cannon;
+        
+        cachedTarget = null;
+        cachedDamageable = null;
+        targetRefreshTimer = 0f;
     }
 
     private void RefreshTarget()
     {
-        if (enemyChecker == null)
+        if (currentCannon == null)
+        {
             return;
+        }
 
-        // 기존 타겟 선정 방식 유지
-        Transform target = enemyChecker.FindNearestEnemy();
+        Transform target;
+        IDamageable damageable = null;
 
+        if (currentCannon.CannonType == AirshipCannonType.Heal)
+        {
+            Hero hero = heroChecker?.FindHealTarget();
+
+            target = hero?.transform;
+            damageable = hero;
+        }
+        else
+        {
+            target = enemyChecker?.FindNearestEnemy();
+        }
+
+        // 같은 타겟이면 기존 캐시 유지
         if (target == cachedTarget)
+        {
             return;
+        }
 
         cachedTarget = target;
+
+        // 회복탄은 Hero를 바로 사용
+        // 일반탄만 타겟 변경 시 GetComponent 실행
         cachedDamageable =
-            target == null
-                ? null
-                : target.GetComponentInParent<IDamageable>();
+            damageable ?? target?.GetComponentInParent<IDamageable>();
     }
 
     private void Attack(Transform target)
@@ -169,14 +194,7 @@ public class AirshipAttack : MonoBehaviour
             return;
         }
 
-        if (target != cachedTarget)
-        {
-            cachedTarget = target;
-            cachedDamageable =
-                target.GetComponentInParent<IDamageable>();
-        }
-
-        if (cachedDamageable == null)
+        if (target == null || cachedDamageable == null)
         {
             return;
         }
@@ -206,10 +224,16 @@ public class AirshipAttack : MonoBehaviour
             return;
         }
 
+        bool isHeal =
+            currentCannon.CannonType == AirshipCannonType.Heal;
+
         bool isCritical =
-            criticalChance >= 1f ||
-            (criticalChance > 0f &&
-             Random.value < criticalChance);
+            !isHeal &&
+            (
+                criticalChance >= 1f ||
+                (criticalChance > 0f &&
+                 Random.value < criticalChance)
+            );
 
         float finalDamage =
             attackDamage * (isCritical ? 2f : 1f);
@@ -221,7 +245,8 @@ public class AirshipAttack : MonoBehaviour
             cachedDamageable,
             new DamageInfo(
                 finalDamage,
-                isCritical
+                isCritical,
+                isHeal
             ),
             targetHeightOffset
         );

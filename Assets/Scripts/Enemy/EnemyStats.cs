@@ -98,6 +98,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
         Debug.Log($"EnemyStats TakeDamage 호출됨: {damageAmount}");
         
     }
+    public void Heal(DamageInfo damageInfo){}
 
     private void Die()
     {
