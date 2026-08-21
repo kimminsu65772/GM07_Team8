@@ -2,7 +2,7 @@ using UnityEngine;
 
 public enum EquipGradeEnum
 {
-    Common, Rare, Epic, Legend
+    Common, Rare, Epic, Legendary
 }
 
 public enum EquipPartEnum
