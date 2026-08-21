@@ -3510,6 +3510,7 @@ GameObject:
   m_Component:
   - component: {fileID: 183848532}
   - component: {fileID: 183848531}
+  - component: {fileID: 183848533}
   m_Layer: 0
   m_Name: StageManager
   m_TagString: Untagged
@@ -3532,6 +3533,7 @@ MonoBehaviour:
   stageCatalog: {fileID: 11400000, guid: d91e731294da203459985cca1f398faa, type: 2}
   spawnYOffset: 1
   spawnPoint: {fileID: 303639108}
+  enemyPoolManager: {fileID: 183848533}
   target: {fileID: 1882879765}
   airshipHealth: {fileID: 1882879766}
   bossTopHpUI: {fileID: 0}
@@ -3558,6 +3560,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1181137083}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &183848533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183848530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d99951ee880d19e428d43f3c60a66567, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyPoolManager
 --- !u!1 &189547028
 GameObject:
   m_ObjectHideFlags: 0

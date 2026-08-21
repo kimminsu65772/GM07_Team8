@@ -26,6 +26,7 @@ public class StageManager : MonoBehaviour
 
     [Header("Spawn")]
     [SerializeField] private Transform spawnPoint;
+    [SerializeField] private EnemyPoolManager enemyPoolManager;
 
     // 실제 비행선 또는 비행선 공격 위치
     [SerializeField] private Transform target;
@@ -204,26 +205,29 @@ public class StageManager : MonoBehaviour
             spawnPoint.position +
             new Vector3( 0, yOffset, 0f );
 
-        GameObject spawnedEnemy =
-            Instantiate(
+        if (enemyPoolManager == null)
+        {
+            Debug.LogError(
+                "StageManager에 EnemyPoolManager가 연결되지 않았습니다."
+            );
+
+            return;
+        }
+
+        EnemyStats enemyStats =
+            enemyPoolManager.GetEnemy(
                 enemyPrefab,
                 spawnPosition,
                 Quaternion.identity
             );
 
-        EnemyStats enemyStats =
-            spawnedEnemy.GetComponent<EnemyStats>();
-
         if (enemyStats == null)
         {
-            Debug.LogError(
-                $"{spawnedEnemy.name}에 EnemyStats가 없습니다."
-            );
-
-            Destroy(spawnedEnemy);
-
             return;
         }
+
+        GameObject spawnedEnemy =
+            enemyStats.gameObject;
         Debug.Log(
     $"보스 확인 - IsBossWave: {isBossWave}, IsBoss: {enemyStats.IsBoss}"
 );
@@ -261,11 +265,13 @@ public class StageManager : MonoBehaviour
             enemyStats
         );
 
-        enemyStats.EnemyDied +=
-            HandleEnemyDied;
+        enemyStats.EnemyDied -= HandleEnemyDied;
 
-        enemyStats.EnemyDeathCompleted +=
-            HandleEnemyDeathCompleted;
+        enemyStats.EnemyDied += HandleEnemyDied;
+
+        enemyStats.EnemyDeathCompleted -= HandleEnemyDeathCompleted;
+
+        enemyStats.EnemyDeathCompleted += HandleEnemyDeathCompleted;
 
         // 적한테 비행선 위치 전달
         EnemyTargetSelector targetSelector =
@@ -545,35 +551,39 @@ public class StageManager : MonoBehaviour
         OnEnemyKilled?.Invoke();
     }
 
-    private void HandleEnemyDeathCompleted(
-        EnemyStats deadEnemy)
+    private void HandleEnemyDeathCompleted( EnemyStats deadEnemy)
     {
         if (deadEnemy == null)
         {
             return;
         }
 
-        deadEnemy.EnemyDeathCompleted -=
-            HandleEnemyDeathCompleted;
+        deadEnemy.EnemyDied -= HandleEnemyDied;
+        deadEnemy.EnemyDeathCompleted -=HandleEnemyDeathCompleted;
 
-        trackedEnemies.Remove(
-            deadEnemy
-        );
+        trackedEnemies.Remove( deadEnemy  );
 
         remainingEnemyCount =
             Mathf.Max(
-                remainingEnemyCount - 1,
-                0
-            );
+                remainingEnemyCount - 1, 0 );
+        if (deadEnemy.IsBoss && bossTopHpUI != null)
+        {
+            bossTopHpUI.HideBossHp();
+        }
+        if (enemyPoolManager != null)
+        {
+            enemyPoolManager.ReleaseEnemy(deadEnemy );
+        }
+        else
+        {
+            Debug.LogError(" StageManager에 EnemyPoolManager가 연결되지 않았습니다." );
+        }
     }
 
     private void RefreshAliveEnemyCount()
     {
         // 외부에서 직접 Destroy된 적 제거
-        for (int i =
-                 trackedEnemies.Count - 1;
-             i >= 0;
-             i--)
+        for (int i =  trackedEnemies.Count - 1;  i >= 0; i--)
         {
             if (trackedEnemies[i] == null)
             {
@@ -665,15 +675,25 @@ public class StageManager : MonoBehaviour
             enemy.EnemyDeathCompleted -=
                 HandleEnemyDeathCompleted;
 
-            Destroy(
-                enemy.gameObject
-            );
+            if (enemyPoolManager != null)
+            {
+                enemyPoolManager.ReleaseEnemy(enemy);
+            }
+            else
+            {
+                Debug.LogError( "StageManager에 EnemyPoolManager가 연결되지 않았습니다." );
+            }
         }
 
         trackedEnemies.Clear();
 
         aliveEnemyCount = 0;
         remainingEnemyCount = 0;
+
+        if (bossTopHpUI != null)
+        {
+            bossTopHpUI.HideBossHp();
+        }
     }
 
     private void CompleteStage()
@@ -686,9 +706,7 @@ public class StageManager : MonoBehaviour
         isStageFinished = true;
         stageRoutine = null;
 
-        Debug.Log(
-            $"Stage {currentStageNumber}의 모든 웨이브가 완료되었습니다."
-        );
+        Debug.Log(  $"Stage {currentStageNumber}의 모든 웨이브가 완료되었습니다." );
 
         OnStageCompleted?.Invoke(
             currentStageNumber
@@ -706,14 +724,9 @@ public class StageManager : MonoBehaviour
         isStageFinished = true;
         stageRoutine = null;
 
-        Debug.Log(
-            failureMessage
-        );
+        Debug.Log(  failureMessage  );
 
-        OnStageFailed?.Invoke(
-            currentStageNumber,
-            failureMessage
-        );
+        OnStageFailed?.Invoke( currentStageNumber, failureMessage  );
     }
 
     private void OnDisable()
