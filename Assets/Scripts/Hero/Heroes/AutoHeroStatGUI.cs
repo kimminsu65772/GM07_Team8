@@ -179,7 +179,7 @@ public class AutoHeroStatGUI : MonoBehaviour
             levelText +
             $"hp : {currentHealth:F1} / {maxHealth:F1}\n" +
             $"atk : {stats.Attack:F1}\n" +
-            $"def : {stats.Defense:F1}\n" +
+            $"def : {stats.Recovery:F1}\n" +
             $"critical : {stats.CriticalChance * 100f:F1}%\n" +
             $"move speed : {currentMoveSpeed:F1} / {stats.MoveSpeed:F1}\n" +
             $"attack speed : {stats.AttackSpeed:F1}";
@@ -197,7 +197,7 @@ public class AutoHeroStatGUI : MonoBehaviour
 
         return $"level : " +
                $"atk {state.AttackLevel}, " +
-               $"def {state.DefenseLevel}, " +
+               $"def {state.RecoveryLevel}, " +
                $"hp {state.MaxHealthLevel}, " +
                $"critical {state.CriticalLevel}\n";
     }

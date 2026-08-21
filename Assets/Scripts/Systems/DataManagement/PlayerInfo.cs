@@ -252,7 +252,7 @@ public class PlayerInfo : MonoBehaviour
         return statType switch
         {
             AirshipStatType.Attack => Airship.AttackLevel,
-            AirshipStatType.Defense => Airship.DefenseLevel,
+            AirshipStatType.Recovery => Airship.RecoveryLevel,
             AirshipStatType.MaxHealth => Airship.MaxHealthLevel,
             AirshipStatType.CriticalChance => Airship.CriticalLevel,
             _ => -1
@@ -271,7 +271,7 @@ public class PlayerInfo : MonoBehaviour
         if (upgradeState == null) return;
 
         Airship.AttackLevel = upgradeState.AttackLevel;
-        Airship.DefenseLevel = upgradeState.DefenseLevel;
+        Airship.RecoveryLevel = upgradeState.RecoveryLevel;
         Airship.MaxHealthLevel = upgradeState.MaxHealthLevel;
         Airship.CriticalLevel = upgradeState.CriticalLevel;
 

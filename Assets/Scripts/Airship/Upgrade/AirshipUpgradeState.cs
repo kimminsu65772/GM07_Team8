@@ -4,18 +4,18 @@
 public class AirshipUpgradeState
 {
     public int AttackLevel { get; private set; }
-    public int DefenseLevel { get; private set; }
+    public int RecoveryLevel { get; private set; }
     public int MaxHealthLevel { get; private set; }
     public int CriticalLevel { get; private set; }
 
     public void SetLevels(
         int attackLevel,
-        int defenseLevel,
+        int recoveryLevel,
         int maxHealthLevel,
         int criticalLevel)
     {
         AttackLevel = attackLevel;
-        DefenseLevel = defenseLevel;
+        RecoveryLevel = recoveryLevel;
         MaxHealthLevel = maxHealthLevel;
         CriticalLevel = criticalLevel;
     }
@@ -26,8 +26,8 @@ public class AirshipUpgradeState
             case AirshipStatType.Attack:
                 return AttackLevel;
 
-            case AirshipStatType.Defense:
-                return DefenseLevel;
+            case AirshipStatType.Recovery:
+                return RecoveryLevel;
 
             case AirshipStatType.MaxHealth:
                 return MaxHealthLevel;
@@ -47,8 +47,8 @@ public class AirshipUpgradeState
             case AirshipStatType.Attack:
                 AttackLevel++;
                 break;
-            case AirshipStatType.Defense:
-                DefenseLevel++;
+            case AirshipStatType.Recovery:
+                RecoveryLevel++;
                 break;
             case AirshipStatType.MaxHealth:
                 MaxHealthLevel++;

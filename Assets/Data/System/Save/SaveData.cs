@@ -46,7 +46,7 @@ public class PlayerProfileSaveData
 public class AirshipSaveData
 {
     public int AttackLevel { get; set; }
-    public int DefenseLevel { get; set; }
+    public int RecoveryLevel { get; set; }
     public int MaxHealthLevel { get; set; }
     public int CriticalLevel { get; set; }
     public AirshipCannonType EquippedCannonType { get; set; }
