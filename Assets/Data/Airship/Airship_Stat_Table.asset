@@ -18,8 +18,8 @@ MonoBehaviour:
     growthValue: 2
     maxLevel: 1000
   - statType: 1
-    baseValue: 10
-    growthValue: 5
+    baseValue: 0
+    growthValue: 10
     maxLevel: 1000
   - statType: 2
     baseValue: 500
