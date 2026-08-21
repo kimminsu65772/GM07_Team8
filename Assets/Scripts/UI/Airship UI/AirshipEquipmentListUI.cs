@@ -42,11 +42,18 @@ public class AirshipEquipmentListUI : MonoBehaviour
 
                 Button btn = slot.GetComponentInChildren<Button>();
                 TextMeshProUGUI btnText = btn != null ? btn.GetComponentInChildren<TextMeshProUGUI>() : null;
-
+                //해금 여부
+                bool isOwned = PlayerInfo.Instance.IsCannonOwned(data.CannonType);
+                //장착 여부
                 bool isEquipped = (equipmentController.EquippedCannon == data);
                 if (slotUI != null)
                 {
+                    slotUI.SetLockedState(!isOwned);
                     slotUI.SetEquippedState(isEquipped);
+                }
+                if (btn != null)
+                {
+                    btn.interactable = isOwned;
                 }
                 if (btnText != null)
                 {
@@ -82,11 +89,18 @@ public class AirshipEquipmentListUI : MonoBehaviour
 
                 Button btn = slot.GetComponentInChildren<Button>();
                 TextMeshProUGUI btnText = btn != null ? btn.GetComponentInChildren<TextMeshProUGUI>() : null;
-
+                //해금 여부
+                bool isOwned = PlayerInfo.Instance.IsGearOwned(data.GearType);
+                //장착 여부
                 bool isEquipped = (equipmentController.EquippedGear == data);
                 if (slotUI != null)
                 {
+                    slotUI.SetLockedState(!isOwned);
                     slotUI.SetEquippedState(isEquipped);
+                }
+                if (btn != null)
+                {
+                    btn.interactable = isOwned;
                 }
                 if (btnText != null)
                 {
@@ -151,7 +165,8 @@ public class AirshipEquipmentListUI : MonoBehaviour
                 System.Action<AirshipCannonData> del = field.GetValue(equipmentController) as System.Action<AirshipCannonData>;
                 del?.Invoke(null);
             }
-            SaveCannonState((AirshipCannonType)(-1)); 
+            equipmentController.EquipCannon(AirshipCannonType.Normal);
+            SaveCannonState(AirshipCannonType.Normal);
         }
     }
     private void ToggleUnequipGear()
@@ -169,7 +184,8 @@ public class AirshipEquipmentListUI : MonoBehaviour
                 System.Action<AirshipGearData> del = field.GetValue(equipmentController) as System.Action<AirshipGearData>;
                 del?.Invoke(null);
             }
-            SaveGearState((AirshipGearType)(-1));
+            equipmentController.EquipGear(AirshipGearType.Normal);
+            SaveGearState(AirshipGearType.Normal);
         }
     }
     //세이브 데이터 실시간 반영
