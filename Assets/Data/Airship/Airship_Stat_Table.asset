@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b0d0b17a75945947b27986bd8b9fb34, type: 3}
-  m_Name: New Airship Stat Table
+  m_Name: Airship_Stat_Table
   m_EditorClassIdentifier: Assembly-CSharp::AirshipStatTable
   stats:
   - statType: 0
-    baseValue: 10
-    growthValue: 2
-    maxLevel: 100
-  - statType: 1
-    baseValue: 1
-    growthValue: 1
-    maxLevel: 100
-  - statType: 2
     baseValue: 100
-    growthValue: 20
-    maxLevel: 100
+    growthValue: 2
+    maxLevel: 1000
+  - statType: 1
+    baseValue: 10
+    growthValue: 5
+    maxLevel: 1000
+  - statType: 2
+    baseValue: 500
+    growthValue: 100
+    maxLevel: 1000
   - statType: 3
     baseValue: 0.01
     growthValue: 0.01

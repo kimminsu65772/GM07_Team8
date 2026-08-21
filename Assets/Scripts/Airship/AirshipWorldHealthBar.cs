@@ -230,14 +230,20 @@ public class AirshipWorldHealthBar : MonoBehaviour
         float maxHealth,
         float currentShield)
     {
+        string currentHealthText =
+            GameFormatUtils.ToIdleNumber(currentHealth);
+
         string shieldText =
             currentShield > 0f
-                ? $"(<color=#4DA6FF>+{Mathf.RoundToInt(currentShield)}</color>) "
+                ? $"(<color=#4DA6FF>+{GameFormatUtils.ToIdleNumber(currentShield)}</color>) "
                 : string.Empty;
 
+        string maxHealthText =
+            GameFormatUtils.ToIdleNumber(maxHealth);
+
         healthText.text =
-            $"{Mathf.RoundToInt(currentHealth)}{shieldText}/ " +
-            $"{Mathf.RoundToInt(maxHealth)}";
+            $"{currentHealthText}{shieldText}/ " +
+            $"{maxHealthText}";
     }
 
     private float GetBarMax(
