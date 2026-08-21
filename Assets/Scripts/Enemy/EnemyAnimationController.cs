@@ -4,20 +4,20 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyStats))]
 public class EnemyAnimationController : MonoBehaviour
 {
-    private static readonly int MoveParameter =
-        Animator.StringToHash("1_Move");
+    private static readonly int MoveParameter = Animator.StringToHash("1_Move");
 
-    private static readonly int AttackParameter =
-        Animator.StringToHash("2_Attack");
+    private static readonly int AttackParameter =  Animator.StringToHash("2_Attack");
 
-    private static readonly int DamagedParameter =
-        Animator.StringToHash("3_Damaged");
+    private static readonly int DamagedParameter =  Animator.StringToHash("3_Damaged");
 
-    private static readonly int DeathParameter =
-        Animator.StringToHash("4_Death");
+    private static readonly int DeathParameter =  Animator.StringToHash("4_Death");
 
-    private static readonly int ChargeParameter =
-        Animator.StringToHash("5_Other");
+    private static readonly int ChargeParameter =  Animator.StringToHash("5_Other");
+    // 풀에서 재사용할 때 복구할 SPUM 내부 Transform 정보
+    private Transform[] animatedTransforms;
+    private Vector3[] initialLocalPositions;
+    private Quaternion[] initialLocalRotations;
+    private Vector3[] initialLocalScales;
 
     [Header("SPUM Animator")]
     [SerializeField] private Animator enemyAnimator;
@@ -31,26 +31,48 @@ public class EnemyAnimationController : MonoBehaviour
 
     private void Awake()
     {
-        enemyRigidbody2D =
-            GetComponent<Rigidbody2D>();
-
-        enemyStats =
-            GetComponent<EnemyStats>();
+        enemyRigidbody2D = GetComponent<Rigidbody2D>();
+        enemyStats = GetComponent<EnemyStats>();
 
         // 직접 연결하지 않았다면 자식 Animator를 자동으로 찾는다.
         if (enemyAnimator == null)
         {
-            enemyAnimator =
-                GetComponentInChildren<Animator>();
+            enemyAnimator = GetComponentInChildren<Animator>();
         }
 
+        // Animator가 없으면 초기화를 중단한다.
         if (enemyAnimator == null)
         {
-            Debug.LogError(
-                $"{name}: 자식 오브젝트에서 SPUM Animator를 찾지 못했습니다."
-            );
+            Debug.LogError($"{name}: 자식 오브젝트에서 SPUM Animator를 찾지 못했습니다.");
 
             enabled = false;
+            return;
+        }
+
+        // SPUM 내부 모든 자식 Transform을 가져온다.
+        animatedTransforms =
+            enemyAnimator.GetComponentsInChildren<Transform>(true);
+
+        initialLocalPositions =
+            new Vector3[animatedTransforms.Length];
+
+        initialLocalRotations =
+            new Quaternion[animatedTransforms.Length];
+
+        initialLocalScales =
+            new Vector3[animatedTransforms.Length];
+
+        // 사망 애니메이션이 변경하기 전의 기본 Transform 값을 저장한다.
+        for (int i = 0; i < animatedTransforms.Length; i++)
+        {
+            initialLocalPositions[i] =
+                animatedTransforms[i].localPosition;
+
+            initialLocalRotations[i] =
+                animatedTransforms[i].localRotation;
+
+            initialLocalScales[i] =
+                animatedTransforms[i].localScale;
         }
     }
 
@@ -212,5 +234,51 @@ public class EnemyAnimationController : MonoBehaviour
                 false
             );
         }
+    }
+    public void ResetForPool()
+    {
+        // 풀에서 다시 꺼낸 적의 애니메이션 상태를 초기화한다.
+        enabled = true;
+
+        if (enemyAnimator == null)
+        {
+            return;
+        }
+
+        // 사망 상태에 고정된 Animator를 기본 상태로 되돌린다.
+        RuntimeAnimatorController animatorController =
+            enemyAnimator.runtimeAnimatorController;
+
+        enemyAnimator.runtimeAnimatorController = null;
+        enemyAnimator.runtimeAnimatorController = animatorController;
+
+        // 사망 애니메이션이 변경한 SPUM 내부 Transform을 기본값으로 복구한다.
+        if (animatedTransforms != null)
+        {
+            for (int i = 0; i < animatedTransforms.Length; i++)
+            {
+                if (animatedTransforms[i] == null)
+                {
+                    continue;
+                }
+
+                animatedTransforms[i].localPosition = initialLocalPositions[i];
+                animatedTransforms[i].localRotation = initialLocalRotations[i];
+                animatedTransforms[i].localScale = initialLocalScales[i];
+            }
+        }
+
+        // 이전 사용에서 남은 공격·피격·사망·스킬 트리거를 제거한다.
+        enemyAnimator.ResetTrigger(AttackParameter);
+        enemyAnimator.ResetTrigger(DamagedParameter);
+        enemyAnimator.ResetTrigger(DeathParameter);
+        enemyAnimator.ResetTrigger(ChargeParameter);
+
+        // 이동 및 사망 상태를 살아 있는 기본 상태로 변경한다.
+        enemyAnimator.SetBool(MoveParameter, false);
+        enemyAnimator.SetBool(IsDeathParameter, false);
+
+        // 변경한 애니메이션 상태를 즉시 반영한다.
+        enemyAnimator.Update(0f);
     }
 }
