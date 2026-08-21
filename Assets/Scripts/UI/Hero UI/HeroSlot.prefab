@@ -150,7 +150,6 @@ GameObject:
   - component: {fileID: 7994609830644189639}
   - component: {fileID: 6389532245630252209}
   - component: {fileID: 4650451804999061920}
-  - component: {fileID: 6799181004274775904}
   m_Layer: 5
   m_Name: HeroSlot
   m_TagString: Untagged
@@ -230,10 +229,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09b46fcefc4fbcb4ca949a3e58d2742e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroSlotUI
-  nameLevelText: {fileID: 4250005945838186482}
-  statText: {fileID: 2935945353438637251}
-  lockOverlay: {fileID: 6821445802421022436}
-  slotButton: {fileID: 0}
+  nameText: {fileID: 0}
+  heroIcon: {fileID: 0}
+  formationOverlayImage: {fileID: 0}
+  formationStateText: {fileID: 0}
+  canDrag: 1
 --- !u!225 &4650451804999061920
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -246,20 +246,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &6799181004274775904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6592645561998167529}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3a93999b3363164ca10ccaefd915fed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DraggableHeroSlot
-  heroName: 
-  iconImage: {fileID: 0}
 --- !u!1 &6821445802421022436
 GameObject:
   m_ObjectHideFlags: 0
