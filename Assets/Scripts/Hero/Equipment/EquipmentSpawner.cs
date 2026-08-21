@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 
 public class EquipmentSpawner : MonoBehaviour
@@ -22,6 +21,7 @@ public class EquipmentSpawner : MonoBehaviour
         }
     }
     */
+    
 
     private EquipGradeEnum randGrade;
     private EquipPartEnum randPart;
@@ -30,12 +30,13 @@ public class EquipmentSpawner : MonoBehaviour
     int randGradeNum;
     int randPartNum;
 
-    private float hpMax, hpMin;
-    private float atkMax, atkMin;
-    private float defMax, defMin;
-    private float criChanceMax, criChanceMin;
+    [SerializeField] private EquipmentSO[] equipSO;
+    private int equipSOSelectedNum;
 
-    private string savePath = "Assets/Data/Hero/EquipmentData";
+    private float hp;
+    private float atk;
+    private float def;
+    private float criChance;
 
     private void Update()
     {
@@ -44,22 +45,20 @@ public class EquipmentSpawner : MonoBehaviour
 
     public void CreateEquip()
     {
-        Equipment spawnedEquip = ScriptableObject.CreateInstance<Equipment>();
-
+        Equipment spawnedEquip = new Equipment();
         RandomInfo();
+        int id = SetEquipID();
 
-        spawnedEquip.SetData(
-            randGrade, randPart,
-            randHP, randAtk, randDef, randCriChance);
+        spawnedEquip.EquipInit(equipSO[equipSOSelectedNum], id);
 
+        EquipmentManager.EquipDic.Add(id, spawnedEquip);
 
-        string fileName = EquipName();
-        string assetPath = $"{savePath}/{fileName}";
-        AssetDatabase.CreateAsset(spawnedEquip, assetPath);
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
-
-        Debug.Log($"{assetPath} 생성 완료");
+        string dicLog = "";
+        foreach (var equip in EquipmentManager.EquipDic)
+        {
+            dicLog += $"ID: {equip.Key}, Equipment: {equip.Value}\n";
+        }
+        Debug.Log($"생성 완료\n{dicLog}");
     }
 
     private void RandomInfo()
@@ -70,47 +69,56 @@ public class EquipmentSpawner : MonoBehaviour
         switch (randGradeNum)
         {
             case 0:
-                randGrade = EquipGradeEnum.Common;
+                equipSOSelectedNum = 0;
                 break;
             case 1:
-                randGrade = EquipGradeEnum.Rare;
+                equipSOSelectedNum = 3;
                 break;
             case 2:
-                randGrade = EquipGradeEnum.Epic;
+                equipSOSelectedNum = 6;
                 break;
             case 3:
-                randGrade = EquipGradeEnum.Legendary;
+                equipSOSelectedNum = 9;
+                break;
+            default:
+                Debug.Log("randGradeNum 잘못된 값 생성");
                 break;
         }
 
         switch (randPartNum)
         {
             case 0:
-                randPart = EquipPartEnum.Weapon;
                 break;
             case 1:
-                randPart = EquipPartEnum.Body;
+                equipSOSelectedNum += 1;
                 break;
             case 2:
-                randPart = EquipPartEnum.Acc;
+                equipSOSelectedNum += 2;
+                break;
+            default:
+                Debug.Log("randPartNum 잘못된 값 생성");
                 break;
         }
     }
 
-    public string EquipName()
+    public int SetEquipID()
     {
-        int saveNum = 1;
+        int n = 1;
+        int equipID;
+        string equipIDs;
 
         while (true)
         {
-            string fileName = $"Equip{randGradeNum}{randPartNum}_{saveNum}.asset";
+            equipIDs = $"{equipSOSelectedNum}{n}";
 
-            if (AssetDatabase.LoadAssetAtPath<Equipment>($"{savePath}/{fileName}") == null)
+            equipID = int.TryParse(equipIDs, out equipID) ? equipID : 0;
+
+            if (!EquipmentManager.EquipDic.ContainsKey(equipID))
             {
-                return fileName;
+                return equipID;
             }
 
-            saveNum++;
+            n++;
         }
     }
 }

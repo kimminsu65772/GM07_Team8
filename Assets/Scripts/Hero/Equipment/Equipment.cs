@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "EquipData", menuName = "Game Data/Equipment Data")]
-public class Equipment : ScriptableObject
+public class EquipmentSO : ScriptableObject
 {
     [Header("장비 스탯")]
     [SerializeField] private EquipGradeEnum equipGrade;
@@ -37,15 +37,27 @@ public class Equipment : ScriptableObject
         get => bonusCriChance;
         set => bonusCriChance = Mathf.Clamp(value, 0f, 100f);
     }
+}
 
-    public void SetData(EquipGradeEnum grade, EquipPartEnum part, float hp, float atk, float def, float criChance)
+public class Equipment
+{
+    public int EquipID { get; private set; }
+    public int EquipLv { get; private set; }
+    public EquipGradeEnum EquipGrade { get; private set; }
+    public EquipPartEnum EquipPart { get; private set; }
+    public float BonusHP { get; private set; }
+    public float BonusAtk { get; private set; }
+    public float BonusDef { get; private set; }
+    public float BonusCriChance { get; private set; }
+
+    public void EquipInit(EquipmentSO equipSO, int id)
     {
-        equipGrade = grade;
-        equipPart = part;
-
-        bonusHP = Mathf.Max(0f, hp);
-        bonusAtk = Mathf.Max(0f, atk);
-        bonusDef = Mathf.Max(0f, def);
-        bonusCriChance = Mathf.Clamp(criChance, 0f, 100f);
+        EquipID = id;
+        EquipGrade = equipSO.EquipGrade;
+        EquipPart = equipSO.EquipPart;
+        BonusHP = equipSO.BonusHP;
+        BonusAtk = equipSO.BonusAtk;
+        BonusDef = equipSO.BonusDef;
+        BonusCriChance = equipSO.BonusCriChance;
     }
 }

@@ -1069,6 +1069,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3137b603fe3339942837c48d9f55951e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EquipmentSpawner
+  equipSO:
+  - {fileID: 11400000, guid: 50e0069963b730d41b356405732ec03b, type: 2}
+  - {fileID: 11400000, guid: f1323019d0b55f745888e2b457bea024, type: 2}
+  - {fileID: 11400000, guid: 0b90abdde3fd9f547a3813b5f4b5f683, type: 2}
+  - {fileID: 11400000, guid: 7ab8f1b41076f124080f593c6631316c, type: 2}
+  - {fileID: 11400000, guid: ea52fafd8d8a5be4ca8ec262e2b1165d, type: 2}
+  - {fileID: 11400000, guid: 97a0dd6f94b604c4dacae405dd465c1d, type: 2}
+  - {fileID: 11400000, guid: 735a564a62575b04a86e87ead05eb20d, type: 2}
+  - {fileID: 11400000, guid: 3b496258d24edad469f16621c25a94d7, type: 2}
+  - {fileID: 11400000, guid: ef3a981dc23f3634baf7efecc6e5a8ac, type: 2}
+  - {fileID: 11400000, guid: 62d61408f282f364aa1cca734088034b, type: 2}
+  - {fileID: 11400000, guid: 4d0b8172b3e1a244a9ad6b69c2d025b7, type: 2}
+  - {fileID: 11400000, guid: 4653eb57a6321cb4e820880ec0e7ef75, type: 2}
 --- !u!4 &1287598685
 Transform:
   m_ObjectHideFlags: 0

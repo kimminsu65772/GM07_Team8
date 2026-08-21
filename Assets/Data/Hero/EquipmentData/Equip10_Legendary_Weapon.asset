@@ -9,12 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0b6c984393db5e499310b1c05df435e, type: 3}
+  m_Script: {fileID: 0}
   m_Name: Equip10_Legendary_Weapon
-  m_EditorClassIdentifier: Assembly-CSharp::Equipment
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentSO
   equipGrade: 3
   equipPart: 0
-  equipLv: 1
   bonusHP: 0
   bonusAtk: 0
   bonusDef: 0
