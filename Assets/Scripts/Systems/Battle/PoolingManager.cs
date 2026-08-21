@@ -16,6 +16,12 @@ public class PoolingManager : MonoBehaviour
     [Header("Rapid 투사체")]
     [SerializeField] private AirshipProjectileBase rapidProjectilePrefab;
     [SerializeField, Min(0)] private int rapidInitialSize = 10;
+    
+    [Header("Heal 투사체")]
+    [SerializeField] private AirshipProjectileBase healProjectilePrefab;
+    [SerializeField, Min(0)] private int healInitialSize = 5;
+
+    
 
     [Header("Freeze 명중 VFX")]
     [SerializeField] private GameObject freezeImpactVfxPrefab;
@@ -32,6 +38,8 @@ public class PoolingManager : MonoBehaviour
 
     private readonly List<GameObject> inactiveFreezeImpactVfx =
         new List<GameObject>();
+    private readonly List<AirshipProjectileBase> inactiveHealProjectiles =
+        new List<AirshipProjectileBase>();
     
     
     
@@ -103,6 +111,12 @@ public class PoolingManager : MonoBehaviour
             rapidInitialSize,
             inactiveRapidProjectiles,
             AirshipCannonType.Rapid
+        );
+        PrewarmProjectile(
+            healProjectilePrefab,
+            healInitialSize,
+            inactiveHealProjectiles,
+            AirshipCannonType.Heal
         );
 
         PrewarmFreezeImpactVfx();
@@ -261,6 +275,9 @@ public class PoolingManager : MonoBehaviour
 
             case AirshipCannonType.Rapid:
                 return inactiveRapidProjectiles;
+            
+            case AirshipCannonType.Heal:
+                return inactiveHealProjectiles;
 
             default:
                 return null;
@@ -280,6 +297,9 @@ public class PoolingManager : MonoBehaviour
 
             case AirshipCannonType.Rapid:
                 return rapidProjectilePrefab;
+            
+            case AirshipCannonType.Heal:
+                return healProjectilePrefab;
 
             default:
                 return null;

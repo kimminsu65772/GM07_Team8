@@ -53,4 +53,5 @@ public class TestAirshipHealth : MonoBehaviour, IDamageable
     {
 
     }
+    public void Heal(DamageInfo damageInfo){}
 }
