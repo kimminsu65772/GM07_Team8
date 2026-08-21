@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.Events;
 public class AirshipItemSlotUI : MonoBehaviour
 {
     [Header("UI References")]
@@ -15,6 +15,8 @@ public class AirshipItemSlotUI : MonoBehaviour
     [Header("Lock Effect")]
     [SerializeField] private GameObject lockObject;
 
+    [Header("Unlock")]
+    [SerializeField] private Button unlockButton;
     // 대포
     public void SetCannonInfo(AirshipCannonData data)
     {
@@ -49,6 +51,23 @@ public class AirshipItemSlotUI : MonoBehaviour
         if (lockObject != null)
         {
             lockObject.SetActive(isLocked);
+        }
+        if (unlockButton != null)
+        {
+            unlockButton.gameObject.SetActive(isLocked);
+        }
+    }
+    public void SetUnlockButtonState(bool isLocked,UnityAction onUnlock)
+    {
+        if (unlockButton == null) return;
+
+        unlockButton.gameObject.SetActive(isLocked);
+
+        unlockButton.onClick.RemoveAllListeners();
+
+        if (isLocked && onUnlock != null)
+        {
+            unlockButton.onClick.AddListener(onUnlock);
         }
     }
 }

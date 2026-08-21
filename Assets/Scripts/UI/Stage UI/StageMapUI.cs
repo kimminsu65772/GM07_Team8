@@ -11,18 +11,22 @@ public class StageMapUI : MonoBehaviour
 
     [Header("UI References")]
     [SerializeField] private Transform mapContentTransform;
+    [SerializeField] private GameObject mapTemplate;
     [SerializeField] private GameObject stageSlotPrefab;
 
     [Header("Grid Layout Settings (일정 간격 설정)")]
-    [SerializeField] private float spacingX = 200f; 
-    [SerializeField] private float spacingY = 150f; 
-    [SerializeField] private int columns = 4;      
+    [SerializeField] private float spacingX = 280f; 
+    [SerializeField] private float spacingY = 60f; 
+    [SerializeField] private int columns = 10;      
 
     [Header("Random Offset Settings (위아래 좌우 흔들림 조절)")]
-    [SerializeField] private float offsetXRange = 30f;
+    [SerializeField] private float offsetXRange = 50f;
     [SerializeField] private float offsetYRange = 50f; 
 
     private readonly List<StageMapSlot> spawnedSlots = new List<StageMapSlot>();
+    private readonly List<GameObject> spawnedMaps = new List<GameObject>();
+
+    private bool isMapGenerated = false;
     private void OnEnable()
     {
         RefreshMap();
@@ -30,37 +34,62 @@ public class StageMapUI : MonoBehaviour
     private void GenerateMapSlots(int maxCleared)
     {
         int totalStages = stageCatalog.StageCount;
+        int mapCount = Mathf.CeilToInt(totalStages / 10f);
 
-        for (int i = 1; i <= totalStages; i++)
+        for (int mapIndex = 0; mapIndex < mapCount; mapIndex++)
         {
-            if(!stageCatalog.TryGetStageData(i,out StageData stageData)) continue;
-            GameObject slotObj = Instantiate(stageSlotPrefab,mapContentTransform);
-            StageMapSlot mapSlot = slotObj.GetComponent<StageMapSlot>();
+            GameObject mapObj;
 
-            if (mapSlot == null)
+            if (mapIndex == 0)
             {
-                Destroy(slotObj);
-                continue;
+                mapObj = mapTemplate;
             }
-            RectTransform rectTrans = slotObj.GetComponent<RectTransform>();
-
-            if (rectTrans != null)
+            else
             {
-                int index = i - 1;
-                int row = index / columns;
-                int col = index % columns;
-                float baseX = col * spacingX;
-                float baseY = -row * spacingY;
-
-                float randomX = Random.Range(-offsetXRange,offsetXRange);
-
-                float randomY = Random.Range( -offsetYRange,offsetYRange);
-
-                rectTrans.anchoredPosition = new Vector2( baseX + randomX,baseY + randomY);
+                mapObj = Instantiate(mapTemplate,mapContentTransform);
             }
+            mapObj.name = $"Map_{mapIndex + 1:00}";
 
-            mapSlot.Init(this, i,maxCleared);
-            spawnedSlots.Add(mapSlot);
+            spawnedMaps.Add(mapObj);
+
+            Transform mapTransform = mapObj.transform.Find("Map Transform");
+
+            if (mapTransform == null) continue;
+
+            int startStage = mapIndex * 10 + 1;
+            int endStage = Mathf.Min(startStage + 9,totalStages);
+
+            for (int stageNumber = startStage; stageNumber <= endStage; stageNumber++)
+            {
+                if (!stageCatalog.TryGetStageData(stageNumber, out StageData stageData)) continue;
+                GameObject slotObj = Instantiate(stageSlotPrefab,mapTransform);
+                StageMapSlot mapSlot = slotObj.GetComponent<StageMapSlot>();
+
+                if (mapSlot == null)
+                {
+                    Destroy(slotObj);
+                    continue;
+                }
+
+                RectTransform rectTrans = slotObj.GetComponent<RectTransform>();
+
+                if (rectTrans != null)
+                {
+                    int index = stageNumber - startStage;
+                    int row = index / columns;
+                    int col = index % columns;
+                    float baseX = col * spacingX;
+                    float baseY = -row * spacingY;
+
+                    float randomX = Random.Range(-offsetXRange,offsetXRange);
+
+                    float randomY = Random.Range( -offsetYRange,offsetYRange);
+
+                    rectTrans.anchoredPosition = new Vector2( baseX + randomX,baseY + randomY);
+                }
+                mapSlot.Init(this, stageNumber, maxCleared);
+                spawnedSlots.Add(mapSlot);
+            }
         }
     }
 
@@ -69,7 +98,6 @@ public class StageMapUI : MonoBehaviour
         if (stageCatalog == null) return;
         if (mapContentTransform == null) return;
         if (stageSlotPrefab == null) return;
-        ClearMapSlots();
 
         int maxCleared = 0;
 
@@ -78,21 +106,27 @@ public class StageMapUI : MonoBehaviour
         {
             maxCleared = PlayerInfo.Instance.MaxClearedStage;
         }
-        GenerateMapSlots(maxCleared);
-    }
-    private void ClearMapSlots()
-    {
-        foreach (StageMapSlot slot in spawnedSlots)
+
+        if (!isMapGenerated)
         {
-            if (slot != null)
-            {
-                Destroy(slot.gameObject);
-            }
+            GenerateMapSlots(maxCleared);
+
+            isMapGenerated = true;
         }
-        spawnedSlots.Clear();
-        for (int i = mapContentTransform.childCount - 1; i >= 0; i--)
+        UpdateMapVisibility(maxCleared);
+    }
+    private void UpdateMapVisibility(int maxCleared)
+    {
+        if (spawnedMaps.Count == 0) return;
+        int currentMapIndex = maxCleared / 10;
+
+        currentMapIndex = Mathf.Clamp(currentMapIndex,0,spawnedMaps.Count - 1);
+
+        for (int i = 0; i < spawnedMaps.Count; i++)
         {
-            Destroy(mapContentTransform.GetChild(i).gameObject);
+            if (spawnedMaps[i] == null) continue;
+
+            spawnedMaps[i].SetActive(i == currentMapIndex);
         }
     }
     public void OnStageSelected(int stageNumber)
