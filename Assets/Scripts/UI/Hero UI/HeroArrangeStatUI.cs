@@ -28,17 +28,18 @@ public class HeroArrangeStatUI : MonoBehaviour
         }
 
         HeroStat heroStat = heroEntry.GetHeroStat();
-        heroStatUIs[0].SetValue(heroData.Level);
-        heroStatUIs[1].SetValue(heroStat.MaxHP);
-        heroStatUIs[2].SetValue(heroStat.Atk);
-        heroStatUIs[3].SetValue(heroStat.Def);
+        SetStatValue(0, heroData.Level);
+        SetStatValue(1, heroStat.MaxHP);
+        SetStatValue(2, heroStat.Atk);
+        SetStatValue(3, heroStat.Def);
         // TODO: 크리티컬은 장비 시스템 완성되면 적용
-        heroStatUIs[4].SetValue(0f);
-        heroStatUIs[5].SetValue(heroEntry.SkillCooldown);
+        SetStatValue(4, 0f);
+        SetStatValue(5, heroEntry.SkillCooldown);
 
         if (skillIcon != null)
         {
             skillIcon.sprite = heroEntry.SkillIcon;
+            skillIcon.enabled = true;
         }
     }
 
@@ -56,5 +57,36 @@ public class HeroArrangeStatUI : MonoBehaviour
                 statUI.Clear();
             }
         }
+
+        if (skillIcon != null)
+        {
+            skillIcon.enabled = false;
+        }
     }   
+
+    private void SetStatValue(int index, float value)
+    {
+        if (heroStatUIs == null ||
+            index < 0 ||
+            index >= heroStatUIs.Length ||
+            heroStatUIs[index] == null)
+        {
+            return;
+        }
+
+        heroStatUIs[index].SetValue(value);
+    }
+
+    private void SetStatValue(int index, int value)
+    {
+        if (heroStatUIs == null ||
+            index < 0 ||
+            index >= heroStatUIs.Length ||
+            heroStatUIs[index] == null)
+        {
+            return;
+        }
+
+        heroStatUIs[index].SetValue(value);
+    }
 }

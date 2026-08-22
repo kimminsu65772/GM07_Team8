@@ -305,12 +305,14 @@ public class PlayerInfo : MonoBehaviour
     public bool IsCannonOwned(AirshipCannonType cannonType)
     {
         if (!CheckInitialized()) return false;
+        if (Airship.OwnedCannons == null) return false;
         return Airship.OwnedCannons.Contains(cannonType);
     }
 
     public bool IsGearOwned(AirshipGearType gearType)
     {
         if (!CheckInitialized()) return false;
+        if (Airship.OwnedGears == null) return false;
         return Airship.OwnedGears.Contains(gearType);
     }
 
@@ -322,6 +324,7 @@ public class PlayerInfo : MonoBehaviour
     public void SetOwnedCannonId(AirshipCannonType cannonType, SavePolicy savePolicy = SavePolicy.Soon)
     {
         if (!CheckInitialized()) return;
+        Airship.OwnedCannons ??= new HashSet<AirshipCannonType>();
         if (!Airship.OwnedCannons.Add(cannonType))
         {
             Debug.LogWarning($"SetOwnedCannonId: 이미 소유한 캐논입니다. CannonType: {cannonType}");
@@ -339,6 +342,7 @@ public class PlayerInfo : MonoBehaviour
     public void SetOwnedGearId(AirshipGearType gearType, SavePolicy savePolicy = SavePolicy.Soon)
     {
         if (!CheckInitialized()) return;
+        Airship.OwnedGears ??= new HashSet<AirshipGearType>();
         if (!Airship.OwnedGears.Add(gearType))
         {
             Debug.LogWarning($"SetOwnedGearId: 이미 소유한 기어입니다. GearType: {gearType}");
@@ -417,22 +421,29 @@ public class PlayerInfo : MonoBehaviour
             SaveData.StageProgress.RepeatClearedStage = true;
         }
 
-        if (SaveData.SaveVersion < 4)
+        if (SaveData.SaveVersion < 5)
         {
-            // 기존 세이브 데이터에 없는 비행선 파츠 소유 여부를 초기화하여 세이브 데이터에 반영할 수 있도록 한다.
-            SaveData.Airship.OwnedCannons ??= new HashSet<AirshipCannonType>();
-            SaveData.Airship.OwnedGears ??= new HashSet<AirshipGearType>();
-
-            SaveData.Airship.OwnedCannons.Add(AirshipCannonType.Normal);
-            SaveData.Airship.OwnedGears.Add(AirshipGearType.Normal);
-
-            // 테스트 과정에서 이미 다른 파츠를 장착한 경우, 해당 파츠도 소유한 것으로 간주하여 OwnedCannons와 OwnedGears에 추가
-            SaveData.Airship.OwnedCannons.Add(SaveData.Airship.EquippedCannonType);
-            SaveData.Airship.OwnedGears.Add(SaveData.Airship.EquippedGearType);
+            MigrateAirshipPartsOwnership();
         }
 
         SaveData.SaveVersion = SaveDataVersion.CurrentVersion;
 
         return true;
+    }
+
+    private void MigrateAirshipPartsOwnership()
+    {
+        if (SaveData?.Airship == null) return;
+
+        // 기존 세이브 데이터에 없는 비행선 파츠 소유 여부를 초기화하여 세이브 데이터에 반영할 수 있도록 한다.
+        SaveData.Airship.OwnedCannons ??= new HashSet<AirshipCannonType>();
+        SaveData.Airship.OwnedGears ??= new HashSet<AirshipGearType>();
+
+        SaveData.Airship.OwnedCannons.Add(AirshipCannonType.Normal);
+        SaveData.Airship.OwnedGears.Add(AirshipGearType.Normal);
+
+        // 테스트 과정에서 이미 다른 파츠를 장착한 경우, 해당 파츠도 소유한 것으로 간주하여 OwnedCannons와 OwnedGears에 추가
+        SaveData.Airship.OwnedCannons.Add(SaveData.Airship.EquippedCannonType);
+        SaveData.Airship.OwnedGears.Add(SaveData.Airship.EquippedGearType);
     }
 }

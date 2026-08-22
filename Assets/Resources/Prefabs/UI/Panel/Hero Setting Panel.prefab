@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 2651077162049501464}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &51476384064777278
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,7 +455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 2089356189417763541}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &82955009685632148
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,7 +659,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 607518317071708536}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &200550856903550810
 GameObject:
   m_ObjectHideFlags: 0
@@ -831,7 +831,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4712118918539004608
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2168,7 +2168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 1243770663490498270}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &914766543512357076
 GameObject:
   m_ObjectHideFlags: 0
@@ -2334,7 +2334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 3766438680674619398}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &981822945464424957
 GameObject:
   m_ObjectHideFlags: 0
@@ -2644,7 +2644,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 955858592194682436}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &1151032596764321996
 GameObject:
   m_ObjectHideFlags: 0
@@ -2735,7 +2735,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 1375482760119895534}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &1157265668807667931
 GameObject:
   m_ObjectHideFlags: 0
@@ -2963,7 +2963,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 7755334554022981382}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &1308384360200325128
 GameObject:
   m_ObjectHideFlags: 0
@@ -3324,7 +3324,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 332945225808554279}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &1487329085104430102
 GameObject:
   m_ObjectHideFlags: 0
@@ -4047,7 +4047,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 945918033556562619}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &2008590569820821370
 GameObject:
   m_ObjectHideFlags: 0
@@ -4599,7 +4599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 2327138284698322437}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &2574293044228822789
 GameObject:
   m_ObjectHideFlags: 0
@@ -5422,9 +5422,9 @@ RectTransform:
   m_Father: {fileID: 6598433925878043994}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: -17}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &708431088691721248
 CanvasRenderer:
@@ -6006,7 +6006,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 4425901453910112667}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &3137574677291528404
 GameObject:
   m_ObjectHideFlags: 0
@@ -6234,7 +6234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 2998430427318439830}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &3240289128290754778
 GameObject:
   m_ObjectHideFlags: 0
@@ -7162,7 +7162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 3767496289686845094}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &3687261737587885214
 GameObject:
   m_ObjectHideFlags: 0
@@ -7540,7 +7540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 7882361307480003294}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &3769180247443256749
 GameObject:
   m_ObjectHideFlags: 0
@@ -7631,7 +7631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 7652425667000375280}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &3770279968801303898
 GameObject:
   m_ObjectHideFlags: 0
@@ -7804,7 +7804,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 300}
+  m_SizeDelta: {x: 40, y: 300}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &8628591165101982297
 MonoBehaviour:
@@ -8210,7 +8210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 2809381208422437250}
-  isPercentage: 1
+  valueFormat: 0
 --- !u!1 &4351817371832468211
 GameObject:
   m_ObjectHideFlags: 0
@@ -8403,7 +8403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 3242845681017459768}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &4371823465062861108
 GameObject:
   m_ObjectHideFlags: 0
@@ -9297,7 +9297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 1115106574493890723}
-  isPercentage: 1
+  valueFormat: 0
 --- !u!1 &4771950440848546715
 GameObject:
   m_ObjectHideFlags: 0
@@ -9526,7 +9526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 6148578893329890624}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &4928882976118624242
 GameObject:
   m_ObjectHideFlags: 0
@@ -9653,7 +9653,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 1513011042944828528}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &5021469201027901231
 GameObject:
   m_ObjectHideFlags: 0
@@ -9881,7 +9881,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 1454399279960405688}
-  isPercentage: 1
+  valueFormat: 0
 --- !u!1 &5095936651508767821
 GameObject:
   m_ObjectHideFlags: 0
@@ -10659,7 +10659,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 8156006458000068477}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &5503500648895054137
 GameObject:
   m_ObjectHideFlags: 0
@@ -11086,7 +11086,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 7604944617122939209}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &5847584018754173266
 GameObject:
   m_ObjectHideFlags: 0
@@ -12326,7 +12326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 22292108257093322}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &6358686667640920411
 GameObject:
   m_ObjectHideFlags: 0
@@ -13117,7 +13117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 1141663260857421244}
-  isPercentage: 1
+  valueFormat: 0
 --- !u!1 &6677618786815901494
 GameObject:
   m_ObjectHideFlags: 0
@@ -13208,7 +13208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 3627455614550388356}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &6912195380866163224
 GameObject:
   m_ObjectHideFlags: 0
@@ -14132,7 +14132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 7495006784145787280}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1 &7488953038992227964
 GameObject:
   m_ObjectHideFlags: 0
@@ -15571,7 +15571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 2833092091609226954}
-  isPercentage: 1
+  valueFormat: 0
 --- !u!1 &8439389386097503695
 GameObject:
   m_ObjectHideFlags: 0
@@ -16106,7 +16106,7 @@ RectTransform:
   m_Father: {fileID: 6373852847383700309}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -17239,7 +17239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 7703416785309684444}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!1001 &8452240257369194305
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17433,7 +17433,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 4967424614715655563}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!114 &4967424614715655563 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3576902524887087818, guid: 48a7a245a6c79de4eb30c89f902b3620, type: 3}
@@ -17474,7 +17474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 7734191080508527185}
-  isPercentage: 1
+  valueFormat: 0
 --- !u!1 &6757561483598260090 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2921655173975857211, guid: 48a7a245a6c79de4eb30c89f902b3620, type: 3}
@@ -17493,7 +17493,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 5066752821980468425}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!114 &7734191080508527185 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2168833363929705744, guid: 48a7a245a6c79de4eb30c89f902b3620, type: 3}
@@ -17523,7 +17523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroStatUI
   valueText: {fileID: 9127377397613238256}
-  isPercentage: 0
+  valueFormat: 0
 --- !u!114 &9127377397613238256 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 857538638535567537, guid: 48a7a245a6c79de4eb30c89f902b3620, type: 3}

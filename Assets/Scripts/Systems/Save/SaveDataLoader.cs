@@ -69,7 +69,7 @@ public class SaveDataLoader
         {
             MigrateHeroes(root);
             MigrateHeroFormation(root);
-            root["SaveVersion"] = SaveDataVersion.CurrentVersion;
+            root["SaveVersion"] = 3;
         }
 
         return root.ToString(Formatting.None);
