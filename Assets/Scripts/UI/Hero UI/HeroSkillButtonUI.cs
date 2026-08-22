@@ -41,10 +41,12 @@ public class HeroSkillButtonUI : MonoBehaviour
         if (hero != null)
         {
             heroAttack = hero.GetComponent<HeroAttack>();
+            gameObject.SetActive(true);
         }
         else
         {
             heroAttack = null;
+            gameObject.SetActive(false);
         }
         UpdateButtonState();
     }
@@ -61,6 +63,8 @@ public class HeroSkillButtonUI : MonoBehaviour
 
         if (skillButton != null)
             skillButton.interactable = false;
+
+        gameObject.SetActive(false);
     }
     private void OnClickSkill()
     {
@@ -73,28 +77,66 @@ public class HeroSkillButtonUI : MonoBehaviour
 
         hero.SearchEnemy();
         if (hero.TargetEnemy == null) return;
+        if (hero.IsDead) return;
         heroAttack.UseSkill(hero.TargetEnemy);
     }
 
     private void UpdateButtonState()
     {
-        if (skillButton == null) return;
+        if (skillButton == null)return;
+        bool canUse = false;
 
-        bool canUse = hero != null && heroAttack != null && !hero.IsDead && !heroAttack.IsAutoSkill
-            &&heroAttack.SkillTimer >= hero.HeroSkillTime;
+        if (hero != null && heroAttack != null && hero.gameObject.activeInHierarchy && !hero.IsDead && !heroAttack.IsAutoSkill && heroAttack.SkillTimer >= hero.HeroSkillTime)
+        {
+            canUse = true;
+        }
         skillButton.interactable = canUse;
     }
 
     private void UpdateCooldownUI()
     {
-        if (hero == null || heroAttack == null) return;
+        if (hero == null || heroAttack == null)
+        {
+            if (cooldownFill != null)
+            { 
+                cooldownFill.fillAmount = 0f;
+            }
+            if (cooldownText != null)
+            {
+                cooldownText.text = "";
+            }
+            return;
+        }
         float maxTime = hero.HeroSkillTime;
 
-        if (maxTime <= 0f) return;
+        if (maxTime <= 0f)
+        {
+            if (cooldownFill != null)
+            {
+                cooldownFill.fillAmount = 0f;
+            }
+            if (cooldownText != null)
+            {
+                cooldownText.text = "";
+            }
+            return;
+        }
+        if (hero.IsDead)
+        {
+            if (cooldownFill != null)
+            {
+                cooldownFill.fillAmount = 0f;
+            }
+
+            if (cooldownText != null)
+            {
+                cooldownText.text = "";
+            }
+            return;
+        }
         float currentTime = heroAttack.SkillTimer;
 
-        float remaining = Mathf.Max( maxTime - currentTime,0f);
-
+        float remaining = Mathf.Max(maxTime - currentTime,0f);
         if (cooldownFill != null)
         {
             cooldownFill.fillAmount = remaining / maxTime;

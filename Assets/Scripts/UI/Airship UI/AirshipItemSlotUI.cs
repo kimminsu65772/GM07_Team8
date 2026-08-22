@@ -15,8 +15,21 @@ public class AirshipItemSlotUI : MonoBehaviour
     [Header("Lock Effect")]
     [SerializeField] private GameObject lockObject;
 
-    [Header("Unlock")]
+    [Header("Buttons")]
+    [SerializeField] private Button equipButton;
     [SerializeField] private Button unlockButton;
+
+    [Header("Unlock Button Alpha")]
+    [SerializeField] private float unlockAvailableAlpha = 1f;
+    [SerializeField] private float unlockUnavailableAlpha = 0.4f;
+    public Button EquipButton
+    {
+        get { return equipButton; }
+    }
+    public Button UnlockButton
+    {
+        get { return unlockButton; }
+    }
     // 대포
     public void SetCannonInfo(AirshipCannonData data)
     {
@@ -56,18 +69,24 @@ public class AirshipItemSlotUI : MonoBehaviour
         {
             unlockButton.gameObject.SetActive(isLocked);
         }
+        if (!isLocked && unlockButton != null)
+        {
+            unlockButton.onClick.RemoveAllListeners();
+        }
     }
-    public void SetUnlockButtonState(bool isLocked,UnityAction onUnlock)
+    public void SetUnlockAvailable(bool canUnlock)
     {
         if (unlockButton == null) return;
 
-        unlockButton.gameObject.SetActive(isLocked);
+        Image buttonImage =  unlockButton.GetComponent<Image>();
 
-        unlockButton.onClick.RemoveAllListeners();
-
-        if (isLocked && onUnlock != null)
+        if (buttonImage != null)
         {
-            unlockButton.onClick.AddListener(onUnlock);
+            Color color = buttonImage.color;
+            color.a = canUnlock ? unlockAvailableAlpha : unlockUnavailableAlpha;
+
+            buttonImage.color = color;
         }
+        unlockButton.interactable = canUnlock;
     }
 }
