@@ -20,14 +20,17 @@ public class HeroEquipmentManager : MonoBehaviour
 
     public void SelecteEquip(Equipment equip)
     {
-        if (selectedEquip == equip) return;
+        if (selectedEquip.EquipID == equip.EquipID) return;
 
         selectedEquip = equip;
     }
 
     public void GetEquip()
     {
-        if (selectedEquip == currentWeaponEquip || selectedEquip == currentBodyEquip || selectedEquip == currentAccEquip) return;
+        if (selectedEquip.EquipID == currentWeaponEquip.EquipID ||
+            selectedEquip.EquipID == currentBodyEquip.EquipID ||
+            selectedEquip.EquipID == currentAccEquip.EquipID)
+            return;
 
         switch (selectedEquip.EquipPart)
         {

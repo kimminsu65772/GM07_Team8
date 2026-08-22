@@ -37,9 +37,6 @@ public abstract class Hero : MonoBehaviour, IDamageable
     private HeroEquipmentManager heroEquip;
     protected HeroAttack attack;
 
-    private string skillName;
-    private string skillInfo;
-
     private bool canStun = true;
     public bool IsStunned { get; private set; }
 
@@ -186,6 +183,27 @@ public abstract class Hero : MonoBehaviour, IDamageable
         {
             StartCoroutine(DieAndRevive());
         }
+    }
+    public void Heal(DamageInfo damageInfo)
+    {
+        if (isDead || damageInfo.Damage <= 0f)
+        {
+            return;
+        }
+
+        // 나중에 데미지 텍스트랑 연결할때 이벤트로 넘겨주려면 실제 힐량이 필요
+        float actualHeal =
+            Mathf.Min(
+                damageInfo.Damage,
+                HeroMaxHP - HeroCurrentHP
+            );
+
+        if (actualHeal <= 0f)
+        {
+            return;
+        }
+
+        HeroCurrentHP += actualHeal;
     }
 
     public void SearchEnemy()
@@ -373,15 +391,6 @@ public abstract class Hero : MonoBehaviour, IDamageable
         TargetPosPreset = new Vector2(posX, posY);
         TargetScalePreset = new Vector2(scaleX, scaleY);
     }
-
-    protected void EditSkillText(string name, string info)
-    {
-        skillName = name;
-        skillInfo = info;
-    }
-
-    public string GetSkillName() { return skillName; }
-    public string GetSkillInfo() { return skillInfo; }
 
     public void Stun(float duration)
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 public enum AirshipStatType
 {
     Attack,
-    Defense,
+    Recovery,
     MaxHealth,
     CriticalChance,
     MoveSpeed,

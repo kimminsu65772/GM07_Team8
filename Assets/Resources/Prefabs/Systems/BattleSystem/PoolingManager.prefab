@@ -45,11 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PoolingManager
   normalProjectilePrefab: {fileID: 193875028588587811, guid: 4672c54b98b02474e92eba6e7b85097d, type: 3}
-  normalInitialSize: 20
+  normalInitialSize: 10
   freezeProjectilePrefab: {fileID: -4218226267792731221, guid: 2e258cc4bb28c9448b808f70147497c1, type: 3}
   freezeInitialSize: 5
   rapidProjectilePrefab: {fileID: 193875028588587811, guid: 54351d19f9be66541909aa8de035a6af, type: 3}
-  rapidInitialSize: 30
+  rapidInitialSize: 10
+  healProjectilePrefab: {fileID: 7841467219157905698, guid: b45ffb3d053098b4493df46760ff1099, type: 3}
+  healInitialSize: 10
   freezeImpactVfxPrefab: {fileID: 3391895794129409543, guid: 7de74a08c40e78941975622b05d0225c, type: 3}
   freezeImpactVfxInitialSize: 5
   heroProjectile1Prefab: {fileID: 2817707393459148996, guid: 00ab1cd3e4bc5794c8cef6307342dc7a, type: 3}

@@ -20,7 +20,7 @@ public class SaveDataFactory
             Airship = new AirshipSaveData
             {
                 AttackLevel = 1,
-                DefenseLevel = 1,
+                RecoveryLevel = 1,
                 MaxHealthLevel = 1,
                 CriticalLevel = 1,
                 EquippedCannonType = AirshipCannonType.Normal,

@@ -61,6 +61,47 @@ public class EnemyStats : MonoBehaviour, IDamageable
     {
         currentHealth = MaxHealth;
     }
+    public void ResetForPool()
+    {
+        // 이전 사용에서 실행 중이던 사망 코루틴을 중단한다.
+        StopAllCoroutines();
+
+        // 체력과 EnemyStats 상태를 초기화한다.
+        currentHealth = MaxHealth;
+        enabled = true;
+
+        // 이전 이동 속도가 남지 않도록 정지시킨다.
+        Rigidbody2D enemyRigidbody2D = GetComponent<Rigidbody2D>();
+
+        if (enemyRigidbody2D != null)
+        {
+            enemyRigidbody2D.linearVelocity = Vector2.zero;
+        }
+
+        // 이동 컴포넌트를 다시 활성화한다.
+        EnemyMovement enemyMovement = GetComponent<EnemyMovement>();
+
+        if (enemyMovement != null)
+        {
+            enemyMovement.enabled = true;
+        }
+
+        // 일반 공격 컴포넌트를 다시 활성화한다.
+        EnemyAttack enemyAttack = GetComponent<EnemyAttack>();
+
+        if (enemyAttack != null)
+        {
+            enemyAttack.enabled = true;
+        }
+
+        // 사망 애니메이션과 이전 트리거를 초기화한다.
+        EnemyAnimationController animationController =  GetComponent<EnemyAnimationController>();
+
+        if (animationController != null)
+        {
+            animationController.ResetForPool();
+        }
+    }
     public void Stun(float duration)
     {
         // 추후 스턴 처리
@@ -98,6 +139,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
         Debug.Log($"EnemyStats TakeDamage 호출됨: {damageAmount}");
         
     }
+    public void Heal(DamageInfo damageInfo){}
 
     private void Die()
     {
@@ -113,7 +155,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
 
         EnemyDeathCompleted?.Invoke(this);
 
-        Destroy(gameObject);
+      
     }
     
 }

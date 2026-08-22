@@ -1040,6 +1040,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a124f247f593a440992d1507fd92614, type: 3}
+--- !u!1 &1287598683
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1287598685}
+  - component: {fileID: 1287598684}
+  m_Layer: 0
+  m_Name: EquipmentSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1287598684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287598683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3137b603fe3339942837c48d9f55951e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentSpawner
+  equipSO:
+  - {fileID: 11400000, guid: 50e0069963b730d41b356405732ec03b, type: 2}
+  - {fileID: 11400000, guid: f1323019d0b55f745888e2b457bea024, type: 2}
+  - {fileID: 11400000, guid: 0b90abdde3fd9f547a3813b5f4b5f683, type: 2}
+  - {fileID: 11400000, guid: 7ab8f1b41076f124080f593c6631316c, type: 2}
+  - {fileID: 11400000, guid: ea52fafd8d8a5be4ca8ec262e2b1165d, type: 2}
+  - {fileID: 11400000, guid: 97a0dd6f94b604c4dacae405dd465c1d, type: 2}
+  - {fileID: 11400000, guid: 735a564a62575b04a86e87ead05eb20d, type: 2}
+  - {fileID: 11400000, guid: 3b496258d24edad469f16621c25a94d7, type: 2}
+  - {fileID: 11400000, guid: ef3a981dc23f3634baf7efecc6e5a8ac, type: 2}
+  - {fileID: 11400000, guid: 62d61408f282f364aa1cca734088034b, type: 2}
+  - {fileID: 11400000, guid: 4d0b8172b3e1a244a9ad6b69c2d025b7, type: 2}
+  - {fileID: 11400000, guid: 4653eb57a6321cb4e820880ec0e7ef75, type: 2}
+--- !u!4 &1287598685
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287598683}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1343839439
 GameObject:
   m_ObjectHideFlags: 0
@@ -1625,3 +1682,4 @@ SceneRoots:
   - {fileID: 784049436}
   - {fileID: 1371812957}
   - {fileID: 1565683243}
+  - {fileID: 1287598685}
