@@ -21,11 +21,6 @@ public class EquipmentSpawner : MonoBehaviour
         }
     }
     */
-    
-
-    private EquipGradeEnum randGrade;
-    private EquipPartEnum randPart;
-    private float randHP, randAtk, randDef, randCriChance;
 
     int randGradeNum;
     int randPartNum;
@@ -33,10 +28,7 @@ public class EquipmentSpawner : MonoBehaviour
     [SerializeField] private EquipmentSO[] equipSO;
     private int equipSOSelectedNum;
 
-    private float hp;
-    private float atk;
-    private float def;
-    private float criChance;
+    
 
     private void Update()
     {
@@ -47,13 +39,12 @@ public class EquipmentSpawner : MonoBehaviour
     {
         Equipment spawnedEquip = new Equipment();
         RandomInfo();
-        int id = SetEquipID();
+        string id = SetEquipID();
 
         spawnedEquip.EquipInit(equipSO[equipSOSelectedNum], id);
 
         EquipmentManager.EquipDic.Add(id, spawnedEquip);
 
-        string dicLog = "";
         foreach (var equip in EquipmentManager.EquipDic)
         {
             Debug.Log($"ID: {equip.Key}, Equipment: {equip.Value}\n");
@@ -100,17 +91,14 @@ public class EquipmentSpawner : MonoBehaviour
         }
     }
 
-    private int SetEquipID()
+    private string SetEquipID()
     {
         int n = 1;
-        int equipID;
-        string equipIDs;
+        string equipID;
 
         while (true)
         {
-            equipIDs = $"{equipSOSelectedNum}{n}";
-
-            equipID = int.TryParse(equipIDs, out equipID) ? equipID : 0;
+            equipID = $"{equipSOSelectedNum}_{n}";
 
             if (!EquipmentManager.EquipDic.ContainsKey(equipID))
             {
