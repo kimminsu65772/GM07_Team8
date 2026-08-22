@@ -18,9 +18,12 @@ public class HeroInventoryUIController : MonoBehaviour
     [Header("영웅 상세 정보 UI 연결")]
     [SerializeField] private Image heroIcon;
     [SerializeField] private Image skillIcon;
+    [SerializeField] private TMP_Text skillName;
+    [SerializeField] private TMP_Text skillDescription;
     [SerializeField] private TMP_Text heroName;
     [SerializeField] private TMP_Text heroLevel;
     [SerializeField] private TMP_Text heroLocation;
+    [SerializeField] private HeroStatUI[] heroStatUIs;
 
 
     private readonly List<HeroSlotUI> heroSlotPool = new();
@@ -118,15 +121,22 @@ public class HeroInventoryUIController : MonoBehaviour
         }
         if (heroLevel != null)
         {
-            heroLevel.text = $"Lv. {saveData.Level}";
+            heroLevel.text = $"레벨: {saveData.Level}";
         }
         if (heroLocation != null)
         {
             heroLocation.text = $"위치: {entry.HeroLocation}";
         }
-        if (skillIcon != null)
+        if (skillIcon != null && skillName != null && skillDescription != null)
         {
+            skillIcon.sprite = entry.SkillIcon;
+            skillName.text = entry.SkillName;
+            skillDescription.text = entry.SkillDescription;
             skillIcon.gameObject.SetActive(true);
+        }
+        if (heroStatUIs != null)
+        {
+            GetHeroStat(entry);
         }
     }
 
@@ -154,7 +164,54 @@ public class HeroInventoryUIController : MonoBehaviour
         {
             heroLocation.text = "";
         }
+        if (skillName != null)
+        {
+            skillName.text = "";
+        }
+        if (skillDescription != null)
+        {
+            skillDescription.text = "";
+        }
+
+        for (int i = 0; i < heroStatUIs.Length; i++)
+        {
+            if (heroStatUIs[i] != null)
+            {
+                heroStatUIs[i].Clear();
+            }
+        }
     }
+
+    private void GetHeroStat(HeroEntry entry)
+    {
+        if (entry == null)
+        {
+            Debug.LogWarning("GetHeroStat 호출 시 HeroEntry가 null입니다.");
+            return;
+        }
+
+        if (heroStatUIs == null || heroStatUIs.Length < 4)
+        {
+            Debug.LogWarning("HeroStatUI 배열이 설정되지 않았습니다.");
+            return;
+        }
+
+        HeroStat stat = entry.GetHeroStat();
+
+        float[] values =
+        {
+            stat.Atk,
+            stat.Def,
+            stat.MaxHP,
+            0
+        };
+
+        for (int i = 0; i < heroStatUIs.Length && i < values.Length; i++)
+        {
+            heroStatUIs[i].SetValue(values[i]);
+        }
+    }
+
 
     private List<(HeroEntry entry, HeroSaveData heroSaveData)> GetIngameHeroes()
     {

@@ -21,15 +21,16 @@ public interface IHeroStatTable
 
 public static class HeroStats
 {
-    public static readonly Dictionary<int, IHeroStatTable> HeroStatDic = new()
+    public static readonly Dictionary<HeroNameEnum, IHeroStatTable> HeroStatDic = new()
     {
-        { -1, new Hero1StatTable() },
-        { -2, new Hero2StatTable() }
+        { HeroNameEnum.Warrior, new Hero1StatTable() },
+        { HeroNameEnum.Mage, new Hero2StatTable() },
+        { HeroNameEnum.Sorcery, new Hero3StatTable() }
     };
 
-    public static IHeroStatTable GetStatTable(int id)
+    public static IHeroStatTable GetStatTable(HeroNameEnum heroId)
     {
-        return HeroStatDic[id];
+        return HeroStatDic[heroId];
     }
 }
 
