@@ -1528,7 +1528,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2057144907884187506, guid: 7df9a69e1db650b45ae77885dd47f203, type: 3}
       propertyPath: m_Name
-      value: Cha1
+      value: SampleWarriorPrefab
       objectReference: {fileID: 0}
     - target: {fileID: 3570309129477720992, guid: 7df9a69e1db650b45ae77885dd47f203, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1617,7 +1617,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4136471860748260653, guid: 0d33069a5d850e142a8d0bd29e6040c4, type: 3}
       propertyPath: m_Name
-      value: Cha2
+      value: SampleMagePrefab
       objectReference: {fileID: 0}
     - target: {fileID: 7992600380936150462, guid: 0d33069a5d850e142a8d0bd29e6040c4, type: 3}
       propertyPath: m_LocalPosition.x
