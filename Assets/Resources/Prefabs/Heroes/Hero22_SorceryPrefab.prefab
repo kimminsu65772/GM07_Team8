@@ -585,7 +585,7 @@ GameObject:
   - component: {fileID: 9140440116478194214}
   - component: {fileID: 40990562345974146}
   m_Layer: 7
-  m_Name: SampleSorceryPrefab
+  m_Name: Hero22_SorceryPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -600,7 +600,7 @@ Transform:
   m_GameObject: {fileID: 7245292273247505057}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.49058, y: -0.06662, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -691,10 +691,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c64a2c56d9f880f4880f549499c15fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroEquipmentManager
-  currentWeaponEquip: {fileID: 0}
-  currentBodyEquip: {fileID: 0}
-  currentAccEquip: {fileID: 0}
-  selectedEquip: {fileID: 0}
 --- !u!1 &7583711370096473414
 GameObject:
   m_ObjectHideFlags: 0

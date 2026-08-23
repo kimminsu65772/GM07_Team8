@@ -1,13 +1,14 @@
 using UnityEngine;
 
-public class Cha1 : Hero
+public class Hero21_Mage : Hero
 {
     protected override void Awake()
     {
-        statTable = new Hero1StatTable();
-        SetAttackEffectPreset(-0.6f, 0.5f, -1.4f, 1.7f);
-        SetSkillEffectPreset(-0.6f, 0.5f, 1.5f, 1.7f);
-        Init(1, 2f, 5f, HeroLocationEnum.Front);
+        statTable = new Hero2StatTable();
+        SetAttackEffectPreset(0f, 0.05f, 1.3f, 1.3f);
+        SetSkillEffectPreset(0f, 0.05f, 1.5f, 1.7f);
+        SetTargetEffectPreset(0f, 0.1f, 1.5f, 1.5f);
+        Init(21, 1f, 6f, HeroLocationEnum.Back);
     }
 
     public override void Skill(GameObject enemy)
@@ -18,13 +19,14 @@ public class Cha1 : Hero
         Vector2 direction = enemy.transform.position - transform.position;
         FlipSprite(direction);
 
+        attack.VFX.PlayTargetEffect(enemy.transform, TargetPosPreset, TargetScalePreset);
+
         bool isCrit = false;
         if (criRan <= HeroCriChance)
         {
             damage *= 2f;
             isCrit = true;
         }
-            
 
         if (enemy.TryGetComponent<IDamageable>(out IDamageable enemyHP))
         {
