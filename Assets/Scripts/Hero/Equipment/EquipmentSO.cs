@@ -11,9 +11,6 @@ public class EquipmentSO : ScriptableObject
     [SerializeField] private float bonusDef;
     [SerializeField] private float bonusCriChance;
 
-    private int equipLv;
-    public int EquipLv => equipLv;
-
     public EquipGradeEnum EquipGrade => equipGrade;
     public EquipPartEnum EquipPart => equipPart;
     public float BonusHP
@@ -21,7 +18,6 @@ public class EquipmentSO : ScriptableObject
         get => bonusHP;
         set => bonusHP = Mathf.Max(0f, value);
     }
-
     public float BonusAtk
     {
         get => bonusAtk;
@@ -41,7 +37,7 @@ public class EquipmentSO : ScriptableObject
 
 public class Equipment
 {
-    public int EquipID { get; private set; }
+    public string EquipID { get; private set; }
     public int EquipLv { get; private set; }
     public EquipGradeEnum EquipGrade { get; private set; }
     public EquipPartEnum EquipPart { get; private set; }
@@ -50,7 +46,7 @@ public class Equipment
     public float BonusDef { get; private set; }
     public float BonusCriChance { get; private set; }
 
-    public void EquipInit(EquipmentSO equipSO, int id)
+    public void EquipInit(EquipmentSO equipSO, string id)
     {
         EquipID = id;
         EquipGrade = equipSO.EquipGrade;

@@ -150,6 +150,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
     public void Update()
     {
+        if (!targetEnemy.activeSelf) targetEnemy = null;
         if (targetEnemy == null) SearchEnemy();
         if (targetEnemy == null && location == HeroLocationEnum.Front) MoveToPlacementPoint();
         if (targetEnemy != null && location == HeroLocationEnum.Front) MoveToEnemy();
