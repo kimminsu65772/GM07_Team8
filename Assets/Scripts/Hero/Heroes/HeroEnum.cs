@@ -13,7 +13,13 @@ public enum HeroStateEnum
 public enum HeroNameEnum
 {
     None = 0,
-    Warrior,
-    Mage,
-    Sorcery
+    Warrior = 11,
+    SpellBlade,
+    Berserker,
+    Rogue,
+    Mage = 21,
+    Sorcery,
+    RapidMage,
+    Archer,
+    RapidArcher
 }

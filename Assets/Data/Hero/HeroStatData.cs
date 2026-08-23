@@ -38,9 +38,9 @@ public class Hero1StatTable : IHeroStatTable
 {
     private readonly Dictionary<int, HeroStat> stats = new()
     {
-        {1, new HeroStat(100f, 20f, 10f) },
-        {2, new HeroStat(120, 25f, 12f) },
-        {3, new HeroStat(140f, 30f, 14f) }
+        {1, new HeroStat(150f, 50f, 20f) },
+        {2, new HeroStat(200f, 70f, 30f) },
+        {3, new HeroStat(250f, 90f, 40f) }
     };
 
     public HeroStat GetStat(int lv)
@@ -54,9 +54,9 @@ public class Hero2StatTable : IHeroStatTable
 {
     private readonly Dictionary<int, HeroStat> stats = new()
     {
-        {1, new HeroStat(80f, 10f, 7f) },
-        {2, new HeroStat(90f, 17f, 8f) },
-        {3, new HeroStat(100f, 24f, 9f) }
+        {1, new HeroStat(100f, 50f, 10f) },
+        {2, new HeroStat(120f, 70f, 15f) },
+        {3, new HeroStat(140f, 90f, 20f) }
     };
 
     public HeroStat GetStat(int lv)
@@ -70,9 +70,9 @@ public class Hero3StatTable : IHeroStatTable
 {
     private readonly Dictionary<int, HeroStat> stats = new()
     {
-        {1, new HeroStat(80f, 10f, 7f) },
-        {2, new HeroStat(90f, 17f, 8f) },
-        {3, new HeroStat(100f, 24f, 9f) }
+        {1, new HeroStat(90f, 50f, 10f) },
+        {2, new HeroStat(110f, 70f, 15f) },
+        {3, new HeroStat(130f, 90f, 20f) }
     };
 
     public HeroStat GetStat(int lv)
