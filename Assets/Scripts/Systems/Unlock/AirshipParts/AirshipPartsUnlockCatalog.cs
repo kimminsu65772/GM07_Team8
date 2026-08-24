@@ -66,7 +66,7 @@ public class AirshipPartsUnlockCatalog : ScriptableObject
         return false;
     }
 
-    public UnlockResult CheckCannonUnlock(AirshipCannonType gearType)
+    public UnlockResult CheckCannonUnlock(AirshipCannonType cannonType)
     {
         if (PlayerInfo.Instance == null)
         {
@@ -74,10 +74,15 @@ public class AirshipPartsUnlockCatalog : ScriptableObject
             return new UnlockResult(false, false, false, new CurrencyCost(CurrencyType.Gear, 0), "플레이어 정보 없음");
         }
 
-        bool isOwned = PlayerInfo.Instance.IsCannonOwned(gearType);
-        if (!TryGetCannonUnlock(gearType, out AirshipCannonUnlock unlock))
+        if (cannonType == AirshipCannonType.Normal)
         {
-            Debug.LogError($"캐논 타입 {gearType}에 대한 해금 정보를 찾을 수 없습니다.");
+            return new UnlockResult(true, true, true, new CurrencyCost(CurrencyType.Gear, 0), "기본 장비");
+        }
+
+        bool isOwned = PlayerInfo.Instance.IsCannonOwned(cannonType);
+        if (!TryGetCannonUnlock(cannonType, out AirshipCannonUnlock unlock))
+        {
+            Debug.LogError($"캐논 타입 {cannonType}에 대한 해금 정보를 찾을 수 없습니다.");
             return new UnlockResult(isOwned, false, false, new CurrencyCost(CurrencyType.Gear, 0), "해금 정보 없음");
         }
 
@@ -105,6 +110,11 @@ public class AirshipPartsUnlockCatalog : ScriptableObject
         {
             Debug.LogError("플레이어의 정보가 없습니다.");
             return new UnlockResult(false, false, false, new CurrencyCost(CurrencyType.Gear, 0), "플레이어 정보 없음");
+        }
+
+        if (gearType == AirshipGearType.Normal)
+        {
+            return new UnlockResult(true, true, true, new CurrencyCost(CurrencyType.Gear, 0), "기본 장비");
         }
 
         bool isOwned = PlayerInfo.Instance.IsGearOwned(gearType);

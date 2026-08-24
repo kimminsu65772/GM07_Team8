@@ -83,6 +83,24 @@ public class AirshipDropSlot : MonoBehaviour, IDropHandler
         heroIcon.gameObject.SetActive(true);
     }
 
+    public bool TrySetHero(HeroEntry entry)
+    {
+        if (entry == null)
+        {
+            Debug.LogError("SetHero 호출 시 entry가 null입니다.");
+            return false;
+        }
+        if (heroIcon == null)
+        {
+            Debug.LogError("heroIcon이 할당되지 않았습니다.");
+            return false;
+        }
+
+        heroIcon.sprite = entry.HeroIcon;
+        heroIcon.gameObject.SetActive(true);
+        return true;
+    }
+
     public void ClearHero()
     {
         if (heroIcon != null)

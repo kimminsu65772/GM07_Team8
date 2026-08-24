@@ -33,8 +33,8 @@ public class SaveDataFactory
             {
                 Slots = new List<HeroSaveSlot>
                 {
-                    new HeroSaveSlot { SlotIndex = 0, HeroId = HeroNameEnum.None },
-                    new HeroSaveSlot { SlotIndex = 1, HeroId = HeroNameEnum.None },
+                    new HeroSaveSlot { SlotIndex = 0, HeroId = HeroNameEnum.Warrior },
+                    new HeroSaveSlot { SlotIndex = 1, HeroId = HeroNameEnum.Mage },
                     new HeroSaveSlot { SlotIndex = 2, HeroId = HeroNameEnum.None },
                     new HeroSaveSlot { SlotIndex = 3, HeroId = HeroNameEnum.None },
                     new HeroSaveSlot { SlotIndex = 4, HeroId = HeroNameEnum.None }
@@ -52,6 +52,28 @@ public class SaveDataFactory
                 {
                     { CurrencyType.Gold, new CurrencySaveData { Amount = 1000 } },
                     { CurrencyType.Gems, new CurrencySaveData { Amount = 50 } }
+                }
+            },
+            Inventory = new InventorySaveData
+            {
+                Items = new Dictionary<int, ItemStackSaveData>()
+            },
+            EquipmentInventory = new EquipmentInventorySaveData
+            {
+                OwnedEquipmentIds = new List<string>()
+            },
+            EquipmentCraft = new EquipmentCraftSaveData
+            {
+                Slots = new List<EquipmentCraftSlotSaveData>
+                {
+                    new EquipmentCraftSlotSaveData
+                    {
+                        SlotIndex = 0,
+                        IsCrafting = false,
+                        RecipeId = 0,
+                        StartedAtUtc = string.Empty,
+                        CompletesAtUtc = string.Empty
+                    }
                 }
             },
             // 마지막 저장 시간은 단순히 오프라인 보상 계산이나 기타 시간 기반 로직 수행 시 시간 차이를 계산하기 위함이기 때문에
@@ -77,6 +99,9 @@ public class SaveDataFactory
             {
                 Level = entry.DefaultLevel,
                 IsOwned = entry.IsDefaultOwned,
+                EquippedWeaponId = string.Empty,
+                EquippedBodyId = string.Empty,
+                EquippedAccId = string.Empty
             };
         }
 
@@ -87,5 +112,5 @@ public class SaveDataFactory
 // 나중에 데이터 구조가 변경되었을 때 버전 관리 및 비교 후 보정 작업을 위해 현재 세이브 데이터의 버전을 상수로 정의한다.
 public static class SaveDataVersion
 {
-    public const int CurrentVersion = 4;
+    public const int CurrentVersion = 7;
 }

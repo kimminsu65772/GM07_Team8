@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 public enum CurrencyType
 {
@@ -26,11 +28,14 @@ public class PlayerSaveData
     public PlayerProfileSaveData Profile { get; set; }
     public AirshipSaveData Airship { get; set; }
     public Dictionary<HeroNameEnum, HeroSaveData> Heroes { get; set; }
-
     public HeroFormationSaveData HeroFormation { get; set; }
     public StageProgressSaveData StageProgress { get; set; }
     // 플레이어가 보유한 재화 묶음 데이터를 저장하는 데이터
     public WalletSaveData Wallet { get; set; }
+    public InventorySaveData Inventory { get; set; }
+    public EquipmentInventorySaveData EquipmentInventory { get; set; }
+
+    public EquipmentCraftSaveData EquipmentCraft { get; set; }
     // 플레이어가 마지막으로 세이브한 시각을 국제 시간 기준으로 저장하는 데이터
     public string LastSavedAtUtc { get; set; }
 }
@@ -66,6 +71,9 @@ public class HeroSaveData
 {
     public int Level { get; set; }
     public bool IsOwned { get; set; }
+    public string EquippedWeaponId { get; set; }
+    public string EquippedBodyId { get; set; }
+    public string EquippedAccId { get; set; }
 }
 
 [Serializable]
@@ -78,6 +86,7 @@ public class HeroFormationSaveData
 public class HeroSaveSlot
 {
     public int SlotIndex { get; set; }
+    [JsonConverter(typeof(StringEnumConverter))]
     public HeroNameEnum HeroId { get; set; }
 }
 
@@ -101,4 +110,42 @@ public class WalletSaveData
 public class CurrencySaveData
 {
     public int Amount { get; set; }
+}
+
+[Serializable]
+public class InventorySaveData
+{
+    public Dictionary<int, ItemStackSaveData> Items { get; set; }
+}
+
+// 재료 전용 인벤
+[Serializable]
+public class ItemStackSaveData
+{
+    public int Amount { get; set; }
+}
+
+// 장비 전용 인벤
+[Serializable]
+public class EquipmentInventorySaveData
+{
+    public List<string> OwnedEquipmentIds { get; set; }
+}
+
+// 제작 중인 슬롯의 정보를 담는 데이터
+[Serializable]
+public class EquipmentCraftSaveData
+{
+    public List<EquipmentCraftSlotSaveData> Slots { get; set; }
+}
+
+// 제작 진행 현황을 저장하는 데이터
+[Serializable]
+public class EquipmentCraftSlotSaveData
+{
+    public int SlotIndex { get; set; }
+    public bool IsCrafting { get; set; }
+    public int RecipeId { get; set; }
+    public string StartedAtUtc { get; set; }
+    public string CompletesAtUtc { get; set; }
 }
