@@ -275,9 +275,9 @@ MonoBehaviour:
   durationText: {fileID: 3134400606029924788}
   craftIcon: {fileID: 3572538288722838614}
   materialCostSlots:
-  - {fileID: 1484349543785223127}
-  - {fileID: 8213514617160987571}
   - {fileID: 8213514617160987568}
+  - {fileID: 8213514617160987571}
+  - {fileID: 1484349543785223127}
   craftButton: {fileID: 1027481940005415323}
 --- !u!1 &1507796757117982116
 GameObject:
