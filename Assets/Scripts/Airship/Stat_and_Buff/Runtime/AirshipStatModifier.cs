@@ -25,12 +25,12 @@ public class AirshipStatModifier
     // 생성 후 바뀌지 않는 런타임 스탯 변경값.
     public AirshipStatType StatType { get; }
     public AirshipModifierType ModifierType { get; }
-    public float Value { get; }
+    public double Value { get; }
 
     public AirshipStatModifier(
         AirshipStatType statType,
         AirshipModifierType modifierType,
-        float value)
+        double value)
     {
         StatType = statType;
         ModifierType = modifierType;

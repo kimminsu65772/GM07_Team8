@@ -4,7 +4,7 @@ public class Hero22_Sorcery : Hero
 {
     protected override void Awake()
     {
-        statTable = new Hero3StatTable();
+        statTable = new Hero22StatTable();
         SetAttackEffectPreset(0f, 0.5f, 1.5f, 1.5f);
         SetSkillEffectPreset(0f, 0.5f, 1.5f, 1.7f);
         SetTargetEffectPreset(0f, 1.4f, 7f, 7f);

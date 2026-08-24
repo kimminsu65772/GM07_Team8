@@ -24,6 +24,8 @@ public class HeroSkillUIController : MonoBehaviour
 
     private Coroutine refreshCoroutine;
 
+    private float refreshTimer;
+    private const float RefreshInterval = 0.2f;
 
     private void Awake()
     {
@@ -45,6 +47,16 @@ public class HeroSkillUIController : MonoBehaviour
             refreshCoroutine = null;
         }
     }
+    private void Update()
+    {
+        refreshTimer += Time.unscaledDeltaTime;
+
+        if (refreshTimer >= RefreshInterval)
+        {
+            refreshTimer = 0f;
+            RefreshSkillButtons();
+        }
+    }
     private IEnumerator WaitForHeroesAndRefresh()
     {
         float timer = 0f;
@@ -55,6 +67,8 @@ public class HeroSkillUIController : MonoBehaviour
 
             if (heroes.Length > 0)
             {
+                yield return null;
+
                 RefreshSkillButtons();
                 refreshCoroutine = null;
 

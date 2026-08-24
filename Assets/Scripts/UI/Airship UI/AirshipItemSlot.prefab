@@ -588,8 +588,9 @@ GameObject:
   - component: {fileID: 3023252484262827955}
   - component: {fileID: 3307925081499621740}
   - component: {fileID: 7897089526044195610}
+  - component: {fileID: 4150087727262684891}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Equip Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -666,13 +667,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -697,6 +698,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4150087727262684891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2425324508637471892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d69160763fcf1e34992211ef19062cc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHoverScale
+  hoverScale: 1.15
+  duration: 0.2
+  easeType: 27
 --- !u!1 &3939447682786161741
 GameObject:
   m_ObjectHideFlags: 0
@@ -729,10 +745,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3780329735440243421}
-  - {fileID: 8151884693992674448}
   - {fileID: 2483645623715204829}
   - {fileID: 4587561073617580008}
   - {fileID: 8608979765514986998}
+  - {fileID: 8151884693992674448}
   - {fileID: 3469051278061153099}
   - {fileID: 7189333598950356326}
   m_Father: {fileID: 0}
@@ -797,6 +813,10 @@ MonoBehaviour:
   descText: {fileID: 8875485004617809642}
   goldGlowObject: {fileID: 131782027040489783}
   lockObject: {fileID: 7701882682306528780}
+  equipButton: {fileID: 7897089526044195610}
+  unlockButton: {fileID: 3626174912627743351}
+  unlockAvailableAlpha: 1
+  unlockUnavailableAlpha: 0.45
 --- !u!1 &4084042143568654078
 GameObject:
   m_ObjectHideFlags: 0
@@ -887,13 +907,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}

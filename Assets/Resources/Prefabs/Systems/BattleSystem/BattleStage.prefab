@@ -183,7 +183,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5381246048532595681}
-  - component: {fileID: 4992363913989649827}
   - component: {fileID: 8956793677715358491}
   - component: {fileID: 8589339353576967018}
   - component: {fileID: 1812815847424032649}
@@ -220,18 +219,6 @@ Transform:
   - {fileID: 7619586811544992084}
   m_Father: {fileID: 2816945746729132700}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4992363913989649827
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1072501174300116573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ddbcce7ef0c8f84fa4f98c4da5f551c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AirshipUpgradeManager
 --- !u!114 &8956793677715358491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,7 +231,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f148b3af9417b84eb36894d7d3280ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AirshipController
-  upgradeManager: {fileID: 0}
+  upgradeController: {fileID: 0}
+  equipmentController: {fileID: 0}
   statController: {fileID: 8589339353576967018}
   health: {fileID: 1812815847424032649}
   attack: {fileID: 4297295325368422485}
@@ -275,9 +263,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85929e5032d740a47a9cd8407998db26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AirshipHealth
+  equipmentController: {fileID: 0}
   currentHealth: 0
+  shield: 0
   hitRadius: 3.95
   drawOnlyWhenSelected: 0
+  recoveryInterval: 1
 --- !u!114 &4297295325368422485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,11 +281,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6190817e96c805a4a88d6422abdc92b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AirshipAttack
+  heroChecker: {fileID: 0}
   enemyChecker: {fileID: 4356170115814369668}
   health: {fileID: 1812815847424032649}
   equipmentController: {fileID: 2207187721593059716}
   aimPoint: {fileID: 1966827446950185948}
   projectileSpawnPoint: {fileID: 5602574281378796587}
+  aimLerpSpeed: 25
+  targetHeightOffset: 0.5
+  targetRefreshInterval: 0.1
+  noTargetDelay: 0.7
 --- !u!114 &759087307359766089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -417,6 +413,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AirshipEquipmentController
   equippedCannon: {fileID: 11400000, guid: 88fbdf1c82fecdb4fa2b5269584cd0de, type: 2}
   equippedGear: {fileID: 11400000, guid: a4c221f216a86954686f05d5d8cb34ae, type: 2}
+  cannonDatas: []
+  gearDatas: []
   statController: {fileID: 8589339353576967018}
   barrelRenderer: {fileID: 9185820902284795283}
   gearRenderer: {fileID: 8006992420389464709}
@@ -648,7 +646,7 @@ SpriteRenderer:
   m_Size: {x: 10.42, y: 7.31}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
 --- !u!1 &2789671506575892354
 GameObject:
@@ -1096,7 +1094,7 @@ SpriteRenderer:
   m_Size: {x: 13.45, y: 3.84}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
 --- !u!1 &6078154847778936067
 GameObject:
@@ -1599,11 +1597,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FollowCam
   target: {fileID: 5381246048532595681}
   smoothCamera: 0
-  lockVerticalAxis: 0
   lockCameraSize: 0
   cameraSize: 6
-  targetOffsetY: -0.2
   targetOffsetX: -0.7
+  startFollowPoint: {fileID: 0}
+  stageManager: {fileID: 0}
 --- !u!1 &8729124381071910040
 GameObject:
   m_ObjectHideFlags: 0

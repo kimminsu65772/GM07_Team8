@@ -4,7 +4,7 @@ public class Hero21_Mage : Hero
 {
     protected override void Awake()
     {
-        statTable = new Hero2StatTable();
+        statTable = new Hero21StatTable();
         SetAttackEffectPreset(0f, 0.05f, 1.3f, 1.3f);
         SetSkillEffectPreset(0f, 0.05f, 1.5f, 1.7f);
         SetTargetEffectPreset(0f, 0.1f, 1.5f, 1.5f);
@@ -14,7 +14,7 @@ public class Hero21_Mage : Hero
     public override void Skill(GameObject enemy)
     {
         float criRan = Random.Range(1f, 100f);
-        float damage = HeroAtk * 1.5f;
+        double damage = HeroAtk * 1.5f;
 
         Vector2 direction = enemy.transform.position - transform.position;
         FlipSprite(direction);

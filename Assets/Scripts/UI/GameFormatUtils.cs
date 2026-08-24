@@ -27,12 +27,12 @@ public static class GameFormatUtils
     }
 
 
-    public static string FormatStatValue(AirshipStatType statType, float rawValue)
+    public static string FormatStatValue(AirshipStatType statType, double rawValue)
     {
         switch (statType)
         {
             case AirshipStatType.CriticalChance:
-                return ToPercent(rawValue);
+                return ToPercent((float)rawValue);
 
             case AirshipStatType.Attack:
             case AirshipStatType.Recovery:

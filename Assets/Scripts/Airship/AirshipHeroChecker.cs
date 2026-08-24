@@ -27,7 +27,7 @@ public class AirshipHeroChecker : MonoBehaviour
             }
 
             float healthRatio =
-                hero.HeroCurrentHP / hero.HeroMaxHP;
+                (float)hero.HeroCurrentHP / (float)hero.HeroMaxHP;
 
             if (healthRatio < lowestHealthRatio)
             {

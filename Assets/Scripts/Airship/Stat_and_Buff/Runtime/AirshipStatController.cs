@@ -116,11 +116,11 @@ public class AirshipStatController : MonoBehaviour
 
     private void CalculateStat(AirshipStatType statType, int level)
     {
-        float value = statTable.GetStatValue(statType, level);
+        double value = statTable.GetStatValue(statType, level);
 
-        float flatSum = 0f;
-        float percentAddSum = 0f;
-        float percentMultiply = 1f;
+        double flatSum = 0d;
+        double percentAddSum = 0d;
+        double percentMultiply = 1d;
 
         foreach (AirshipBuff buff in activeBuffs)
         {
@@ -148,7 +148,7 @@ public class AirshipStatController : MonoBehaviour
             }
         }
 
-        value = (value + flatSum) * (1f + percentAddSum) * percentMultiply;
+        value = (value + flatSum) * (1d + percentAddSum) * percentMultiply;
         CurrentStats.SetStat(statType, value);
     }
 }

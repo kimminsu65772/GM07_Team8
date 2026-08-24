@@ -25,7 +25,7 @@ public class AirshipAttack : MonoBehaviour
 
     private AirshipCannonData currentCannon;
 
-    private float attackDamage;
+    private double attackDamage;
     private float criticalChance;
     private float attackInterval = 1f;
     private float attackTimer;
@@ -235,8 +235,8 @@ public class AirshipAttack : MonoBehaviour
                  Random.value < criticalChance)
             );
 
-        float finalDamage =
-            attackDamage * (isCritical ? 2f : 1f);
+        double finalDamage =
+            attackDamage * (isCritical ? 2d : 1d);
 
         projectile.Init(
             projectileSpawnPoint.position,
