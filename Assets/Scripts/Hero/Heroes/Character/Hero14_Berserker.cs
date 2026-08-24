@@ -4,7 +4,7 @@ public class Hero14_Berserker : Hero
 {
     protected override void Awake()
     {
-        statTable = new Hero2StatTable();
+        statTable = new Hero14StatTable();
         SetAttackEffectPreset(0f, 0f, 0f, 0f);
         SetSkillEffectPreset(0f, 0f, 0f, 0f);
         SetTargetEffectPreset(0f, 0f, 0f, 0f);

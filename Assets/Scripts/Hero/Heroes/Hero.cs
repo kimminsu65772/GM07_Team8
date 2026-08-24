@@ -1,6 +1,6 @@
 using System.Collections;
-using TMPro;
 using UnityEngine;
+using System;
 
 public abstract class Hero : MonoBehaviour, IDamageable
 {
@@ -8,10 +8,10 @@ public abstract class Hero : MonoBehaviour, IDamageable
     [SerializeField] private int heroID;
     [SerializeField] private string heroName;
     [SerializeField] private int heroLv;
-    [SerializeField] private float heroMaxHP;
-    [SerializeField] private float heroCurrentHP;
-    [SerializeField] private float heroAtk;
-    [SerializeField] private float heroDef;
+    [SerializeField] private double heroMaxHP;
+    [SerializeField] private double heroCurrentHP;
+    [SerializeField] private double heroAtk;
+    [SerializeField] private double heroDef;
     [SerializeField] private float heroCriChance;
     [SerializeField] private bool isDead;
     [SerializeField] private float hitRadius;
@@ -54,25 +54,25 @@ public abstract class Hero : MonoBehaviour, IDamageable
         get => heroLv;
         set => heroLv = Mathf.Max(1, value);
     }
-    public float HeroMaxHP
+    public double HeroMaxHP
     {
         get => heroMaxHP;
-        set => heroMaxHP = Mathf.Max(0f, value);
+        set => heroMaxHP = Math.Max(0d, value);
     }
-    public float HeroCurrentHP
+    public double HeroCurrentHP
     {
         get => heroCurrentHP;
-        set => heroCurrentHP = Mathf.Clamp(value, 0f, HeroMaxHP);
+        set => heroCurrentHP = Math.Clamp(value, 0d, HeroMaxHP);
     }
-    public float HeroAtk
+    public double HeroAtk
     {
         get => heroAtk;
-        set => heroAtk = Mathf.Max(0f, value);
+        set => heroAtk = Math.Max(0d, value);
     }
-    public float HeroDef
+    public double HeroDef
     {
         get => heroDef;
-        set => heroDef = Mathf.Max(0f, value);
+        set => heroDef = Math.Max(0d, value);
     }
     public float HeroCriChance
     {
@@ -100,6 +100,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
     public HeroLocationEnum Location => location;
     public HeroStateEnum HeroState => heroState;
     public LayerMask EnemyLayer => enemyLayer;
+    public float HPRatio { get; private set; }
 
     protected virtual void Awake() { }
     public virtual void Skill(GameObject enemy) { }
@@ -120,7 +121,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         isDead = false;
         this.location = location;
 
-        heroState = HeroStateEnum.Move;
+        isMoving = true;
         heroEquip = GetComponent<HeroEquipmentManager>();
         attack = GetComponent<HeroAttack>();
 
@@ -153,6 +154,8 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
     public void Update()
     {
+        HPRatio = (float)HeroCurrentHP / (float)HeroMaxHP;
+
         if (targetEnemy != null && !targetEnemy.activeSelf) targetEnemy = null;
         if (targetEnemy == null) SearchEnemy();
         if (targetEnemy == null && location == HeroLocationEnum.Front) MoveToPlacementPoint();
@@ -168,16 +171,18 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
     public void TakeDamage(DamageInfo damageInfo)
     {
-        float damage = (float)damageInfo.Damage;
+        double damage = damageInfo.Damage;
         
-        // 방어력 적용하기
-        heroCurrentHP -= damage;
+        // 방어력 적용
+        double finalDamage = damage * 100d / (HeroDef + 100d);
+        heroCurrentHP -= finalDamage;
 
         if (heroCurrentHP <= 0f)
         {
             StartCoroutine(DieAndRevive());
         }
     }
+
     public void Heal(DamageInfo damageInfo)
     {
         if (isDead || damageInfo.Damage <= 0f)
@@ -186,9 +191,9 @@ public abstract class Hero : MonoBehaviour, IDamageable
         }
 
         // 나중에 데미지 텍스트랑 연결할때 이벤트로 넘겨주려면 실제 힐량이 필요
-        float actualHeal =
-            Mathf.Min(
-                (float)damageInfo.Damage,
+        double actualHeal =
+            Math.Min(
+                damageInfo.Damage,
                 HeroMaxHP - HeroCurrentHP
             );
 

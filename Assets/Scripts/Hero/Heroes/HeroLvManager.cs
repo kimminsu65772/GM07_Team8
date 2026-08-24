@@ -22,7 +22,6 @@ public class HeroLvManager : MonoBehaviour
     }
 
     // private Hero hero;
-    private int heroMaxLv = 3;
     private HeroStat stat;
 
     public event Action<Hero> OnLevelUp;
@@ -43,7 +42,7 @@ public class HeroLvManager : MonoBehaviour
     public void LvUp(Hero hero)
     {
         // 비용 지불 조건/기능 추가
-        if (hero.HeroLv >= heroMaxLv) return;
+        // if () return;
 
         hero.HeroLv++;
         LvApply(hero.HeroLv, hero);
@@ -51,7 +50,7 @@ public class HeroLvManager : MonoBehaviour
 
     public void LvSet(int lv, Hero hero)
     {
-        if (lv >= heroMaxLv) lv = heroMaxLv;
+        if (lv <= 0) return;
 
         hero.HeroLv = lv;
         LvApply(hero.HeroLv, hero);
@@ -59,6 +58,8 @@ public class HeroLvManager : MonoBehaviour
 
     public void LvApply(int lv, Hero hero)
     {
+        if (lv <= 0) return;
+
         stat = hero.GetStat(lv);
 
         hero.HeroMaxHP = stat.MaxHP;
