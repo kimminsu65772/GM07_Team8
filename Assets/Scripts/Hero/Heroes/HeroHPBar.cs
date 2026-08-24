@@ -14,6 +14,6 @@ public class HeroHPBar : MonoBehaviour
 
     void Update()
     {
-        hpBar.value = hero.HeroCurrentHP / hero.HeroMaxHP;
+        hpBar.value = hero.HPRatio;
     }
 }

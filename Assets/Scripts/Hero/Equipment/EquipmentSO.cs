@@ -3,6 +3,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EquipData", menuName = "Game Data/Equipment Data")]
 public class EquipmentSO : ScriptableObject
 {
+    [Header("장비 정보")]
+    [SerializeField] private string equipName;
+    [SerializeField] private Sprite equipIcon;
     [Header("장비 스탯")]
     [SerializeField] private EquipGradeEnum equipGrade;
     [SerializeField] private EquipPartEnum equipPart;
