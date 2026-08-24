@@ -30,7 +30,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
     private AirshipMovement airshipMovement;
     private bool isMoving;
     
-    private float searchRange = 50f;
+    private float searchRange = 12f;
     private float meleeRange = 1.3f;
     
     protected HeroStateEnum heroState;
@@ -123,6 +123,8 @@ public abstract class Hero : MonoBehaviour, IDamageable
         heroState = HeroStateEnum.Move;
         heroEquip = GetComponent<HeroEquipmentManager>();
         attack = GetComponent<HeroAttack>();
+
+        FlipSprite(new Vector2(1, 0));
     }
 
     public void Initialize(
@@ -143,14 +145,15 @@ public abstract class Hero : MonoBehaviour, IDamageable
         heroCurrentHP = heroMaxHP;
         IsStunned = false;
         isDead = false;
-        heroState = HeroStateEnum.Move;
+        heroState = HeroStateEnum.Idle;
+        isMoving = false;
         targetEnemy = null;
         attack.ClearCoolTime();
     }
 
     public void Update()
     {
-        if (!targetEnemy.activeSelf) targetEnemy = null;
+        if (targetEnemy != null && !targetEnemy.activeSelf) targetEnemy = null;
         if (targetEnemy == null) SearchEnemy();
         if (targetEnemy == null && location == HeroLocationEnum.Front) MoveToPlacementPoint();
         if (targetEnemy != null && location == HeroLocationEnum.Front) MoveToEnemy();
@@ -161,21 +164,11 @@ public abstract class Hero : MonoBehaviour, IDamageable
         }
 
         ChangeState();
-
-        /*
-        if (Input.GetKeyDown(KeyCode.A)) TakeDamage(new DamageInfo(10, false));
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            Stun(3f);
-            Debug.Log("3초 스턴 적용");
-        }
-        */
     }
 
     public void TakeDamage(DamageInfo damageInfo)
     {
-        float damage = damageInfo.Damage;
+        float damage = (float)damageInfo.Damage;
         
         // 방어력 적용하기
         heroCurrentHP -= damage;
@@ -195,7 +188,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         // 나중에 데미지 텍스트랑 연결할때 이벤트로 넘겨주려면 실제 힐량이 필요
         float actualHeal =
             Mathf.Min(
-                damageInfo.Damage,
+                (float)damageInfo.Damage,
                 HeroMaxHP - HeroCurrentHP
             );
 
@@ -344,16 +337,6 @@ public abstract class Hero : MonoBehaviour, IDamageable
         attack.StopIsSkilling();
     }
 
-    /*
-    private void OnDrawGizmos()
-    {
-        // 근거리 공격 사거리
-        Gizmos.color = Color.red;
-        if (location == HeroLocationEnum.Front) Gizmos.DrawWireSphere(
-            new Vector3(transform.position.x, transform.position.y, transform.position.z), meleeRange);
-    }
-    */
-
     public void EquipStatApply(Equipment equip)
     {
         HeroMaxHP += equip.BonusHP;
@@ -408,5 +391,13 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
         yield return new WaitForSeconds(duration * 2);
         canStun = true;
+    }
+
+    private void OnDrawGizmos()
+    {
+        // 근거리 공격 사거리
+        Gizmos.color = Color.red;
+        if (location == HeroLocationEnum.Back) Gizmos.DrawWireSphere(
+            new Vector3(transform.position.x, transform.position.y, transform.position.z), searchRange);
     }
 }
