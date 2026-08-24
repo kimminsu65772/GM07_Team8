@@ -53,7 +53,7 @@ public class HeroAttack : MonoBehaviour
         if (attackTimer >= hero.HeroAttackTime)
         {
             float criRan = Random.Range(1f, 100f);
-            float damage = hero.HeroAtk;
+            double damage = hero.HeroAtk;
 
             isAttacking = true;
             attackTimer = 0f;
@@ -89,7 +89,7 @@ public class HeroAttack : MonoBehaviour
             if (hero.TargetEnemy == null) return;
 
             float criRan = Random.Range(1f, 100f);
-            float damage = hero.HeroAtk;
+            double damage = hero.HeroAtk;
 
             isAttacking = true;
             attackTimer = 0f;
@@ -113,7 +113,7 @@ public class HeroAttack : MonoBehaviour
     }
 
     // areaShape = 0(원), 1(사각형)
-    public void AreaAttack(int areaShape, Transform target, float range, float damageBonus)
+    public void AreaAttack(int areaShape, Transform target, float range, double damageBonus)
     {
         Collider2D[] enemies = null;
 
@@ -147,7 +147,7 @@ public class HeroAttack : MonoBehaviour
             if (coll.gameObject.TryGetComponent<IDamageable>(out IDamageable enemyHP))
             {
                 float criRan = Random.Range(1f, 100f);
-                float damage = hero.HeroAtk * damageBonus;
+                double damage = hero.HeroAtk * damageBonus;
 
                 bool isCrit = false;
                 if (criRan <= hero.HeroCriChance)

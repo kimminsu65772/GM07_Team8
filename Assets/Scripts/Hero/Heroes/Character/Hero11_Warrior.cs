@@ -4,7 +4,7 @@ public class Hero11_Warrior : Hero
 {
     protected override void Awake()
     {
-        statTable = new Hero1StatTable();
+        statTable = new Hero11StatTable();
         SetAttackEffectPreset(-0.6f, 0.5f, -1.4f, 1.7f);
         SetSkillEffectPreset(-0.6f, 0.5f, 1.5f, 1.7f);
         Init(11, 2f, 5f, HeroLocationEnum.Front);
@@ -13,7 +13,7 @@ public class Hero11_Warrior : Hero
     public override void Skill(GameObject enemy)
     {
         float criRan = Random.Range(1f, 100f);
-        float damage = HeroAtk * 1.5f;
+        double damage = HeroAtk * 1.5f;
 
         Vector2 direction = enemy.transform.position - transform.position;
         FlipSprite(direction);
