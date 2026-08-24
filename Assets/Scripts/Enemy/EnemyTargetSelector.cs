@@ -99,10 +99,13 @@ public class EnemyTargetSelector : MonoBehaviour
                 continue;
             }
 
+
+
             // 죽어 있는 영웅은 제외
             if (hero.IsDead ||
                 hero.HeroCurrentHP <= 0f)
             {
+                Debug.Log(  $"{name}: 죽은 영웅 제외 | " + $"{hero.name}, IsDead: {hero.IsDead}, HP: {hero.HeroCurrentHP}" );
                 continue;
             }
 
