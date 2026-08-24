@@ -738,4 +738,34 @@ public class PlayerInfo : MonoBehaviour
             heroData.EquippedAccId ??= string.Empty;
         }
     }
+
+    #if UNITY_EDITOR
+    [ContextMenu("Reset Data")]
+    private void ContextResetData()
+    {
+        if (!CheckInitialized()) return;
+        SaveData = SaveDataFactory.CreateNewData(heroCatalog);
+        SaveScheduler.Instance.Initialize(SaveData, saveDataWriter);
+        Initialize();
+        saveDataWriter.ForceSave(SaveData);
+    }
+
+    [ContextMenu("Test/Add Test Currencies")]
+    private void ContextAddTestCurrencies()
+    {
+        if (!CheckInitialized()) return;
+        AddCurrency(CurrencyType.Gold, 1000000, SavePolicy.Deferred);
+        AddCurrency(CurrencyType.Gems, 100000, SavePolicy.Deferred);
+        AddCurrency(CurrencyType.Gear, 100000, SavePolicy.Deferred);
+    }
+
+    [ContextMenu("Test/Add Test Items")]
+    private void ContextAddItems()
+    {
+        if (!CheckInitialized()) return;
+        AddItem(10000, 100, SavePolicy.Deferred);
+        AddItem(10001, 100, SavePolicy.Deferred);
+        AddItem(10002, 100, SavePolicy.Deferred);
+    }
+    #endif
 }

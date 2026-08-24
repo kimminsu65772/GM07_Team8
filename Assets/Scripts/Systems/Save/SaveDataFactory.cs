@@ -33,8 +33,8 @@ public class SaveDataFactory
             {
                 Slots = new List<HeroSaveSlot>
                 {
-                    new HeroSaveSlot { SlotIndex = 0, HeroId = HeroNameEnum.None },
-                    new HeroSaveSlot { SlotIndex = 1, HeroId = HeroNameEnum.None },
+                    new HeroSaveSlot { SlotIndex = 0, HeroId = HeroNameEnum.Warrior },
+                    new HeroSaveSlot { SlotIndex = 1, HeroId = HeroNameEnum.Mage },
                     new HeroSaveSlot { SlotIndex = 2, HeroId = HeroNameEnum.None },
                     new HeroSaveSlot { SlotIndex = 3, HeroId = HeroNameEnum.None },
                     new HeroSaveSlot { SlotIndex = 4, HeroId = HeroNameEnum.None }
