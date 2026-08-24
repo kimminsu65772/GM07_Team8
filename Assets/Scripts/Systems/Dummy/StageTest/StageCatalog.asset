@@ -23,3 +23,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bd954198ef7f450eaa9990041ed0fbad, type: 2}
   - {fileID: 11400000, guid: 53344e8f97f5443da99dbc0369b9875f, type: 2}
   - {fileID: 11400000, guid: 83597a243e0b4ec79ed5ed1d6b6e959e, type: 2}
+  stageCycle: 10
