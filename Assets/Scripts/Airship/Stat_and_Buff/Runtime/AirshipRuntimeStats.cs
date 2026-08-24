@@ -7,7 +7,7 @@ using System;
 public class AirshipRuntimeStats
 {
     public float Attack { get; private set; }
-    public float Defense { get; private set; }
+    public float Recovery { get; private set; }
     public float MaxHealth { get; private set; }
     public float CriticalChance { get; private set; }
     public float MoveSpeed { get; private set; }
@@ -20,8 +20,8 @@ public class AirshipRuntimeStats
             case AirshipStatType.Attack:
                 Attack = value;
                 break;
-            case AirshipStatType.Defense:
-                Defense = value;
+            case AirshipStatType.Recovery:
+                Recovery = value;
                 break;
             case AirshipStatType.MaxHealth:
                 MaxHealth = value;
@@ -44,7 +44,7 @@ public class AirshipRuntimeStats
         return statType switch
         {
             AirshipStatType.Attack => Attack,
-            AirshipStatType.Defense => Defense,
+            AirshipStatType.Recovery => Recovery,
             AirshipStatType.MaxHealth => MaxHealth,
             AirshipStatType.CriticalChance => CriticalChance,
             AirshipStatType.MoveSpeed => MoveSpeed,
