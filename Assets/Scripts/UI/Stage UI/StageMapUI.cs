@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 public class StageMapUI : MonoBehaviour
 {
     [Header("Data Reference")]
@@ -10,131 +10,146 @@ public class StageMapUI : MonoBehaviour
     [SerializeField] private StageTransitionController stageTransitionController;
 
     [Header("UI References")]
-    [SerializeField] private Transform mapContentTransform;
-    [SerializeField] private GameObject mapTemplate;
+    [Tooltip("현재 Stage Panel의 MapTransform")]
+    [SerializeField] private Transform mapTransform;
+
+    [Tooltip("스테이지 버튼 프리팹")]
     [SerializeField] private GameObject stageSlotPrefab;
 
-    [Header("Grid Layout Settings (일정 간격 설정)")]
-    [SerializeField] private float spacingX = 280f; 
-    [SerializeField] private float spacingY = 60f; 
-    [SerializeField] private int columns = 10;      
+    [Header("Map Settings")]
+    [Tooltip("현재 지역 번호")]
+    [SerializeField] private int mapNumber = 1;
 
-    [Header("Random Offset Settings (위아래 좌우 흔들림 조절)")]
-    [SerializeField] private float offsetXRange = 50f;
-    [SerializeField] private float offsetYRange = 50f; 
+    [Tooltip("지역 하나당 스테이지 개수")]
+    [SerializeField] private int stagesPerMap = 10;
 
-    private readonly List<StageMapSlot> spawnedSlots = new List<StageMapSlot>();
-    private readonly List<GameObject> spawnedMaps = new List<GameObject>();
+    [Header("ZigZag Settings")]
+    [Tooltip("좌우 간격")]
+    [SerializeField] private float zigzagX = 130f;
 
-    private bool isMapGenerated = false;
+    [Tooltip("스테이지 사이의 세로 간격")]
+    [SerializeField] private float spacingY = 80f;
+
+    private readonly List<StageMapSlot> spawnedSlots = new();
     private void OnEnable()
     {
         RefreshMap();
     }
-    private void GenerateMapSlots(int maxCleared)
+    public void RefreshMap()
+    {
+        if (stageCatalog == null)
+        {
+            Debug.LogError("StageMapUI : StageCatalog가 없습니다.");
+            return;
+        }
+        if (mapTransform == null)
+        {
+            Debug.LogError("StageMapUI : Map Content Transform이 없습니다.");
+            return;
+        }
+        if (stageSlotPrefab == null)
+        {
+            Debug.LogError("StageMapUI : Stage Slot Prefab이 없습니다.");
+            return;
+        }
+        int maxCleared = 0;
+
+        if (PlayerInfo.Instance != null && PlayerInfo.Instance.IsInitialized)
+        {
+            maxCleared = PlayerInfo.Instance.MaxClearedStage;
+        }
+        GenerateStageButtonsIfNeeded(maxCleared);
+    }
+    private void GenerateStageButtonsIfNeeded(int maxCleared)
     {
         int totalStages = stageCatalog.StageCount;
-        int mapCount = Mathf.CeilToInt(totalStages / 10f);
+        if (mapTransform == null) return;
 
-        for (int mapIndex = 0; mapIndex < mapCount; mapIndex++)
+        if (mapTransform.childCount > 0)
         {
-            GameObject mapObj;
+            UpdateExistingStageButtons(mapTransform, maxCleared);
+            return;
+        }
 
-            if (mapIndex == 0)
+        int startStage = GetStartStage();
+        int endStage = Mathf.Min(startStage + stagesPerMap - 1,totalStages);
+        Debug.Log($"[StageMapUI] MapNumber={mapNumber}, " + $"StartStage={startStage}, " + $"EndStage={endStage}, " + $"TotalStages={totalStages}");
+
+        for (int stageNumber = startStage; stageNumber <= endStage; stageNumber++)
+        {
+            Debug.Log($"[StageMapUI] Stage {stageNumber} 생성 시도");
+            if (!stageCatalog.TryGetStageData( stageNumber, out StageData stageData))
             {
-                mapObj = mapTemplate;
+                Debug.LogWarning($"[StageMapUI] StageCatalog에 " + $"Stage {stageNumber} 데이터가 없습니다.");
+                continue;
             }
-            else
+
+            GameObject slotObj = Instantiate(stageSlotPrefab, mapTransform);
+
+            slotObj.name = $"StageButton_{stageNumber:00}";
+
+            StageMapSlot mapSlot = slotObj.GetComponent<StageMapSlot>();
+
+            if (mapSlot == null)
             {
-                mapObj = Instantiate(mapTemplate,mapContentTransform);
+                Debug.LogError("StageButton 프리팹에 StageMapSlot이 없습니다.");
+                Destroy(slotObj);
+                continue;
             }
-            mapObj.name = $"Map_{mapIndex + 1:00}";
+            SetZigZagPosition(slotObj, stageNumber - startStage);
 
-            spawnedMaps.Add(mapObj);
+            mapSlot.Init(this, stageNumber, maxCleared);
+            spawnedSlots.Add(mapSlot);
+        }
+    }
+    private int GetStartStage()
+    {
+        return (mapNumber - 1) * stagesPerMap + 1;
+    }
+    private void SetZigZagPosition(GameObject slotObj,int index)
+    {
+        RectTransform rect = slotObj.GetComponent<RectTransform>();
+        if (rect == null) return;
+        float x;
 
-            Transform mapTransform = mapObj.transform.Find("Map Transform");
+        if (index % 2 == 0)
+        {
+            x = -zigzagX;
+        }
+        else
+        {
+            x = zigzagX;
+        }
 
-            if (mapTransform == null) continue;
+        float y = index * spacingY;
+        rect.anchoredPosition = new Vector2(x, y);
+    }
 
-            int startStage = mapIndex * 10 + 1;
-            int endStage = Mathf.Min(startStage + 9,totalStages);
+    private void UpdateExistingStageButtons(Transform mapTransform, int maxCleared)
+    {
+        foreach (Transform child in mapTransform)
+        {
+            StageMapSlot mapSlot = child.GetComponent<StageMapSlot>();
 
-            for (int stageNumber = startStage; stageNumber <= endStage; stageNumber++)
+            if (mapSlot == null) continue;
+
+            mapSlot.Refresh(maxCleared);
+
+            if (!spawnedSlots.Contains(mapSlot))
             {
-                if (!stageCatalog.TryGetStageData(stageNumber, out StageData stageData)) continue;
-                GameObject slotObj = Instantiate(stageSlotPrefab,mapTransform);
-                StageMapSlot mapSlot = slotObj.GetComponent<StageMapSlot>();
-
-                if (mapSlot == null)
-                {
-                    Destroy(slotObj);
-                    continue;
-                }
-
-                RectTransform rectTrans = slotObj.GetComponent<RectTransform>();
-
-                if (rectTrans != null)
-                {
-                    int index = stageNumber - startStage;
-                    int row = index / columns;
-                    int col = index % columns;
-                    float baseX = col * spacingX;
-                    float baseY = -row * spacingY;
-
-                    float randomX = Random.Range(-offsetXRange,offsetXRange);
-
-                    float randomY = Random.Range( -offsetYRange,offsetYRange);
-
-                    rectTrans.anchoredPosition = new Vector2( baseX + randomX,baseY + randomY);
-                }
-                mapSlot.Init(this, stageNumber, maxCleared);
                 spawnedSlots.Add(mapSlot);
             }
         }
     }
 
-    public void RefreshMap()
-    {
-        if (stageCatalog == null) return;
-        if (mapContentTransform == null) return;
-        if (stageSlotPrefab == null) return;
-
-        int maxCleared = 0;
-
-        if (PlayerInfo.Instance != null &&
-            PlayerInfo.Instance.IsInitialized)
-        {
-            maxCleared = PlayerInfo.Instance.MaxClearedStage;
-        }
-
-        if (!isMapGenerated)
-        {
-            GenerateMapSlots(maxCleared);
-
-            isMapGenerated = true;
-        }
-        UpdateMapVisibility(maxCleared);
-    }
-    private void UpdateMapVisibility(int maxCleared)
-    {
-        if (spawnedMaps.Count == 0) return;
-        int currentMapIndex = maxCleared / 10;
-
-        currentMapIndex = Mathf.Clamp(currentMapIndex,0,spawnedMaps.Count - 1);
-
-        for (int i = 0; i < spawnedMaps.Count; i++)
-        {
-            if (spawnedMaps[i] == null) continue;
-
-            spawnedMaps[i].SetActive(i == currentMapIndex);
-        }
-    }
     public void OnStageSelected(int stageNumber)
     {
-        if (PlayerInfo.Instance != null)
+        if (PlayerInfo.Instance == null) return;
+        bool success = PlayerInfo.Instance.TrySetCurrentStage(stageNumber);
+
+        if (success)
         {
-            bool success = PlayerInfo.Instance.TrySetCurrentStage(stageNumber);
-            if (success)
+            if (stageTransitionController != null)
             {
                 stageTransitionController.StartTransition(stageNumber);
             }

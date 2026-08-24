@@ -41,4 +41,8 @@ public class StageMapSlot : MonoBehaviour
             lockObject.SetActive(!isUnlocked);
         }
     }
+    public void Refresh(int maxClearedStage)
+    {
+        RefreshState(maxClearedStage);
+    }
 }

@@ -157,6 +157,13 @@ public abstract class Hero : MonoBehaviour, IDamageable
         HPRatio = (float)HeroCurrentHP / (float)HeroMaxHP;
 
         if (targetEnemy != null && !targetEnemy.activeSelf) targetEnemy = null;
+=======
+        //병합때 지우기
+        if (targetEnemy != null && !targetEnemy.activeSelf)
+        {
+            targetEnemy = null;
+        }
+>>>>>>> Stashed changes
         if (targetEnemy == null) SearchEnemy();
         if (targetEnemy == null && location == HeroLocationEnum.Front) MoveToPlacementPoint();
         if (targetEnemy != null && location == HeroLocationEnum.Front) MoveToEnemy();
