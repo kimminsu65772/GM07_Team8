@@ -12,6 +12,9 @@ public class AirshipEquipmentListUI : MonoBehaviour
     [SerializeField] private Transform contentTransform;
     [SerializeField] private GameObject itemSlotPrefab;
 
+    [Header("Unlock")]
+    [SerializeField] private AirshipPartsUnlockCatalog unlockCatalog;
+
     private AirshipEquipmentController equipmentController;
 
     private void OnEnable()
@@ -40,16 +43,27 @@ public class AirshipEquipmentListUI : MonoBehaviour
                 AirshipItemSlotUI slotUI = slot.GetComponent<AirshipItemSlotUI>();
                 if (slotUI != null) slotUI.SetCannonInfo(data);
 
-                Button btn = slot.GetComponentInChildren<Button>();
+                Button btn = slotUI.EquipButton;
                 TextMeshProUGUI btnText = btn != null ? btn.GetComponentInChildren<TextMeshProUGUI>() : null;
-                //해금 여부
+                // 해금 여부
                 bool isOwned = PlayerInfo.Instance.IsCannonOwned(data.CannonType);
-                //장착 여부
+                // 장착 여부
                 bool isEquipped = (equipmentController.EquippedCannon == data);
+                // 해금 가능 여부
+                bool canUnlock = false;
+                if (!isOwned && unlockCatalog != null)
+                {
+                    UnlockResult unlockResult = unlockCatalog.CheckCannonUnlock(data.CannonType);
+                    canUnlock = unlockResult.IsRequirementMet && unlockResult.HasEnoughCurrency;
+                }
                 if (slotUI != null)
                 {
                     slotUI.SetLockedState(!isOwned);
                     slotUI.SetEquippedState(isEquipped);
+                    if (!isOwned)
+                    {
+                        slotUI.SetUnlockAvailable(canUnlock);
+                    }
                 }
                 if (btn != null)
                 {
@@ -87,16 +101,27 @@ public class AirshipEquipmentListUI : MonoBehaviour
                 AirshipItemSlotUI slotUI = slot.GetComponent<AirshipItemSlotUI>();
                 if (slotUI != null) slotUI.SetGearInfo(data);
 
-                Button btn = slot.GetComponentInChildren<Button>();
+                Button btn = slotUI.EquipButton;
                 TextMeshProUGUI btnText = btn != null ? btn.GetComponentInChildren<TextMeshProUGUI>() : null;
-                //해금 여부
+                // 해금 여부
                 bool isOwned = PlayerInfo.Instance.IsGearOwned(data.GearType);
-                //장착 여부
+                // 장착 여부
                 bool isEquipped = (equipmentController.EquippedGear == data);
+                // 해금 가능 여부
+                bool canUnlock = false;
+                if (!isOwned && unlockCatalog != null)
+                {
+                    UnlockResult unlockResult = unlockCatalog.CheckGearUnlock(data.GearType);
+                    canUnlock = unlockResult.IsRequirementMet && unlockResult.HasEnoughCurrency;
+                }
                 if (slotUI != null)
                 {
                     slotUI.SetLockedState(!isOwned);
                     slotUI.SetEquippedState(isEquipped);
+                    if (!isOwned)
+                    {
+                        slotUI.SetUnlockAvailable(canUnlock);
+                    }
                 }
                 if (btn != null)
                 {

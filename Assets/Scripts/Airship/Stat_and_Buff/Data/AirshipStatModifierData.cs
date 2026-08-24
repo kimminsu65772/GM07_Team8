@@ -10,7 +10,7 @@ public class AirshipStatModifierData
 {
     [SerializeField] private AirshipStatType statType;
     [SerializeField] private AirshipModifierType modifierType;
-    [SerializeField] private float value;
+    [SerializeField] private double value;
 
     public AirshipStatModifier CreateModifier()
     {

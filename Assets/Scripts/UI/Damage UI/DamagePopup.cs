@@ -16,7 +16,7 @@ public class DamagePopup : MonoBehaviour
     private Color textColor;
     public void Setup(DamageInfo damageInfo)
     {
-        damageText.text = Mathf.RoundToInt(damageInfo.Damage).ToString();
+        damageText.text = GameFormatUtils.ToIdleNumber(damageInfo.Damage);
         if (damageInfo.IsCritical)
         {
             damageText.color = criticalColor;

@@ -10,14 +10,14 @@ using UnityEngine;
 public class AirshipStatGrowthData
 {
     [SerializeField] private AirshipStatType statType;
-    [SerializeField] private float baseValue;
-    [SerializeField] private float growthValue;
+    [SerializeField] private double baseValue;
+    [SerializeField] private double growthValue;
     [SerializeField, Min(1)] private int maxLevel = 100;
 
     public AirshipStatType StatType => statType;
     public int MaxLevel => maxLevel;
 
-    public float GetValue(int level)
+    public double GetValue(int level)
     {
         return baseValue + growthValue * (level - 1);
     }
@@ -33,13 +33,13 @@ public class AirshipStatTable : ScriptableObject
 {
     [SerializeField] private List<AirshipStatGrowthData> stats = new List<AirshipStatGrowthData>();
 
-    public float GetStatValue(AirshipStatType statType, int level)
+    public double GetStatValue(AirshipStatType statType, int level)
     {
         AirshipStatGrowthData stat = FindStat(statType);
 
         if (stat == null)
         {
-            return 0f;
+            return 0d;
         }
 
         return stat.GetValue(level);

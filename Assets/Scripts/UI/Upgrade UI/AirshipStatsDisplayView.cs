@@ -40,7 +40,7 @@ public class AirshipStatsDisplayView : MonoBehaviour
         UpdateStatUI(AirshipStatType.MaxHealth, stats.MaxHealth, maxHealthValueText);
         UpdateStatUI(AirshipStatType.CriticalChance, stats.CriticalChance, criticalValueText);
     }
-    private void UpdateStatUI(AirshipStatType statType, float finalValue, TextMeshProUGUI valueText)
+    private void UpdateStatUI(AirshipStatType statType, double finalValue, TextMeshProUGUI valueText)
     {
         if (valueText == null) return;
 
@@ -50,7 +50,7 @@ public class AirshipStatsDisplayView : MonoBehaviour
         }
         else
         {
-            valueText.text = $"{finalValue:F1}";
+            valueText.text = GameFormatUtils.ToIdleNumber(finalValue);
         }
     }
 }
