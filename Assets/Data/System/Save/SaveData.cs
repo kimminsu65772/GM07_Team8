@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 public enum CurrencyType
 {
@@ -84,6 +86,7 @@ public class HeroFormationSaveData
 public class HeroSaveSlot
 {
     public int SlotIndex { get; set; }
+    [JsonConverter(typeof(StringEnumConverter))]
     public HeroNameEnum HeroId { get; set; }
 }
 

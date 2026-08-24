@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HeroUnlockCatalog
   m_EditorClassIdentifier: Assembly-CSharp::HeroUnlockCatalog
   heroUnlocks:
-  - heroId: 3
+  - heroId: 22
     currencyCost:
       Type: 2
       Amount: 3000

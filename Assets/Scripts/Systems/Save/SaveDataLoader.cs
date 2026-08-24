@@ -72,6 +72,12 @@ public class SaveDataLoader
             root["SaveVersion"] = 3;
         }
 
+        if (saveVersion < 7)
+        {
+            MigrateHeroNumericKeys(root);
+            MigrateHeroFormationNumericIds(root);
+        }
+
         return root.ToString(Formatting.None);
     }
 
@@ -129,6 +135,75 @@ public class SaveDataLoader
         }
     }
 
+    private static void MigrateHeroFormationNumericIds(JObject root)
+    {
+        JObject heroFormation = root["HeroFormation"] as JObject;
+        JArray slots = heroFormation?["Slots"] as JArray;
+
+        if (slots == null)
+        {
+            return;
+        }
+
+        foreach (JObject slot in slots)
+        {
+            JToken heroIdToken = slot["HeroId"];
+            string migratedHeroName = ConvertLegacyHeroId(heroIdToken);
+
+            if (!string.IsNullOrEmpty(migratedHeroName))
+            {
+                slot["HeroId"] = migratedHeroName;
+            }
+        }
+    }
+
+    private static void MigrateHeroNumericKeys(JObject root)
+    {
+        JObject heroes = root["Heroes"] as JObject;
+
+        if (heroes == null)
+        {
+            return;
+        }
+
+        JObject migratedHeroes = new JObject();
+
+        foreach (JProperty heroProperty in heroes.Properties())
+        {
+            bool isNumericKey = int.TryParse(heroProperty.Name, out _);
+            string migratedHeroName = ConvertLegacyHeroId(heroProperty.Name);
+
+            if (migratedHeroName == nameof(HeroNameEnum.None))
+            {
+                continue;
+            }
+
+            if (!isNumericKey || !migratedHeroes.ContainsKey(migratedHeroName))
+            {
+                migratedHeroes[migratedHeroName] = heroProperty.Value;
+            }
+        }
+
+        root["Heroes"] = migratedHeroes;
+    }
+
+    private static string ConvertLegacyHeroId(string heroIdText)
+    {
+        if (int.TryParse(heroIdText, out int numericHeroId))
+        {
+            return numericHeroId switch
+            {
+                0 => nameof(HeroNameEnum.None),
+                1 or 11 => nameof(HeroNameEnum.Warrior),
+                2 or 21 => nameof(HeroNameEnum.Mage),
+                3 or 22 => nameof(HeroNameEnum.Sorcery),
+                _ => nameof(HeroNameEnum.None)
+            };
+        }
+
+        return heroIdText;
+    }
+
     private static string ConvertLegacyHeroName(string heroName)
     {
         return heroName switch
@@ -148,5 +223,28 @@ public class SaveDataLoader
 
             _ => nameof(HeroNameEnum.None)
         };
+    }
+
+    private static string ConvertLegacyHeroId(JToken heroIdToken)
+    {
+        if (heroIdToken == null)
+        {
+            return nameof(HeroNameEnum.None);
+        }
+
+        if (heroIdToken.Type == JTokenType.Integer)
+        {
+            int heroId = heroIdToken.Value<int>();
+            return heroId switch
+            {
+                0 => nameof(HeroNameEnum.None),
+                1 or 11 => nameof(HeroNameEnum.Warrior),
+                2 or 21 => nameof(HeroNameEnum.Mage),
+                3 or 22 => nameof(HeroNameEnum.Sorcery),
+                _ => nameof(HeroNameEnum.None)
+            };
+        }
+
+        return ConvertLegacyHeroId(heroIdToken.Value<string>());
     }
 }
