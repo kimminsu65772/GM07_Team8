@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 26d8ad8942967f0489b443454c35a2ae, type: 3}
-  m_Name: RangedWave 2
+  m_Name: MobWave 3
   m_EditorClassIdentifier: Assembly-CSharp::WaveData
   enemySpawns:
-  - enemyPrefab: {fileID: 7931180812232907860, guid: f2213b7c9faeb8f4aa58213393b0fff1, type: 3}
-    spawnCount: 7
+  - enemyPrefab: {fileID: 7931180812232907860, guid: 19417c8b64eb6054fa18388a37544181, type: 3}
+    spawnCount: 5
     spawnInterval: 0.5
   nextWaveDelay: 0.75
   isBossWave: 0
