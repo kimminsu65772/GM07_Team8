@@ -25,7 +25,7 @@ public class TestAirshipHealth : MonoBehaviour, IDamageable
         DamageInfo damageInfo)
     {
         float damageAmount =
-            damageInfo.Damage;
+            (float)damageInfo.Damage;
 
         if (damageAmount <= 0f ||
             currentHealth <= 0)

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class AirshipWorldHealthBar : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class AirshipWorldHealthBar : MonoBehaviour
     private bool initialized;
 
     // 최대 체력 변경 감지용
-    private float lastMaxHealth = -1f;
+    private double lastMaxHealth = -1d;
 
     private void OnEnable()
     {
@@ -100,8 +101,8 @@ public class AirshipWorldHealthBar : MonoBehaviour
     }
 
     private void HandleHealthChanged(
-        float currentHealth,
-        float maxHealth)
+        double currentHealth,
+        double maxHealth)
     {
         UpdateHealthText(
             currentHealth,
@@ -109,9 +110,9 @@ public class AirshipWorldHealthBar : MonoBehaviour
             health.Shield
         );
 
-        float currentShield = health.Shield;
+        double currentShield = health.Shield;
 
-        float barMax =
+        double barMax =
             GetBarMax(
                 currentHealth,
                 maxHealth,
@@ -119,9 +120,12 @@ public class AirshipWorldHealthBar : MonoBehaviour
             );
 
         float targetRatio =
-            barMax <= 0f
+            barMax <= 0d
                 ? 0f
-                : Mathf.Clamp01(currentHealth / barMax);
+                : (float)Math.Max(
+                    0d,
+                    Math.Min(1d, currentHealth / barMax)
+                );
 
         UpdateShieldSlider(
             currentHealth,
@@ -131,7 +135,7 @@ public class AirshipWorldHealthBar : MonoBehaviour
 
         // 최초 초기화 또는 최대 체력 자체가 변경된 경우만 즉시 초기화
         if (!initialized ||
-            !Mathf.Approximately(lastMaxHealth, maxHealth))
+            lastMaxHealth != maxHealth)
         {
             SnapTo(
                 targetRatio,
@@ -171,17 +175,17 @@ public class AirshipWorldHealthBar : MonoBehaviour
         delayedFollowing = true;
     }
 
-    private void HandleShieldChanged(float currentShield)
+    private void HandleShieldChanged(double currentShield)
     {
         UpdateHealthText(
             health.CurrentHealth,
             health.MaxHealth,
             currentShield
         );
-        float maxHealth = health.MaxHealth;
-        float currentHealth = health.CurrentHealth;
+        double maxHealth = health.MaxHealth;
+        double currentHealth = health.CurrentHealth;
 
-        float barMax =
+        double barMax =
             GetBarMax(
                 currentHealth,
                 maxHealth,
@@ -189,9 +193,12 @@ public class AirshipWorldHealthBar : MonoBehaviour
             );
 
         float targetRatio =
-            barMax <= 0f
+            barMax <= 0d
                 ? 0f
-                : Mathf.Clamp01(currentHealth / barMax);
+                : (float)Math.Max(
+                    0d,
+                    Math.Min(1d, currentHealth / barMax)
+                );
 
         UpdateShieldSlider(
             currentHealth,
@@ -226,15 +233,15 @@ public class AirshipWorldHealthBar : MonoBehaviour
         lastMaxHealth = maxHealth;
     }
     private void UpdateHealthText(
-        float currentHealth,
-        float maxHealth,
-        float currentShield)
+        double currentHealth,
+        double maxHealth,
+        double currentShield)
     {
         string currentHealthText =
             GameFormatUtils.ToIdleNumber(currentHealth);
 
         string shieldText =
-            currentShield > 0f
+            currentShield > 0d
                 ? $"(<color=#4DA6FF>+{GameFormatUtils.ToIdleNumber(currentShield)}</color>) "
                 : string.Empty;
 
@@ -246,34 +253,38 @@ public class AirshipWorldHealthBar : MonoBehaviour
             $"{maxHealthText}";
     }
 
-    private float GetBarMax(
-        float currentHealth,
-        float maxHealth,
-        float currentShield)
+    private double GetBarMax(
+        double currentHealth,
+        double maxHealth,
+        double currentShield)
     {
         if (!health.IsShieldEnabled)
             return maxHealth;
 
-        return Mathf.Max(
+        return Math.Max(
             maxHealth,
             currentHealth + currentShield
         );
     }
 
     private void UpdateShieldSlider(
-        float currentHealth,
-        float currentShield,
-        float barMax)
+        double currentHealth,
+        double currentShield,
+        double barMax)
     {
         shieldHealthSlider.gameObject.SetActive(
             health.IsShieldEnabled
         );
 
         float shieldEndRatio =
-            barMax <= 0f
+            barMax <= 0d
                 ? 0f
-                : Mathf.Clamp01(
-                    (currentHealth + currentShield) / barMax
+                : (float)Math.Max(
+                    0d,
+                    Math.Min(
+                        1d,
+                        (currentHealth + currentShield) / barMax
+                    )
                 );
 
         shieldTarget = shieldEndRatio;
