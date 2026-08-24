@@ -16,6 +16,7 @@ public class HeroEntry : ScriptableObject
     [SerializeField] private Sprite skillIcon;
     [SerializeField] private string skillName;
     [SerializeField] private string skillDescription;
+    [SerializeField] private float skillCooldown;
 
     public HeroNameEnum HeroId => heroId;
     public string HeroName => heroId.ToString();
@@ -27,4 +28,20 @@ public class HeroEntry : ScriptableObject
     public Sprite SkillIcon => skillIcon;
     public string SkillName => skillName;
     public string SkillDescription => skillDescription;
+    public float SkillCooldown => skillCooldown;
+
+    public HeroStat GetHeroStat()
+    {
+        if (PlayerInfo.Instance == null ||
+            !PlayerInfo.Instance.TryGetHeroData(HeroId, out HeroSaveData saveData))
+        {
+            return HeroStats
+                .GetStatTable((int)HeroId)
+                .GetStat(DefaultLevel);
+        }
+
+        return HeroStats
+            .GetStatTable((int)HeroId)
+            .GetStat(saveData.Level);
+    }
 }

@@ -10,6 +10,7 @@ public class HeroArrangeUIController : MonoBehaviour
     [SerializeField] private Transform heroListContent;
     [SerializeField] private GameObject heroSlotPrefab;
     [SerializeField] private HeroCatalog heroCatalog;
+    [SerializeField] private HeroArrangeStatUI[] heroArrangeStatUIs;
 
     private const int MaxHeroSlots = 5; // 최대 영웅 슬롯 수
 
@@ -28,7 +29,6 @@ public class HeroArrangeUIController : MonoBehaviour
 
     private void OnEnable()
     {
-
         playerInfo = PlayerInfo.Instance;
 
         foreach (AirshipDropSlot slot in heroArrangeSlots)
@@ -117,21 +117,41 @@ public class HeroArrangeUIController : MonoBehaviour
                 continue;
             }
 
-            HeroSaveSlot saveSlot = FindFormationSlot(slot.SlotIndex);
+            int slotIndex = slot.SlotIndex;
+            HeroArrangeStatUI statUI = GetArrangeStatUI(slotIndex);
+            HeroSaveSlot saveSlot = FindFormationSlot(slotIndex);
 
             if (saveSlot == null || saveSlot.HeroId == HeroNameEnum.None)
             {
                 slot.ClearHero();
+                statUI.ClearHeroStatUIs();
                 continue;
             }
             if (heroCatalog == null || !heroCatalog.TryGetHeroEntry(saveSlot.HeroId, out HeroEntry heroEntry))
             {
                 slot.ClearHero();
+                statUI.ClearHeroStatUIs();
                 continue;
             }
 
-            slot.SetHero(heroEntry);
+            if (slot.TrySetHero(heroEntry))
+            {
+                statUI.SetHeroStatUIs(heroEntry);
+            }
         }
+    }
+
+    private HeroArrangeStatUI GetArrangeStatUI(int slotIndex)
+    {
+        if (heroArrangeStatUIs == null ||
+            slotIndex < 0 ||
+            slotIndex >= heroArrangeStatUIs.Length)
+        {
+            Debug.LogWarning($"슬롯 {slotIndex}에 대응되는 HeroArrangeStatUI가 없습니다.");
+            return null;
+        }
+
+        return heroArrangeStatUIs[slotIndex];
     }
 
     // UI 영웅 배치 인덱스에 맞는 HeroSaveSlot을 가져오는 메서드

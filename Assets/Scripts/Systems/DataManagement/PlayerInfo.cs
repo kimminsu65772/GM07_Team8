@@ -305,12 +305,14 @@ public class PlayerInfo : MonoBehaviour
     public bool IsCannonOwned(AirshipCannonType cannonType)
     {
         if (!CheckInitialized()) return false;
+        if (Airship.OwnedCannons == null) return false;
         return Airship.OwnedCannons.Contains(cannonType);
     }
 
     public bool IsGearOwned(AirshipGearType gearType)
     {
         if (!CheckInitialized()) return false;
+        if (Airship.OwnedGears == null) return false;
         return Airship.OwnedGears.Contains(gearType);
     }
 
@@ -322,6 +324,7 @@ public class PlayerInfo : MonoBehaviour
     public void SetOwnedCannonId(AirshipCannonType cannonType, SavePolicy savePolicy = SavePolicy.Soon)
     {
         if (!CheckInitialized()) return;
+        Airship.OwnedCannons ??= new HashSet<AirshipCannonType>();
         if (!Airship.OwnedCannons.Add(cannonType))
         {
             Debug.LogWarning($"SetOwnedCannonId: 이미 소유한 캐논입니다. CannonType: {cannonType}");
@@ -339,6 +342,7 @@ public class PlayerInfo : MonoBehaviour
     public void SetOwnedGearId(AirshipGearType gearType, SavePolicy savePolicy = SavePolicy.Soon)
     {
         if (!CheckInitialized()) return;
+        Airship.OwnedGears ??= new HashSet<AirshipGearType>();
         if (!Airship.OwnedGears.Add(gearType))
         {
             Debug.LogWarning($"SetOwnedGearId: 이미 소유한 기어입니다. GearType: {gearType}");
@@ -387,6 +391,242 @@ public class PlayerInfo : MonoBehaviour
         return true;
     }
 
+    public int GetItemAmount(int itemId)
+    {
+        if (!CheckInitialized() || SaveData == null) return 0;
+
+        // 세이브 데이터는 보유중인 아이템 Id만 들고 있어서 패치를 통해 인게임에 추가된 재료가
+        // 세이브 데이터에는 없을 수도 있음. 따라서 이 경우에는 0을 반환.
+        return SaveData.Inventory.Items.TryGetValue(itemId, out ItemStackSaveData item)
+            ? item.Amount
+            : 0;
+    }
+
+    public bool HasEnoughItem(int itemId, int amount)
+    {
+        if (amount <= 0) return true;
+        int currentAmount = GetItemAmount(itemId);
+
+        return currentAmount >= amount;
+    }
+
+    public bool TryConsumeItem(int itemId, int amount, SavePolicy savePolicy = SavePolicy.Soon)
+    {
+        if (!CheckInitialized() || SaveData == null || amount <= 0) return false;
+        if (!SaveData.Inventory.Items.ContainsKey(itemId)) return false;
+
+        if (HasEnoughItem(itemId, amount))
+        {
+            SaveData.Inventory.Items[itemId].Amount -= amount;
+            RequestSave(savePolicy);
+            return true;
+        }
+
+        return false;
+    }
+
+    public void AddItem(int itemId, int amount, SavePolicy savePolicy = SavePolicy.Soon)
+    {
+        if (!CheckInitialized() || SaveData == null || amount <= 0) return;
+        if (!SaveData.Inventory.Items.TryGetValue(itemId, out ItemStackSaveData item))
+        {
+            item = new ItemStackSaveData();
+            SaveData.Inventory.Items[itemId] = item;
+        }
+        SaveData.Inventory.Items[itemId].Amount += amount;
+        RequestSave(savePolicy);
+    }
+
+    public IReadOnlyList<string> GetOwnedEquipmentIds()
+    {
+        if (!CheckInitialized() || SaveData == null)
+            return Array.Empty<string>();
+
+        return SaveData.EquipmentInventory.OwnedEquipmentIds;
+    }
+
+    public bool HasEquipment(string equipmentId)
+    {
+        if (!CheckInitialized() || SaveData == null) return false;
+        if (string.IsNullOrEmpty(equipmentId)) return false;
+
+        return SaveData.EquipmentInventory.OwnedEquipmentIds.Contains(equipmentId);
+    }
+
+    public void AddEquipment(string equipmentId, SavePolicy savePolicy = SavePolicy.Soon)
+    {
+        if (!CheckInitialized() || SaveData == null) return;
+        if (string.IsNullOrEmpty(equipmentId)) return;
+
+        if (SaveData.EquipmentInventory.OwnedEquipmentIds.Contains(equipmentId))
+            return;
+
+        SaveData.EquipmentInventory.OwnedEquipmentIds.Add(equipmentId);
+        RequestSave(savePolicy);
+    }
+
+    // 장비 삭제는 쓸 일이 있을 지는 잘 모르겠지만 나중에 분해로 활용할 수 있지 않을까?
+    public bool RemoveEquipment(string equipmentId, SavePolicy savePolicy = SavePolicy.Soon)
+    {
+        if (!CheckInitialized() || SaveData == null) return false;
+        if (string.IsNullOrEmpty(equipmentId)) return false;
+
+        bool removed = SaveData.EquipmentInventory.OwnedEquipmentIds.Remove(equipmentId);
+
+        if (removed)
+            RequestSave(savePolicy);
+
+        return removed;
+    }
+
+    public string GetHeroEquippedId(HeroNameEnum heroId, EquipPartEnum equipPart)
+    {
+        if (!CheckInitialized() || SaveData == null) return string.Empty;
+        if (!SaveData.Heroes.TryGetValue(heroId, out HeroSaveData heroData)) return string.Empty;
+        if (heroData == null) return string.Empty;
+
+        return equipPart switch
+        {
+            EquipPartEnum.Weapon => heroData.EquippedWeaponId ?? string.Empty,
+            EquipPartEnum.Body => heroData.EquippedBodyId ?? string.Empty,
+            EquipPartEnum.Acc => heroData.EquippedAccId ?? string.Empty,
+            _ => string.Empty
+        };
+    }
+
+    public bool SetHeroEquippedEquipmentId(HeroNameEnum heroId, EquipPartEnum equipPart, string equipmentId, SavePolicy savePolicy = SavePolicy.Soon)
+    {
+        if (!CheckInitialized() || SaveData == null) return false;
+        if (!SaveData.Heroes.TryGetValue(heroId, out HeroSaveData heroData)) return false;
+        if (heroData == null) return false;
+        if (string.IsNullOrEmpty(equipmentId)) return false;
+        if (!HasEquipment(equipmentId)) return false;
+        if (GetHeroEquippedId(heroId, equipPart) == equipmentId) return true;
+
+
+        switch (equipPart)
+        {
+            case EquipPartEnum.Weapon:
+                heroData.EquippedWeaponId = equipmentId;
+                break;
+            case EquipPartEnum.Body:
+                heroData.EquippedBodyId = equipmentId;
+                break;
+            case EquipPartEnum.Acc:
+                heroData.EquippedAccId = equipmentId;
+                break;
+            default:
+                return false;
+        }
+
+        RequestSave(savePolicy);
+        return true;
+    }
+
+    public bool ClearHeroEquippedEquipmentId(HeroNameEnum heroId, EquipPartEnum equipPart, SavePolicy savePolicy = SavePolicy.Soon)
+    {
+        if (!CheckInitialized() || SaveData == null) return false;
+        if (!SaveData.Heroes.TryGetValue(heroId, out HeroSaveData heroData)) return false;
+        if (heroData == null) return false;
+
+        switch (equipPart)
+        {
+            case EquipPartEnum.Weapon:
+                heroData.EquippedWeaponId = string.Empty;
+                break;
+
+            case EquipPartEnum.Body:
+                heroData.EquippedBodyId = string.Empty;
+                break;
+
+            case EquipPartEnum.Acc:
+                heroData.EquippedAccId = string.Empty;
+                break;
+
+            default:
+                return false;
+        }
+
+        RequestSave(savePolicy);
+        return true;
+    }
+
+    public IReadOnlyList<EquipmentCraftSlotSaveData> GetEquipmentCraftSlots()
+    {
+        if (!CheckInitialized() || SaveData == null)
+            return Array.Empty<EquipmentCraftSlotSaveData>();
+
+        return SaveData.EquipmentCraft.Slots;
+    }
+
+    public EquipmentCraftSlotSaveData GetEquipmentCraftSlot(int slotIndex)
+    {
+        if (!CheckInitialized() || SaveData == null) return null;
+
+        foreach (var slot in SaveData.EquipmentCraft.Slots)
+        {
+            if (slot.SlotIndex == slotIndex) 
+                return slot;
+        }
+
+        return null;
+    }
+
+    public bool StartEquipmentCraft(int slotIndex, int recipeId, DateTime startedAtUtc, DateTime completesAtUtc, SavePolicy savePolicy = SavePolicy.Soon)
+    {
+        if (!CheckInitialized() || SaveData == null) return false;
+        if (recipeId < 0) return false;
+        if (completesAtUtc <= startedAtUtc) return false;
+
+        EquipmentCraftSlotSaveData slot = GetEquipmentCraftSlot(slotIndex);
+
+        if (slot == null) return false;
+        if (slot.IsCrafting) return false;
+
+        slot.IsCrafting = true;
+        slot.RecipeId = recipeId;
+        slot.StartedAtUtc = startedAtUtc.ToString("o");
+        slot.CompletesAtUtc = completesAtUtc.ToString("o");
+
+        RequestSave(savePolicy);
+        return true;
+    }
+
+    public bool IsEquipmentCraftComplete(int slotIndex, DateTime nowUtc)
+    {
+        EquipmentCraftSlotSaveData slot = GetEquipmentCraftSlot(slotIndex);
+
+        if (slot == null) return false;
+        if (!slot.IsCrafting) return false;
+        if (string.IsNullOrEmpty(slot.CompletesAtUtc)) return false;
+
+        // string으로 저장된 완료 시간을 다시 국제 표준 시간 기준 DateTime 형식으로 변경
+        if (!DateTime.TryParse(slot.CompletesAtUtc, null, System.Globalization.DateTimeStyles.RoundtripKind, out DateTime completesAtUtc))
+        {
+            return false;
+        }
+
+        return nowUtc >= completesAtUtc;
+    }
+
+    public bool ClearEquipmentCraftSlot(int slotIndex, SavePolicy savePolicy = SavePolicy.Soon)
+    {
+        if (!CheckInitialized() || SaveData == null) return false;
+
+        EquipmentCraftSlotSaveData slot = GetEquipmentCraftSlot(slotIndex);
+
+        if (slot == null)
+            return false;
+
+        slot.IsCrafting = false;
+        slot.RecipeId = 0;
+        slot.StartedAtUtc = string.Empty;
+        slot.CompletesAtUtc = string.Empty;
+
+        RequestSave(savePolicy);
+        return true;
+    }
+
     private bool CheckInitialized()
     {
         if (!IsInitialized)
@@ -408,6 +648,16 @@ public class PlayerInfo : MonoBehaviour
         SaveScheduler.Instance.RequestSave(savePolicy);
     }
 
+    /*
+     * 세이브 데이터 동기화 메서드 영역
+     */
+
+    // v1: 초기 세이브 구조
+    // v2: 스테이지 반복 설정 RepeatClearedStage 추가
+    // v3: 영웅/편성 저장 키 string → HeroNameEnum 마이그레이션 (Json을 수정해야 해서 Loader에 구현)
+    // v4: 비행선 파츠 소유 데이터 추가 (기본 장비를 소유 목록에 넣지 않는 에러 발견)
+    // v5: 비행선 파츠 소유 HashSet 초기화/마이그레이션 보정
+    // v6: 아이템 인벤토리, 장비 인벤토리, 영웅 장비 착용 상태, 장비 제작 진행 상태 추가
     private bool MigrateSaveDataIfNeeded()
     {
         if (SaveData.SaveVersion >= SaveDataVersion.CurrentVersion) return false;
@@ -417,22 +667,105 @@ public class PlayerInfo : MonoBehaviour
             SaveData.StageProgress.RepeatClearedStage = true;
         }
 
-        if (SaveData.SaveVersion < 4)
+        if (SaveData.SaveVersion < 5)
         {
-            // 기존 세이브 데이터에 없는 비행선 파츠 소유 여부를 초기화하여 세이브 데이터에 반영할 수 있도록 한다.
-            SaveData.Airship.OwnedCannons ??= new HashSet<AirshipCannonType>();
-            SaveData.Airship.OwnedGears ??= new HashSet<AirshipGearType>();
+            MigrateAirshipPartsOwnership();
+        }
 
-            SaveData.Airship.OwnedCannons.Add(AirshipCannonType.Normal);
-            SaveData.Airship.OwnedGears.Add(AirshipGearType.Normal);
-
-            // 테스트 과정에서 이미 다른 파츠를 장착한 경우, 해당 파츠도 소유한 것으로 간주하여 OwnedCannons와 OwnedGears에 추가
-            SaveData.Airship.OwnedCannons.Add(SaveData.Airship.EquippedCannonType);
-            SaveData.Airship.OwnedGears.Add(SaveData.Airship.EquippedGearType);
+        if (SaveData.SaveVersion < 6)
+        {
+            MigrateInventoryAndEquipmentCraft();
+            MigrationHeroEquipment();
         }
 
         SaveData.SaveVersion = SaveDataVersion.CurrentVersion;
 
         return true;
     }
+
+    private void MigrateAirshipPartsOwnership()
+    {
+        if (SaveData?.Airship == null) return;
+
+        // 기존 세이브 데이터에 없는 비행선 파츠 소유 여부를 초기화하여 세이브 데이터에 반영할 수 있도록 한다.
+        SaveData.Airship.OwnedCannons ??= new HashSet<AirshipCannonType>();
+        SaveData.Airship.OwnedGears ??= new HashSet<AirshipGearType>();
+
+        SaveData.Airship.OwnedCannons.Add(AirshipCannonType.Normal);
+        SaveData.Airship.OwnedGears.Add(AirshipGearType.Normal);
+
+        // 테스트 과정에서 이미 다른 파츠를 장착한 경우, 해당 파츠도 소유한 것으로 간주하여 OwnedCannons와 OwnedGears에 추가
+        SaveData.Airship.OwnedCannons.Add(SaveData.Airship.EquippedCannonType);
+        SaveData.Airship.OwnedGears.Add(SaveData.Airship.EquippedGearType);
+    }
+
+    // 장비 제작과 제작에 필요한 재료가 추가됨에 따라 인벤토리 및 장비 제작 관련 데이터를 추가하여 구버전 세이브 데이터를 동기화
+    private void MigrateInventoryAndEquipmentCraft()
+    {
+        SaveData.Inventory ??= new InventorySaveData();
+        SaveData.Inventory.Items ??= new Dictionary<int, ItemStackSaveData>();
+
+        SaveData.EquipmentInventory ??= new EquipmentInventorySaveData();
+        SaveData.EquipmentInventory.OwnedEquipmentIds ??= new List<string>();
+
+        SaveData.EquipmentCraft ??= new EquipmentCraftSaveData();
+        SaveData.EquipmentCraft.Slots ??= new List<EquipmentCraftSlotSaveData>();
+
+        if (SaveData.EquipmentCraft.Slots.Count == 0)
+        {
+            SaveData.EquipmentCraft.Slots.Add(new EquipmentCraftSlotSaveData
+            {
+                SlotIndex = 0,
+                IsCrafting = false,
+                RecipeId = 0,
+                StartedAtUtc = string.Empty,
+                CompletesAtUtc = string.Empty
+            });
+        }
+    }
+
+    private void MigrationHeroEquipment()
+    {
+        if (SaveData.Heroes == null) return;
+
+        foreach (HeroSaveData heroData in SaveData.Heroes.Values)
+        {
+            if (heroData == null)
+                continue;
+
+            heroData.EquippedWeaponId ??= string.Empty;
+            heroData.EquippedBodyId ??= string.Empty;
+            heroData.EquippedAccId ??= string.Empty;
+        }
+    }
+
+    #if UNITY_EDITOR
+    [ContextMenu("Reset Data")]
+    private void ContextResetData()
+    {
+        if (!CheckInitialized()) return;
+        SaveData = SaveDataFactory.CreateNewData(heroCatalog);
+        SaveScheduler.Instance.Initialize(SaveData, saveDataWriter);
+        Initialize();
+        saveDataWriter.ForceSave(SaveData);
+    }
+
+    [ContextMenu("Test/Add Test Currencies")]
+    private void ContextAddTestCurrencies()
+    {
+        if (!CheckInitialized()) return;
+        AddCurrency(CurrencyType.Gold, 1000000, SavePolicy.Deferred);
+        AddCurrency(CurrencyType.Gems, 100000, SavePolicy.Deferred);
+        AddCurrency(CurrencyType.Gear, 100000, SavePolicy.Deferred);
+    }
+
+    [ContextMenu("Test/Add Test Items")]
+    private void ContextAddItems()
+    {
+        if (!CheckInitialized()) return;
+        AddItem(10000, 100, SavePolicy.Deferred);
+        AddItem(10001, 100, SavePolicy.Deferred);
+        AddItem(10002, 100, SavePolicy.Deferred);
+    }
+    #endif
 }
