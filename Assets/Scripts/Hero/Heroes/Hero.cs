@@ -121,7 +121,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         isDead = false;
         this.location = location;
 
-        heroState = HeroStateEnum.Move;
+        isMoving = true;
         heroEquip = GetComponent<HeroEquipmentManager>();
         attack = GetComponent<HeroAttack>();
 
