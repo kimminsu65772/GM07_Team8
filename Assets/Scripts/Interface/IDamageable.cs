@@ -1,10 +1,10 @@
 public readonly struct DamageInfo
 {
-    public readonly float Damage;
+    public readonly double Damage;
     public readonly bool IsCritical;
     public readonly bool IsHeal;
 
-    public DamageInfo(float damage, bool isCritical = false, bool isHeal = false)
+    public DamageInfo(double damage, bool isCritical = false, bool isHeal = false)
     {
         Damage = damage;
         IsCritical = isCritical;

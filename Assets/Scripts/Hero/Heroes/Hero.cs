@@ -168,7 +168,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
     public void TakeDamage(DamageInfo damageInfo)
     {
-        float damage = damageInfo.Damage;
+        float damage = (float)damageInfo.Damage;
         
         // 방어력 적용하기
         heroCurrentHP -= damage;
@@ -188,7 +188,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         // 나중에 데미지 텍스트랑 연결할때 이벤트로 넘겨주려면 실제 힐량이 필요
         float actualHeal =
             Mathf.Min(
-                damageInfo.Damage,
+                (float)damageInfo.Damage,
                 HeroMaxHP - HeroCurrentHP
             );
 

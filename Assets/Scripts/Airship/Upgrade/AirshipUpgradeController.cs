@@ -140,7 +140,7 @@ public class AirshipUpgradeController : MonoBehaviour
         return upgradeState.GetLevel(statType);
     }
 
-    public float GetCurrentStat(AirshipStatType statType)
+    public double GetCurrentStat(AirshipStatType statType)
     {
         return statTable.GetStatValue(statType, GetCurrentLevel(statType));
     }
@@ -154,13 +154,13 @@ public class AirshipUpgradeController : MonoBehaviour
         return GetCurrentLevel(statType) + 1;
     }
 
-    public float GetNextStat(AirshipStatType statType)
+    public double GetNextStat(AirshipStatType statType)
     {
         int nextLevel = GetNextLevel(statType);
 
         if (nextLevel < 0)
         {
-            return -1f;
+            return -1d;
         }
 
         return statTable.GetStatValue(statType, nextLevel);

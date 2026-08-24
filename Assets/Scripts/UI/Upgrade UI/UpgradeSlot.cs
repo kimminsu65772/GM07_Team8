@@ -47,7 +47,7 @@ public class UpgradeSlot : MonoBehaviour
             costText.text = controller.GetCost(statType).ToString("N0");
             upgradeButton.interactable = true;
         }
-        float currentStat = controller.GetCurrentStat(statType);
+        double currentStat = controller.GetCurrentStat(statType);
 
         if (isMax)
         {
@@ -59,7 +59,7 @@ public class UpgradeSlot : MonoBehaviour
         }
         else
         {
-            float nextStat = controller.GetNextStat(statType);
+            double nextStat = controller.GetNextStat(statType);
             string formattedCurrent = GameFormatUtils.FormatStatValue(statType, currentStat);
             string formattedNext = GameFormatUtils.FormatStatValue(statType, nextStat);
 
