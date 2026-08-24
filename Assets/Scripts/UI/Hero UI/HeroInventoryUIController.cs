@@ -198,7 +198,7 @@ public class HeroInventoryUIController : MonoBehaviour
 
         HeroStat stat = entry.GetHeroStat();
 
-        float[] values =
+        double[] values =
         {
             stat.Atk,
             stat.Def,

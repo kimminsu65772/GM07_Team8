@@ -64,7 +64,7 @@ public class HeroArrangeStatUI : MonoBehaviour
         }
     }   
 
-    private void SetStatValue(int index, float value)
+    private void SetStatValue(int index, double value)
     {
         if (heroStatUIs == null ||
             index < 0 ||

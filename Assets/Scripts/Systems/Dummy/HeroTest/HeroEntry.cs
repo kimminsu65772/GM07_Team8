@@ -36,12 +36,12 @@ public class HeroEntry : ScriptableObject
             !PlayerInfo.Instance.TryGetHeroData(HeroId, out HeroSaveData saveData))
         {
             return HeroStats
-                .GetStatTable(HeroId)
+                .GetStatTable((int)HeroId)
                 .GetStat(DefaultLevel);
         }
 
         return HeroStats
-            .GetStatTable(HeroId)
+            .GetStatTable((int)HeroId)
             .GetStat(saveData.Level);
     }
 }

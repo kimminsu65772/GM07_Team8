@@ -21,7 +21,7 @@ public class HeroStatUI : MonoBehaviour
         }
     }
 
-    public void SetValue(float value)
+    public void SetValue(double value)
     {
         if (valueText == null)
         {
@@ -31,7 +31,7 @@ public class HeroStatUI : MonoBehaviour
         switch (valueFormat)
         {
             case ValueFormat.Percent:
-                valueText.text = GameFormatUtils.ToPercent(value);
+                valueText.text = GameFormatUtils.ToPercent((float)value);
                 break;
             case ValueFormat.Seconds:
                 valueText.text = $"{value:F1}초";

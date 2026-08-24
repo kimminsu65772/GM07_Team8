@@ -15,7 +15,7 @@ MonoBehaviour:
   recipeId: 0
   recipeName: "\uD558\uAE09 \uC7A5\uBE44 \uC81C\uC791"
   recipeIcon: {fileID: 21300000, guid: 7de4f17a0ab224fe5a6d6b2e94c06b79, type: 3}
-  recipeDescription: "\uCEE4\uBA3C~\uB808\uC5B4 \uB4F1\uAE09\uC758 \uC7A5\uBE44 1\uAC1C\uB97C
+  recipeDescription: "\uCEE4\uBA3C~\uC5D0 \uB4F1\uAE09\uC758 \uC7A5\uBE44 1\uAC1C\uB97C
     \uC11C\uB85C \uB2E4\uB978 \uD655\uB960\uB85C \uC81C\uC791\uD569\uB2C8\uB2E4."
   gradeRates:
   - grade: 0
