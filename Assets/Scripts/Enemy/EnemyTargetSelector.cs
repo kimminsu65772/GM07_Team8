@@ -14,12 +14,14 @@ public class EnemyTargetSelector : MonoBehaviour
     private EnemyAttack enemyAttack;
     private Transform currentTarget;
     private EnemyRangedAttack enemyRangedAttack;
+    private EnemyMagicAttack enemyMagicAttack;
 
     private void Awake()
     {
         enemyMovement = GetComponent<EnemyMovement>();
         enemyAttack = GetComponent<EnemyAttack>();
         enemyRangedAttack = GetComponent<EnemyRangedAttack>();
+        enemyMagicAttack = GetComponent<EnemyMagicAttack>();
     }
 
     private void Start()
@@ -43,6 +45,7 @@ public class EnemyTargetSelector : MonoBehaviour
         enemyAttack?.SetTarget(currentTarget);
         enemyRangedAttack?.SetTarget(currentTarget);
         enemyMovement?.SetCombatTarget(currentTarget);
+        enemyMagicAttack?.SetTarget(currentTarget);
     }
 
     public void SetAirshipTarget(Transform newAirshipTarget)
@@ -64,6 +67,7 @@ public class EnemyTargetSelector : MonoBehaviour
         enemyAttack?.SetTarget(currentTarget);
         enemyRangedAttack?.SetTarget(currentTarget);
         enemyMovement?.SetCombatTarget(currentTarget);
+        enemyMagicAttack?.SetTarget(currentTarget);
     }
 
     public Transform GetPriorityTarget(Vector3 enemyPosition)
@@ -99,10 +103,13 @@ public class EnemyTargetSelector : MonoBehaviour
                 continue;
             }
 
+
+
             // 죽어 있는 영웅은 제외
             if (hero.IsDead ||
                 hero.HeroCurrentHP <= 0f)
             {
+                Debug.Log(  $"{name}: 죽은 영웅 제외 | " + $"{hero.name}, IsDead: {hero.IsDead}, HP: {hero.HeroCurrentHP}" );
                 continue;
             }
 

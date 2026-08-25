@@ -4,18 +4,27 @@ public class EnemyAnimationEventReceiver : MonoBehaviour
 {
     private EnemyAttack enemyAttack;
     private BossChargeSkill bossChargeSkill;
+    private EnemyMagicAttack enemyMagicAttack;
 
     private void Awake()
     {
-        enemyAttack =
-            GetComponentInParent<EnemyAttack>();
+        enemyAttack = GetComponentInParent<EnemyAttack>();
 
-        bossChargeSkill =
-            GetComponentInParent<BossChargeSkill>();
+        enemyMagicAttack = GetComponentInParent<EnemyMagicAttack>();
+
+        bossChargeSkill =  GetComponentInParent<BossChargeSkill>();
     }
 
     public void ApplyAttackDamage()
     {
+        // 마법 공격 컴포넌트가 있으면 폭발 공격 실행
+        if (enemyMagicAttack != null)
+        {
+            enemyMagicAttack.CastExplosion();
+            return;
+        }
+
+        // 일반 근거리 공격
         if (enemyAttack == null)
         {
             return;
@@ -34,6 +43,8 @@ public class EnemyAnimationEventReceiver : MonoBehaviour
             rangedAttack.FireProjectile();
         }
     }
+
+   
     public void StartCharge()
     {
         if (bossChargeSkill == null)
