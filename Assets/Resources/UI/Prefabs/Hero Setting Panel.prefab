@@ -8,6 +8,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 166274368284326575, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 166274368284326575, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 166274368284326575, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 282968533497963762, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1161849975649800389, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1197452822757071802, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -15,6 +35,34 @@ PrefabInstance:
     - target: {fileID: 1197452822757071802, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1206819414270624155, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
+      propertyPath: m_Name
+      value: Hero Setting Panel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1585954728595271764, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1585954728595271764, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1585954728595271764, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2081474328703407566, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2776224759698119785, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2776224759698119785, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3835645560221474583, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
       propertyPath: m_AnchorMax.x
@@ -112,6 +160,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5915970906366502820, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6320938380732031166, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -122,6 +174,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6320938380732031166, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6578284388857071898, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6793708820901375611, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6793708820901375611, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6903179861130275047, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
@@ -139,6 +203,10 @@ PrefabInstance:
     - target: {fileID: 8113166548142090199, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
       propertyPath: m_Name
       value: Hero Setting Panel
+      objectReference: {fileID: 0}
+    - target: {fileID: 8858446625945783730, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

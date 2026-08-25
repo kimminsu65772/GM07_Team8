@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System;
 
 public class HeroInventoryUIController : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class HeroInventoryUIController : MonoBehaviour
     [SerializeField] private Transform contentGrid;
     [SerializeField] private GameObject heroSlotPrefab;
     [SerializeField] private HeroCatalog heroCatalog;
+    [SerializeField] private HeroLevelUpUIController heroLevelUpUIController;
 
     //[Header("상세 정보 UI 연결 (위쪽 패널)")]
     //[SerializeField] private GameObject detailPanelRoot;     
@@ -24,11 +26,19 @@ public class HeroInventoryUIController : MonoBehaviour
     [SerializeField] private TMP_Text heroLevel;
     [SerializeField] private TMP_Text heroLocation;
     [SerializeField] private HeroStatUI[] heroStatUIs;
+    
 
 
     private readonly List<HeroSlotUI> heroSlotPool = new();
 
     private PlayerInfo playerInfo;
+    private HeroEntry selectedHeroEntry;
+    private HeroSaveData selectedHeroSaveData;
+
+    public HeroEntry SelectecHeroEntry => selectedHeroEntry;
+    public HeroSaveData SelectedHeroSaveData => selectedHeroSaveData;
+
+    public event Action<HeroEntry, HeroSaveData> OnHeroSelected;
 
     private void Awake()
     {
@@ -49,6 +59,18 @@ public class HeroInventoryUIController : MonoBehaviour
         }
 
         playerInfo = PlayerInfo.Instance;
+    }
+
+    private void OnEnable()
+    {
+        RefreshInventory();
+        ClearDetailInfo();
+        heroLevelUpUIController.OnHeroLevelUp += RefreshInventory;
+    }
+
+    private void OnDisable()
+    {
+        heroLevelUpUIController.OnHeroLevelUp -= RefreshInventory;
     }
 
     private void Start()
@@ -87,6 +109,15 @@ public class HeroInventoryUIController : MonoBehaviour
             heroSlotPool[i].SetFormationState(false);
             heroSlotPool[i].SetDragEnabled(false);
         }
+
+        if (selectedHeroEntry != null && selectedHeroSaveData != null)
+        {
+            ShowDetailInfo(selectedHeroEntry, selectedHeroSaveData);
+        }
+        else
+        {
+            ClearDetailInfo();
+        }
     }
     //영웅 상세 정보 표시
     //private void ShowDetailInfo(HeroEntry entry, HeroSaveData saveData)
@@ -110,6 +141,12 @@ public class HeroInventoryUIController : MonoBehaviour
 
     private void ShowDetailInfo(HeroEntry entry, HeroSaveData saveData)
     {
+        if (entry != null && saveData != null)
+        {
+            selectedHeroEntry = entry;
+            selectedHeroSaveData = saveData;
+        }
+
         if (heroIcon != null)
         {
             heroIcon.gameObject.SetActive(true);
@@ -138,6 +175,8 @@ public class HeroInventoryUIController : MonoBehaviour
         {
             GetHeroStat(entry);
         }
+
+        OnHeroSelected?.Invoke(entry, saveData);
     }
 
     private void ClearDetailInfo()
@@ -171,6 +210,12 @@ public class HeroInventoryUIController : MonoBehaviour
         if (skillDescription != null)
         {
             skillDescription.text = "";
+        }
+
+        if (selectedHeroEntry != null && selectedHeroSaveData != null)
+        {
+            selectedHeroEntry = null;
+            selectedHeroSaveData = null;
         }
 
         for (int i = 0; i < heroStatUIs.Length; i++)

@@ -551,6 +551,13 @@ public class PlayerInfo : MonoBehaviour
         return true;
     }
 
+    public EquipmentInventorySaveData GetOwnedEquips()
+    {
+        if (!CheckInitialized() || SaveData == null)
+            return new EquipmentInventorySaveData { OwnedEquipmentIds = new List<string>() };
+        return SaveData.EquipmentInventory;
+    }
+
     public IReadOnlyList<EquipmentCraftSlotSaveData> GetEquipmentCraftSlots()
     {
         if (!CheckInitialized() || SaveData == null)

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 122f01c6f330da14b9672c40f7bfac22, type: 3}
+  m_Name: CurrencyTable
+  m_EditorClassIdentifier: Assembly-CSharp::CurrencyTable
+  currencies:
+  - {fileID: 11400000, guid: 195c46b9a96947b42b74c38ec0b7c7da, type: 2}
+  - {fileID: 11400000, guid: 7b22e5a8b8bd4fc45a37987805547e02, type: 2}
+  - {fileID: 11400000, guid: 85c75abb27265ea4d909673ccdbff888, type: 2}
