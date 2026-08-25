@@ -8,13 +8,13 @@ public class EquipmentSpawner : MonoBehaviour
     private int randGradeNum;
     private int randPartNum;
 
-    public long NextEquipmentID { get; private set; } = 1;
+    public int NextEquipmentID { get; private set; } = 1;
 
     public Equipment CreateEquipByGrade(EquipGradeEnum equipGrade)
     {
         Equipment spawnedEquip = new();
         RandomInfoByGrade(equipGrade);
-        long id = GenerateEquipID();
+        int id = GenerateEquipID();
 
         spawnedEquip.EquipInit(equipSO[equipSOSelectedNum], id);
 
@@ -66,7 +66,7 @@ public class EquipmentSpawner : MonoBehaviour
         }
     }
 
-    private long GenerateEquipID()
+    private int GenerateEquipID()
     {
         while (EquipmentManager.EquipDic.ContainsKey(NextEquipmentID))
         {

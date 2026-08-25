@@ -249,7 +249,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
             isMoving = false;
 
             if (attack.IsAutoSkill && skillTime <= attack.SkillTimer) attack.UseSkill(targetEnemy);
-            else attack.MeleeAttack(targetEnemy);
+            else attack.MeleeAttack();
         }
         else
         {
