@@ -28,7 +28,10 @@ public class EquipmentSpawner : MonoBehaviour
     [SerializeField] private EquipmentSO[] equipSO;
     private int equipSOSelectedNum;
 
-    
+    private void OnEnable()
+    {
+        RestoreSavedEquipments();
+    }
 
     private void Update()
     {
@@ -163,5 +166,12 @@ public class EquipmentSpawner : MonoBehaviour
 
             n++;
         }
+    }
+
+    private void RestoreSavedEquipments()
+    {
+        EquipmentManager.EquipDic.Clear();
+        EquipmentInventorySaveData equipmentInventorySaveData = PlayerInfo.Instance.GetOwnedEquips();
+        EquipmentManager.RebuildFromSave(equipmentInventorySaveData, equipSO);
     }
 }

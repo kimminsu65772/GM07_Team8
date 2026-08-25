@@ -54,7 +54,7 @@ public class AirshipEquipmentListUI : MonoBehaviour
                 if (!isOwned && unlockCatalog != null)
                 {
                     UnlockResult unlockResult = unlockCatalog.CheckCannonUnlock(data.CannonType);
-                    canUnlock = unlockResult.IsRequirementMet && unlockResult.HasEnoughCurrency;
+                    canUnlock = unlockResult.CanUnlock;
                 }
                 if (slotUI != null)
                 {
@@ -63,6 +63,16 @@ public class AirshipEquipmentListUI : MonoBehaviour
                     if (!isOwned)
                     {
                         slotUI.SetUnlockAvailable(canUnlock);
+                        Button unlockButton = slotUI.UnlockButton;
+                        if (unlockButton != null)
+                        {
+                            unlockButton.onClick.RemoveAllListeners();
+                            unlockButton.onClick.AddListener(() =>
+                            {
+                                OnClickUnlockCannonButton(data.CannonType);
+                                RefreshList();
+                            });
+                        }
                     }
                 }
                 if (btn != null)
@@ -112,7 +122,7 @@ public class AirshipEquipmentListUI : MonoBehaviour
                 if (!isOwned && unlockCatalog != null)
                 {
                     UnlockResult unlockResult = unlockCatalog.CheckGearUnlock(data.GearType);
-                    canUnlock = unlockResult.IsRequirementMet && unlockResult.HasEnoughCurrency;
+                    canUnlock = unlockResult.CanUnlock;
                 }
                 if (slotUI != null)
                 {
@@ -121,6 +131,16 @@ public class AirshipEquipmentListUI : MonoBehaviour
                     if (!isOwned)
                     {
                         slotUI.SetUnlockAvailable(canUnlock);
+                        Button unlockButton = slotUI.UnlockButton;
+                        if (unlockButton != null)
+                        {
+                            unlockButton.onClick.RemoveAllListeners();
+                            unlockButton.onClick.AddListener(() =>
+                            {
+                                OnClickUnlockGearButton(data.GearType);
+                                RefreshList();
+                            });
+                        }
                     }
                 }
                 if (btn != null)
@@ -172,6 +192,34 @@ public class AirshipEquipmentListUI : MonoBehaviour
         {
             equipmentController.EquipGear(gearType);
         }
+    }
+    private void OnClickUnlockCannonButton(AirshipCannonType cannonType)
+    {
+        if (unlockCatalog == null) return;
+
+        UnlockResult unlockResult = unlockCatalog.CheckCannonUnlock(cannonType);
+        if (!unlockResult.CanUnlock) return;
+
+        if (!PlayerInfo.Instance.TrySpendCurrency(unlockResult.Cost.Type, unlockResult.Cost.Amount, SavePolicy.Soon))
+        {
+            return;
+        }
+
+        PlayerInfo.Instance.SetOwnedCannonId(cannonType, SavePolicy.Soon);
+    }
+    private void OnClickUnlockGearButton(AirshipGearType gearType)
+    {
+        if (unlockCatalog == null) return;
+
+        UnlockResult unlockResult = unlockCatalog.CheckGearUnlock(gearType);
+        if (!unlockResult.CanUnlock) return;
+
+        if (!PlayerInfo.Instance.TrySpendCurrency(unlockResult.Cost.Type, unlockResult.Cost.Amount, SavePolicy.Soon))
+        {
+            return;
+        }
+
+        PlayerInfo.Instance.SetOwnedGearId(gearType, SavePolicy.Soon);
     }
     private void ToggleUnequipCannon()
     {
