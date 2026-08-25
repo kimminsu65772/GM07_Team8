@@ -138,7 +138,7 @@ public class PlayerInfo : MonoBehaviour
     /// SavePolicy.Soon: 설정된 시간 후에 저장 요청 (기본으로는 5초로 잡고 있음)
     /// SavePolicy.Immediate: 즉시 저장 요청
     /// </param>
-    public void AddCurrency(CurrencyType type, int amount, SavePolicy savePolicy = SavePolicy.Deferred)
+    public void AddCurrency(CurrencyType type, long amount, SavePolicy savePolicy = SavePolicy.Deferred)
     {
         if (!CheckInitialized()) return;
 
@@ -162,7 +162,7 @@ public class PlayerInfo : MonoBehaviour
         RequestSave(savePolicy);
     }
 
-    public bool TrySpendCurrency(CurrencyType type, int amount, SavePolicy savePolicy = SavePolicy.Soon)
+    public bool TrySpendCurrency(CurrencyType type, long amount, SavePolicy savePolicy = SavePolicy.Soon)
     {
         if (!CheckInitialized()) return false;
 

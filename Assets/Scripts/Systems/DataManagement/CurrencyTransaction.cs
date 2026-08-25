@@ -4,9 +4,9 @@ using System;
 public struct CurrencyReward
 {
     public CurrencyType Type;
-    public int Amount;
+    public long Amount;
 
-    public CurrencyReward(CurrencyType type, int amount)
+    public CurrencyReward(CurrencyType type, long amount)
     {
         if (amount < 0)
         {
@@ -32,8 +32,8 @@ public struct RewardBundle
 public struct CurrencyCost
 {
     public CurrencyType Type;
-    public int Amount;
-    public CurrencyCost(CurrencyType type, int amount)
+    public long  Amount;
+    public CurrencyCost(CurrencyType type, long amount)
     {
         if (amount < 0)
         {

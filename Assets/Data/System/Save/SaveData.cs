@@ -109,7 +109,7 @@ public class WalletSaveData
 [Serializable]
 public class CurrencySaveData
 {
-    public int Amount { get; set; }
+    public long Amount { get; set; }
 }
 
 [Serializable]

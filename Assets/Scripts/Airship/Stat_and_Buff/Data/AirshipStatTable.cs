@@ -17,8 +17,8 @@ public class AirshipStatGrowthData
     [SerializeField, Min(1)] private int maxLevel = 100;
 
     [Header("Upgrade Cost")]
-    [SerializeField, Min(0)] private int baseUpgradeCost;
-    [SerializeField, Min(0)] private int upgradeCostPerLevel;
+    [SerializeField, Min(0)] private long baseUpgradeCost;
+    [SerializeField, Min(0)] private long upgradeCostPerLevel;
 
     public AirshipStatType StatType => statType;
     public int MaxLevel =>
@@ -41,7 +41,7 @@ public class AirshipStatGrowthData
     }
 
     // 현재 레벨에서 다음 레벨로 올라갈 때 필요한 비용
-    public int GetUpgradeCost(int currentLevel)
+    public long GetUpgradeCost(int currentLevel)
     {
         if (currentLevel < 1 ||
             (statType == AirshipStatType.CriticalChance &&
@@ -55,7 +55,10 @@ public class AirshipStatGrowthData
             (double)upgradeCostPerLevel *
             (currentLevel - 1d);
 
-        return RoundCost(cost);
+        return CalculateCost(
+            baseUpgradeCost,
+            upgradeCostPerLevel,
+            currentLevel);
     }
 
     // 여러 레벨을 한 번에 올릴 때 필요한 총 비용
@@ -92,24 +95,29 @@ public class AirshipStatGrowthData
         return totalCost;
     }
 
-    private static int RoundCost(double cost)
+    private static long CalculateCost(
+        long baseCost,
+        long costPerLevel,
+        int currentLevel)
     {
-        if (double.IsNaN(cost) ||
-            cost <= 0d)
+        long levelOffset =
+            currentLevel - 1L;
+
+        if (levelOffset <= 0L)
         {
-            return 0;
+            return baseCost;
         }
 
-        if (double.IsInfinity(cost) ||
-            cost >= int.MaxValue)
+        if (costPerLevel > 0L &&
+            levelOffset >
+            (long.MaxValue - baseCost) /
+            costPerLevel)
         {
-            return int.MaxValue;
+            return long.MaxValue;
         }
 
-        return (int)Math.Round(
-            cost,
-            MidpointRounding.AwayFromZero
-        );
+        return baseCost +
+               costPerLevel * levelOffset;
     }
 }
 
@@ -140,7 +148,7 @@ public class AirshipStatTable : ScriptableObject
     }
 
     // 한 레벨 업그레이드 비용
-    public int GetUpgradeCost(
+    public long GetUpgradeCost(
         AirshipStatType statType,
         int currentLevel)
     {

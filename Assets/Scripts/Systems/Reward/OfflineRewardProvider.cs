@@ -69,8 +69,8 @@ public static class OfflineRewardProvider
             return new RewardBundle(Array.Empty<CurrencyReward>());
         }
 
-        int goldReward = offlineMinutes * (playerMaxCleardStage + 1);
-        int gemReward = offlineMinutes * (playerMaxCleardStage + 1) / 10;
+        long goldReward = (long)offlineMinutes * (playerMaxCleardStage + 1);
+        long gemReward = (long)offlineMinutes * (playerMaxCleardStage + 1) / 10;
 
         if (goldReward <= 0 && gemReward <= 0)
         {

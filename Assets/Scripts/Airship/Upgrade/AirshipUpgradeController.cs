@@ -171,7 +171,7 @@ public class AirshipUpgradeController : MonoBehaviour
     }
 
     // 비용은 현재 AirshipStatTable에서 계산되며, 아직 int.
-    public int GetCost(AirshipStatType statType)
+    public long GetCost(AirshipStatType statType)
     {
         if (statTable == null)
         {
