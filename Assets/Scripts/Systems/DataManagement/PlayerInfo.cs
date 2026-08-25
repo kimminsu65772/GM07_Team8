@@ -741,13 +741,17 @@ public class PlayerInfo : MonoBehaviour
 
     #if UNITY_EDITOR
     [ContextMenu("Reset Data")]
-    private void ContextResetData()
+    private async void ContextResetData()
     {
         if (!CheckInitialized()) return;
+
+        await SaveScheduler.Instance.FlushAsync();
+
         SaveData = SaveDataFactory.CreateNewData(heroCatalog);
         SaveScheduler.Instance.Initialize(SaveData, saveDataWriter);
-        Initialize();
         saveDataWriter.ForceSave(SaveData);
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Scenes/TitleScene");
     }
 
     [ContextMenu("Test/Add Test Currencies")]

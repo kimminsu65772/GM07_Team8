@@ -1,12 +1,15 @@
+using System;
+
 /// <summary>
 /// 업그레이드 상태를 나타내는 클래스.
 /// </summary>
 public class AirshipUpgradeState
 {
-    public int AttackLevel { get; private set; }
-    public int RecoveryLevel { get; private set; }
-    public int MaxHealthLevel { get; private set; }
-    public int CriticalLevel { get; private set; }
+    // 성장 공식의 시작점은 1레벨.
+    public int AttackLevel { get; private set; } = 1;
+    public int RecoveryLevel { get; private set; } = 1;
+    public int MaxHealthLevel { get; private set; } = 1;
+    public int CriticalLevel { get; private set; } = 1;
 
     public void SetLevels(
         int attackLevel,
@@ -14,11 +17,13 @@ public class AirshipUpgradeState
         int maxHealthLevel,
         int criticalLevel)
     {
-        AttackLevel = attackLevel;
-        RecoveryLevel = recoveryLevel;
-        MaxHealthLevel = maxHealthLevel;
-        CriticalLevel = criticalLevel;
+        // 기존 세이브에 0이 들어있어도 1레벨로 보정.
+        AttackLevel = Math.Max(1, attackLevel);
+        RecoveryLevel = Math.Max(1, recoveryLevel);
+        MaxHealthLevel = Math.Max(1, maxHealthLevel);
+        CriticalLevel = Math.Max(1, criticalLevel);
     }
+
     public int GetLevel(AirshipStatType statType)
     {
         switch (statType)
@@ -47,12 +52,15 @@ public class AirshipUpgradeState
             case AirshipStatType.Attack:
                 AttackLevel++;
                 break;
+
             case AirshipStatType.Recovery:
                 RecoveryLevel++;
                 break;
+
             case AirshipStatType.MaxHealth:
                 MaxHealthLevel++;
                 break;
+
             case AirshipStatType.CriticalChance:
                 CriticalLevel++;
                 break;
