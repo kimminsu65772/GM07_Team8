@@ -154,6 +154,8 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
     public void Update()
     {
+        HPRatio = (float)HeroCurrentHP / (float)HeroMaxHP;
+
         if (targetEnemy != null && !targetEnemy.activeSelf) targetEnemy = null;
         if (targetEnemy == null) SearchEnemy();
         if (targetEnemy == null && location == HeroLocationEnum.Front) MoveToPlacementPoint();
