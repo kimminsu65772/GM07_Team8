@@ -1025,6 +1025,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SPUM_20260807161850606
       objectReference: {fileID: 0}
+    - target: {fileID: 7839355677986207720, guid: 15d6a450fd7f1e44b9f71ad8aedd33de, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7942744650666202910, guid: 15d6a450fd7f1e44b9f71ad8aedd33de, type: 3}
       propertyPath: ATTACK_List.Array.size
       value: 2
@@ -1033,6 +1037,10 @@ PrefabInstance:
       propertyPath: 'ATTACK_List.Array.data[1]'
       value: 
       objectReference: {fileID: 7400000, guid: 9a26543e06de846d08fbe01dbfcd13e2, type: 2}
+    - target: {fileID: 9059905694274596762, guid: 15d6a450fd7f1e44b9f71ad8aedd33de, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
