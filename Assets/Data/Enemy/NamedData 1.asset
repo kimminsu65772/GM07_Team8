@@ -16,5 +16,5 @@ MonoBehaviour:
   attackPower: 90
   moveSpeed: 5
   attackRange: 9
-  attackInterval: 1.5
+  attackInterval: 0.8
   isBoss: 0

@@ -7,6 +7,7 @@ public class UpgradeSlot : MonoBehaviour
     [SerializeField] private AirshipStatType statType;
     [SerializeField] private TextMeshProUGUI nameLevelText;
     [SerializeField] private TextMeshProUGUI statValueText;
+    [SerializeField] private TextMeshProUGUI costText;
     [SerializeField] private Button upgradeButton;
 
     private ButtonHoverScale hoverScaleComponent;
@@ -31,7 +32,7 @@ public class UpgradeSlot : MonoBehaviour
     }
     private void OnUpgradeButtonClicked()
     {
-        if (controller.TryUpgrade(statType))
+        if (controller.TryUpgrade(statType, 1))
         {
             Debug.Log($"{statType} 업그레이드 성공!");
         }
@@ -45,11 +46,13 @@ public class UpgradeSlot : MonoBehaviour
         if (controller == null) return;
         bool isMax = controller.IsMaxLevel(statType);
         int currentLevel = controller.GetCurrentLevel(statType);
+        long cost = controller.GetUpgradeCost(statType, 1);
 
         if (isMax)
         {
             nameLevelText.text = $"{statType} MAX";
             upgradeButton.interactable = false;
+            if (costText != null) costText.text = "MAX";
             // MAX일 때 호버 스케일과 사운드 플레이어 끄기
             if (hoverScaleComponent != null) hoverScaleComponent.enabled = false;
             if (soundPlayerComponent != null) soundPlayerComponent.enabled = false;
@@ -57,7 +60,9 @@ public class UpgradeSlot : MonoBehaviour
         else
         {
             nameLevelText.text = $"{statType} LV.{currentLevel}";
-            upgradeButton.interactable = true;
+            upgradeButton.interactable = controller.CanAffordUpgrade(statType, 1);
+            if (costText != null) costText.text = $"비용: {GameFormatUtils.ToIdleNumber(cost)}";
+
             // MAX가 아닐 때 호버 스케일과 사운드 플레이어 켜기
             if (hoverScaleComponent != null) hoverScaleComponent.enabled = true;
             if (soundPlayerComponent != null) soundPlayerComponent.enabled = true;
@@ -74,7 +79,7 @@ public class UpgradeSlot : MonoBehaviour
         }
         else
         {
-            double nextStat = controller.GetNextStat(statType);
+            double nextStat = controller.GetTargetStat(statType, 1);
             string formattedCurrent = GameFormatUtils.FormatStatValue(statType, currentStat);
             string formattedNext = GameFormatUtils.FormatStatValue(statType, nextStat);
 
