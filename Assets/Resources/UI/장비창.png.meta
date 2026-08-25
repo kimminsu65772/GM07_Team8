@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 3fb17d636e1106f4ab886cc34ffd1c0e
+guid: c1da47b1374ff464082dff2c43d04a2a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5049274275931296750
-    second: AIDrawing_260821_d7d27c7e-3f2f-40c3-b637-0b61dd94e52a_0_MiriCanvas_0
+      213: 3094996897256808402
+    second: "\uC7A5\uBE44\uCC3D_0"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AIDrawing_260821_d7d27c7e-3f2f-40c3-b637-0b61dd94e52a_0_MiriCanvas_0
+      name: "\uC7A5\uBE44\uCC3D_0"
       rect:
         serializedVersion: 2
-        x: 0
-        y: 17
-        width: 960
-        height: 1023
+        x: 25
+        y: 0
+        width: 1998
+        height: 2042
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 21ce8995ccf5de9b0800000000000000
-      internalID: -5049274275931296750
+      spriteID: 2df9de1b743a3fa20800000000000000
+      internalID: 3094996897256808402
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      AIDrawing_260821_d7d27c7e-3f2f-40c3-b637-0b61dd94e52a_0_MiriCanvas_0: -5049274275931296750
+      "\uC7A5\uBE44\uCC3D_0": 3094996897256808402
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

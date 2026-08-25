@@ -7,10 +7,20 @@ public class UpgradeSlot : MonoBehaviour
     [SerializeField] private AirshipStatType statType;
     [SerializeField] private TextMeshProUGUI nameLevelText;
     [SerializeField] private TextMeshProUGUI statValueText;
-    [SerializeField] private TextMeshProUGUI costText;
     [SerializeField] private Button upgradeButton;
 
+    private ButtonHoverScale hoverScaleComponent;
+    private ButtonSoundPlayer soundPlayerComponent;
+
     private AirshipUpgradeController controller;
+    private void Awake()
+    {
+        if (upgradeButton != null)
+        {
+            hoverScaleComponent = upgradeButton.GetComponent<ButtonHoverScale>();
+            soundPlayerComponent = upgradeButton.GetComponent<ButtonSoundPlayer>();
+        }
+    }
     public void Init(AirshipUpgradeController controller)
     {
         this.controller = controller;
@@ -32,20 +42,25 @@ public class UpgradeSlot : MonoBehaviour
     }
     public void RefreshUI(AirshipUpgradeState state)
     {
+        if (controller == null) return;
         bool isMax = controller.IsMaxLevel(statType);
         int currentLevel = controller.GetCurrentLevel(statType);
 
         if (isMax)
         {
             nameLevelText.text = $"{statType} MAX";
-            costText.text = "MAX";
             upgradeButton.interactable = false;
+            // MAX일 때 호버 스케일과 사운드 플레이어 끄기
+            if (hoverScaleComponent != null) hoverScaleComponent.enabled = false;
+            if (soundPlayerComponent != null) soundPlayerComponent.enabled = false;
         }
         else
         {
             nameLevelText.text = $"{statType} LV.{currentLevel}";
-            costText.text = controller.GetCost(statType).ToString("N0");
             upgradeButton.interactable = true;
+            // MAX가 아닐 때 호버 스케일과 사운드 플레이어 켜기
+            if (hoverScaleComponent != null) hoverScaleComponent.enabled = true;
+            if (soundPlayerComponent != null) soundPlayerComponent.enabled = true;
         }
         double currentStat = controller.GetCurrentStat(statType);
 
