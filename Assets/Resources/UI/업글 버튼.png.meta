@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 4b813973adfb4774a8b593075fd87bdf
+guid: 558dc9177027a1f46a92a9adc12322ff
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2156966092879155091
-    second: AIDrawing_260820_e48da1ff-f070-4a6c-8629-44e9e0304ef6_0_MiriCanvas_0
+      213: 6095616665090389714
+    second: "\uC5C5\uAE00 \uBC84\uD2BC_0"
+  - first:
+      213: -7505004387966409312
+    second: "\uC5C5\uAE00 \uBC84\uD2BC_1"
+  - first:
+      213: 2367908969521229380
+    second: "\uC5C5\uAE00 \uBC84\uD2BC_2"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +132,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AIDrawing_260820_e48da1ff-f070-4a6c-8629-44e9e0304ef6_0_MiriCanvas_0
+      name: "\uC5C5\uAE00 \uBC84\uD2BC_0"
       rect:
         serializedVersion: 2
-        x: 105
-        y: 214
-        width: 1736
-        height: 1792
+        x: 190
+        y: 1388
+        width: 660
+        height: 613
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +147,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 39fcf9ebb351fed10800000000000000
-      internalID: 2156966092879155091
+      spriteID: 2d6f9a99f0bf79450800000000000000
+      internalID: 6095616665090389714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uC5C5\uAE00 \uBC84\uD2BC_1"
+      rect:
+        serializedVersion: 2
+        x: 1082
+        y: 1386
+        width: 668
+        height: 615
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a5a389b54ed8d790800000000000000
+      internalID: -7505004387966409312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uC5C5\uAE00 \uBC84\uD2BC_2"
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 217
+        width: 714
+        height: 636
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44e26cc79a08cd020800000000000000
+      internalID: 2367908969521229380
       vertices: []
       indices: 
       edges: []
@@ -161,7 +211,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      AIDrawing_260820_e48da1ff-f070-4a6c-8629-44e9e0304ef6_0_MiriCanvas_0: 2156966092879155091
+      "\uC5C5\uAE00 \uBC84\uD2BC_0": 6095616665090389714
+      "\uC5C5\uAE00 \uBC84\uD2BC_1": -7505004387966409312
+      "\uC5C5\uAE00 \uBC84\uD2BC_2": 2367908969521229380
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
