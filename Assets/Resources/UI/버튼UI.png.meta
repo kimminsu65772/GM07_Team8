@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f99e1406add82994c8a5ec48f2ff40b5
+guid: 88183407c7da50441bd458bf0aca7e26
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -32,9 +32,6 @@ TextureImporter:
   - first:
       213: 7481598148773612085
     second: "\uBC84\uD2BCUI_9"
-  - first:
-      213: 5634675308204903569
-    second: "\uBC84\uD2BCUI_10"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -292,9 +289,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 961
-        y: 144
-        width: 332
-        height: 223
+        y: 139
+        width: 391
+        height: 234
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -313,9 +310,9 @@ TextureImporter:
       name: "\uBC84\uD2BCUI_7"
       rect:
         serializedVersion: 2
-        x: 1299
-        y: 139
-        width: 53
+        x: 1543
+        y: 140
+        width: 769
         height: 234
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -335,10 +332,10 @@ TextureImporter:
       name: "\uBC84\uD2BCUI_8"
       rect:
         serializedVersion: 2
-        x: 1543
-        y: 140
-        width: 769
-        height: 234
+        x: 2451
+        y: 138
+        width: 411
+        height: 236
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -357,28 +354,6 @@ TextureImporter:
       name: "\uBC84\uD2BCUI_9"
       rect:
         serializedVersion: 2
-        x: 2451
-        y: 138
-        width: 411
-        height: 236
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 53a0fd980e9f3d760800000000000000
-      internalID: 7481598148773612085
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\uBC84\uD2BCUI_10"
-      rect:
-        serializedVersion: 2
         x: 3141
         y: 138
         width: 408
@@ -391,8 +366,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 19cc73ac653623e40800000000000000
-      internalID: 5634675308204903569
+      spriteID: 53a0fd980e9f3d760800000000000000
+      internalID: 7481598148773612085
       vertices: []
       indices: 
       edges: []
@@ -413,7 +388,6 @@ TextureImporter:
     nameFileIdTable:
       "\uBC84\uD2BCUI_0": 1667709491840257164
       "\uBC84\uD2BCUI_1": -4400131729287164139
-      "\uBC84\uD2BCUI_10": 5634675308204903569
       "\uBC84\uD2BCUI_2": 5970913352719644415
       "\uBC84\uD2BCUI_3": -2581139428191642458
       "\uBC84\uD2BCUI_4": 4852152336821148534
