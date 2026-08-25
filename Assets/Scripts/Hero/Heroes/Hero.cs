@@ -110,9 +110,9 @@ public abstract class Hero : MonoBehaviour, IDamageable
     {
         heroID = id;
         heroName = ((HeroNameEnum)id).ToString();
-        //HeroSaveData heroData = PlayerInfo.Instance.TryGetHeroData(heroName, out heroData) ? heroData : null;
-        //HeroLv = heroData.Level;
-        HeroLv = 1;
+        HeroSaveData heroData = PlayerInfo.Instance.TryGetHeroData((HeroNameEnum)id, out heroData) ? heroData : null;
+        HeroLv = heroData.Level;
+        //HeroLv = 1;
         HeroLvManager.Instance.LvApply(HeroLv, this);
         heroCurrentHP = heroMaxHP;
         HeroAttackTime = attackTime;
