@@ -21,6 +21,7 @@ public class UpgradeUIController : MonoBehaviour
         }
 
         upgradeController.OnUpgradeChanged += RefreshAllSlots;
+        PlayerInfo.Instance.OnCurrencyChanged += HandleCurrencyChanged;
         RefreshAllSlots(upgradeController.UpgradeState);
     }
     private void OnDestroy()
@@ -28,6 +29,10 @@ public class UpgradeUIController : MonoBehaviour
         if (upgradeController != null)
         {
             upgradeController.OnUpgradeChanged -= RefreshAllSlots;
+        }
+        if (PlayerInfo.Instance != null)
+        {
+            PlayerInfo.Instance.OnCurrencyChanged -= HandleCurrencyChanged;
         }
     }
     private void RefreshAllSlots(AirshipUpgradeState state)
@@ -39,5 +44,20 @@ public class UpgradeUIController : MonoBehaviour
                 slot.RefreshUI(state);
             }
         }
+    }
+    
+    
+    private void HandleCurrencyChanged(
+        CurrencyType changedCurrencyType)
+    {
+        if (upgradeController == null ||
+            changedCurrencyType != upgradeController.UpgradeCurrency)
+        {
+            return;
+        }
+
+        RefreshAllSlots(
+            upgradeController.UpgradeState
+        );
     }
 }

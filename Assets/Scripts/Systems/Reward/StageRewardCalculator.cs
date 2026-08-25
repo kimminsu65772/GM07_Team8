@@ -1,17 +1,18 @@
 using UnityEngine;
+using System;
 
 public static class StageRewardCalculator
 {
-    private const int BaseGoldReward = 1000;
-    private const int KillGoldReward = 100;
-    private const int BaseGearReward = 100;
-    private const int KillGearReward = 10;
-    private const int FixedGemReward = 300;
+    private const long BaseGoldReward = 1000;
+    private const long KillGoldReward = 100;
+    private const long BaseGearReward = 100;
+    private const long KillGearReward = 10;
+    private const long FixedGemReward = 300;
 
     private const float GearDropRate = 0.1f;
 
-    private const float GoldRewardGrowthRate = 1.06f;
-    private const float GearRewardGrowthRate = 1.06f;
+    private const double GoldRewardGrowthRate = 1.06d;
+    private const double GearRewardGrowthRate = 1.06d;
 
     public static RewardBundle CalculateFirstClearReward(int stageNumber)
     {
@@ -21,9 +22,9 @@ public static class StageRewardCalculator
             return new RewardBundle(new CurrencyReward[0]);
         }
 
-        int goldReward = CalculateGoldReward(stageNumber);
-        int gearReward = CalculateGearReward(stageNumber);
-        int gemReward = FixedGemReward;
+        long goldReward = CalculateGoldReward(stageNumber);
+        long gearReward = CalculateGearReward(stageNumber);
+        long gemReward = FixedGemReward;
         CurrencyReward[] rewards = new CurrencyReward[]
         {
             new CurrencyReward(CurrencyType.Gold, goldReward),
@@ -41,11 +42,11 @@ public static class StageRewardCalculator
             return new RewardBundle(new CurrencyReward[0]);
         }
 
-        int goldReward = CalculateKillGoldReward(stageNumber);
-        int gearReward = CalculateKillGearReward(stageNumber);
+        long goldReward = CalculateKillGoldReward(stageNumber);
+        long gearReward = CalculateKillGearReward(stageNumber);
         // 랜덤으로 기어 드랍 여부 결정
         // Random.value는 0.0 이상 1.0 미만의 난수를 반환.
-        bool isGearDropped = Random.value < GearDropRate;
+        bool isGearDropped = UnityEngine.Random.value < GearDropRate;
         CurrencyReward[] rewards;
         if (isGearDropped)
         {
@@ -65,12 +66,12 @@ public static class StageRewardCalculator
         return new RewardBundle(rewards);
     }
 
-    private static int CalculateGoldReward(int stageNumber)
+    private static long CalculateGoldReward(int stageNumber)
     {
         return BaseGoldReward * stageNumber;
     }
 
-    private static int CalculateKillGoldReward(int stageNumber)
+    private static long CalculateKillGoldReward(int stageNumber)
     {
         if (stageNumber <= 0)
         {
@@ -78,17 +79,17 @@ public static class StageRewardCalculator
             return 0;
         }
 
-        float goldReward = KillGoldReward * Mathf.Pow(GoldRewardGrowthRate, stageNumber - 1);
+        double goldReward = KillGoldReward * Math.Pow(GoldRewardGrowthRate, stageNumber - 1);
 
-        return Mathf.RoundToInt(goldReward);
+        return ConvertRewardToLong(goldReward);
     }
 
-    private static int CalculateGearReward(int stageNumber)
+    private static long CalculateGearReward(int stageNumber)
     {
         return BaseGearReward * stageNumber;
     }
 
-    private static int CalculateKillGearReward(int stageNumber)
+    private static long CalculateKillGearReward(int stageNumber)
     {
         if (stageNumber <= 0)
         {
@@ -96,7 +97,28 @@ public static class StageRewardCalculator
             return 0;
         }
 
-        float gearReward = KillGearReward * Mathf.Pow(GearRewardGrowthRate, stageNumber - 1);
-        return Mathf.RoundToInt(gearReward);
+        double gearReward = KillGearReward * Math.Pow(GearRewardGrowthRate, stageNumber - 1);
+        return ConvertRewardToLong(gearReward);
+    }
+    
+    
+    // 보상을 long으로 변환하는 함수
+    private static long ConvertRewardToLong(double value)
+    {
+        if (double.IsNaN(value) ||
+            value <= 0d)
+        {
+            return 0L;
+        }
+
+        if (double.IsInfinity(value) ||
+            value >= long.MaxValue)
+        {
+            return long.MaxValue;
+        }
+
+        return (long)Math.Round(
+            value,
+            MidpointRounding.AwayFromZero);
     }
 }
