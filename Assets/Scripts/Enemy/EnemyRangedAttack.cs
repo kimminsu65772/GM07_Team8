@@ -9,6 +9,7 @@ public class EnemyRangedAttack : MonoBehaviour
 
     [Header("Projectile")]
     [SerializeField] private Transform firePoint;
+    [SerializeField] private float projectileScale = 1f;
 
     [Header("Attack Event")]
     [SerializeField] private UnityEvent attackPerformed = new UnityEvent();
@@ -24,19 +25,14 @@ public class EnemyRangedAttack : MonoBehaviour
 
     private void Update()
     {
-        if (target == null ||
-            enemyStats == null ||
-            enemyStats.IsDead)
+        if (target == null || enemyStats == null || enemyStats.IsDead)
         {
             ResetAttackTimer();
             return;
         }
 
         float distance =
-            Mathf.Abs(
-                transform.position.x -
-                target.position.x
-            );
+            Mathf.Abs( transform.position.x - target.position.x );
 
         if (distance > enemyStats.AttackRange)
         {
@@ -90,12 +86,9 @@ public class EnemyRangedAttack : MonoBehaviour
             return;
         }
 
-        projectile.Init(
-            firePoint.position,
-            Quaternion.identity,
-            target,
-            enemyStats.AttackPower
-        );
+        projectile.transform.localScale =  Vector3.one * projectileScale;
+
+        projectile.Init( firePoint.position, Quaternion.identity, target, enemyStats.AttackPower );
     }
 
     private void ResetAttackTimer()
