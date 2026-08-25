@@ -10,6 +10,7 @@ public class EnemyMagicAttack : MonoBehaviour
     [SerializeField] private float explosionEffectDuration = 1f;
     [SerializeField] private float castDelay = 0.3f;
     [SerializeField] private float explosionYOffset = 0.5f;
+    [SerializeField] private float explosionEffectScale = 0.02f;
 
     private Transform target;
     private IDamageable targetDamageable;
@@ -94,7 +95,7 @@ public class EnemyMagicAttack : MonoBehaviour
             {
                 explosionRect.position = explosionPosition;
                 explosionRect.sizeDelta = new Vector2(64f, 64f);
-                explosionRect.localScale = Vector3.one * 0.02f;
+                explosionRect.localScale = Vector3.one * explosionEffectScale;
             }
 
             Destroy(explosionEffect, explosionEffectDuration);
