@@ -10,8 +10,8 @@ public class GachaSystem : MonoBehaviour
     [Header("시스템 연결")]
     [SerializeField] private HeroCatalog heroCatalog;
     [Header("뽑기 비용")]
-    [SerializeField] private int singlePullCost = 1000;
-    [SerializeField] private int tenPullCost = 10000;
+    [SerializeField] private long singlePullCost = 1000;
+    [SerializeField] private long tenPullCost = 10000;
 
     [System.Serializable]
     public class HeroGachaItem
@@ -31,7 +31,7 @@ public class GachaSystem : MonoBehaviour
     public void PullGachaSingle() => ProcessPull(1, singlePullCost);
     public void PullGachaTen() => ProcessPull(10, tenPullCost);
 
-    private void ProcessPull(int count, int cost)
+    private void ProcessPull(int count, long cost)
     {
         if (PlayerInfo.Instance == null)
         {
