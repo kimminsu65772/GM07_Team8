@@ -154,6 +154,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
     public void Update()
     {
+        HPRatio = (float)HeroCurrentHP / (float)HeroMaxHP;
         if (targetEnemy != null && !targetEnemy.activeSelf) targetEnemy = null;
         if (targetEnemy == null) SearchEnemy();
         if (targetEnemy == null && location == HeroLocationEnum.Front) MoveToPlacementPoint();
@@ -163,7 +164,6 @@ public abstract class Hero : MonoBehaviour, IDamageable
             if (attack.IsAutoSkill && skillTime <= attack.SkillTimer) attack.UseSkill(targetEnemy);
             else attack.RangeAttack();
         }
-
         ChangeState();
     }
 
@@ -190,10 +190,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
         // 나중에 데미지 텍스트랑 연결할때 이벤트로 넘겨주려면 실제 힐량이 필요
         double actualHeal =
-            Math.Min(
-                damageInfo.Damage,
-                HeroMaxHP - HeroCurrentHP
-            );
+            Math.Min(damageInfo.Damage, HeroMaxHP - HeroCurrentHP);
 
         if (actualHeal <= 0f)
         {
