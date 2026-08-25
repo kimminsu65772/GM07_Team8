@@ -24,6 +24,34 @@ public class AirshipUpgradeState
         CriticalLevel = Math.Max(1, criticalLevel);
     }
 
+    // 여러 레벨을 한 번에 올린 뒤 최종 레벨을 반영한다.
+    public void SetLevel(
+        AirshipStatType statType,
+        int level)
+    {
+        int safeLevel =
+            Math.Max(1, level);
+
+        switch (statType)
+        {
+            case AirshipStatType.Attack:
+                AttackLevel = safeLevel;
+                break;
+
+            case AirshipStatType.Recovery:
+                RecoveryLevel = safeLevel;
+                break;
+
+            case AirshipStatType.MaxHealth:
+                MaxHealthLevel = safeLevel;
+                break;
+
+            case AirshipStatType.CriticalChance:
+                CriticalLevel = safeLevel;
+                break;
+        }
+    }
+
     public int GetLevel(AirshipStatType statType)
     {
         switch (statType)
@@ -42,28 +70,6 @@ public class AirshipUpgradeState
 
             default:
                 return -1;
-        }
-    }
-
-    public void IncreaseStatLevel(AirshipStatType statType)
-    {
-        switch (statType)
-        {
-            case AirshipStatType.Attack:
-                AttackLevel++;
-                break;
-
-            case AirshipStatType.Recovery:
-                RecoveryLevel++;
-                break;
-
-            case AirshipStatType.MaxHealth:
-                MaxHealthLevel++;
-                break;
-
-            case AirshipStatType.CriticalChance:
-                CriticalLevel++;
-                break;
         }
     }
 }

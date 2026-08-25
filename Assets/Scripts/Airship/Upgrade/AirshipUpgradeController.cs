@@ -49,14 +49,22 @@ public class AirshipUpgradeController : MonoBehaviour
         NotifyUpgradeChanged();
     }
 
-    public bool TryUpgrade(AirshipStatType statType)
+    // upgradeLevelCount만큼 업그레이드한다.
+    // 예: 1 = +1, 10 = +10, 100 = +100
+    public bool TryUpgrade(
+        AirshipStatType statType,
+        int upgradeLevelCount)
     {
-        if (!isInitialized || statTable == null)
+        if (!isInitialized ||
+            statTable == null ||
+            PlayerInfo.Instance == null ||
+            upgradeLevelCount <= 0)
         {
             return false;
         }
 
-        int currentLevel = upgradeState.GetLevel(statType);
+        int currentLevel =
+            upgradeState.GetLevel(statType);
 
         // -1인 스탯, 이속 공속은 업그레이드 대상이 아니므로 혹시 모를 방지는 해둠.
         if (currentLevel < 1)
@@ -65,31 +73,42 @@ public class AirshipUpgradeController : MonoBehaviour
         }
 
         // 이미 최대 레벨이면 막음
-        if (currentLevel >= statTable.GetMaxLevel(statType))
+        if (IsMaxLevel(statType))
         {
             return false;
         }
 
-        if (!TrySpendUpgradeCost(statType))
+        // 최대 레벨을 초과하지 않는 최종 레벨 계산
+        int targetLevel =
+            GetTargetLevel(statType, upgradeLevelCount);
+
+        if (targetLevel <= currentLevel)
+        {
+            return false;
+        }
+
+        // 현재 레벨부터 최종 레벨까지 필요한 총 비용 계산
+        long totalCost =
+            GetUpgradeCost(statType, upgradeLevelCount);
+
+        if (!PlayerInfo.Instance.TrySpendCurrency(
+                upgradeCurrency,
+                totalCost))
         {
             Debug.Log("재화 부족");
             return false;
         }
 
-        upgradeState.IncreaseStatLevel(statType);
+        // 계산된 최종 레벨을 한 번에 반영
+        upgradeState.SetLevel(
+            statType,
+            targetLevel
+        );
+
         SaveState();
         NotifyUpgradeChanged();
 
         return true;
-    }
-    
-    // AirshipStatTable에서 현재 레벨 기준 비용.
-    private bool TrySpendUpgradeCost(AirshipStatType statType)
-    {
-        return PlayerInfo.Instance.TrySpendCurrency(
-            upgradeCurrency,
-            GetCost(statType)
-        );
     }
 
     private void SaveState()
@@ -114,12 +133,65 @@ public class AirshipUpgradeController : MonoBehaviour
         }
 
         return upgradeState.GetLevel(statType) >=
-               statTable.GetMaxLevel(statType);
+               GetMaxLevel(statType);
+    }
+
+    public int GetMaxLevel(AirshipStatType statType)
+    {
+        if (statTable == null)
+        {
+            return 0;
+        }
+
+        return statTable.GetMaxLevel(statType);
     }
 
     public int GetCurrentLevel(AirshipStatType statType)
     {
         return upgradeState.GetLevel(statType);
+    }
+
+    // 요청한 업그레이드 수를 적용했을 때의 최종 레벨.
+    // 최대 레벨을 초과하지 않는다.
+    public int GetTargetLevel(
+        AirshipStatType statType,
+        int upgradeLevelCount)
+    {
+        if (statTable == null ||
+            upgradeLevelCount <= 0)
+        {
+            return -1;
+        }
+
+        int currentLevel =
+            GetCurrentLevel(statType);
+
+        if (currentLevel < 1)
+        {
+            return -1;
+        }
+
+        int maxLevel =
+            GetMaxLevel(statType);
+
+        if (maxLevel < 1)
+        {
+            return -1;
+        }
+
+        if (currentLevel >= maxLevel)
+        {
+            return maxLevel;
+        }
+
+        // int 오버플로 방지를 위해 long으로 먼저 계산
+        long requestedTargetLevel =
+            (long)currentLevel +
+            upgradeLevelCount;
+
+        return requestedTargetLevel >= maxLevel
+            ? maxLevel
+            : (int)requestedTargetLevel;
     }
 
     public double GetCurrentStat(AirshipStatType statType)
@@ -135,61 +207,118 @@ public class AirshipUpgradeController : MonoBehaviour
         );
     }
 
-    // ui 원초적으론 ui에서 ismaxlevel이 true일땐 이게 호출되면 안되게 설계해야함.
-    // 다만 혹시 모를 상황을 대비해 방지해둠.
-    public int GetNextLevel(AirshipStatType statType)
+    // 요청한 업그레이드 수를 적용했을 때의 스탯.
+    // 최대 레벨을 초과하면 최대 레벨의 스탯을 반환한다.
+    public double GetTargetStat(
+        AirshipStatType statType,
+        int upgradeLevelCount)
     {
         if (statTable == null)
         {
-            return -1;
+            return -1d;
         }
 
-        int currentLevel = GetCurrentLevel(statType);
+        int targetLevel =
+            GetTargetLevel(
+                statType,
+                upgradeLevelCount
+            );
 
-        if (currentLevel < 1 ||
-            currentLevel >= statTable.GetMaxLevel(statType))
-        {
-            return -1;
-        }
-
-        return currentLevel + 1;
-    }
-
-    public double GetNextStat(AirshipStatType statType)
-    {
-        int nextLevel = GetNextLevel(statType);
-
-        if (nextLevel < 0 || statTable == null)
+        if (targetLevel < 1)
         {
             return -1d;
         }
 
         return statTable.GetStatValue(
             statType,
-            nextLevel
+            targetLevel
         );
     }
 
-    // 비용은 현재 AirshipStatTable에서 계산되며, 아직 int.
-    public long GetCost(AirshipStatType statType)
+    // 현재 레벨에서 요청한 레벨 수만큼 올릴 때 필요한 총 비용.
+    public long GetUpgradeCost(
+        AirshipStatType statType,
+        int upgradeLevelCount)
     {
-        if (statTable == null)
+        if (statTable == null ||
+            upgradeLevelCount <= 0)
         {
-            return 0;
+            return 0L;
         }
 
-        int currentLevel = GetCurrentLevel(statType);
+        int currentLevel =
+            GetCurrentLevel(statType);
+
+        int targetLevel =
+            GetTargetLevel(
+                statType,
+                upgradeLevelCount
+            );
 
         if (currentLevel < 1 ||
-            currentLevel >= statTable.GetMaxLevel(statType))
+            targetLevel <= currentLevel)
         {
-            return 0;
+            return 0L;
         }
 
-        return statTable.GetUpgradeCost(
+        return statTable.GetTotalUpgradeCost(
             statType,
-            currentLevel
+            currentLevel,
+            targetLevel
         );
+    }
+    
+    // 요청한 업그레이드 비용을 지불할 수 있는지 확인한다.
+    public bool CanAffordUpgrade(
+        AirshipStatType statType,
+        int upgradeLevelCount)
+    {
+        if (!isInitialized ||
+            statTable == null ||
+            PlayerInfo.Instance == null ||
+            upgradeLevelCount <= 0)
+        {
+            return false;
+        }
+
+        int currentLevel =
+            GetCurrentLevel(statType);
+
+        int targetLevel =
+            GetTargetLevel(
+                statType,
+                upgradeLevelCount
+            );
+
+        if (currentLevel < 1 ||
+            targetLevel <= currentLevel)
+        {
+            return false;
+        }
+
+        WalletSaveData wallet =
+            PlayerInfo.Instance.Wallet;
+
+        if (wallet == null ||
+            wallet.Currencies == null)
+        {
+            return false;
+        }
+
+        if (!wallet.Currencies.TryGetValue(
+                upgradeCurrency,
+                out CurrencySaveData currency))
+        {
+            return false;
+        }
+
+        long requiredCost =
+            GetUpgradeCost(
+                statType,
+                upgradeLevelCount
+            );
+
+        return currency.Amount >= requiredCost;
     }
 
     #endregion

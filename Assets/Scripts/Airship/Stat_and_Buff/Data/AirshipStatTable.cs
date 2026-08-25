@@ -21,44 +21,26 @@ public class AirshipStatGrowthData
     [SerializeField, Min(0)] private long upgradeCostPerLevel;
 
     public AirshipStatType StatType => statType;
+
     public int MaxLevel =>
         statType == AirshipStatType.CriticalChance
-            ? maxLevel
+            ? Math.Max(1, maxLevel)
             : int.MaxValue;
 
     public double GetValue(int level)
     {
-        int safeLevel = Math.Max(1, level);
+        int safeLevel =
+            Math.Max(1, level);
 
         if (statType == AirshipStatType.CriticalChance)
         {
-            safeLevel = Math.Min(safeLevel, maxLevel);
+            safeLevel =
+                Math.Min(safeLevel, MaxLevel);
         }
 
         return baseValue +
                valuePerLevel *
                (safeLevel - 1d);
-    }
-
-    // 현재 레벨에서 다음 레벨로 올라갈 때 필요한 비용
-    public long GetUpgradeCost(int currentLevel)
-    {
-        if (currentLevel < 1 ||
-            (statType == AirshipStatType.CriticalChance &&
-             currentLevel >= maxLevel))
-        {
-            return 0;
-        }
-
-        double cost =
-            baseUpgradeCost +
-            (double)upgradeCostPerLevel *
-            (currentLevel - 1d);
-
-        return CalculateCost(
-            baseUpgradeCost,
-            upgradeCostPerLevel,
-            currentLevel);
     }
 
     // 여러 레벨을 한 번에 올릴 때 필요한 총 비용
@@ -72,24 +54,42 @@ public class AirshipStatGrowthData
         int safeTargetLevel =
             Math.Max(safeCurrentLevel, targetLevel);
 
-        if (statType == AirshipStatType.CriticalChance)
-        {
-            safeTargetLevel =
-                Math.Min(safeTargetLevel, maxLevel);
-        }
+        safeTargetLevel =
+            Math.Min(safeTargetLevel, MaxLevel);
 
         if (safeTargetLevel <= safeCurrentLevel)
         {
             return 0L;
         }
 
+        long safeBaseCost =
+            Math.Max(0L, baseUpgradeCost);
+
+        long safeCostPerLevel =
+            Math.Max(0L, upgradeCostPerLevel);
+
         long totalCost = 0L;
 
+        // 현재 레벨부터 목표 레벨 직전까지의 비용 합산
         for (int level = safeCurrentLevel;
              level < safeTargetLevel;
              level++)
         {
-            totalCost += GetUpgradeCost(level);
+            long levelCost =
+                CalculateCost(
+                    safeBaseCost,
+                    safeCostPerLevel,
+                    level
+                );
+
+            // 총 비용 오버플로 방지
+            if (levelCost >
+                long.MaxValue - totalCost)
+            {
+                return long.MaxValue;
+            }
+
+            totalCost += levelCost;
         }
 
         return totalCost;
@@ -145,22 +145,6 @@ public class AirshipStatTable : ScriptableObject
         }
 
         return stat.GetValue(level);
-    }
-
-    // 한 레벨 업그레이드 비용
-    public long GetUpgradeCost(
-        AirshipStatType statType,
-        int currentLevel)
-    {
-        AirshipStatGrowthData stat =
-            FindStat(statType);
-
-        if (stat == null)
-        {
-            return 0;
-        }
-
-        return stat.GetUpgradeCost(currentLevel);
     }
 
     // 여러 레벨 업그레이드 총 비용
