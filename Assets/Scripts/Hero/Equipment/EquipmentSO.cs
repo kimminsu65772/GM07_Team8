@@ -40,7 +40,7 @@ public class EquipmentSO : ScriptableObject
 
 public class Equipment
 {
-    public string EquipID { get; private set; }
+    public long EquipID { get; private set; }
     public int EquipLv { get; private set; }
     public EquipGradeEnum EquipGrade { get; private set; }
     public EquipPartEnum EquipPart { get; private set; }
@@ -49,7 +49,7 @@ public class Equipment
     public float BonusDef { get; private set; }
     public float BonusCriChance { get; private set; }
 
-    public void EquipInit(EquipmentSO equipSO, string id)
+    public void EquipInit(EquipmentSO equipSO, long id)
     {
         EquipID = id;
         EquipGrade = equipSO.EquipGrade;

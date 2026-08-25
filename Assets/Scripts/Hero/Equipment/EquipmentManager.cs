@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class EquipmentManager
 {
-    public static Dictionary<string, Equipment> EquipDic = new Dictionary<string, Equipment>();
+    public static Dictionary<int, Equipment> EquipDic = new Dictionary<int, Equipment>();
 }
