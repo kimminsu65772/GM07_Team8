@@ -2157,6 +2157,102 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: skillFrames.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: attackFrames.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: targetFrames.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: 'skillFrames.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1215849678, guid: de0f4d321a6942b48a3dc70bf109269d, type: 3}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: 'skillFrames.Array.data[1]'
+      value: 
+      objectReference: {fileID: -1872456774, guid: de0f4d321a6942b48a3dc70bf109269d, type: 3}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: 'skillFrames.Array.data[2]'
+      value: 
+      objectReference: {fileID: -537689980, guid: de0f4d321a6942b48a3dc70bf109269d, type: 3}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: 'skillFrames.Array.data[3]'
+      value: 
+      objectReference: {fileID: 583151524, guid: de0f4d321a6942b48a3dc70bf109269d, type: 3}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: 'skillFrames.Array.data[4]'
+      value: 
+      objectReference: {fileID: -212240365, guid: de0f4d321a6942b48a3dc70bf109269d, type: 3}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: 'skillFrames.Array.data[5]'
+      value: 
+      objectReference: {fileID: 1503572014, guid: de0f4d321a6942b48a3dc70bf109269d, type: 3}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: 'attackFrames.Array.data[0]'
+      value: 
+      objectReference: {fileID: -3316136795399127397, guid: d9a99715dc1d2d5419fde20750c18c91, type: 3}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: 'attackFrames.Array.data[1]'
+      value: 
+      objectReference: {fileID: -3316136795399127397, guid: d9a99715dc1d2d5419fde20750c18c91, type: 3}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: 'attackFrames.Array.data[2]'
+      value: 
+      objectReference: {fileID: -3316136795399127397, guid: d9a99715dc1d2d5419fde20750c18c91, type: 3}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: 'attackFrames.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1215849678, guid: de0f4d321a6942b48a3dc70bf109269d, type: 3}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: 'attackFrames.Array.data[4]'
+      value: 
+      objectReference: {fileID: -1872456774, guid: de0f4d321a6942b48a3dc70bf109269d, type: 3}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: 'attackFrames.Array.data[5]'
+      value: 
+      objectReference: {fileID: -537689980, guid: de0f4d321a6942b48a3dc70bf109269d, type: 3}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: 'attackFrames.Array.data[6]'
+      value: 
+      objectReference: {fileID: 583151524, guid: de0f4d321a6942b48a3dc70bf109269d, type: 3}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: 'attackFrames.Array.data[7]'
+      value: 
+      objectReference: {fileID: -212240365, guid: de0f4d321a6942b48a3dc70bf109269d, type: 3}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: 'attackFrames.Array.data[8]'
+      value: 
+      objectReference: {fileID: 1503572014, guid: de0f4d321a6942b48a3dc70bf109269d, type: 3}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: 'targetFrames.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1916703108, guid: cdee70740bbc37a46bc5d666b8b74124, type: 3}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: 'targetFrames.Array.data[1]'
+      value: 
+      objectReference: {fileID: 587372748, guid: cdee70740bbc37a46bc5d666b8b74124, type: 3}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: 'targetFrames.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1361475956, guid: cdee70740bbc37a46bc5d666b8b74124, type: 3}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: 'targetFrames.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2088165234, guid: cdee70740bbc37a46bc5d666b8b74124, type: 3}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: 'targetFrames.Array.data[4]'
+      value: 
+      objectReference: {fileID: -1111449586, guid: cdee70740bbc37a46bc5d666b8b74124, type: 3}
+    - target: {fileID: 2374493524590419429, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
+      propertyPath: 'targetFrames.Array.data[5]'
+      value: 
+      objectReference: {fileID: -1795800926, guid: cdee70740bbc37a46bc5d666b8b74124, type: 3}
     - target: {fileID: 5338311504596496945, guid: 43835f38bc58c3349824a5ce80da74a2, type: 3}
       propertyPath: m_Name
       value: ShieldmanPrefab

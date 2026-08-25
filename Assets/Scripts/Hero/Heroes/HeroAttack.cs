@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class HeroAttack : MonoBehaviour
 {
@@ -46,7 +47,7 @@ public class HeroAttack : MonoBehaviour
         if (skillTimer < hero.HeroSkillTime) skillTimer += Time.deltaTime;
     }
 
-    public void MeleeAttack(GameObject enemy)
+    public void MeleeAttack()
     {
         if (hero.Location != HeroLocationEnum.Front || hero.IsDead || isAttacking || isSkilling) return;
 
@@ -58,7 +59,7 @@ public class HeroAttack : MonoBehaviour
             isAttacking = true;
             attackTimer = 0f;
 
-            Vector2 direction = enemy.transform.position - transform.position;
+            Vector2 direction = hero.TargetEnemy.transform.position - transform.position;
             hero.FlipSprite(direction);
 
             vfx.PlayAttackEffect(hero.AtkPosPreset, hero.AtkScalePreset);
@@ -70,7 +71,7 @@ public class HeroAttack : MonoBehaviour
                 isCrit = true;
             }
 
-            if (enemy.TryGetComponent<IDamageable>(out IDamageable enemyHP))
+            if (hero.TargetEnemy.TryGetComponent<IDamageable>(out IDamageable enemyHP))
             {
                 enemyHP.TakeDamage(new DamageInfo(damage, isCrit));
             }
