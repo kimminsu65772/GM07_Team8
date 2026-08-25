@@ -140,7 +140,7 @@ public class CraftUIController : MonoBehaviour
             return;
         }
 
-        PlayerInfo.Instance.AddEquipment(equipment.EquipID);
+        //PlayerInfo.Instance.AddEquipment(equipment.EquipID);
         PlayerInfo.Instance.ClearEquipmentCraftSlot(craftSlot.SlotIndex);
 
         RefreshRecipeSlots();

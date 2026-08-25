@@ -2,60 +2,19 @@ using UnityEngine;
 
 public class EquipmentSpawner : MonoBehaviour
 {
-    /*
-    private static EquipmentSpawner instance;
-    public static EquipmentSpawner Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindFirstObjectByType<EquipmentSpawner>();
-                if (instance == null)
-                {
-                    GameObject obj = new GameObject("EquipmentSpawner");
-                    instance = obj.AddComponent<EquipmentSpawner>();
-                }
-            }
-            return instance;
-        }
-    }
-    */
-
-    int randGradeNum;
-    int randPartNum;
-
     [SerializeField] private EquipmentSO[] equipSO;
     private int equipSOSelectedNum;
 
-    
+    private int randGradeNum;
+    private int randPartNum;
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.C)) CreateEquip();
-    }
-
-    public void CreateEquip()
-    {
-        Equipment spawnedEquip = new Equipment();
-        RandomInfo();
-        string id = SetEquipID();
-
-        spawnedEquip.EquipInit(equipSO[equipSOSelectedNum], id);
-
-        EquipmentManager.EquipDic.Add(id, spawnedEquip);
-
-        foreach (var equip in EquipmentManager.EquipDic)
-        {
-            Debug.Log($"ID: {equip.Key}, Equipment: {equip.Value}\n");
-        }
-    }
+    public long NextEquipmentID { get; private set; } = 1;
 
     public Equipment CreateEquipByGrade(EquipGradeEnum equipGrade)
     {
         Equipment spawnedEquip = new();
         RandomInfoByGrade(equipGrade);
-        string id = SetEquipID();
+        long id = GenerateEquipID();
 
         spawnedEquip.EquipInit(equipSO[equipSOSelectedNum], id);
 
@@ -107,6 +66,33 @@ public class EquipmentSpawner : MonoBehaviour
         }
     }
 
+    private long GenerateEquipID()
+    {
+        while (EquipmentManager.EquipDic.ContainsKey(NextEquipmentID))
+        {
+            NextEquipmentID++;
+        }
+
+        return NextEquipmentID++;
+    }
+
+    /*
+    public void CreateEquip()
+    {
+        Equipment spawnedEquip = new Equipment();
+        RandomInfo();
+        long id = GenerateEquipID();
+
+        spawnedEquip.EquipInit(equipSO[equipSOSelectedNum], id);
+
+        EquipmentManager.EquipDic.Add(id, spawnedEquip);
+
+        foreach (var equip in EquipmentManager.EquipDic)
+        {
+            Debug.Log($"ID: {equip.Key}, Equipment: {equip.Value}\n");
+        }
+    }
+
     private void RandomInfo()
     {
         randGradeNum = Random.Range(0, 4);
@@ -146,22 +132,5 @@ public class EquipmentSpawner : MonoBehaviour
                 break;
         }
     }
-
-    private string SetEquipID()
-    {
-        int n = 1;
-        string equipID;
-
-        while (true)
-        {
-            equipID = $"{equipSOSelectedNum}_{n}";
-
-            if (!EquipmentManager.EquipDic.ContainsKey(equipID))
-            {
-                return equipID;
-            }
-
-            n++;
-        }
-    }
+    */
 }
