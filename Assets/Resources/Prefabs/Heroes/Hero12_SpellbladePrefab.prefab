@@ -840,9 +840,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EffectPlayer
   selfEffect: {fileID: 8567777136555159471}
   targetEffect: {fileID: 7554811415342939316}
-  attackFrames: []
-  skillFrames: []
-  targetFrames: []
+  attackFrames:
+  - {fileID: -3316136795399127397, guid: d9a99715dc1d2d5419fde20750c18c91, type: 3}
+  - {fileID: -3316136795399127397, guid: d9a99715dc1d2d5419fde20750c18c91, type: 3}
+  - {fileID: -3316136795399127397, guid: d9a99715dc1d2d5419fde20750c18c91, type: 3}
+  - {fileID: -623232602, guid: 6de6a7c599c0f5c44abd0c1bb107a3cb, type: 3}
+  - {fileID: -1811532039, guid: 6de6a7c599c0f5c44abd0c1bb107a3cb, type: 3}
+  - {fileID: 1300826070, guid: 6de6a7c599c0f5c44abd0c1bb107a3cb, type: 3}
+  - {fileID: 709818659, guid: 6de6a7c599c0f5c44abd0c1bb107a3cb, type: 3}
+  - {fileID: -1136456208, guid: 6de6a7c599c0f5c44abd0c1bb107a3cb, type: 3}
+  - {fileID: 122291462, guid: 6de6a7c599c0f5c44abd0c1bb107a3cb, type: 3}
+  skillFrames:
+  - {fileID: 1761346455, guid: 354ae67e6aa7bc844b33cffb4fe89b2b, type: 3}
+  - {fileID: 876342088, guid: 354ae67e6aa7bc844b33cffb4fe89b2b, type: 3}
+  - {fileID: 25519742, guid: 354ae67e6aa7bc844b33cffb4fe89b2b, type: 3}
+  - {fileID: 818487478, guid: 354ae67e6aa7bc844b33cffb4fe89b2b, type: 3}
+  - {fileID: 1158402681, guid: 354ae67e6aa7bc844b33cffb4fe89b2b, type: 3}
+  - {fileID: 1049454255, guid: 354ae67e6aa7bc844b33cffb4fe89b2b, type: 3}
+  targetFrames:
+  - {fileID: -367236432, guid: 5add7396dfe684b4a995120aab3ea01c, type: 3}
+  - {fileID: 1620485169, guid: 5add7396dfe684b4a995120aab3ea01c, type: 3}
+  - {fileID: 1620605016, guid: 5add7396dfe684b4a995120aab3ea01c, type: 3}
+  - {fileID: -348531477, guid: 5add7396dfe684b4a995120aab3ea01c, type: 3}
+  - {fileID: 2109200983, guid: 5add7396dfe684b4a995120aab3ea01c, type: 3}
+  - {fileID: 1601009130, guid: 5add7396dfe684b4a995120aab3ea01c, type: 3}
   frameTime: 0.05
 --- !u!1001 &8289906312368360263
 PrefabInstance:
