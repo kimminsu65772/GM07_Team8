@@ -11,6 +11,7 @@ public class HeroInventoryUIController : MonoBehaviour
     [SerializeField] private GameObject heroSlotPrefab;
     [SerializeField] private HeroCatalog heroCatalog;
     [SerializeField] private HeroLevelUpUIController heroLevelUpUIController;
+    [SerializeField] private Button heroUpgradeButton;
 
     //[Header("상세 정보 UI 연결 (위쪽 패널)")]
     //[SerializeField] private GameObject detailPanelRoot;     
@@ -26,7 +27,9 @@ public class HeroInventoryUIController : MonoBehaviour
     [SerializeField] private TMP_Text heroLevel;
     [SerializeField] private TMP_Text heroLocation;
     [SerializeField] private HeroStatUI[] heroStatUIs;
-    
+
+    [Header("중앙 영웅 시각화 컨트롤러")]
+    [SerializeField] private HeroDisplayController heroDisplayController;
 
 
     private readonly List<HeroSlotUI> heroSlotPool = new();
@@ -65,12 +68,18 @@ public class HeroInventoryUIController : MonoBehaviour
     {
         RefreshInventory();
         ClearDetailInfo();
-        heroLevelUpUIController.OnHeroLevelUp += RefreshInventory;
+        if (heroLevelUpUIController != null)
+        {
+            heroLevelUpUIController.OnHeroLevelUp += RefreshInventory;
+        }
     }
 
     private void OnDisable()
     {
-        heroLevelUpUIController.OnHeroLevelUp -= RefreshInventory;
+        if (heroLevelUpUIController != null)
+        {
+            heroLevelUpUIController.OnHeroLevelUp -= RefreshInventory;
+        }
     }
 
     private void Start()
@@ -176,7 +185,13 @@ public class HeroInventoryUIController : MonoBehaviour
             GetHeroStat(entry);
         }
 
+        if (heroDisplayController != null)
+        {
+            heroDisplayController.DisplayHero(entry);
+        }
+
         OnHeroSelected?.Invoke(entry, saveData);
+        SetHeroUpgradeButtonInteractable(true);
     }
 
     private void ClearDetailInfo()
@@ -225,6 +240,23 @@ public class HeroInventoryUIController : MonoBehaviour
                 heroStatUIs[i].Clear();
             }
         }
+
+        if (heroDisplayController != null)
+        {
+            heroDisplayController.ClearDisplay();
+        }
+
+        SetHeroUpgradeButtonInteractable(false);
+    }
+
+    private void SetHeroUpgradeButtonInteractable(bool isInteractable)
+    {
+        if (heroUpgradeButton == null)
+        {
+            return;
+        }
+
+        heroUpgradeButton.interactable = isInteractable;
     }
 
     private void GetHeroStat(HeroEntry entry)
