@@ -10,6 +10,8 @@ public class UpgradeSlot : MonoBehaviour
     [SerializeField] private TextMeshProUGUI costText;
     [SerializeField] private Button upgradeButton;
 
+    [SerializeField] private UpgradeToggleUI upgradeToggleUI;
+
     private ButtonHoverScale hoverScaleComponent;
     private ButtonSoundPlayer soundPlayerComponent;
 
@@ -32,7 +34,9 @@ public class UpgradeSlot : MonoBehaviour
     }
     private void OnUpgradeButtonClicked()
     {
-        if (controller.TryUpgrade(statType, 1))
+        int upgradeLevelCount = upgradeToggleUI.CurrentUpgradeMode;
+
+        if (controller.TryUpgrade(statType, upgradeLevelCount))
         {
             Debug.Log($"{statType} 업그레이드 성공!");
         }
@@ -46,7 +50,8 @@ public class UpgradeSlot : MonoBehaviour
         if (controller == null) return;
         bool isMax = controller.IsMaxLevel(statType);
         int currentLevel = controller.GetCurrentLevel(statType);
-        long cost = controller.GetUpgradeCost(statType, 1);
+        int upgradeLevelCount = upgradeToggleUI.CurrentUpgradeMode;
+        long cost = controller.GetUpgradeCost(statType, upgradeLevelCount);
 
         if (isMax)
         {
@@ -60,7 +65,7 @@ public class UpgradeSlot : MonoBehaviour
         else
         {
             nameLevelText.text = $"{statType} LV.{currentLevel}";
-            upgradeButton.interactable = controller.CanAffordUpgrade(statType, 1);
+            upgradeButton.interactable = controller.CanAffordUpgrade(statType, upgradeLevelCount);
             if (costText != null) costText.text = $"비용: {GameFormatUtils.ToIdleNumber(cost)}";
 
             // MAX가 아닐 때 호버 스케일과 사운드 플레이어 켜기
@@ -79,7 +84,7 @@ public class UpgradeSlot : MonoBehaviour
         }
         else
         {
-            double nextStat = controller.GetTargetStat(statType, 1);
+            double nextStat = controller.GetTargetStat(statType, upgradeLevelCount);
             string formattedCurrent = GameFormatUtils.FormatStatValue(statType, currentStat);
             string formattedNext = GameFormatUtils.FormatStatValue(statType, nextStat);
 
