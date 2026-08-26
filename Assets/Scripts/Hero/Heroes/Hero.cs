@@ -403,6 +403,11 @@ public abstract class Hero : MonoBehaviour, IDamageable
         canStun = true;
     }
 
+    protected void SetAttackTime(float duration)
+    {
+        HeroAttackTime = duration;
+    }
+
     private void OnDrawGizmos()
     {
         // 근거리 공격 사거리

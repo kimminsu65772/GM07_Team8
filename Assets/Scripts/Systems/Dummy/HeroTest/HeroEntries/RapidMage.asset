@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15951fa409c979b4ead191d1d9e3ed31, type: 3}
+  m_Name: RapidMage
+  m_EditorClassIdentifier: Assembly-CSharp::HeroEntry
+  heroId: 23
+  heroIcon: {fileID: 0}
+  heroPrefab: {fileID: 4645190578520512926, guid: d958e285e47510848ba1e6a91e2d815a, type: 3}
+  heroLocation: 1
+  isDefaultOwned: 1
+  defaultLevel: 1
+  skillIcon: {fileID: 0}
+  skillName: "\uB9C8\uB825 \uBC94\uB78C"
+  skillDescription: "\uB118\uCE58\uB294 \uB9C8\uB825\uC744 \uB354\uC6B1 \uBE60\uB974\uAC8C
+    \uC0C1\uB300\uC5D0\uAC8C \uC3DF\uC544\uB0C5\uB2C8\uB2E4."
+  skillCooldown: 8

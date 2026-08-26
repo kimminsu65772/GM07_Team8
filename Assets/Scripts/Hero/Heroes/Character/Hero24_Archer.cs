@@ -8,7 +8,7 @@ public class Hero24_Archer : Hero
         SetAttackEffectPreset(0f, 0f, 1f, 1f);
         SetSkillEffectPreset(0f, 0f, 1f, 1f);
         SetTargetEffectPreset(0f, 0f, 1f, 1f);
-        Init(24, 1f, 6f, HeroLocationEnum.Back);
+        Init(24, 1.1f, 3f, HeroLocationEnum.Back);
     }
 
     public override void Skill(GameObject enemy)

@@ -15,6 +15,7 @@ public enum HeroNameEnum
     None = 0,
     Warrior = 11,
     SpellBlade,
+    Shieldman,
     Berserker,
     Rogue,
     Mage = 21,
