@@ -56,8 +56,6 @@ public class UpgradeUIController : MonoBehaviour
             return;
         }
 
-        RefreshAllSlots(
-            upgradeController.UpgradeState
-        );
+        RefreshAllSlots(upgradeController.UpgradeState);
     }
 }

@@ -13,6 +13,8 @@ public class Hero22_Sorcery : Hero
 
     public override void Skill(GameObject enemy)
     {
+        if (enemy == null || IsDead) return;
+
         attack.AreaAttack(1, enemy.transform, 5f, 1.2f);
     }
 }

@@ -12,6 +12,8 @@ public class UpgradeToggleUI : MonoBehaviour
     public GameObject checkImage10;
     public GameObject checkImage100;
 
+    private int currentUpgradeMode = 1;
+    public int CurrentUpgradeMode => currentUpgradeMode;
     void Start()
     {
         SetUpgradeMode(1);
@@ -22,6 +24,7 @@ public class UpgradeToggleUI : MonoBehaviour
     }
     private void SetUpgradeMode(int mode)
     {
+        currentUpgradeMode = mode;
         if (checkImage1 != null) checkImage1.SetActive(false);
         if (checkImage10 != null) checkImage10.SetActive(false);
         if (checkImage100 != null) checkImage100.SetActive(false);

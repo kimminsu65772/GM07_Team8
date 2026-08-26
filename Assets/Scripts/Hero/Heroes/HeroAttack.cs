@@ -45,11 +45,38 @@ public class HeroAttack : MonoBehaviour
     {
         if (attackTimer < hero.HeroAttackTime) attackTimer += Time.deltaTime;
         if (skillTimer < hero.HeroSkillTime) skillTimer += Time.deltaTime;
+        
+        if (isAttacking && hero.TargetEnemy != null)
+        {
+            if (hero.TargetEnemy.TryGetComponent<EnemyStats>(out EnemyStats enemy))
+            {
+                if (enemy.IsDead)
+                {
+                    isAttacking = false;
+                    hero.SearchEnemy();
+                }
+            }
+        }
+
+        if (isSkilling && hero.TargetEnemy != null)
+        {
+            if (hero.TargetEnemy.TryGetComponent<EnemyStats>(out EnemyStats enemy))
+            {
+                if (enemy.IsDead)
+                {
+                    isSkilling = false;
+                    hero.SearchEnemy();
+                }
+            }
+        }
+        
     }
 
     public void MeleeAttack()
     {
         if (hero.Location != HeroLocationEnum.Front || hero.IsDead || isAttacking || isSkilling) return;
+
+        if (hero.TargetEnemy == null) hero.SearchEnemy();
 
         if (attackTimer >= hero.HeroAttackTime)
         {
@@ -196,14 +223,14 @@ public class HeroAttack : MonoBehaviour
     {
         if (hero.IsDead || isAttacking || isSkilling) return;
 
-        if (skillTimer >= hero.HeroSkillTime)
-        {
-            isSkilling = true;
-            skillTimer = 0f;
+        if (skillTimer < hero.HeroSkillTime) return;
 
-            hero.Skill(enemy);
-            vfx.PlaySkillEffect(hero.SkillPosPreset, hero.SkillScalePreset);
-        }
+        if (enemy.GetComponent<EnemyStats>().IsDead) hero.SearchEnemy();
+
+        isSkilling = true;
+        hero.Skill(enemy);
+        vfx.PlaySkillEffect(hero.SkillPosPreset, hero.SkillScalePreset);
+        skillTimer = 0f;
     }
 
     public void StopIsAttacking()

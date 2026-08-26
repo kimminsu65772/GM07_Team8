@@ -1659,7 +1659,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 94966131764468426, guid: 00ee47bb5e8e29c41b149719e2f83f55, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1041389646085338807, guid: 00ee47bb5e8e29c41b149719e2f83f55, type: 3}
       propertyPath: skillFrames.Array.size
@@ -1803,11 +1803,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6973733379191204663, guid: 00ee47bb5e8e29c41b149719e2f83f55, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8647302346651534720, guid: 00ee47bb5e8e29c41b149719e2f83f55, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1824,11 +1824,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5732539489633814074, guid: 84ae44d12b920ab4eb804efe20415f38, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7816316159859847751, guid: 84ae44d12b920ab4eb804efe20415f38, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7977685896051430582, guid: 84ae44d12b920ab4eb804efe20415f38, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1876,7 +1876,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8493128530073556472, guid: 84ae44d12b920ab4eb804efe20415f38, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
