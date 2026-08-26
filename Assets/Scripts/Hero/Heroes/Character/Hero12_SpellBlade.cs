@@ -13,6 +13,8 @@ public class Hero12_SpellBlade : Hero
 
     public override void Skill(GameObject enemy)
     {
+        if (enemy == null || IsDead) return;
+
         attack.AreaAttack(0, enemy.transform, 3f, 1.2f);
     }
 }

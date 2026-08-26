@@ -13,6 +13,8 @@ public class Hero25_RapidArcher : Hero
 
     public override void Skill(GameObject enemy)
     {
+        if (enemy == null || IsDead) return;
+
         // 스킬 구현
         // 셀프 공속 버프
     }

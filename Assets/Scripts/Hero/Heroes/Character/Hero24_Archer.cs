@@ -13,6 +13,8 @@ public class Hero24_Archer : Hero
 
     public override void Skill(GameObject enemy)
     {
+        if (enemy == null || IsDead) return;
+
         // 스킬 구현
         // 강타
     }

@@ -156,7 +156,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
     {
         HPRatio = (float)HeroCurrentHP / (float)HeroMaxHP;
 
-        if (targetEnemy != null && !targetEnemy.activeSelf) targetEnemy = null;
+        if (targetEnemy != null && targetEnemy.GetComponent<EnemyStats>().IsDead) targetEnemy = null;
         if (targetEnemy == null) SearchEnemy();
         if (targetEnemy == null && location == HeroLocationEnum.Front) MoveToPlacementPoint();
         if (targetEnemy != null && location == HeroLocationEnum.Front) MoveToEnemy();
@@ -213,6 +213,11 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
         foreach (Collider2D enemy in enemies)
         {
+            if (enemy.TryGetComponent<EnemyStats>(out EnemyStats enemyStats))
+            {
+                if (enemyStats.IsDead) continue;
+            }
+
             float distance = (enemy.transform.position - transform.position).sqrMagnitude;
 
             if (distance < closestDistance)

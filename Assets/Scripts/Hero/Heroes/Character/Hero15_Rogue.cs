@@ -13,6 +13,8 @@ public class Hero15_Rogue : Hero
 
     public override void Skill(GameObject enemy)
     {
+        if (enemy == null || IsDead) return;
+
         // 스킬 구현 버프
         // 셀프 공속 버프
     }

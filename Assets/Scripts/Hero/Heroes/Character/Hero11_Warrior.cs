@@ -12,6 +12,8 @@ public class Hero11_Warrior : Hero
 
     public override void Skill(GameObject enemy)
     {
+        if (enemy == null || IsDead) return;
+
         float criRan = Random.Range(1f, 100f);
         double damage = HeroAtk * 1.5f;
 
