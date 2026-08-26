@@ -29,4 +29,4 @@ MonoBehaviour:
     amount: 6
   - itemId: 10001
     amount: 3
-  craftDurationInSeconds: 150
+  craftDurationInSeconds: 5

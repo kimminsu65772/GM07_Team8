@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EquipmentSpawner : MonoBehaviour
 {
-    [SerializeField] private EquipmentSO[] equipSO;
+    [SerializeField] private EquipmentDB equipmentDB;
     private int equipSOSelectedNum;
 
     private int randGradeNum;
@@ -14,16 +14,16 @@ public class EquipmentSpawner : MonoBehaviour
     {
         Equipment spawnedEquip = new();
         RandomInfoByGrade(equipGrade);
-        int id = GenerateEquipID();
+        int id = PlayerInfo.Instance.GetNextEquipId();
 
-        spawnedEquip.EquipInit(equipSO[equipSOSelectedNum], id);
+        spawnedEquip.EquipInit(equipmentDB.EquipmentDBList[equipSOSelectedNum], id);
 
-        EquipmentManager.EquipDic.Add(id, spawnedEquip);
+        //EquipmentManager.EquipDic.Add(id, spawnedEquip);
 
-        foreach (var equip in EquipmentManager.EquipDic)
-        {
-            Debug.Log($"ID: {equip.Key}, Equipment: {equip.Value}\n");
-        }
+        //foreach (var equip in EquipmentManager.EquipDic)
+        //{
+        //    Debug.Log($"ID: {equip.Key}, Equipment: {equip.Value}\n");
+        //}
 
         return spawnedEquip;
     }

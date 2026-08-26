@@ -60,7 +60,8 @@ public class SaveDataFactory
             },
             EquipmentInventory = new EquipmentInventorySaveData
             {
-                OwnedEquipmentIds = new List<string>()
+                NextEquipId = 1,
+                Equipments = new List<EquipmentSaveData>()
             },
             EquipmentCraft = new EquipmentCraftSaveData
             {
@@ -99,9 +100,9 @@ public class SaveDataFactory
             {
                 Level = entry.DefaultLevel,
                 IsOwned = entry.IsDefaultOwned,
-                EquippedWeaponId = string.Empty,
-                EquippedBodyId = string.Empty,
-                EquippedAccId = string.Empty
+                EquippedWeaponId = 0,
+                EquippedBodyId = 0,
+                EquippedAccId = 0
             };
         }
 

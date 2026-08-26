@@ -7,6 +7,11 @@ public class HeroEquipmentManager : MonoBehaviour
     [SerializeField] private Equipment currentAccEquip;
     [SerializeField] private Equipment selectedEquip;
 
+    [Header("런타임 장착 목록")]
+    [SerializeField] private int currentWeaponID;
+    [SerializeField] private int currentBodyID;
+    [SerializeField] private int currentAccID;
+
     private Hero hero;
 
     public Equipment CurrentWeaponEquip => currentWeaponEquip;
@@ -53,6 +58,7 @@ public class HeroEquipmentManager : MonoBehaviour
         if (weapon.EquipPart != EquipPartEnum.Weapon) return;
 
         currentWeaponEquip = weapon;
+        currentWeaponID = weapon.EquipID;
         hero.EquipStatApply(weapon);
     }
 
@@ -61,6 +67,7 @@ public class HeroEquipmentManager : MonoBehaviour
         if (body.EquipPart != EquipPartEnum.Body) return;
 
         currentBodyEquip = body;
+        currentBodyID = body.EquipID;
         hero.EquipStatApply(body);
     }
 
@@ -69,6 +76,7 @@ public class HeroEquipmentManager : MonoBehaviour
         if (acc.EquipPart != EquipPartEnum.Acc) return;
 
         currentAccEquip = acc;
+        currentAccID = acc.EquipID;
         hero.EquipStatApply(acc);
     }
 

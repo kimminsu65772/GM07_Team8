@@ -229,8 +229,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09b46fcefc4fbcb4ca949a3e58d2742e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroSlotUI
-  nameText: {fileID: 0}
-  heroIcon: {fileID: 0}
+  nameText: {fileID: 4250005945838186482}
+  heroIcon: {fileID: 7994609830644189639}
   formationOverlayImage: {fileID: 0}
   formationStateText: {fileID: 0}
   canDrag: 1

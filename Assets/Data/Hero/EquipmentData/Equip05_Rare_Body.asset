@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0b6c984393db5e499310b1c05df435e, type: 3}
   m_Name: Equip05_Rare_Body
   m_EditorClassIdentifier: Assembly-CSharp::EquipmentSO
+  equipDataId: 4
+  equipName: "\uC815\uCC30\uB300\uC6D0 \uAD70\uBCF5"
+  equipIcon: {fileID: -8632902382057423091, guid: e7a1ab8305fcb4e6592557e7915e0409, type: 3}
   equipGrade: 1
   equipPart: 1
-  bonusHP: 0
+  bonusHP: 5
   bonusAtk: 0
-  bonusDef: 0
-  bonusCriChance: 0
+  bonusDef: 5
+  bonusCriChance: 2

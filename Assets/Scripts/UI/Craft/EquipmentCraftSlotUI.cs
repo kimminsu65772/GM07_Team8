@@ -9,7 +9,6 @@ public class EquipmentCraftSlotUI : MonoBehaviour
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private TMP_Text explanationText;
     [SerializeField] private TMP_Text durationText;
-    [SerializeField] private Image craftIcon;
     [SerializeField] private MaterialCostSlotUI[] materialCostSlots;
     [SerializeField] private Button craftButton;
 
@@ -24,6 +23,17 @@ public class EquipmentCraftSlotUI : MonoBehaviour
             craftButton.onClick.RemoveListener(OnCraftButtonClicked);
             craftButton.onClick.AddListener(OnCraftButtonClicked);
         }
+    }
+
+    private void OnEnable()
+    {
+        PlayerInfo.Instance.OnItemAmountChanged -= Refresh;
+        PlayerInfo.Instance.OnItemAmountChanged += Refresh;
+    }
+
+    private void OnDisable()
+    {
+        PlayerInfo.Instance.OnItemAmountChanged -= Refresh;
     }
 
     private void OnDestroy()
@@ -67,11 +77,6 @@ public class EquipmentCraftSlotUI : MonoBehaviour
         if (durationText != null)
         {
             durationText.text = FormatDuration(currentRecipe.CraftDuration);
-        }
-
-        if (craftIcon != null)
-        {
-            craftIcon.enabled = craftIcon.sprite != null;
         }
 
         RefreshMaterialCosts();

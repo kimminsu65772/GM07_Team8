@@ -37,6 +37,8 @@ public class PlayerInfo : MonoBehaviour
 
     public event Action<CurrencyType> OnCurrencyChanged;
 
+    public event Action OnItemAmountChanged;
+
     // UI에서 캐싱한 Hero 목록 상태를 갱신할 수 있도록 Hero 소유 여부 변경 시 이벤트 발생
     public event Action<HeroNameEnum, bool> OnHeroOwnedChanged;
 
@@ -418,6 +420,7 @@ public class PlayerInfo : MonoBehaviour
         if (HasEnoughItem(itemId, amount))
         {
             SaveData.Inventory.Items[itemId].Amount -= amount;
+            OnItemAmountChanged?.Invoke();
             RequestSave(savePolicy);
             return true;
         }
@@ -434,44 +437,125 @@ public class PlayerInfo : MonoBehaviour
             SaveData.Inventory.Items[itemId] = item;
         }
         SaveData.Inventory.Items[itemId].Amount += amount;
+        OnItemAmountChanged?.Invoke();
         RequestSave(savePolicy);
     }
 
-    public IReadOnlyList<string> GetOwnedEquipmentIds()
+    public IReadOnlyList<EquipmentSaveData> GetOwnedEquipments()
     {
         if (!CheckInitialized() || SaveData == null)
-            return Array.Empty<string>();
+            return Array.Empty<EquipmentSaveData>();
 
-        return SaveData.EquipmentInventory.OwnedEquipmentIds;
+        EnsureEquipmentInventoryData();
+        return SaveData.EquipmentInventory.Equipments;
     }
 
-    public bool HasEquipment(string equipmentId)
+    public IReadOnlyList<int> GetOwnedEquipmentIds()
     {
+        if (!CheckInitialized() || SaveData == null)
+            return Array.Empty<int>();
+
+        EnsureEquipmentInventoryData();
+
+        List<int> equipmentIds = new();
+        foreach (EquipmentSaveData equipment in SaveData.EquipmentInventory.Equipments)
+        {
+            if (equipment != null)
+            {
+                equipmentIds.Add(equipment.EquipId);
+            }
+        }
+
+        return equipmentIds;
+    }
+
+    public bool TryGetEquipment(int equipmentId, out EquipmentSaveData equipment)
+    {
+        equipment = null;
+
         if (!CheckInitialized() || SaveData == null) return false;
-        if (string.IsNullOrEmpty(equipmentId)) return false;
+        if (equipmentId <= 0) return false;
 
-        return SaveData.EquipmentInventory.OwnedEquipmentIds.Contains(equipmentId);
+        EnsureEquipmentInventoryData();
+
+        foreach (EquipmentSaveData ownedEquipment in SaveData.EquipmentInventory.Equipments)
+        {
+            if (ownedEquipment != null && ownedEquipment.EquipId == equipmentId)
+            {
+                equipment = ownedEquipment;
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    public void AddEquipment(string equipmentId, SavePolicy savePolicy = SavePolicy.Soon)
+    public void GetHeroEquippedEquipments(HeroNameEnum heroId, 
+        out EquipmentSaveData weapon, 
+        out EquipmentSaveData armor, 
+        out EquipmentSaveData acc)
     {
+        weapon = null;
+        armor = null;
+        acc = null;
         if (!CheckInitialized() || SaveData == null) return;
-        if (string.IsNullOrEmpty(equipmentId)) return;
+        if (!SaveData.Heroes.TryGetValue(heroId, out HeroSaveData heroData)) return;
+        if (heroData == null) return;
 
-        if (SaveData.EquipmentInventory.OwnedEquipmentIds.Contains(equipmentId))
-            return;
-
-        SaveData.EquipmentInventory.OwnedEquipmentIds.Add(equipmentId);
-        RequestSave(savePolicy);
+        weapon = heroData.EquippedWeaponId > 0 && TryGetEquipment(heroData.EquippedWeaponId, out EquipmentSaveData weaponData) ? weaponData : null;
+        armor = heroData.EquippedBodyId > 0 && TryGetEquipment(heroData.EquippedBodyId, out EquipmentSaveData armorData) ? armorData : null;
+        acc = heroData.EquippedAccId > 0 && TryGetEquipment(heroData.EquippedAccId, out EquipmentSaveData accData) ? accData : null;
     }
 
-    // 장비 삭제는 쓸 일이 있을 지는 잘 모르겠지만 나중에 분해로 활용할 수 있지 않을까?
-    public bool RemoveEquipment(string equipmentId, SavePolicy savePolicy = SavePolicy.Soon)
+    public bool HasEquipment(int equipmentId)
+    {
+        return TryGetEquipment(equipmentId, out _);
+    }
+
+    public bool AddEquipment(EquipmentSaveData equipment, SavePolicy savePolicy = SavePolicy.Soon)
     {
         if (!CheckInitialized() || SaveData == null) return false;
-        if (string.IsNullOrEmpty(equipmentId)) return false;
+        if (equipment == null) return false;
 
-        bool removed = SaveData.EquipmentInventory.OwnedEquipmentIds.Remove(equipmentId);
+        EnsureEquipmentInventoryData();
+
+        if (equipment.EquipId <= 0)
+        {
+            equipment.EquipId = GetNextEquipId();
+        }
+
+        if (HasEquipment(equipment.EquipId))
+            return false;
+
+        SaveData.EquipmentInventory.Equipments.Add(equipment);
+
+        if (equipment.EquipId >= SaveData.EquipmentInventory.NextEquipId)
+        {
+            SaveData.EquipmentInventory.NextEquipId = equipment.EquipId + 1;
+        }
+
+        RequestSave(savePolicy);
+        return true;
+    }
+
+    public bool RemoveEquipment(int equipmentId, SavePolicy savePolicy = SavePolicy.Soon)
+    {
+        if (!CheckInitialized() || SaveData == null) return false;
+        if (equipmentId <= 0) return false;
+
+        EnsureEquipmentInventoryData();
+
+        bool removed = false;
+        for (int i = SaveData.EquipmentInventory.Equipments.Count - 1; i >= 0; i--)
+        {
+            EquipmentSaveData equipment = SaveData.EquipmentInventory.Equipments[i];
+            if (equipment != null && equipment.EquipId == equipmentId)
+            {
+                SaveData.EquipmentInventory.Equipments.RemoveAt(i);
+                removed = true;
+                break;
+            }
+        }
 
         if (removed)
             RequestSave(savePolicy);
@@ -479,27 +563,27 @@ public class PlayerInfo : MonoBehaviour
         return removed;
     }
 
-    public string GetHeroEquippedId(HeroNameEnum heroId, EquipPartEnum equipPart)
+    public int GetHeroEquippedId(HeroNameEnum heroId, EquipPartEnum equipPart)
     {
-        if (!CheckInitialized() || SaveData == null) return string.Empty;
-        if (!SaveData.Heroes.TryGetValue(heroId, out HeroSaveData heroData)) return string.Empty;
-        if (heroData == null) return string.Empty;
+        if (!CheckInitialized() || SaveData == null) return 0;
+        if (!SaveData.Heroes.TryGetValue(heroId, out HeroSaveData heroData)) return 0;
+        if (heroData == null) return 0;
 
         return equipPart switch
         {
-            EquipPartEnum.Weapon => heroData.EquippedWeaponId ?? string.Empty,
-            EquipPartEnum.Body => heroData.EquippedBodyId ?? string.Empty,
-            EquipPartEnum.Acc => heroData.EquippedAccId ?? string.Empty,
-            _ => string.Empty
+            EquipPartEnum.Weapon => heroData.EquippedWeaponId,
+            EquipPartEnum.Body => heroData.EquippedBodyId,
+            EquipPartEnum.Acc => heroData.EquippedAccId,
+            _ => 0
         };
     }
 
-    public bool SetHeroEquippedEquipmentId(HeroNameEnum heroId, EquipPartEnum equipPart, string equipmentId, SavePolicy savePolicy = SavePolicy.Soon)
+    public bool SetHeroEquippedEquipmentId(HeroNameEnum heroId, EquipPartEnum equipPart, int equipmentId, SavePolicy savePolicy = SavePolicy.Soon)
     {
         if (!CheckInitialized() || SaveData == null) return false;
         if (!SaveData.Heroes.TryGetValue(heroId, out HeroSaveData heroData)) return false;
         if (heroData == null) return false;
-        if (string.IsNullOrEmpty(equipmentId)) return false;
+        if (equipmentId <= 0) return false;
         if (!HasEquipment(equipmentId)) return false;
         if (GetHeroEquippedId(heroId, equipPart) == equipmentId) return true;
 
@@ -532,15 +616,15 @@ public class PlayerInfo : MonoBehaviour
         switch (equipPart)
         {
             case EquipPartEnum.Weapon:
-                heroData.EquippedWeaponId = string.Empty;
+                heroData.EquippedWeaponId = 0;
                 break;
 
             case EquipPartEnum.Body:
-                heroData.EquippedBodyId = string.Empty;
+                heroData.EquippedBodyId = 0;
                 break;
 
             case EquipPartEnum.Acc:
-                heroData.EquippedAccId = string.Empty;
+                heroData.EquippedAccId = 0;
                 break;
 
             default:
@@ -554,8 +638,34 @@ public class PlayerInfo : MonoBehaviour
     public EquipmentInventorySaveData GetOwnedEquips()
     {
         if (!CheckInitialized() || SaveData == null)
-            return new EquipmentInventorySaveData { OwnedEquipmentIds = new List<string>() };
+            return new EquipmentInventorySaveData
+            {
+                NextEquipId = 1,
+                Equipments = new List<EquipmentSaveData>()
+            };
+
+        EnsureEquipmentInventoryData();
         return SaveData.EquipmentInventory;
+    }
+
+    private void EnsureEquipmentInventoryData()
+    {
+        if (SaveData.EquipmentInventory == null)
+        {
+            SaveData.EquipmentInventory = new EquipmentInventorySaveData
+            {
+                NextEquipId = 1,
+                Equipments = new List<EquipmentSaveData>()
+            };
+        }
+    }
+
+    public int GetNextEquipId()
+    {
+        EnsureEquipmentInventoryData();
+
+        int nextId = SaveData.EquipmentInventory.NextEquipId;
+        return nextId;
     }
 
     public IReadOnlyList<EquipmentCraftSlotSaveData> GetEquipmentCraftSlots()
@@ -665,6 +775,7 @@ public class PlayerInfo : MonoBehaviour
     // v4: 비행선 파츠 소유 데이터 추가 (기본 장비를 소유 목록에 넣지 않는 에러 발견)
     // v5: 비행선 파츠 소유 HashSet 초기화/마이그레이션 보정
     // v6: 아이템 인벤토리, 장비 인벤토리, 영웅 장비 착용 상태, 장비 제작 진행 상태 추가
+    // 장비 데이터 저장 방식이 아예 바뀌어서 의미가 있나 싶다...
     private bool MigrateSaveDataIfNeeded()
     {
         if (SaveData.SaveVersion >= SaveDataVersion.CurrentVersion) return false;
@@ -682,7 +793,6 @@ public class PlayerInfo : MonoBehaviour
         if (SaveData.SaveVersion < 6)
         {
             MigrateInventoryAndEquipmentCraft();
-            MigrationHeroEquipment();
         }
 
         SaveData.SaveVersion = SaveDataVersion.CurrentVersion;
@@ -713,7 +823,12 @@ public class PlayerInfo : MonoBehaviour
         SaveData.Inventory.Items ??= new Dictionary<int, ItemStackSaveData>();
 
         SaveData.EquipmentInventory ??= new EquipmentInventorySaveData();
-        SaveData.EquipmentInventory.OwnedEquipmentIds ??= new List<string>();
+        SaveData.EquipmentInventory.Equipments ??= new List<EquipmentSaveData>();
+
+        if (SaveData.EquipmentInventory.NextEquipId <= 0)
+        {
+            SaveData.EquipmentInventory.NextEquipId = 1;
+        }
 
         SaveData.EquipmentCraft ??= new EquipmentCraftSaveData();
         SaveData.EquipmentCraft.Slots ??= new List<EquipmentCraftSlotSaveData>();
@@ -728,21 +843,6 @@ public class PlayerInfo : MonoBehaviour
                 StartedAtUtc = string.Empty,
                 CompletesAtUtc = string.Empty
             });
-        }
-    }
-
-    private void MigrationHeroEquipment()
-    {
-        if (SaveData.Heroes == null) return;
-
-        foreach (HeroSaveData heroData in SaveData.Heroes.Values)
-        {
-            if (heroData == null)
-                continue;
-
-            heroData.EquippedWeaponId ??= string.Empty;
-            heroData.EquippedBodyId ??= string.Empty;
-            heroData.EquippedAccId ??= string.Empty;
         }
     }
 

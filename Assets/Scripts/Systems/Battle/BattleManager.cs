@@ -195,6 +195,7 @@ public class BattleManager : MonoBehaviour
             spawnedHero.transform.SetPositionAndRotation(startPoint.position, startPoint.rotation);
             spawnedHero.gameObject.SetActive(true);
             spawnedHero.Initialize(startPoint, airship.Movement);
+            ApplyEquipments(spawnedHero);
 
             spawnedHeroes.Add(spawnedHero);
         }
@@ -239,5 +240,26 @@ public class BattleManager : MonoBehaviour
         {
             Profiler.EndSample();
         }
+    }
+
+    private void ApplyEquipments(Hero hero)
+    {
+        if (hero == null) return;
+
+        HeroEquipmentManager equipmentManager = hero.GetComponent<HeroEquipmentManager>();
+        if (equipmentManager == null) return;
+
+        PlayerInfo.Instance.GetHeroEquippedEquipments((HeroNameEnum)hero.HeroID, out EquipmentSaveData saveWeapon, out EquipmentSaveData saveBody, out EquipmentSaveData saveAcc);
+
+        Equipment weapon = new();
+        weapon.LoadFromSaveData(saveWeapon);
+        Equipment body = new();
+        body.LoadFromSaveData(saveBody);
+        Equipment acc = new();
+        acc.LoadFromSaveData(saveAcc);
+
+        equipmentManager.GetWeapon(weapon);
+        equipmentManager.GetBody(body);
+        equipmentManager.GetAcc(acc);
     }
 }

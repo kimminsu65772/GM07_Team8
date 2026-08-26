@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -71,9 +72,9 @@ public class HeroSaveData
 {
     public int Level { get; set; }
     public bool IsOwned { get; set; }
-    public string EquippedWeaponId { get; set; }
-    public string EquippedBodyId { get; set; }
-    public string EquippedAccId { get; set; }
+    public int EquippedWeaponId { get; set; }
+    public int EquippedBodyId { get; set; }
+    public int EquippedAccId { get; set; }
 }
 
 [Serializable]
@@ -129,7 +130,22 @@ public class ItemStackSaveData
 [Serializable]
 public class EquipmentInventorySaveData
 {
-    public List<string> OwnedEquipmentIds { get; set; }
+    public int NextEquipId { get; set; }
+    public List<EquipmentSaveData> Equipments { get; set; }
+}
+
+[Serializable]
+public class EquipmentSaveData
+{
+    public int EquipDataId { get; set; }
+    public int EquipId { get; set; }
+    public int EquipLv { get; set; }
+    public EquipGradeEnum EquipGrade { get; set; }
+    public EquipPartEnum EquipPart { get; set; }
+    public float BonusHP { get; set; }
+    public float BonusAtk { get; set; }
+    public float BonusDef { get; set; }
+    public float BonusCriChance { get; set; }
 }
 
 // 제작 중인 슬롯의 정보를 담는 데이터

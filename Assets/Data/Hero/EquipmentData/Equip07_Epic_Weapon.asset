@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0b6c984393db5e499310b1c05df435e, type: 3}
   m_Name: Equip07_Epic_Weapon
   m_EditorClassIdentifier: Assembly-CSharp::EquipmentSO
+  equipDataId: 6
+  equipName: "\uB9C8\uAC80"
+  equipIcon: {fileID: 21300000, guid: bc252f1d8c3f043d8a8557e4f873120d, type: 3}
   equipGrade: 2
   equipPart: 0
   bonusHP: 0
-  bonusAtk: 0
+  bonusAtk: 33
   bonusDef: 0
-  bonusCriChance: 0
+  bonusCriChance: 15

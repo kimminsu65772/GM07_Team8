@@ -353,6 +353,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
     {
         HeroMaxHP += equip.BonusHP;
         HeroCurrentHP += equip.BonusHP;
+        HeroAtk += equip.BonusAtk;
         HeroDef += equip.BonusDef;
         HeroCriChance += equip.BonusCriChance;
     }
