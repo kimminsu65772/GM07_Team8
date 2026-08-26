@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15951fa409c979b4ead191d1d9e3ed31, type: 3}
+  m_Name: Archer
+  m_EditorClassIdentifier: Assembly-CSharp::HeroEntry
+  heroId: 24
+  heroIcon: {fileID: 0}
+  heroPrefab: {fileID: 2185290070318136992, guid: 50775322580ef83499f5d587da020bd7, type: 3}
+  heroLocation: 1
+  isDefaultOwned: 1
+  defaultLevel: 1
+  skillIcon: {fileID: 0}
+  skillName: "\uAC15\uC0AC"
+  skillDescription: "\uD654\uC0B4\uC744 \uB354 \uAC15\uD558\uAC8C \uB0A0\uB824 \uC801\uC5D0\uAC8C
+    \uD070 \uD53C\uD574\uB97C \uC785\uD799\uB2C8\uB2E4."
+  skillCooldown: 3

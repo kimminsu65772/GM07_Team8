@@ -66,7 +66,7 @@ public class Hero11StatTable : IHeroStatTable
 public class Hero12StatTable : IHeroStatTable
 {
     private double lv1HP = 130;
-    private double lv1Atk = 50;
+    private double lv1Atk = 55;
     private double lv1Def = 5;
 
     private double lvHP = 50;
@@ -87,11 +87,11 @@ public class Hero12StatTable : IHeroStatTable
 public class Hero13StatTable : IHeroStatTable
 {
     private double lv1HP = 150;
-    private double lv1Atk = 50;
+    private double lv1Atk = 60;
     private double lv1Def = 5;
 
     private double lvHP = 50;
-    private double lvAtk = 20;
+    private double lvAtk = 15;
     private double lvDef = 5;
 
     public HeroStat GetStat(int lv)
@@ -108,7 +108,7 @@ public class Hero13StatTable : IHeroStatTable
 public class Hero14StatTable : IHeroStatTable
 {
     private double lv1HP = 150;
-    private double lv1Atk = 50;
+    private double lv1Atk = 45;
     private double lv1Def = 5;
 
     private double lvHP = 50;
@@ -129,11 +129,11 @@ public class Hero14StatTable : IHeroStatTable
 public class Hero15StatTable : IHeroStatTable
 {
     private double lv1HP = 150;
-    private double lv1Atk = 50;
+    private double lv1Atk = 20;
     private double lv1Def = 5;
 
     private double lvHP = 50;
-    private double lvAtk = 20;
+    private double lvAtk = 8;
     private double lvDef = 5;
 
     public HeroStat GetStat(int lv)
@@ -171,11 +171,11 @@ public class Hero21StatTable : IHeroStatTable
 public class Hero22StatTable : IHeroStatTable
 {
     private double lv1HP = 90;
-    private double lv1Atk = 50;
+    private double lv1Atk = 45;
     private double lv1Def = 0;
 
     private double lvHP = 20;
-    private double lvAtk = 20;
+    private double lvAtk = 23;
     private double lvDef = 2;
 
     public HeroStat GetStat(int lv)

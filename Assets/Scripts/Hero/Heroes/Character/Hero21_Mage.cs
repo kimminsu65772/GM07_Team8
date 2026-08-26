@@ -13,8 +13,10 @@ public class Hero21_Mage : Hero
 
     public override void Skill(GameObject enemy)
     {
+        if (enemy == null || IsDead) return;
+
         float criRan = Random.Range(1f, 100f);
-        double damage = HeroAtk * 1.5f;
+        double damage = HeroAtk * 2.0f;
 
         Vector2 direction = enemy.transform.position - transform.position;
         FlipSprite(direction);

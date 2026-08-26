@@ -8,7 +8,7 @@ public class Hero13_Shieldman : Hero
         SetAttackEffectPreset(-0.3f, 0.4f, -1.5f, 1.5f);
         SetSkillEffectPreset(-0.3f, 0.4f, -1.7f, 1.7f);
         SetTargetEffectPreset(0f, 0f, 1.5f, 1.5f);
-        Init(13, 1f, 6f, HeroLocationEnum.Front);
+        Init(13, 3f, 8f, HeroLocationEnum.Front);
     }
 
     public override void Skill(GameObject enemy)

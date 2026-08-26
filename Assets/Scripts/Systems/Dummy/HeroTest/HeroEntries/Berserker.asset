@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15951fa409c979b4ead191d1d9e3ed31, type: 3}
+  m_Name: Berserker
+  m_EditorClassIdentifier: Assembly-CSharp::HeroEntry
+  heroId: 14
+  heroIcon: {fileID: 0}
+  heroPrefab: {fileID: 8493128530073556472, guid: 84ae44d12b920ab4eb804efe20415f38, type: 3}
+  heroLocation: 0
+  isDefaultOwned: 1
+  defaultLevel: 1
+  skillIcon: {fileID: 0}
+  skillName: 
+  skillDescription: 
+  skillCooldown: 0
