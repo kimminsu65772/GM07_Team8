@@ -1,0 +1,104 @@
+using System.Collections;
+using UnityEngine;
+
+[RequireComponent(typeof(EnemyStats))]
+public class BossDotAreaSkill : MonoBehaviour
+{
+    [Header("Skill")]
+    [SerializeField, Min(0.1f)] private float skillCooldown = 8f;
+    [SerializeField, Min(0f)] private float firstSkillDelay = 3f;
+    [SerializeField, Min(0.1f)] private float skillAnimationDuration = 1.5f;
+
+    [Header("Dot Area")]
+    [SerializeField] private DotDamageArea dotAreaPrefab;
+    [SerializeField] private Transform areaSpawnPoint;
+    [SerializeField] private Vector3 areaPositionOffset;
+
+    private EnemyMovement enemyMovement;
+    private EnemyStats enemyStats;
+    private EnemyAttack enemyAttack;
+    private EnemyAnimationController animationController;
+
+    private Coroutine skillCoroutine;
+    private bool isCasting;
+
+    private void Awake()
+    {
+        enemyStats = GetComponent<EnemyStats>();
+        enemyAttack = GetComponent<EnemyAttack>();
+        animationController = GetComponent<EnemyAnimationController>();
+        enemyMovement = GetComponent<EnemyMovement>();
+    }
+
+    private void OnEnable()
+    {
+        skillCoroutine = StartCoroutine(SkillRoutine());
+    }
+
+    private IEnumerator SkillRoutine()
+    {
+        yield return new WaitForSeconds(firstSkillDelay);
+
+        while (enemyStats != null && !enemyStats.IsDead)
+        {
+            isCasting = true;
+
+            // 광역기 시전 중에는 기본 공격이 함께 실행되지 않도록 막는다.
+            if (enemyAttack != null)
+            {
+                enemyAttack.enabled = false;
+            }
+
+            animationController?.PlayDotAreaSkill();
+
+            yield return new WaitForSeconds(skillAnimationDuration);
+
+            if (enemyAttack != null)
+            {
+                enemyAttack.enabled = true;
+            }
+
+            isCasting = false;
+
+            yield return new WaitForSeconds(skillCooldown);
+        }
+    }
+
+    // 광역기 애니메이션 이벤트에서 호출한다.
+    // 광역기 애니메이션 이벤트에서 호출한다.
+    public void CastDotArea()
+    {
+        if (!isCasting || enemyStats == null || enemyStats.IsDead || dotAreaPrefab == null)
+        {
+            return;
+        }
+
+        if (enemyMovement == null || enemyMovement.AirshipTarget == null)
+        {
+            return;
+        }
+
+        // 현재 공격 대상과 상관없이 비행선 위치에 장판을 생성한다.
+        Vector3 spawnPosition = enemyMovement.AirshipTarget.position + areaPositionOffset;
+
+        DotDamageArea area = Instantiate(dotAreaPrefab, spawnPosition, Quaternion.identity);
+        area.Initialize(enemyStats.AttackPower);
+    }
+
+    private void OnDisable()
+    {
+        if (skillCoroutine != null)
+        {
+            StopCoroutine(skillCoroutine);
+            skillCoroutine = null;
+        }
+
+        isCasting = false;
+
+        // 시전 도중 풀로 반환돼도 기본 공격이 비활성화된 채 남지 않도록 복구한다.
+        if (enemyAttack != null)
+        {
+            enemyAttack.enabled = true;
+        }
+    }
+}
