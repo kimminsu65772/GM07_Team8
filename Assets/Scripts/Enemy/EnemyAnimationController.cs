@@ -116,10 +116,7 @@ public class EnemyAnimationController : MonoBehaviour
             movementThreshold *
             movementThreshold;
 
-        enemyAnimator.SetBool(
-            MoveParameter,
-            isMoving
-        );
+        enemyAnimator.SetBool(  MoveParameter, isMoving  );
     }
 
     // EnemyAttack의 Attack Event에서 호출한다.
@@ -164,7 +161,24 @@ public class EnemyAnimationController : MonoBehaviour
             enemyAnimator.SetTrigger(otherParameter);
         }
     }
+    // 광역 도트 스킬의 Other 애니메이션을 재생한다.
+    public void PlayDotAreaSkill()
+    {
+        if (enemyAnimator == null || enemyStats == null || enemyStats.IsDead)
+        {
+            return;
+        }
 
+        enemyAnimator.ResetTrigger(AttackParameter);
+        enemyAnimator.SetBool(MoveParameter, false);
+
+        int otherParameter = GetOtherParameter();
+
+        if (otherParameter != 0)
+        {
+            enemyAnimator.SetTrigger(otherParameter);
+        }
+    }
     private void HandleEnemyDamaged(
         EnemyStats damagedEnemy)
     {

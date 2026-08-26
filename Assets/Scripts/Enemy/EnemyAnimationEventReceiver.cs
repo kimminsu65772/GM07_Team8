@@ -5,6 +5,7 @@ public class EnemyAnimationEventReceiver : MonoBehaviour
     private EnemyAttack enemyAttack;
     private BossChargeSkill bossChargeSkill;
     private EnemyMagicAttack enemyMagicAttack;
+    private BossDotAreaSkill bossDotAreaSkill;
 
     private void Awake()
     {
@@ -13,6 +14,8 @@ public class EnemyAnimationEventReceiver : MonoBehaviour
         enemyMagicAttack = GetComponentInParent<EnemyMagicAttack>();
 
         bossChargeSkill =  GetComponentInParent<BossChargeSkill>();
+
+        bossDotAreaSkill = GetComponentInParent<BossDotAreaSkill>();
     }
 
     public void ApplyAttackDamage()
@@ -54,7 +57,15 @@ public class EnemyAnimationEventReceiver : MonoBehaviour
 
         bossChargeSkill.StartCharge();
     }
+    public void CastDotArea()
+    {
+        if (bossDotAreaSkill == null)
+        {
+            return;
+        }
 
+        bossDotAreaSkill.CastDotArea();
+    }
     public void AttackStop()
     {
     }
