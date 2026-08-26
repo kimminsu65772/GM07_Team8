@@ -948,7 +948,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 40, y: 300}
+  m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &6418011877930472854
 MonoBehaviour:
@@ -2857,7 +2857,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &497224354623615438
 MonoBehaviour:
@@ -3633,7 +3633,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1523175496176414211
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3744,6 +3744,7 @@ MonoBehaviour:
   contentGrid: {fileID: 8858446625945783730}
   heroSlotPrefab: {fileID: 100000, guid: 9b8fdb7f73482b349935d41ac631b4ce, type: 3}
   heroCatalog: {fileID: 11400000, guid: f1c7fc4c864c0734394d02b6c8445009, type: 2}
+  heroLevelUpUIController: {fileID: 0}
   heroIcon: {fileID: 0}
   skillIcon: {fileID: 7178074857815164757}
   skillName: {fileID: 7029005335911334224}
@@ -3756,7 +3757,6 @@ MonoBehaviour:
   - {fileID: 4765112186556870628}
   - {fileID: 3639653437924635156}
   - {fileID: 4978174675366748585}
-  heroDisplayController: {fileID: 1063426050181781275}
 --- !u!1 &1178740903913672019
 GameObject:
   m_ObjectHideFlags: 0
@@ -3809,7 +3809,7 @@ GameObject:
   - component: {fileID: 8677921447405068873}
   - component: {fileID: 4926696950610526814}
   m_Layer: 5
-  m_Name: Hero Setting Panel
+  m_Name: Hero Setting Panel_old
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6001,7 +6001,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 7344608710218023279, guid: 63ad2db76f482d9489208f82f84c9727, type: 3}
+  m_Sprite: {fileID: 7344608710218023279, guid: 3c8ec2377c96b464990cb616ff3e8023, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10475,7 +10475,7 @@ RectTransform:
   m_Father: {fileID: 1312913501464885533}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -12423,7 +12423,7 @@ RectTransform:
   m_Father: {fileID: 5600685939008166884}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -15959,7 +15959,7 @@ RectTransform:
   m_Father: {fileID: 7585368252366772145}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 2.5, y: 2.5}
   m_SizeDelta: {x: -25, y: -65}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -16668,9 +16668,9 @@ RectTransform:
   m_Father: {fileID: 8935252526468264542}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -17, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &2149556011128990918
 CanvasRenderer:
@@ -19191,7 +19191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.6981132, g: 0.41285822, b: 0.3721075, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -19251,7 +19251,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8745935344365170358}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 533327119876505224}
+        m_TargetAssemblyTypeName: ToggleController, Assembly-CSharp
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6369796920796336659
 GameObject:
   m_ObjectHideFlags: 0
@@ -19558,7 +19570,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &81995535231450930
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22782,9 +22794,9 @@ RectTransform:
   m_Father: {fileID: 46194711888115226}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: -17}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &5754225160036637202
 CanvasRenderer:
@@ -23000,8 +23012,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281939573
-  m_fontColor: {r: 0.45882356, g: 0.21176472, b: 0.22352943, a: 1}
+    rgba: 4281874488
+  m_fontColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -24839,7 +24851,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9067789706419063664
 RectTransform:
   m_ObjectHideFlags: 0

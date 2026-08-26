@@ -1,19 +1,19 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class HeroSkillButtonUI : MonoBehaviour
 {
     [Header("스킬 버튼")]
-    [SerializeField]
-    private Button skillButton;
+    [SerializeField] private Button skillButton;
 
     [Header("쿨타임 UI")]
-    [SerializeField]
-    private Image cooldownFill;
+    [SerializeField] private Image cooldownFill;
 
-    [SerializeField]
-    private TMP_Text cooldownText;
+    [SerializeField] private TMP_Text cooldownText;
+
+    [SerializeField] private Image skillIcon;
 
     private Hero hero;
     private HeroAttack heroAttack;
@@ -46,9 +46,17 @@ public class HeroSkillButtonUI : MonoBehaviour
         else
         {
             heroAttack = null;
+            SetSkillIcon(null);
             gameObject.SetActive(false);
         }
         UpdateButtonState();
+    }
+    public void SetSkillIcon(Sprite icon)
+    {
+        if (skillIcon == null) return;
+
+        skillIcon.sprite = icon;
+        skillIcon.gameObject.SetActive(icon != null);
     }
     public void ClearHero()
     {

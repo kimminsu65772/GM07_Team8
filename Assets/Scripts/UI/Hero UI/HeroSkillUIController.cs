@@ -16,6 +16,7 @@ public class HeroSkillUIController : MonoBehaviour
     [SerializeField] private Button autoSkillButton;
     [SerializeField] private TMP_Text autoSkillButtonText;
 
+    [SerializeField] private HeroCatalog heroCatalog;
     private readonly List<Hero> placedHeroes = new();
 
     private const int MaxHeroCount = 5;
@@ -90,6 +91,14 @@ public class HeroSkillUIController : MonoBehaviour
             {
                 Hero hero = placedHeroes[i];
                 skillButtons[i].SetHero(hero);
+                if (heroCatalog != null && heroCatalog.TryGetHeroEntry((HeroNameEnum)hero.HeroID, out HeroEntry entry))
+                {
+                    skillButtons[i].SetSkillIcon(entry.SkillIcon);
+                }
+                else
+                {
+                    skillButtons[i].SetSkillIcon(null);
+                }
             }
             else
             {
