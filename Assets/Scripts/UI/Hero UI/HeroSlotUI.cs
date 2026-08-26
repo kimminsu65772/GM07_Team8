@@ -45,7 +45,7 @@ public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         heroName = entry.HeroName;
         onClickCallback = onClick;
 
-        if (nameText != null) nameText.text = $"{heroName} (Lv.{saveData.Level})";
+        if (nameText != null) nameText.text = heroName;
 
         if (heroIcon != null)
         {

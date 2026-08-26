@@ -142,6 +142,13 @@ public abstract class Hero : MonoBehaviour, IDamageable
             airshipMovement = newAirshipMovement;
         }
 
+        if (HeroID == 0)
+        {
+            Debug.LogError("HeroID가 설정되지 않았습니다.");
+            return;
+        }   
+        HeroSaveData heroData = PlayerInfo.Instance.TryGetHeroData((HeroNameEnum)HeroID, out heroData) ? heroData : null;
+        HeroLv = heroData.Level;
         HeroLvManager.Instance.LvApply(HeroLv, this);
         heroCurrentHP = heroMaxHP;
         IsStunned = false;
@@ -351,6 +358,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
     {
         HeroMaxHP += equip.BonusHP;
         HeroCurrentHP += equip.BonusHP;
+        HeroAtk += equip.BonusAtk;
         HeroDef += equip.BonusDef;
         HeroCriChance += equip.BonusCriChance;
     }

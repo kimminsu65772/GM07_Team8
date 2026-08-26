@@ -6,7 +6,9 @@ public class CraftUIController : MonoBehaviour
     [SerializeField] private EquipmentCraftSlotUI[] recipeSlots;
     [SerializeField] private EquipmentCraftRecipeDB recipeDB;
     [SerializeField] private ItemDBSO itemDB;
+    [SerializeField] private EquipmentDB equipmentDB;
     [SerializeField] private CraftUI craftUI;
+    [SerializeField] private CraftCompleteUIController craftCompleteUI;
     [SerializeField] private EquipmentSpawner equipmentSpawner;
 
     private void OnEnable()
@@ -133,6 +135,7 @@ public class CraftUIController : MonoBehaviour
         EquipGradeEnum selectecGrade = DecideGrade(recipe);
 
         Equipment equipment = equipmentSpawner.CreateEquipByGrade(selectecGrade);
+        EquipmentSO equipmentSO = equipmentDB != null ? equipmentDB.GetEquipmentSO(equipment.EquipDataId) : null;
 
         if (equipment == null)
         {
@@ -140,7 +143,26 @@ public class CraftUIController : MonoBehaviour
             return;
         }
 
-        //PlayerInfo.Instance.AddEquipment(equipment.EquipID);
+        EquipmentSaveData equipmentSaveData = new()
+        {
+            EquipDataId = equipment.EquipDataId,
+            EquipId = equipment.EquipID,
+            EquipLv = equipment.EquipLv,
+            EquipGrade = equipment.EquipGrade,
+            EquipPart = equipment.EquipPart,
+            BonusHP = equipment.BonusHP,
+            BonusAtk = equipment.BonusAtk,
+            BonusDef = equipment.BonusDef,
+            BonusCriChance = equipment.BonusCriChance
+        };
+
+        bool result = PlayerInfo.Instance.AddEquipment(equipmentSaveData);
+        if (!result)
+        {
+            Debug.LogWarning("장비 인벤토리에 추가 실패...");
+            return;
+        }
+
         PlayerInfo.Instance.ClearEquipmentCraftSlot(craftSlot.SlotIndex);
 
         RefreshRecipeSlots();
@@ -148,6 +170,11 @@ public class CraftUIController : MonoBehaviour
         if (craftUI != null)
         {
             craftUI.Bind(recipeDB, OnCraftCompleted);
+        }
+
+        if (craftCompleteUI != null)
+        {
+            craftCompleteUI.SetCraftedItem(equipmentSaveData, equipmentSO, false);
         }
     }
 

@@ -6,7 +6,7 @@ using System.Collections;
 
 public class CraftUI : MonoBehaviour
 {
-    [SerializeField] private Image recipeIcon;
+    [SerializeField] private Image craftIcon;
     [SerializeField] private TMP_Text durationText;
     [SerializeField] private Slider progressSlider;
     [SerializeField] private Button craftButton;
@@ -125,10 +125,9 @@ public class CraftUI : MonoBehaviour
         DateTime nowUtc = DateTime.UtcNow;
         bool isComplete = PlayerInfo.Instance.IsEquipmentCraftComplete(craftSlot.SlotIndex, nowUtc);
 
-        if (recipeIcon != null)
+        if (craftIcon != null)
         {
-            recipeIcon.sprite = recipe.RecipeIcon;
-            recipeIcon.enabled = recipeIcon.sprite != null;
+            craftIcon.enabled = craftIcon.sprite != null;
         }
 
         if (durationText != null)
@@ -151,10 +150,9 @@ public class CraftUI : MonoBehaviour
 
     private void Clear()
     {
-        if (recipeIcon != null)
+        if (craftIcon != null)
         {
-            recipeIcon.sprite = null;
-            recipeIcon.enabled = false;
+            craftIcon.enabled = false;
         }
 
         if (durationText != null)
