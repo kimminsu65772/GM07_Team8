@@ -1,10 +1,15 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HeroArrangeStatUI : MonoBehaviour
 {
     [SerializeField] private HeroStatUI[] heroStatUIs;
+    [SerializeField] private TMP_Text heroFormationText;
+    [SerializeField] private TMP_Text heroNameText;
     [SerializeField] private Image skillIcon;
+
+    private HeroEntry currentHeroEntry;
 
     public void SetHeroStatUIs(HeroEntry heroEntry)
     {
@@ -14,9 +19,9 @@ public class HeroArrangeStatUI : MonoBehaviour
             return;
         }
 
-        if (heroStatUIs == null || heroStatUIs.Length < 6)
+        if (heroStatUIs == null)
         {
-            Debug.LogError("스탯 UI 컴포넌트가 아직 충분히 연결되지 않았습니다.");
+            Debug.LogError("스탯 UI 컴포넌트가 아직 연결되지 않았습니다.");
             return;
         }
 
@@ -27,6 +32,8 @@ public class HeroArrangeStatUI : MonoBehaviour
             return;
         }
 
+        currentHeroEntry = heroEntry;
+
         HeroStat heroStat = heroEntry.GetHeroStat();
         SetStatValue(0, heroData.Level);
         SetStatValue(1, heroStat.MaxHP);
@@ -35,6 +42,27 @@ public class HeroArrangeStatUI : MonoBehaviour
         // TODO: 크리티컬은 장비 시스템 완성되면 적용
         SetStatValue(4, 0f);
         SetStatValue(5, heroEntry.SkillCooldown);
+
+        if (heroFormationText != null)
+        {
+            switch (heroEntry.HeroLocation)
+            {
+                case HeroLocationEnum.Front:
+                    heroFormationText.text = "전열";
+                    break;
+                case HeroLocationEnum.Back:
+                    heroFormationText.text = "후열";
+                    break;
+                default:
+                    heroFormationText.text = "알 수 없음";
+                    break;
+            }
+        }
+
+        if (heroNameText != null)
+        {
+            heroNameText.text = heroEntry.HeroName;
+        }
 
         if (skillIcon != null)
         {
@@ -50,6 +78,8 @@ public class HeroArrangeStatUI : MonoBehaviour
             return;
         }
 
+        currentHeroEntry = null;
+
         foreach (var statUI in heroStatUIs)
         {
             if (statUI != null)
@@ -62,7 +92,17 @@ public class HeroArrangeStatUI : MonoBehaviour
         {
             skillIcon.enabled = false;
         }
-    }   
+
+        if (heroFormationText != null)
+        {
+            heroFormationText.text = string.Empty;
+        }
+
+        if (heroNameText != null)
+        {
+            heroNameText.text = string.Empty;
+        }
+    }
 
     private void SetStatValue(int index, double value)
     {
