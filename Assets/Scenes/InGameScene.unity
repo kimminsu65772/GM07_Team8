@@ -15035,6 +15035,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PoolingManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6544001011428186228, guid: e5fbd354ecdb1124da0564b03d42ff30, type: 3}
+      propertyPath: heroArrowPrefab
+      value: 
+      objectReference: {fileID: 5701592631559879376, guid: 2ee0740c66daf6148a3e9aa782f5951c, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
