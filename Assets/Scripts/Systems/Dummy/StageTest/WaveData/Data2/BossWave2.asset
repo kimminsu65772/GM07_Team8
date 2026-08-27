@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WaveData
   enemySpawns:
   - enemyPrefab: {fileID: 7931180812232907860, guid: 3ae8aa6b8a5c51b44844026b2dbfb925, type: 3}
-    spawnCount: 7
+    spawnCount: 15
     spawnInterval: 0.5
   - enemyPrefab: {fileID: 7931180812232907860, guid: f2213b7c9faeb8f4aa58213393b0fff1, type: 3}
-    spawnCount: 5
+    spawnCount: 10
     spawnInterval: 0.5
   - enemyPrefab: {fileID: 7931180812232907860, guid: 25d1e52eaae7f104c904633c16eead05, type: 3}
     spawnCount: 1
