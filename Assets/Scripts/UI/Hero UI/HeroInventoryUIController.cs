@@ -31,6 +31,8 @@ public class HeroInventoryUIController : MonoBehaviour
     [Header("중앙 영웅 시각화 컨트롤러")]
     [SerializeField] private HeroDisplayController heroDisplayController;
 
+    [Header("영웅 장비 컨트롤러")]
+    [SerializeField] HeroEquipmentUIController heroEquipmentUIController;
 
     private readonly List<HeroSlotUI> heroSlotPool = new();
 
@@ -67,7 +69,7 @@ public class HeroInventoryUIController : MonoBehaviour
     private void OnEnable()
     {
         RefreshInventory();
-        ClearDetailInfo();
+        
         if (heroLevelUpUIController != null)
         {
             heroLevelUpUIController.OnHeroLevelUp += RefreshInventory;
@@ -82,11 +84,6 @@ public class HeroInventoryUIController : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        RefreshInventory();
-        ClearDetailInfo();
-    }
     //인벤토리 목록 생성 및 갱신
     public void RefreshInventory()
     {
@@ -122,6 +119,10 @@ public class HeroInventoryUIController : MonoBehaviour
         if (selectedHeroEntry != null && selectedHeroSaveData != null)
         {
             ShowDetailInfo(selectedHeroEntry, selectedHeroSaveData);
+        }
+        else if (IngameHeroList.Count > 0)
+        {
+            ShowDetailInfo(IngameHeroList[0].entry, IngameHeroList[0].heroSaveData);
         }
         else
         {
