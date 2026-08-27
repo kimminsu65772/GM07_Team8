@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 691e6cf1493d84d4098e844e6cbf58a2, type: 3}
-  m_Name: StageTest_Stage10
+  m_Name: StageTest_Stage13
   m_EditorClassIdentifier: Assembly-CSharp::StageData
-  stageNumber: 10
+  stageNumber: 13
   waves:
-  - {fileID: 11400000, guid: 945ba84e37914694f8ed5a7a3233bbe8, type: 2}
-  - {fileID: 11400000, guid: e8b00ac49c40ae04c9bcfcb5205f2fb5, type: 2}
-  - {fileID: 11400000, guid: 1885290fea7e4fa41b4a5e834f322d13, type: 2}
+  - {fileID: 11400000, guid: 90c2d60c9a427104191ca4468c733fa7, type: 2}
+  - {fileID: 11400000, guid: 6099a6e150735574aadf28afb1083950, type: 2}
+  - {fileID: 11400000, guid: fe0570e7eeab8f24bb1d26b2de9d5da1, type: 2}

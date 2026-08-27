@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 26d8ad8942967f0489b443454c35a2ae, type: 3}
-  m_Name: Mob+RangedWave 1
+  m_Name: Mob+RangedWave 3
   m_EditorClassIdentifier: Assembly-CSharp::WaveData
   enemySpawns:
-  - enemyPrefab: {fileID: 7931180812232907860, guid: 4cf911cae5db46c48bd3da6e98dc7c60, type: 3}
-    spawnCount: 6
+  - enemyPrefab: {fileID: 7931180812232907860, guid: 19417c8b64eb6054fa18388a37544181, type: 3}
+    spawnCount: 7
     spawnInterval: 0.5
-  - enemyPrefab: {fileID: 7931180812232907860, guid: 2d9687bbb1af7054eac23976dcc68c51, type: 3}
+  - enemyPrefab: {fileID: 7931180812232907860, guid: e71e38612beb00e4783cc01bb830d294, type: 3}
     spawnCount: 5
     spawnInterval: 0.75
   nextWaveDelay: 0.75
