@@ -4339,6 +4339,9 @@ MonoBehaviour:
   contentTransform: {fileID: 1683087969}
   itemSlotPrefab: {fileID: 3939447682786161741, guid: 2f3cdbe768f55a047a41f690447b2d24, type: 3}
   unlockCatalog: {fileID: 11400000, guid: 584171e10465a47429e3255d6a8904d0, type: 2}
+  unlockFailPanel: {fileID: 0}
+  unlockFailText: {fileID: 0}
+  unlockFailDuration: 1.5
 --- !u!114 &367857020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5739,7 +5742,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2098305671}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ToggleController, Assembly-CSharp
         m_MethodName: Close
         m_Mode: 1
@@ -17603,6 +17606,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1619610674}
     m_Modifications:
+    - target: {fileID: 784281089204571010, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 784281089204571010, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 823001184756259644, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 823001184756259644, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 935563039615310687, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 935563039615310687, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 2410393687757781229, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 2410393687757781229, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.66
+      objectReference: {fileID: 0}
     - target: {fileID: 2707489679330176877, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -17614,6 +17649,14 @@ PrefabInstance:
     - target: {fileID: 3601249629661744666, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
       propertyPath: m_Name
       value: Airship
+      objectReference: {fileID: 0}
+    - target: {fileID: 5204805811059217606, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 5204805811059217606, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.06
       objectReference: {fileID: 0}
     - target: {fileID: 6333519300694953608, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
       propertyPath: m_AnchorMax.x
@@ -18823,6 +18866,9 @@ MonoBehaviour:
   contentTransform: {fileID: 1078548149}
   itemSlotPrefab: {fileID: 3939447682786161741, guid: 2f3cdbe768f55a047a41f690447b2d24, type: 3}
   unlockCatalog: {fileID: 11400000, guid: 584171e10465a47429e3255d6a8904d0, type: 2}
+  unlockFailPanel: {fileID: 0}
+  unlockFailText: {fileID: 0}
+  unlockFailDuration: 1.5
 --- !u!114 &1962810254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20413,17 +20459,6 @@ MonoBehaviour:
 --- !u!114 &2098305670 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1642794643421122663, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
-  m_PrefabInstance: {fileID: 2098305666}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc4d33628a31d54408fde67f40dfbe2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ToggleController
---- !u!114 &2098305671 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 189098780726060776, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
   m_PrefabInstance: {fileID: 2098305666}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
