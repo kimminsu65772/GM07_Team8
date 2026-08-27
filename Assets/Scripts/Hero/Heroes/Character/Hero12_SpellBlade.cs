@@ -15,6 +15,6 @@ public class Hero12_SpellBlade : Hero
     {
         if (enemy == null || IsDead) return;
 
-        attack.AreaAttack(0, enemy.transform, 3f, 1.7f);
+        Attack.AreaAttack(0, enemy.transform, 3f, 1.7f);
     }
 }

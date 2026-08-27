@@ -372,6 +372,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c64a2c56d9f880f4880f549499c15fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroEquipmentManager
+  currentWeaponID: 0
+  currentBodyID: 0
+  currentAccID: 0
 --- !u!1 &4387312951727401991
 GameObject:
   m_ObjectHideFlags: 0
@@ -1034,6 +1037,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7942744650666202910, guid: 15d6a450fd7f1e44b9f71ad8aedd33de, type: 3}
+      propertyPath: 'ATTACK_List.Array.data[0]'
+      value: 
+      objectReference: {fileID: 7400000, guid: 4ed74baebe767f54db7bb1177b39ee94, type: 2}
+    - target: {fileID: 7942744650666202910, guid: 15d6a450fd7f1e44b9f71ad8aedd33de, type: 3}
       propertyPath: 'ATTACK_List.Array.data[1]'
       value: 
       objectReference: {fileID: 7400000, guid: 9a26543e06de846d08fbe01dbfcd13e2, type: 2}
@@ -1050,7 +1057,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2457041594951768192, guid: 15d6a450fd7f1e44b9f71ad8aedd33de, type: 3}
       insertIndex: 0
       addedObject: {fileID: 2292950087620158637}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9194396552269522645, guid: 15d6a450fd7f1e44b9f71ad8aedd33de, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5328068442360282700}
   m_SourcePrefab: {fileID: 100100000, guid: 15d6a450fd7f1e44b9f71ad8aedd33de, type: 3}
 --- !u!4 &2551289679247096690 stripped
 Transform:
@@ -1078,3 +1088,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8862680679579354745, guid: 15d6a450fd7f1e44b9f71ad8aedd33de, type: 3}
   m_PrefabInstance: {fileID: 103910592524395506}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &9144599525150213415 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9194396552269522645, guid: 15d6a450fd7f1e44b9f71ad8aedd33de, type: 3}
+  m_PrefabInstance: {fileID: 103910592524395506}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5328068442360282700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9144599525150213415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb4a530ab53fb1a49b39ba388ebc5e0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeroProjectileShooter
+  hero: {fileID: 3288610637737451671}
