@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
+using System.Collections;
 public class AirshipItemSlotUI : MonoBehaviour
 {
     [Header("UI References")]
@@ -22,6 +22,8 @@ public class AirshipItemSlotUI : MonoBehaviour
     [Header("Unlock Button Alpha")]
     [SerializeField] private float unlockAvailableAlpha = 1f;
     [SerializeField] private float unlockUnavailableAlpha = 0.4f;
+
+    private Coroutine unlockFailCoroutine;
     public Button EquipButton
     {
         get { return equipButton; }
@@ -68,12 +70,13 @@ public class AirshipItemSlotUI : MonoBehaviour
         if (unlockButton != null)
         {
             unlockButton.gameObject.SetActive(isLocked);
-        }
-        if (!isLocked && unlockButton != null)
-        {
-            unlockButton.onClick.RemoveAllListeners();
+            if (isLocked)
+            {
+                unlockButton.interactable = true;
+            }
         }
     }
+    //해금 버튼 밝기
     public void SetUnlockAvailable(bool canUnlock)
     {
         if (unlockButton == null) return;
@@ -87,6 +90,6 @@ public class AirshipItemSlotUI : MonoBehaviour
 
             buttonImage.color = color;
         }
-        unlockButton.interactable = canUnlock;
+        unlockButton.interactable = true;
     }
 }

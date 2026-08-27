@@ -1,8 +1,9 @@
-using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 public class AirshipEquipmentListUI : MonoBehaviour
 {
     public enum ListType { CannonList, GearList }
@@ -15,13 +16,21 @@ public class AirshipEquipmentListUI : MonoBehaviour
     [Header("Unlock")]
     [SerializeField] private AirshipPartsUnlockCatalog unlockCatalog;
 
+    [Header("Unlock 실패 안내")]
+    [SerializeField] private GameObject unlockFailPanel;
+    [SerializeField] private TextMeshProUGUI unlockFailText;
+    [SerializeField] private float unlockFailDuration = 1.5f;
+
     private AirshipEquipmentController equipmentController;
+    private Coroutine unlockFailCoroutine;
 
     private void OnEnable()
     {
         if (equipmentController == null)
-        equipmentController = FindAnyObjectByType<AirshipEquipmentController>();
+            equipmentController = FindAnyObjectByType<AirshipEquipmentController>();
 
+        if (unlockFailPanel != null)
+            unlockFailPanel.SetActive(false);
         RefreshList();
     }
     public void RefreshList()
@@ -70,7 +79,6 @@ public class AirshipEquipmentListUI : MonoBehaviour
                             unlockButton.onClick.AddListener(() =>
                             {
                                 OnClickUnlockCannonButton(data.CannonType);
-                                RefreshList();
                             });
                         }
                     }
@@ -138,7 +146,6 @@ public class AirshipEquipmentListUI : MonoBehaviour
                             unlockButton.onClick.AddListener(() =>
                             {
                                 OnClickUnlockGearButton(data.GearType);
-                                RefreshList();
                             });
                         }
                     }
@@ -170,15 +177,6 @@ public class AirshipEquipmentListUI : MonoBehaviour
             }
         }
     }
-    private List<T> GetPrivateFieldList<T>(object target, string fieldName) where T : class
-    {
-        FieldInfo field = target.GetType().GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
-        if (field != null)
-        {
-            return field.GetValue(target) as List<T>;
-        }
-        return null;
-    }
     public void OnClickEquipCannonButton(AirshipCannonType cannonType)
     {
         if (equipmentController != null)
@@ -198,28 +196,74 @@ public class AirshipEquipmentListUI : MonoBehaviour
         if (unlockCatalog == null) return;
 
         UnlockResult unlockResult = unlockCatalog.CheckCannonUnlock(cannonType);
-        if (!unlockResult.CanUnlock) return;
-
-        if (!PlayerInfo.Instance.TrySpendCurrency(unlockResult.Cost.Type, unlockResult.Cost.Amount, SavePolicy.Soon))
+        // 조건 부족
+        if (!unlockResult.IsRequirementMet)
         {
+            ShowUnlockFailPanel("해금 조건을 만족하지 않았습니다.");
             return;
         }
-
+        // 재화 부족
+        if (!unlockResult.HasEnoughCurrency)
+        {
+            ShowUnlockFailPanel("재화가 부족합니다.");
+            return;
+        }
+        bool success = PlayerInfo.Instance.TrySpendCurrency(unlockResult.Cost.Type, unlockResult.Cost.Amount, SavePolicy.Soon);
+        if (!success)
+        {
+            ShowUnlockFailPanel("재화가 부족합니다.");
+            return;
+        }
         PlayerInfo.Instance.SetOwnedCannonId(cannonType, SavePolicy.Soon);
+        RefreshList();
     }
     private void OnClickUnlockGearButton(AirshipGearType gearType)
     {
         if (unlockCatalog == null) return;
 
         UnlockResult unlockResult = unlockCatalog.CheckGearUnlock(gearType);
-        if (!unlockResult.CanUnlock) return;
-
-        if (!PlayerInfo.Instance.TrySpendCurrency(unlockResult.Cost.Type, unlockResult.Cost.Amount, SavePolicy.Soon))
+        // 조건 부족
+        if (!unlockResult.IsRequirementMet)
         {
+            ShowUnlockFailPanel("해금 조건을 만족하지 않았습니다.");
             return;
         }
-
+        // 재화 부족
+        if (!unlockResult.HasEnoughCurrency)
+        {
+            ShowUnlockFailPanel("재화가 부족합니다.");
+            return;
+        }
+        bool success = PlayerInfo.Instance.TrySpendCurrency(unlockResult.Cost.Type, unlockResult.Cost.Amount, SavePolicy.Soon);
+        if (!success)
+        {
+            ShowUnlockFailPanel("재화가 부족합니다.");
+            return;
+        }
         PlayerInfo.Instance.SetOwnedGearId(gearType, SavePolicy.Soon);
+        RefreshList();
+    }
+    private void ShowUnlockFailPanel(string message)
+    {
+        if (unlockFailPanel == null || unlockFailText == null) return;
+        unlockFailText.text = message;
+        unlockFailPanel.SetActive(true);
+
+        if (unlockFailCoroutine != null)
+        {
+            StopCoroutine(unlockFailCoroutine);
+        }
+        unlockFailCoroutine = StartCoroutine(HideUnlockFailPanel());
+    }
+    private IEnumerator HideUnlockFailPanel()
+    {
+        yield return new WaitForSeconds(unlockFailDuration);
+
+        if (unlockFailPanel != null)
+        {
+            unlockFailPanel.SetActive(false);
+        }
+        unlockFailCoroutine = null;
     }
     private void ToggleUnequipCannon()
     {
@@ -256,5 +300,14 @@ public class AirshipEquipmentListUI : MonoBehaviour
             }
             equipmentController.EquipGear(AirshipGearType.Normal);
         }
+    }
+    private List<T> GetPrivateFieldList<T>(object target, string fieldName) where T : class
+    {
+        FieldInfo field = target.GetType().GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
+        if (field != null)
+        {
+            return field.GetValue(target) as List<T>;
+        }
+        return null;
     }
 }
