@@ -73,7 +73,7 @@ public class PlayerInfo : MonoBehaviour
         }
 
         string saveDataPath = Path.Combine(Application.persistentDataPath, "PlayerSaveData.json");
-
+        Debug.Log($"PlayerInfo: SaveDataPath = {saveDataPath}");
         saveDataWriter = new SaveDataWriter(saveDataPath);
         SaveDataLoader saveDataLoader = new SaveDataLoader(saveDataPath);
 
