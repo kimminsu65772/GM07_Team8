@@ -76,7 +76,7 @@ public class HeroAttack : MonoBehaviour
     {
         if (hero.Location != HeroLocationEnum.Front || hero.IsDead || isAttacking || isSkilling) return;
 
-        if (hero.TargetEnemy == null) hero.SearchEnemy();
+        if (hero.TargetEnemy == null || !hero.TargetEnemy.activeSelf) hero.SearchEnemy();
 
         if (attackTimer >= hero.HeroAttackTime)
         {
@@ -110,6 +110,8 @@ public class HeroAttack : MonoBehaviour
     public void RangeAttack()
     {
         if (hero.Location != HeroLocationEnum.Back || hero.IsDead || isAttacking || isSkilling) return;
+
+        if (hero.TargetEnemy == null || !hero.TargetEnemy.activeSelf) hero.SearchEnemy();
 
         if (attackTimer >= hero.HeroAttackTime)
         {

@@ -159,7 +159,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         attack.ClearCoolTime();
     }
 
-    public void Update()
+    protected virtual void Update()
     {
         HPRatio = (float)HeroCurrentHP / (float)HeroMaxHP;
 
@@ -245,7 +245,13 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
     private void MoveToEnemy()
     {
-        if (location == HeroLocationEnum.Back || targetEnemy == null || IsDead || IsStunned)
+        if (targetEnemy == null || !targetEnemy.activeSelf)
+        {
+            targetEnemy = null;
+            return;
+        }
+
+        if (location == HeroLocationEnum.Back || IsDead || IsStunned)
         {
             isMoving = false;
             return;

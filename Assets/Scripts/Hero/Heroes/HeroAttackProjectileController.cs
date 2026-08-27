@@ -4,7 +4,8 @@ public enum HeroProjectileType
 {
     None,
     PlayerAttackProjectile1,
-    PlayerAttackProjectile2
+    PlayerAttackProjectile2,
+    PlayerArrow
 }
 
 public class HeroAttackProjectileController : MonoBehaviour
