@@ -15,6 +15,6 @@ public class Hero22_Sorcery : Hero
     {
         if (enemy == null || IsDead) return;
 
-        attack.AreaAttack(1, enemy.transform, 5f, 1.2f);
+        Attack.AreaAttack(1, enemy.transform, 5f, 1.2f);
     }
 }

@@ -432,6 +432,12 @@ MonoBehaviour:
   - {fileID: 1090839584, guid: aaf2e326d9f950b44931cbec4f2241bc, type: 3}
   - {fileID: 1670284290, guid: aaf2e326d9f950b44931cbec4f2241bc, type: 3}
   - {fileID: -834416289, guid: aaf2e326d9f950b44931cbec4f2241bc, type: 3}
+  - {fileID: 1791243603, guid: aaf2e326d9f950b44931cbec4f2241bc, type: 3}
+  - {fileID: -619232144, guid: aaf2e326d9f950b44931cbec4f2241bc, type: 3}
+  - {fileID: 812850809, guid: aaf2e326d9f950b44931cbec4f2241bc, type: 3}
+  - {fileID: 1090839584, guid: aaf2e326d9f950b44931cbec4f2241bc, type: 3}
+  - {fileID: 1670284290, guid: aaf2e326d9f950b44931cbec4f2241bc, type: 3}
+  - {fileID: -834416289, guid: aaf2e326d9f950b44931cbec4f2241bc, type: 3}
   targetFrames: []
   frameTime: 0.05
 --- !u!1 &3931466257896633082
@@ -501,6 +507,7 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+  animator: {fileID: 8604081996741150297}
 --- !u!114 &6763845124870370619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -555,6 +562,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c64a2c56d9f880f4880f549499c15fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroEquipmentManager
+  currentWeaponID: 0
+  currentBodyID: 0
+  currentAccID: 0
 --- !u!1 &4744653732685355486
 GameObject:
   m_ObjectHideFlags: 0
@@ -867,6 +877,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6891501392175332473}
     m_Modifications:
+    - target: {fileID: 1048300032083351265, guid: ec7a60bac6ce0244bb53e79dacb5960c, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c2c8552e7ccc28f4489318cc3dd45a89, type: 2}
     - target: {fileID: 5817413050488856762, guid: ec7a60bac6ce0244bb53e79dacb5960c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -988,3 +1002,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28ac21711b0ec40a0812d33a586eb7ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &8604081996741150297 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1048300032083351265, guid: ec7a60bac6ce0244bb53e79dacb5960c, type: 3}
+  m_PrefabInstance: {fileID: 8785284472536617144}
+  m_PrefabAsset: {fileID: 0}
