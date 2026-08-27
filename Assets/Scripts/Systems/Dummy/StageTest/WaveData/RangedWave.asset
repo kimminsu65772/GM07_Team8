@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WaveData
   enemySpawns:
   - enemyPrefab: {fileID: 7931180812232907860, guid: 2d9687bbb1af7054eac23976dcc68c51, type: 3}
-    spawnCount: 5
+    spawnCount: 8
     spawnInterval: 0.5
   nextWaveDelay: 0.75
   isBossWave: 0
