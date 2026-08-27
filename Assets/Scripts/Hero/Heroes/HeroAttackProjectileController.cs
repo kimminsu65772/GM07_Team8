@@ -5,7 +5,7 @@ public enum HeroProjectileType
     None,
     PlayerAttackProjectile1,
     PlayerAttackProjectile2,
-    PlayerArrow
+    PlayerAttackArrow
 }
 
 public class HeroAttackProjectileController : MonoBehaviour
@@ -61,6 +61,10 @@ public class HeroAttackProjectileController : MonoBehaviour
             ReturnToPool();
             return;
         }
+
+        Vector2 direction = target.position - transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+        transform.rotation = Quaternion.Euler(0f, 0f, angle);
 
         transform.position = Vector2.MoveTowards(
             transform.position,

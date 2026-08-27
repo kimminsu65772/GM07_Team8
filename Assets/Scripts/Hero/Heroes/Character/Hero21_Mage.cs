@@ -21,7 +21,7 @@ public class Hero21_Mage : Hero
         Vector2 direction = enemy.transform.position - transform.position;
         FlipSprite(direction);
 
-        attack.VFX.PlayTargetEffect(enemy.transform, TargetPosPreset, TargetScalePreset);
+        Attack.VFX.PlayTargetEffect(enemy.transform, TargetPosPreset, TargetScalePreset);
 
         bool isCrit = false;
         if (criRan <= HeroCriChance)

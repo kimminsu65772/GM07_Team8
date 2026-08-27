@@ -35,7 +35,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
     
     protected HeroStateEnum heroState;
     private HeroEquipmentManager heroEquip;
-    protected HeroAttack attack;
+    public HeroAttack Attack { get; private set; }
 
     private bool canStun = true;
     public bool IsStunned { get; private set; }
@@ -123,7 +123,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
         isMoving = true;
         heroEquip = GetComponent<HeroEquipmentManager>();
-        attack = GetComponent<HeroAttack>();
+        Attack = GetComponent<HeroAttack>();
 
         FlipSprite(new Vector2(1, 0));
     }
@@ -156,7 +156,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         heroState = HeroStateEnum.Idle;
         isMoving = false;
         targetEnemy = null;
-        attack.ClearCoolTime();
+        Attack.ClearCoolTime();
     }
 
     protected virtual void Update()
@@ -169,8 +169,8 @@ public abstract class Hero : MonoBehaviour, IDamageable
         if (targetEnemy != null && location == HeroLocationEnum.Front) MoveToEnemy();
         if (targetEnemy != null && location == HeroLocationEnum.Back)
         {
-            if (attack.IsAutoSkill && skillTime <= attack.SkillTimer) attack.UseSkill(targetEnemy);
-            else attack.RangeAttack();
+            if (Attack.IsAutoSkill && skillTime <= Attack.SkillTimer) Attack.UseSkill(targetEnemy);
+            else Attack.RangeAttack();
         }
 
         ChangeState();
@@ -259,15 +259,15 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
         Vector2 direction = targetEnemy.transform.position - transform.position;
 
-        if (direction.sqrMagnitude <= meleeRange * meleeRange) attack.ChangeCanAttack(true);
-        else attack.ChangeCanAttack(false);
+        if (direction.sqrMagnitude <= meleeRange * meleeRange) Attack.ChangeCanAttack(true);
+        else Attack.ChangeCanAttack(false);
 
-        if (attack.CanAttack && location == HeroLocationEnum.Front)
+        if (Attack.CanAttack && location == HeroLocationEnum.Front)
         {
             isMoving = false;
 
-            if (attack.IsAutoSkill && skillTime <= attack.SkillTimer) attack.UseSkill(targetEnemy);
-            else attack.MeleeAttack();
+            if (Attack.IsAutoSkill && skillTime <= Attack.SkillTimer) Attack.UseSkill(targetEnemy);
+            else Attack.MeleeAttack();
         }
         else
         {
@@ -328,8 +328,8 @@ public abstract class Hero : MonoBehaviour, IDamageable
     protected IEnumerator DieAndRevive()
     {
         isDead = true;
-        attack.StopIsAttacking();
-        attack.StopIsSkilling();
+        Attack.StopIsAttacking();
+        Attack.StopIsSkilling();
 
         yield return new WaitForSeconds(3f);
 
@@ -344,20 +344,20 @@ public abstract class Hero : MonoBehaviour, IDamageable
     {
         if (isDead) heroState = HeroStateEnum.Die;
         else if (IsStunned) heroState = HeroStateEnum.Stunned;
-        else if (attack.IsSkilling) heroState = HeroStateEnum.Skill;
-        else if (attack.IsAttacking) heroState = HeroStateEnum.Attack;
+        else if (Attack.IsSkilling) heroState = HeroStateEnum.Skill;
+        else if (Attack.IsAttacking) heroState = HeroStateEnum.Attack;
         else if (isMoving) heroState = HeroStateEnum.Move;
         else heroState = HeroStateEnum.Idle;
     }
 
     public void AttackStop()
     {
-        attack.StopIsAttacking();
+        Attack.StopIsAttacking();
     }
 
     public void SkillStop()
     {
-        attack.StopIsSkilling();
+        Attack.StopIsSkilling();
     }
 
     public void EquipStatApply(Equipment equip)

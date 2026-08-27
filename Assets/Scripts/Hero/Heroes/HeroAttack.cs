@@ -118,9 +118,6 @@ public class HeroAttack : MonoBehaviour
             hero.SearchEnemy();
             if (hero.TargetEnemy == null) return;
 
-            float criRan = Random.Range(1f, 100f);
-            double damage = hero.HeroAtk;
-
             isAttacking = true;
             attackTimer = 0f;
 
@@ -128,15 +125,6 @@ public class HeroAttack : MonoBehaviour
             hero.FlipSprite(direction);
 
             vfx.PlayAttackEffect(hero.AtkPosPreset, hero.AtkScalePreset);
-
-            bool isCrit = false;
-            if (criRan <= hero.HeroCriChance)
-            {
-                damage *= 2f;
-                isCrit = true;
-            }
-
-            ThrowProjectile(hero.TargetEnemy.transform, new DamageInfo(damage, isCrit));
 
             // Debug.Log(gameObject.name + "의 원거리 공격, 피해량 : " + damage);
         }
@@ -192,7 +180,7 @@ public class HeroAttack : MonoBehaviour
         }
     }
 
-    private void ThrowProjectile(
+    public void ThrowProjectile(
         Transform enemy,
         DamageInfo damageInfo)
     {

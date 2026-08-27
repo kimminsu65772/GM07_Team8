@@ -24,7 +24,7 @@ public class Hero15_Rogue : Hero
         if (attackTimeBuffCo != null) StopCoroutine(attackTimeBuffCo);
 
         attackTimeBuffCo = StartCoroutine(AttackTimeBuff());
-        attack.VFX.PlaySkillEffect(SkillPosPreset, SkillScalePreset);
+        Attack.VFX.PlaySkillEffect(SkillPosPreset, SkillScalePreset);
     }
 
     private IEnumerator AttackTimeBuff()

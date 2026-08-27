@@ -58,6 +58,13 @@ public class PoolingManager : MonoBehaviour
     [SerializeField, Min(0)]
     private int heroProjectile2InitialSize = 5;
 
+    [Header("영웅 화살 투사체")]
+    [SerializeField]
+    private HeroAttackProjectileController heroArrowPrefab;
+
+    [SerializeField, Min(0)]
+    private int heroArrowInitialSize = 5;
+
     private readonly List<HeroAttackProjectileController>
         inactiveHeroProjectile1 =
             new List<HeroAttackProjectileController>();
@@ -65,10 +72,14 @@ public class PoolingManager : MonoBehaviour
     private readonly List<HeroAttackProjectileController>
         inactiveHeroProjectile2 =
             new List<HeroAttackProjectileController>();
-    
-    
-    
-    
+
+    private readonly List<HeroAttackProjectileController>
+        inactiveHeroArrow =
+            new List<HeroAttackProjectileController>();
+
+
+
+
     [Space]
     [Header("적 투사체")]
     [SerializeField]
@@ -136,10 +147,15 @@ public class PoolingManager : MonoBehaviour
             inactiveHeroProjectile2,
             HeroProjectileType.PlayerAttackProjectile2
         );
-        
-        
-        
-        
+
+        PrewarmHeroProjectile(
+            heroArrowPrefab,
+            heroArrowInitialSize,
+            inactiveHeroArrow,
+            HeroProjectileType.PlayerAttackArrow
+        );
+
+
         PrewarmEnemyProjectile();
     }
 
@@ -558,6 +574,9 @@ public class PoolingManager : MonoBehaviour
             case HeroProjectileType.PlayerAttackProjectile2:
                 return inactiveHeroProjectile2;
 
+            case HeroProjectileType.PlayerAttackArrow:
+                return inactiveHeroArrow;
+
             default:
                 return null;
         }
@@ -574,6 +593,9 @@ public class PoolingManager : MonoBehaviour
 
             case HeroProjectileType.PlayerAttackProjectile2:
                 return heroProjectile2Prefab;
+
+            case HeroProjectileType.PlayerAttackArrow:
+                return heroArrowPrefab;
 
             default:
                 return null;
