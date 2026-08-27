@@ -276,18 +276,29 @@ public class HeroInventoryUIController : MonoBehaviour
 
         HeroStat stat = entry.GetHeroStat();
 
+        PlayerInfo.Instance.GetHeroEquippedEquipments(entry.HeroId, 
+            out EquipmentSaveData weapon, 
+            out EquipmentSaveData body, 
+            out EquipmentSaveData acc);
+
+        double totalAtkBonus = (weapon?.BonusAtk ?? 0) + (body?.BonusAtk ?? 0) + (acc?.BonusAtk ?? 0);
+        double totalDefBonus = (weapon?.BonusDef ?? 0) + (body?.BonusDef ?? 0) + (acc?.BonusDef ?? 0);
+        double totalHPBonus = (weapon?.BonusHP ?? 0) + (body?.BonusHP ?? 0) + (acc?.BonusHP ?? 0);
+        float totalCriChanceBonus = ((weapon?.BonusCriChance ?? 0) + (body?.BonusCriChance ?? 0) + (acc?.BonusCriChance ?? 0)) / 100f;
+
         double[] values =
         {
-            stat.Atk,
-            stat.Def,
-            stat.MaxHP,
-            0
+            stat.Atk + totalAtkBonus,
+            stat.Def + totalDefBonus,
+            stat.MaxHP + totalHPBonus,
         };
 
         for (int i = 0; i < heroStatUIs.Length && i < values.Length; i++)
         {
             heroStatUIs[i].SetValue(values[i]);
         }
+
+        heroStatUIs[3].SetValue(totalCriChanceBonus);
     }
 
 
