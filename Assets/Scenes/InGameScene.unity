@@ -484,11 +484,35 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1163573173292909826, guid: 704c14735ff1f0b4eb0636eb535cf01f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1163573173292909826, guid: 704c14735ff1f0b4eb0636eb535cf01f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1875910749441341857, guid: 704c14735ff1f0b4eb0636eb535cf01f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1875910749441341857, guid: 704c14735ff1f0b4eb0636eb535cf01f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4617442354390890304, guid: 704c14735ff1f0b4eb0636eb535cf01f, type: 3}
+      propertyPath: m_fontSize
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 4617442354390890304, guid: 704c14735ff1f0b4eb0636eb535cf01f, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 4617442354390890304, guid: 704c14735ff1f0b4eb0636eb535cf01f, type: 3}
+      propertyPath: m_characterSpacing
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4869800132453650406, guid: 704c14735ff1f0b4eb0636eb535cf01f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 8284160051389188607, guid: 704c14735ff1f0b4eb0636eb535cf01f, type: 3}
       propertyPath: m_Name
@@ -496,7 +520,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8284160051389188607, guid: 704c14735ff1f0b4eb0636eb535cf01f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8886889460662948012, guid: 704c14735ff1f0b4eb0636eb535cf01f, type: 3}
       propertyPath: m_Pivot.x
@@ -4339,6 +4363,9 @@ MonoBehaviour:
   contentTransform: {fileID: 1683087969}
   itemSlotPrefab: {fileID: 3939447682786161741, guid: 2f3cdbe768f55a047a41f690447b2d24, type: 3}
   unlockCatalog: {fileID: 11400000, guid: 584171e10465a47429e3255d6a8904d0, type: 2}
+  unlockFailPanel: {fileID: 0}
+  unlockFailText: {fileID: 0}
+  unlockFailDuration: 1.5
 --- !u!114 &367857020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5739,7 +5766,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2098305671}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ToggleController, Assembly-CSharp
         m_MethodName: Close
         m_Mode: 1
@@ -18823,6 +18850,9 @@ MonoBehaviour:
   contentTransform: {fileID: 1078548149}
   itemSlotPrefab: {fileID: 3939447682786161741, guid: 2f3cdbe768f55a047a41f690447b2d24, type: 3}
   unlockCatalog: {fileID: 11400000, guid: 584171e10465a47429e3255d6a8904d0, type: 2}
+  unlockFailPanel: {fileID: 0}
+  unlockFailText: {fileID: 0}
+  unlockFailDuration: 1.5
 --- !u!114 &1962810254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20413,17 +20443,6 @@ MonoBehaviour:
 --- !u!114 &2098305670 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1642794643421122663, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
-  m_PrefabInstance: {fileID: 2098305666}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc4d33628a31d54408fde67f40dfbe2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ToggleController
---- !u!114 &2098305671 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 189098780726060776, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
   m_PrefabInstance: {fileID: 2098305666}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
