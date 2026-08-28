@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15951fa409c979b4ead191d1d9e3ed31, type: 3}
   m_Name: RapidArcher
   m_EditorClassIdentifier: Assembly-CSharp::HeroEntry
-  heroId: 25
+  heroId: 23
   heroIcon: {fileID: 0}
   heroPrefab: {fileID: 2303872753050491697, guid: c23cf509b28200f4bb51dc527570a977, type: 3}
   heroLocation: 1
