@@ -3227,7 +3227,6 @@ GameObject:
   - component: {fileID: 186244218}
   - component: {fileID: 186244222}
   - component: {fileID: 186244221}
-  - component: {fileID: 186244219}
   - component: {fileID: 186244220}
   - component: {fileID: 186244223}
   m_Layer: 5
@@ -3261,19 +3260,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 640, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &186244219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 186244217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc4d33628a31d54408fde67f40dfbe2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ToggleController
-  targetUI: {fileID: 186244217}
 --- !u!114 &186244220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3372,9 +3358,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 186244219}
-        m_TargetAssemblyTypeName: ToggleController, Assembly-CSharp
-        m_MethodName: Close
+      - m_Target: {fileID: 186244220}
+        m_TargetAssemblyTypeName: SkillToolTipUI, Assembly-CSharp
+        m_MethodName: HideToolTip
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3466,19 +3452,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 189374652}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 423083544}
-        m_TargetAssemblyTypeName: ToggleController, Assembly-CSharp
-        m_MethodName: Open
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &189374652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3928,7 +3902,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 423083544}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ToggleController, Assembly-CSharp
         m_MethodName: Close
         m_Mode: 1
@@ -3940,7 +3914,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 186244219}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ToggleController, Assembly-CSharp
         m_MethodName: Close
         m_Mode: 1
@@ -3952,7 +3926,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 479951491}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ToggleController, Assembly-CSharp
         m_MethodName: Close
         m_Mode: 1
@@ -9377,7 +9351,6 @@ GameObject:
   - component: {fileID: 423083543}
   - component: {fileID: 423083547}
   - component: {fileID: 423083546}
-  - component: {fileID: 423083544}
   - component: {fileID: 423083545}
   - component: {fileID: 423083548}
   m_Layer: 5
@@ -9411,19 +9384,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 640, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &423083544
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 423083542}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc4d33628a31d54408fde67f40dfbe2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ToggleController
-  targetUI: {fileID: 423083542}
 --- !u!114 &423083545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9522,9 +9482,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 423083544}
-        m_TargetAssemblyTypeName: ToggleController, Assembly-CSharp
-        m_MethodName: Close
+      - m_Target: {fileID: 423083545}
+        m_TargetAssemblyTypeName: SkillToolTipUI, Assembly-CSharp
+        m_MethodName: HideToolTip
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10340,7 +10300,7 @@ MonoBehaviour:
   mapNumber: 1
   stagesPerMap: 10
   zigzagX: 130
-  spacingY: 60
+  spacingY: 70
 --- !u!1 &466885432
 GameObject:
   m_ObjectHideFlags: 0
@@ -10626,7 +10586,6 @@ GameObject:
   - component: {fileID: 479951490}
   - component: {fileID: 479951494}
   - component: {fileID: 479951493}
-  - component: {fileID: 479951491}
   - component: {fileID: 479951492}
   - component: {fileID: 479951495}
   m_Layer: 5
@@ -10660,19 +10619,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 640, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &479951491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 479951489}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc4d33628a31d54408fde67f40dfbe2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ToggleController
-  targetUI: {fileID: 479951489}
 --- !u!114 &479951492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10771,9 +10717,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 479951491}
-        m_TargetAssemblyTypeName: ToggleController, Assembly-CSharp
-        m_MethodName: Close
+      - m_Target: {fileID: 479951492}
+        m_TargetAssemblyTypeName: SkillToolTipUI, Assembly-CSharp
+        m_MethodName: HideToolTip
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13794,7 +13740,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &645455648
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15713,7 +15659,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 423083544}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ToggleController, Assembly-CSharp
         m_MethodName: Close
         m_Mode: 1
@@ -15725,7 +15671,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 186244219}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ToggleController, Assembly-CSharp
         m_MethodName: Close
         m_Mode: 1
@@ -15737,7 +15683,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 479951491}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ToggleController, Assembly-CSharp
         m_MethodName: Close
         m_Mode: 1
@@ -18395,7 +18341,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 885525058}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 885525057}
+        m_TargetAssemblyTypeName: SkillToolTipUI, Assembly-CSharp
+        m_MethodName: HideToolTip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &887298598
 GameObject:
   m_ObjectHideFlags: 0
@@ -20845,19 +20803,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1081045515}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 479951491}
-        m_TargetAssemblyTypeName: ToggleController, Assembly-CSharp
-        m_MethodName: Open
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1081045515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28161,7 +28107,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 423083544}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ToggleController, Assembly-CSharp
         m_MethodName: Close
         m_Mode: 1
@@ -28173,7 +28119,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 186244219}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ToggleController, Assembly-CSharp
         m_MethodName: Close
         m_Mode: 1
@@ -28185,7 +28131,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 479951491}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ToggleController, Assembly-CSharp
         m_MethodName: Close
         m_Mode: 1
@@ -30368,7 +30314,7 @@ MonoBehaviour:
   mapNumber: 2
   stagesPerMap: 10
   zigzagX: 130
-  spacingY: 80
+  spacingY: 70
 --- !u!1 &1588073510
 GameObject:
   m_ObjectHideFlags: 0
@@ -35419,7 +35365,7 @@ MonoBehaviour:
   mapNumber: 3
   stagesPerMap: 10
   zigzagX: 130
-  spacingY: 80
+  spacingY: 70
 --- !u!1 &1947242374
 GameObject:
   m_ObjectHideFlags: 0
@@ -36541,19 +36487,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1985134000}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 186244219}
-        m_TargetAssemblyTypeName: ToggleController, Assembly-CSharp
-        m_MethodName: Open
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1985134000
 MonoBehaviour:
   m_ObjectHideFlags: 0
