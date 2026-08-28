@@ -191,27 +191,27 @@ public class HeroEquipmentSlot : MonoBehaviour
 
         StringBuilder builder = new();
 
-        AppendStat(builder, "HP", saveData.BonusHP);
-        AppendStat(builder, "ATK", saveData.BonusAtk);
-        AppendStat(builder, "DEF", saveData.BonusDef);
-        AppendStat(builder, "CRI", saveData.BonusCriChance, "%");
+        string formattedHP = GameFormatUtils.ToIdleNumber(saveData.BonusHP);
+        string formattedATK = GameFormatUtils.ToIdleNumber(saveData.BonusAtk);
+        string formattedDEF = GameFormatUtils.ToIdleNumber(saveData.BonusDef);
+        string formattedCRI = GameFormatUtils.ToPercent((float)(saveData.BonusCriChance/100));
+
+        AppendStat(builder, "HP", formattedHP);
+        AppendStat(builder, "ATK", formattedATK);
+        AppendStat(builder, "DEF", formattedDEF);
+        AppendStat(builder, "CRI", formattedCRI);
 
         equipmentStatText.text = builder.ToString();
     }
 
     // string을 더하는 작업이기 때문에 StringBuilder를 사용해봤음.
-    private void AppendStat(StringBuilder builder, string label, float value, string suffix = "")
+    private void AppendStat(StringBuilder builder, string label, string statText, string suffix = "")
     {
-        if (value <= 0f)
-        {
-            return;
-        }
-
         if (builder.Length > 0)
         {
             builder.AppendLine();
         }
 
-        builder.Append($"{label} +{value:0.#}{suffix}");
+        builder.Append($"{label} + {statText}{suffix}");
     }
 }
