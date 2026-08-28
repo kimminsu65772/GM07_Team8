@@ -58,5 +58,11 @@ MonoBehaviour:
   heroProjectile1InitialSize: 5
   heroProjectile2Prefab: {fileID: 2817707393459148996, guid: 05890600abc9e0d47a5c4d82ca251c7f, type: 3}
   heroProjectile2InitialSize: 5
+  heroProjectile3Prefab: {fileID: 2817707393459148996, guid: 76ecae52c4394b348ba17dc0f08a3a5a, type: 3}
+  heroProjectile3InitialSize: 5
+  heroArrowPrefab: {fileID: 5701592631559879376, guid: 2ee0740c66daf6148a3e9aa782f5951c, type: 3}
+  heroArrowInitialSize: 10
+  heroArrowSkillPrefab: {fileID: 2479414937958345036, guid: 8beb008361489c4489f0e7b292fb1130, type: 3}
+  heroArrowSkillInitialSize: 3
   enemyProjectilePrefab: {fileID: 1616738449389842227, guid: 338b897b00b96c246ae9492661761ab8, type: 3}
   enemyProjectileInitialSize: 10

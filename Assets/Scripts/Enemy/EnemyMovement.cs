@@ -1,7 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
+
+public enum EnemyStackGroup { None, Mob, Mob1, Mob2, RangedMob, RangedMob1, RangedMob2 }
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(EnemyStats))]
+
+
 public class EnemyMovement : MonoBehaviour
 {
     [Header("Target")]
@@ -14,6 +19,14 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float airshipStopRange = 1.5f;
     [SerializeField] private bool useAirshipStopRange;
 
+    [Header("Enemy Stacking")]
+    [SerializeField] private bool useEnemyStacking = true;
+    [SerializeField] private EnemyStackGroup stackGroup = EnemyStackGroup.None;
+    [SerializeField] private float stackingDistance = 0.5f;
+    [SerializeField] private float stackingLineRange = 0.3f;
+
+    private static readonly List<EnemyMovement> activeEnemies = new List<EnemyMovement>();
+
     private Rigidbody2D enemyRigidbody2D;
     private EnemyStats enemyStats;
     private Transform combatTarget;
@@ -23,7 +36,18 @@ public class EnemyMovement : MonoBehaviour
         enemyRigidbody2D = GetComponent<Rigidbody2D>();
         enemyStats = GetComponent<EnemyStats>();
     }
+    private void OnEnable()
+    {
+        if (!activeEnemies.Contains(this))
+        {
+            activeEnemies.Add(this);
+        }
+    }
 
+    private void OnDisable()
+    {
+        activeEnemies.Remove(this);
+    }
     public void SetCombatTarget(Transform newTarget)
     {
         combatTarget = newTarget;
@@ -63,8 +87,53 @@ public class EnemyMovement : MonoBehaviour
             return;
         }
 
+        // 같은 그룹의 적이 같은 줄 앞쪽에서 멈춰 있으면 간격을 두고 대기한다.
+        if (ShouldStopForEnemyAhead(currentPosition))
+        {
+            StopMoving();
+            return;
+        }
+
         Move();
     }
+
+    private bool ShouldStopForEnemyAhead(Vector2 currentPosition)
+    {
+        if (!useEnemyStacking || stackGroup == EnemyStackGroup.None)
+        {
+            return false;
+        }
+
+        foreach (EnemyMovement otherEnemy in activeEnemies)
+        {
+            if (otherEnemy == this || !otherEnemy.gameObject.activeInHierarchy || otherEnemy.enemyStats == null || otherEnemy.enemyStats.IsDead)
+            {
+                continue;
+            }
+
+            if (!otherEnemy.useEnemyStacking || otherEnemy.stackGroup != stackGroup)
+            {
+                continue;
+            }
+
+            Vector2 otherPosition = otherEnemy.enemyRigidbody2D.position;
+            float xDistance = currentPosition.x - otherPosition.x;
+            float yDistance = Mathf.Abs(currentPosition.y - otherPosition.y);
+
+            bool isEnemyAhead = xDistance > 0f;
+            bool isSameLine = yDistance <= stackingLineRange;
+            bool isWithinStackingDistance = xDistance <= stackingDistance;
+            bool isEnemyStopped = Mathf.Abs(otherEnemy.enemyRigidbody2D.linearVelocity.x) < 0.01f;
+
+            if (isEnemyAhead && isSameLine && isWithinStackingDistance && isEnemyStopped)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     private void Move()
     {

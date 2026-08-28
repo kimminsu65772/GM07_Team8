@@ -140,6 +140,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
   target: {fileID: 0}
   heroStopRange: 1.3
+  airshipStopRange: 5
+  useAirshipStopRange: 1
+  useEnemyStacking: 1
+  stackGroup: 3
+  stackingDistance: 0.3
+  stackingLineRange: 0.3
 --- !u!114 &4527213543350081925
 MonoBehaviour:
   m_ObjectHideFlags: 0
