@@ -16,7 +16,7 @@ MonoBehaviour:
   equipName: "\uCCA0\uC81C \uAC80"
   equipIcon: {fileID: 21300000, guid: 28cab715ab1f243f5bc8ac56b11d29b3, type: 3}
   equipGrade: 1
-  equipPart: 0
+  equipPart: 1
   bonusHP: 0
   bonusAtk: 5
   bonusDef: 0
