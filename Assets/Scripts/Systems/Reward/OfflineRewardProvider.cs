@@ -7,9 +7,11 @@ public static class OfflineRewardProvider
     private static TimeSpan MaxTimeSpan = TimeSpan.FromHours(16);
 
     private static RewardBundle offlineRewards;
+    private static TimeSpan offlineTime;
     public static RewardBundle OfflineRewards => offlineRewards;
+    public static TimeSpan OfflineTime => offlineTime;
 
-    
+
 
     public static void ProvideOfflineReward()
     {
@@ -50,7 +52,7 @@ public static class OfflineRewardProvider
             return TimeSpan.Zero;
         }
 
-        TimeSpan offlineTime = DateTime.UtcNow - lastSavedAt;
+        offlineTime = DateTime.UtcNow - lastSavedAt;
 
         if (offlineTime > MaxTimeSpan)
         {
