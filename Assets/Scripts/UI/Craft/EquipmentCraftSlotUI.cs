@@ -148,7 +148,7 @@ public class EquipmentCraftSlotUI : MonoBehaviour
 
             // materialIndex가 유효한 경우, 해당 재료 정보를 가져와 슬롯에 바인딩한다.
             // 이 때 재료의 코스트가 null인 경우도 비정상인 상황이므로 슬롯을 숨기고 초기화한다.
-            ItemAmount cost = currentRecipe.RequiredMaterials[materialIndex];
+            ItemCost cost = currentRecipe.RequiredMaterials[materialIndex];
             if (cost == null)
             {
                 slot.Clear();
@@ -199,7 +199,7 @@ public class EquipmentCraftSlotUI : MonoBehaviour
             return true;
         }
 
-        foreach (ItemAmount cost in recipe.RequiredMaterials)
+        foreach (ItemCost cost in recipe.RequiredMaterials)
         {
             if (cost == null)
             {

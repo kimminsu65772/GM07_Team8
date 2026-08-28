@@ -22,20 +22,16 @@ public class EffectPlayer : MonoBehaviour
         }
     }
 
-    public void PlayAttackEffect(Vector2 posPreset, Vector2 scalePreset, Vector3? rotationPreset = null)
+    public void PlayAttackEffect(Vector2 posPreset, Vector2 scalePreset)
     {
-        Vector3 rotation = rotationPreset ?? Vector3.zero;
-
-        SetSelfEffect(posPreset, scalePreset, rotation);
+        SetSelfEffect(posPreset, scalePreset);
 
         PlaySelfEffect(attackFrames);
     }
 
-    public void PlaySkillEffect(Vector2 posPreset, Vector2 scalePreset, Vector3? rotationPreset = null)
+    public void PlaySkillEffect(Vector2 posPreset, Vector2 scalePreset)
     {
-        Vector3 rotation = rotationPreset ?? Vector3.zero;
-
-        SetSelfEffect(posPreset, scalePreset, rotation);
+        SetSelfEffect(posPreset, scalePreset);
 
         PlaySelfEffect(skillFrames);    
     }
@@ -48,11 +44,10 @@ public class EffectPlayer : MonoBehaviour
         PlayTargetEffect(targetFrames);
     }
 
-    private void SetSelfEffect(Vector2 posPreset, Vector2 scalePreset, Vector3 rotationPreset)
+    private void SetSelfEffect(Vector2 posPreset, Vector2 scalePreset)
     {
         selfEffect.transform.localPosition = new Vector3(posPreset.x, posPreset.y, 0);
         selfEffect.transform.localScale = new Vector3(scalePreset.x, scalePreset.y, 1);
-        selfEffect.transform.localEulerAngles = rotationPreset;
     }
 
     // 스킬 실행 시 지정
