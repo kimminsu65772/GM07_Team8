@@ -9,7 +9,7 @@ public class MaterialCostSlotUI : MonoBehaviour
     [SerializeField] private Color enoughColor = Color.white;
     [SerializeField] private Color notEnoughColor = Color.red;
 
-    public void Bind(ItemAmount cost, ItemSO item)
+    public void Bind(ItemCost cost, ItemSO item)
     {
         PlayerInfo playerInfo = PlayerInfo.Instance;
 

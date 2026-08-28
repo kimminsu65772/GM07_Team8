@@ -33,7 +33,6 @@ public class PlayerInfo : MonoBehaviour
     }
 
     public PlayerSaveData SaveData { get; private set; }
-    public event Action OnEquipmentInventoryChanged;
     public bool IsInitialized { get; private set; }
 
     public event Action<CurrencyType> OnCurrencyChanged;
@@ -536,7 +535,6 @@ public class PlayerInfo : MonoBehaviour
         }
 
         RequestSave(savePolicy);
-        OnEquipmentInventoryChanged?.Invoke();
         return true;
     }
 
@@ -560,10 +558,7 @@ public class PlayerInfo : MonoBehaviour
         }
 
         if (removed)
-        {
             RequestSave(savePolicy);
-            OnEquipmentInventoryChanged?.Invoke();
-        }
 
         return removed;
     }

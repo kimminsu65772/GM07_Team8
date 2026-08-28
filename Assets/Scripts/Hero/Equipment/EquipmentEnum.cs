@@ -7,5 +7,5 @@ public enum EquipGradeEnum
 
 public enum EquipPartEnum
 {
-    None, Weapon, Body, Acc
+    Weapon, Body, Acc
 }

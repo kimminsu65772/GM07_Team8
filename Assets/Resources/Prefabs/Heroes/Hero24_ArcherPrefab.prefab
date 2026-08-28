@@ -231,19 +231,7 @@ MonoBehaviour:
   targetEffect: {fileID: 1187726597109193246}
   attackFrames: []
   skillFrames: []
-  targetFrames:
-  - {fileID: -1885571919, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
-  - {fileID: -1885571919, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
-  - {fileID: 363840434, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
-  - {fileID: 363840434, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
-  - {fileID: 336832284, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
-  - {fileID: 336832284, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
-  - {fileID: -1341164914, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
-  - {fileID: -1341164914, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
-  - {fileID: 734439779, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
-  - {fileID: 734439779, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
-  - {fileID: -1315001741, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
-  - {fileID: -1315001741, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
+  targetFrames: []
   frameTime: 0.05
 --- !u!1 &2185290070318136992
 GameObject:
@@ -312,7 +300,6 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
-  skillArrowPrefab: {fileID: 2479414937958345036, guid: 8beb008361489c4489f0e7b292fb1130, type: 3}
 --- !u!114 &2084143984608393051
 MonoBehaviour:
   m_ObjectHideFlags: 0
