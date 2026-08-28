@@ -4932,12 +4932,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28
+  m_fontSize: 30
   m_fontSizeBase: 28
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -13507,12 +13507,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28
+  m_fontSize: 30
   m_fontSizeBase: 28
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -38416,7 +38416,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1161849975649800389, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1206819414270624155, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
       propertyPath: m_Name
@@ -38432,15 +38432,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1585954728595271764, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1585954728595271764, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1585954728595271764, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -17
       objectReference: {fileID: 0}
     - target: {fileID: 1877220794786052062, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
       propertyPath: m_SizeDelta.x
@@ -38457,6 +38457,22 @@ PrefabInstance:
     - target: {fileID: 2776224759698119785, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2997638189434310699, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
+      propertyPath: m_fontSize
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 2997638189434310699, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 2997638189434310699, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3176563933706105622, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 3463181724548682615, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
       propertyPath: m_Sprite
@@ -38588,11 +38604,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6793708820901375611, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6793708820901375611, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7159214259538175170, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
       propertyPath: m_Sprite
@@ -38634,9 +38650,13 @@ PrefabInstance:
       propertyPath: hoverSound
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8811938269928057735, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
+      propertyPath: equipmentNameText
+      value: 
+      objectReference: {fileID: 2098305671}
     - target: {fileID: 8858446625945783730, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 9164396996469592996, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
       propertyPath: hoverSound
@@ -38686,6 +38706,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc4d33628a31d54408fde67f40dfbe2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToggleController
+--- !u!114 &2098305671 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3766555260270429052, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
+  m_PrefabInstance: {fileID: 2098305666}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!114 &2098305672 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4926696950610526814, guid: db1697d1546d4dc409ff36972f4d3b70, type: 3}
@@ -39219,12 +39250,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28
+  m_fontSize: 30
   m_fontSizeBase: 28
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
