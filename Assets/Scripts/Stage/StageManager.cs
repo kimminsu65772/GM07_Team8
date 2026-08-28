@@ -371,48 +371,71 @@ public class StageManager : MonoBehaviour
         CompleteStage();
     }
 
-    private IEnumerator SpawnWave(
-        WaveData waveData)
+    private IEnumerator SpawnWave(WaveData waveData)
     {
-        foreach (EnemySpawnEntry spawnEntry
-                 in waveData.EnemySpawns)
+        // 한 묶음에서 생성할 적의 최대 수
+        const int spawnBatchSize = 3;
+
+        // Enemy Spawns를 순서대로 처리한다.
+        for (int spawnEntryIndex = 0; spawnEntryIndex < waveData.EnemySpawns.Count; spawnEntryIndex++)
         {
+            EnemySpawnEntry spawnEntry = waveData.EnemySpawns[spawnEntryIndex];
+
+            // 프리팹이 연결되지 않은 항목은 건너뛴다.
             if (spawnEntry.EnemyPrefab == null)
             {
-                Debug.LogWarning(
-                    $"{waveData.name}에 Enemy Prefab이 없습니다."
-                );
-
+                Debug.LogWarning($"{waveData.name}에 Enemy Prefab이 없습니다.");
                 continue;
             }
 
-            for (int i = 0;
-                 i < spawnEntry.SpawnCount;
-                 i++)
+            // 적을 3마리 단위로 나누어 생성한다.
+            for (int i = 0; i < spawnEntry.SpawnCount; i += spawnBatchSize)
             {
                 if (isAirshipDestroyed)
                 {
                     yield break;
                 }
 
-                SpawnEnemy(  spawnEntry.EnemyPrefab,i, waveData.IsBossWave);
-
-                bool hasNextEnemy =
-                    i < spawnEntry.SpawnCount - 1;
-
-                if (hasNextEnemy &&
-                    spawnEntry.SpawnInterval > 0f)
+                // 현재 묶음에서 최대 3마리를 서로 다른 Y 위치에 동시에 생성한다.
+                for (int batchIndex = 0; batchIndex < spawnBatchSize; batchIndex++)
                 {
-                    yield return StartCoroutine(
-                        WaitForDelay(
-                            spawnEntry.SpawnInterval
-                        )
-                    );
+                    int enemyIndex = i + batchIndex;
+
+                    // 마지막 묶음이 3마리보다 적으면 초과 생성을 막는다.
+                    if (enemyIndex >= spawnEntry.SpawnCount)
+                    {
+                        break;
+                    }
+
+                    SpawnEnemy(spawnEntry.EnemyPrefab, enemyIndex, waveData.IsBossWave);
+                }
+
+                // 같은 종류의 다음 3마리 묶음이 존재하는지 확인한다.
+                bool hasNextBatch = i + spawnBatchSize < spawnEntry.SpawnCount;
+
+                // 다음 묶음이 있을 때만 설정된 스폰 간격만큼 기다린다.
+                if (hasNextBatch && spawnEntry.SpawnInterval > 0f)
+                {
+                    yield return StartCoroutine(WaitForDelay(spawnEntry.SpawnInterval));
 
                     if (isAirshipDestroyed)
                     {
                         yield break;
                     }
+                }
+            }
+
+            // 같은 WaveData 안에 다음 종류의 적이 있는지 확인한다.
+            bool hasNextSpawnEntry = spawnEntryIndex < waveData.EnemySpawns.Count - 1;
+
+            // 근접 몬스터가 끝난 뒤 원거리 몬스터가 바로 붙어서 나오지 않도록 기다린다.
+            if (hasNextSpawnEntry && spawnEntry.SpawnInterval > 0f)
+            {
+                yield return StartCoroutine(WaitForDelay(spawnEntry.SpawnInterval));
+
+                if (isAirshipDestroyed)
+                {
+                    yield break;
                 }
             }
         }
@@ -422,8 +445,7 @@ public class StageManager : MonoBehaviour
         WaveData waveData)
     {
         // 일반 웨이브
-        if (!waveData.IsBossWave ||
-            waveData.TimeLimit <= 0f)
+        if (!waveData.IsBossWave ||  waveData.TimeLimit <= 0f)
         {
             remainingBossTime = 0f;
 
@@ -431,8 +453,7 @@ public class StageManager : MonoBehaviour
             {
                 RefreshAliveEnemyCount();
 
-                if (remainingEnemyCount <= 0 ||
-                    isAirshipDestroyed)
+                if (remainingEnemyCount <= 0 ||  isAirshipDestroyed)
                 {
                     break;
                 }
@@ -443,44 +464,30 @@ public class StageManager : MonoBehaviour
             yield break;
         }
 
-        remainingBossTime =
-            waveData.TimeLimit;
+        remainingBossTime =  waveData.TimeLimit;
         if (bossTopHpUI != null)
         {
-            bossTopHpUI.SetBossTime(
-                remainingBossTime,
-                waveData.TimeLimit
-            );
+            bossTopHpUI.SetBossTime(  remainingBossTime, waveData.TimeLimit);
         }
 
         while (true)
         {
             RefreshAliveEnemyCount();
 
-            if (aliveEnemyCount <= 0 ||
-                remainingBossTime <= 0f ||
-                isAirshipDestroyed)
+            if (aliveEnemyCount <= 0 ||  remainingBossTime <= 0f || isAirshipDestroyed)
             {
                 break;
             }
 
-            remainingBossTime -=
-                Time.deltaTime;
+            remainingBossTime -= Time.deltaTime;
             if (bossTopHpUI != null)
             {
-                bossTopHpUI.SetBossTime(
-                    remainingBossTime,
-                    waveData.TimeLimit
-                );
+                bossTopHpUI.SetBossTime( remainingBossTime,  waveData.TimeLimit );
             }
             yield return null;
         }
 
-        remainingBossTime =
-            Mathf.Max(
-                remainingBossTime,
-                0f
-            );
+        remainingBossTime =   Mathf.Max( remainingBossTime,    0f   );
 
         if (isAirshipDestroyed)
         {
@@ -494,8 +501,7 @@ public class StageManager : MonoBehaviour
         }
 
         // 보스 사망 처리 완료까지 대기
-        while (remainingEnemyCount > 0 &&
-               !isAirshipDestroyed)
+        while (remainingEnemyCount > 0 && !isAirshipDestroyed)
         {
             RefreshAliveEnemyCount();
 
@@ -530,14 +536,10 @@ public class StageManager : MonoBehaviour
             return;
         }
 
-        deadEnemy.EnemyDied -=
-            HandleEnemyDied;
+        deadEnemy.EnemyDied -=    HandleEnemyDied;
 
         aliveEnemyCount =
-            Mathf.Max(
-                aliveEnemyCount - 1,
-                0
-            );
+            Mathf.Max( aliveEnemyCount - 1,   0   );
 
         OnEnemyKilled?.Invoke();
     }
@@ -584,15 +586,11 @@ public class StageManager : MonoBehaviour
 
         aliveEnemyCount = 0;
 
-        for (int i = 0;
-             i < trackedEnemies.Count;
-             i++)
+        for (int i = 0;   i < trackedEnemies.Count;  i++)
         {
-            EnemyStats enemy =
-                trackedEnemies[i];
+            EnemyStats enemy =   trackedEnemies[i];
 
-            if (enemy != null &&
-                !enemy.IsDead)
+            if (enemy != null &&  !enemy.IsDead)
             {
                 aliveEnemyCount++;
             }
@@ -606,11 +604,9 @@ public class StageManager : MonoBehaviour
             return;
         }
 
-        airshipHealth.OnDestroyed -=
-            HandleAirshipDestroyed;
+        airshipHealth.OnDestroyed -= HandleAirshipDestroyed;
 
-        airshipHealth.OnDestroyed +=
-            HandleAirshipDestroyed;
+        airshipHealth.OnDestroyed +=  HandleAirshipDestroyed;
     }
 
     private void UnsubscribeAirshipEvent()
@@ -620,8 +616,7 @@ public class StageManager : MonoBehaviour
             return;
         }
 
-        airshipHealth.OnDestroyed -=
-            HandleAirshipDestroyed;
+        airshipHealth.OnDestroyed -=  HandleAirshipDestroyed;
     }
 
     private void HandleAirshipDestroyed()
@@ -652,19 +647,16 @@ public class StageManager : MonoBehaviour
 
     private void ClearTrackedEnemies()
     {
-        foreach (EnemyStats enemy
-                 in trackedEnemies)
+        foreach (EnemyStats enemy  in trackedEnemies)
         {
             if (enemy == null)
             {
                 continue;
             }
 
-            enemy.EnemyDied -=
-                HandleEnemyDied;
+            enemy.EnemyDied -=  HandleEnemyDied;
 
-            enemy.EnemyDeathCompleted -=
-                HandleEnemyDeathCompleted;
+            enemy.EnemyDeathCompleted -=   HandleEnemyDeathCompleted;
 
             if (enemyPoolManager != null)
             {
@@ -704,8 +696,7 @@ public class StageManager : MonoBehaviour
         );
     }
 
-    private void FailStage(
-        string failureMessage)
+    private void FailStage(  string failureMessage)
     {
         if (isStageFinished)
         {
