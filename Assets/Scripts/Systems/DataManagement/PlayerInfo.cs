@@ -33,6 +33,7 @@ public class PlayerInfo : MonoBehaviour
     }
 
     public PlayerSaveData SaveData { get; private set; }
+    public event Action OnEquipmentInventoryChanged;
     public bool IsInitialized { get; private set; }
 
     public event Action<CurrencyType> OnCurrencyChanged;
@@ -535,6 +536,7 @@ public class PlayerInfo : MonoBehaviour
         }
 
         RequestSave(savePolicy);
+        OnEquipmentInventoryChanged?.Invoke();
         return true;
     }
 
@@ -558,7 +560,10 @@ public class PlayerInfo : MonoBehaviour
         }
 
         if (removed)
+        {
             RequestSave(savePolicy);
+            OnEquipmentInventoryChanged?.Invoke();
+        }
 
         return removed;
     }
@@ -846,7 +851,20 @@ public class PlayerInfo : MonoBehaviour
         }
     }
 
-    #if UNITY_EDITOR
+    public async void ResetData()
+    {
+        if (!CheckInitialized()) return;
+
+        await SaveScheduler.Instance.FlushAsync();
+
+        SaveData = SaveDataFactory.CreateNewData(heroCatalog);
+        SaveScheduler.Instance.Initialize(SaveData, saveDataWriter);
+        saveDataWriter.ForceSave(SaveData);
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Scenes/TitleScene");
+    }
+
+#if UNITY_EDITOR
     [ContextMenu("Reset Data")]
     private async void ContextResetData()
     {
