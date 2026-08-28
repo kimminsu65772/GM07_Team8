@@ -29,18 +29,18 @@ public class InventoryManager : MonoBehaviour
         }
     }
     // 외부에서 아이템을 획득했을 때 호출할 수 있는 함수
-    public bool AddItem(Sprite itemSprite)
-    {
-        foreach (var slot in slots)
-        {
-            // 비어있는 슬롯을 찾아 아이템을 채워 넣음
-            if (slot.iconImage.sprite == null || !slot.iconImage.gameObject.activeSelf)
-            {
-                slot.SetItem(itemSprite);
-                return true; 
-            }
-        }
-        Debug.Log("인벤토리가 가득 찼습니다!");
-        return false;
-    }
+    //public bool AddItem(Sprite itemSprite)
+    //{
+    //    foreach (var slot in slots)
+    //    {
+    //        // 비어있는 슬롯을 찾아 아이템을 채워 넣음
+    //        if (slot.iconImage.sprite == null || !slot.iconImage.gameObject.activeSelf)
+    //        {
+    //            slot.SetItem(itemSprite);
+    //            return true; 
+    //        }
+    //    }
+    //    Debug.Log("인벤토리가 가득 찼습니다!");
+    //    return false;
+    //}
 }

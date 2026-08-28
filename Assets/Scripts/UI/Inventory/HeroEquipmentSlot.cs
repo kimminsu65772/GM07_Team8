@@ -1,4 +1,6 @@
 using System;
+using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +9,10 @@ public class HeroEquipmentSlot : MonoBehaviour
     [SerializeField] private Image gradeFrame;
     [SerializeField] private Image iconImage;
     [SerializeField] private Image equipBadge;
+
+    [Header("장비 텍스트")]
+    [SerializeField] private TMP_Text equipmentNameText;
+    [SerializeField] private TMP_Text equipmentStatText;
 
     [Header("슬롯 용도 설정")]
     [SerializeField] private EquipPartEnum equipPart;
@@ -65,8 +71,12 @@ public class HeroEquipmentSlot : MonoBehaviour
             ? equipmentData.EquipGrade
             : saveData.EquipGrade;
 
+        Color gradeColor = GetGradeColor(grade);
+
         SetGradeColor(grade);
         SetIcon(equipmentData);
+        SetName(equipmentData, gradeColor);
+        SetStatText(saveData);
         SetEquipped(isEquipped);
     }
 
@@ -92,6 +102,17 @@ public class HeroEquipmentSlot : MonoBehaviour
         {
             iconImage.sprite = null;
             iconImage.enabled = false;
+        }
+
+        if (equipmentNameText != null)
+        {
+            equipmentNameText.text = "";
+            equipmentNameText.color = commonColor;
+        }
+
+        if (equipmentStatText != null)
+        {
+            equipmentStatText.text = "";
         }
 
         SetEquipped(false);
@@ -142,5 +163,55 @@ public class HeroEquipmentSlot : MonoBehaviour
             EquipGradeEnum.Legendary => legendaryColor,
             _ => commonColor
         };
+    }
+
+    private void SetName(EquipmentSO equipment, Color gradeColor)
+    {
+        if (equipmentNameText == null)
+        {
+            return;
+        }
+
+        equipmentNameText.text = equipment != null ? equipment.EquipName : "";
+        equipmentNameText.color = gradeColor;
+    }
+
+    private void SetStatText(EquipmentSaveData saveData)
+    {
+        if (equipmentStatText == null)
+        {
+            return;
+        }
+
+        if (saveData == null)
+        {
+            equipmentStatText.text = "";
+            return;
+        }
+
+        StringBuilder builder = new();
+
+        AppendStat(builder, "HP", saveData.BonusHP);
+        AppendStat(builder, "ATK", saveData.BonusAtk);
+        AppendStat(builder, "DEF", saveData.BonusDef);
+        AppendStat(builder, "CRI", saveData.BonusCriChance, "%");
+
+        equipmentStatText.text = builder.ToString();
+    }
+
+    // string을 더하는 작업이기 때문에 StringBuilder를 사용해봤음.
+    private void AppendStat(StringBuilder builder, string label, float value, string suffix = "")
+    {
+        if (value <= 0f)
+        {
+            return;
+        }
+
+        if (builder.Length > 0)
+        {
+            builder.AppendLine();
+        }
+
+        builder.Append($"{label} +{value:0.#}{suffix}");
     }
 }
