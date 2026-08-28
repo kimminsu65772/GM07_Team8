@@ -348,8 +348,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8977860127913981090}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18e7e82ca1c5a1b4b81c96ddefe491c6, type: 3}
+  m_Script: {fileID: 11500000, guid: a74e37e2e6a92c14f915e562f1fe00a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArcherSkillProjectile
+  moveSpeed: 8
+  lifeTime: 3
   vfx: {fileID: 3456979894164628926}
-  moveSpeed: 18
+  skillMoveSpeed: 15

@@ -851,7 +851,20 @@ public class PlayerInfo : MonoBehaviour
         }
     }
 
-    #if UNITY_EDITOR
+    public async void ResetData()
+    {
+        if (!CheckInitialized()) return;
+
+        await SaveScheduler.Instance.FlushAsync();
+
+        SaveData = SaveDataFactory.CreateNewData(heroCatalog);
+        SaveScheduler.Instance.Initialize(SaveData, saveDataWriter);
+        saveDataWriter.ForceSave(SaveData);
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Scenes/TitleScene");
+    }
+
+#if UNITY_EDITOR
     [ContextMenu("Reset Data")]
     private async void ContextResetData()
     {
