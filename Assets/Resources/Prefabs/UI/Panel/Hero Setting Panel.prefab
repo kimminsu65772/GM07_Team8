@@ -14618,12 +14618,44 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3269643900925377414, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3269643900925377414, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3269643900925377414, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 3652082884980432816}
+    - target: {fileID: 3269643900925377414, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3269643900925377414, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetEquipMode
+      objectReference: {fileID: 0}
+    - target: {fileID: 3269643900925377414, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: EquimentInventoryController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3269643900925377414, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3289489943111376382, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3289489943111376382, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3376342498012421240, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
+      propertyPath: equipPart
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3635834629490859808, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
@@ -14678,6 +14710,34 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 110
       objectReference: {fileID: 0}
+    - target: {fileID: 5436918767871765731, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5436918767871765731, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5436918767871765731, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 3652082884980432816}
+    - target: {fileID: 5436918767871765731, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5436918767871765731, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetEquipMode
+      objectReference: {fileID: 0}
+    - target: {fileID: 5436918767871765731, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: EquimentInventoryController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5436918767871765731, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5794864800454281357, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
       propertyPath: m_Name
       value: Hero Equipage Panel
@@ -14701,6 +14761,10 @@ PrefabInstance:
     - target: {fileID: 6498050771806394233, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
       propertyPath: m_SizeDelta.x
       value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 6498242027298112213, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
+      propertyPath: equipPart
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6558646760429786177, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -14761,6 +14825,10 @@ PrefabInstance:
     - target: {fileID: 7694261707453400508, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8000140993285480426, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
+      propertyPath: equipPart
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8097636832071492864, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
       propertyPath: m_IsActive
