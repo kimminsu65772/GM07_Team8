@@ -5,7 +5,9 @@ public enum HeroProjectileType
     None,
     PlayerAttackProjectile1,
     PlayerAttackProjectile2,
-    PlayerAttackArrow
+    PlayerAttackProjectile3,
+    PlayerAttackArrow,
+    PlayerSkillArrow
 }
 
 public class HeroAttackProjectileController : MonoBehaviour
@@ -46,7 +48,7 @@ public class HeroAttackProjectileController : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (target == null)
         {
@@ -88,7 +90,7 @@ public class HeroAttackProjectileController : MonoBehaviour
         }
     }
 
-    private void ReturnToPool()
+    protected void ReturnToPool()
     {
         if (poolingManager == null)
         {

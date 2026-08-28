@@ -30,7 +30,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
     private AirshipMovement airshipMovement;
     private bool isMoving;
     
-    private float searchRange = 12f;
+    public float SearchRange { get; private set; } = 12f;
     private float meleeRange = 1.3f;
     
     protected HeroStateEnum heroState;
@@ -214,7 +214,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
     public void SearchEnemy()
     {
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, searchRange, enemyLayer);
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, SearchRange, enemyLayer);
         Transform nearestEnemy = null;
         float closestDistance = Mathf.Infinity;
 
@@ -427,6 +427,6 @@ public abstract class Hero : MonoBehaviour, IDamageable
         // 근거리 공격 사거리
         Gizmos.color = Color.red;
         if (location == HeroLocationEnum.Back) Gizmos.DrawWireSphere(
-            new Vector3(transform.position.x, transform.position.y, transform.position.z), searchRange);
+            new Vector3(transform.position.x, transform.position.y, transform.position.z), SearchRange);
     }
 }

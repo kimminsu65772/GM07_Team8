@@ -58,12 +58,26 @@ public class PoolingManager : MonoBehaviour
     [SerializeField, Min(0)]
     private int heroProjectile2InitialSize = 5;
 
+    [Header("영웅 투사체 3")]
+    [SerializeField]
+    private HeroAttackProjectileController heroProjectile3Prefab;
+
+    [SerializeField, Min(0)]
+    private int heroProjectile3InitialSize = 10;
+
     [Header("영웅 화살 투사체")]
     [SerializeField]
     private HeroAttackProjectileController heroArrowPrefab;
 
     [SerializeField, Min(0)]
-    private int heroArrowInitialSize = 5;
+    private int heroArrowInitialSize = 10;
+
+    [Header("영웅 화살 스킬 투사체")]
+    [SerializeField]
+    private HeroAttackProjectileController heroArrowSkillPrefab;
+
+    [SerializeField, Min(0)]
+    private int heroArrowSkillInitialSize = 3;
 
     private readonly List<HeroAttackProjectileController>
         inactiveHeroProjectile1 =
@@ -74,7 +88,15 @@ public class PoolingManager : MonoBehaviour
             new List<HeroAttackProjectileController>();
 
     private readonly List<HeroAttackProjectileController>
+        inactiveHeroProjectile3 =
+            new List<HeroAttackProjectileController>();
+
+    private readonly List<HeroAttackProjectileController>
         inactiveHeroArrow =
+            new List<HeroAttackProjectileController>();
+
+    private readonly List<HeroAttackProjectileController>
+        inactiveHeroArrowSkill =
             new List<HeroAttackProjectileController>();
 
 
@@ -149,10 +171,24 @@ public class PoolingManager : MonoBehaviour
         );
 
         PrewarmHeroProjectile(
+            heroProjectile3Prefab,
+            heroProjectile3InitialSize,
+            inactiveHeroProjectile3,
+            HeroProjectileType.PlayerAttackProjectile3
+        );
+
+        PrewarmHeroProjectile(
             heroArrowPrefab,
             heroArrowInitialSize,
             inactiveHeroArrow,
             HeroProjectileType.PlayerAttackArrow
+        );
+
+        PrewarmHeroProjectile(
+            heroArrowSkillPrefab,
+            heroArrowSkillInitialSize,
+            inactiveHeroArrowSkill,
+            HeroProjectileType.PlayerSkillArrow
         );
 
 
@@ -574,8 +610,14 @@ public class PoolingManager : MonoBehaviour
             case HeroProjectileType.PlayerAttackProjectile2:
                 return inactiveHeroProjectile2;
 
+            case HeroProjectileType.PlayerAttackProjectile3:
+                return inactiveHeroProjectile3;
+
             case HeroProjectileType.PlayerAttackArrow:
                 return inactiveHeroArrow;
+
+            case HeroProjectileType.PlayerSkillArrow:
+                return inactiveHeroArrowSkill;
 
             default:
                 return null;
@@ -594,8 +636,14 @@ public class PoolingManager : MonoBehaviour
             case HeroProjectileType.PlayerAttackProjectile2:
                 return heroProjectile2Prefab;
 
+            case HeroProjectileType.PlayerAttackProjectile3:
+                return heroProjectile3Prefab;
+
             case HeroProjectileType.PlayerAttackArrow:
                 return heroArrowPrefab;
+
+            case HeroProjectileType.PlayerSkillArrow:
+                return heroArrowSkillPrefab;
 
             default:
                 return null;

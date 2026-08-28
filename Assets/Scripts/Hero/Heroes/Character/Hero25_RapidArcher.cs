@@ -4,8 +4,8 @@ using UnityEngine;
 public class Hero25_RapidArcher : Hero
 {
     private Coroutine attackTimeBuffCo;
-    private float attackBuffAmount = 2f;
-    private float originalAttackTime = 0.9f;
+    private float attackBuffAmount = 2.5f;
+    private float originalAttackTime = 1f;
     [SerializeField] private Animator animator;
 
     protected override void Awake()
@@ -14,7 +14,7 @@ public class Hero25_RapidArcher : Hero
         SetAttackEffectPreset(0f, 0f, 1f, 1f);
         SetSkillEffectPreset(0f, 0f, 1f, 1f);
         SetTargetEffectPreset(0f, 0f, 1f, 1f);
-        Init(25, originalAttackTime, 8f, HeroLocationEnum.Back);
+        Init(25, originalAttackTime, 10f, HeroLocationEnum.Back);
     }
 
     public override void Skill(GameObject enemy)

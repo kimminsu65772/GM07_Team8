@@ -359,6 +359,7 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+  animator: {fileID: 4562962606052789578}
 --- !u!114 &1205546075247510657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,8 +373,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroAttack
   skillTimer: 0
-  projectileType: 0
-  firePoint: {fileID: 0}
+  projectileType: 3
+  firePoint: {fileID: 1943268201196686223}
 --- !u!114 &2249381145431675025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -413,6 +414,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c64a2c56d9f880f4880f549499c15fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroEquipmentManager
+  currentWeaponID: 0
+  currentBodyID: 0
+  currentAccID: 0
 --- !u!1 &5439594314641736958
 GameObject:
   m_ObjectHideFlags: 0
@@ -844,6 +848,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &8228070379839652359
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1943268201196686223}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1943268201196686223
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8228070379839652359}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.5, y: 0.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8756014362110675482}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4753783706163102118
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -936,6 +971,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4117507832670493615, guid: ad12cbc94d617b74db0790d549ceb8fa, type: 3}
+      propertyPath: 'ATTACK_List.Array.data[0]'
+      value: 
+      objectReference: {fileID: 7400000, guid: 42d8ef2d50d747b49abe521594d7bd37, type: 2}
     - target: {fileID: 8779341594323185100, guid: ad12cbc94d617b74db0790d549ceb8fa, type: 3}
       propertyPath: m_SortingLayer
       value: 2
@@ -944,14 +983,47 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: 696841935
       objectReference: {fileID: 0}
+    - target: {fileID: 9127163981596626156, guid: ad12cbc94d617b74db0790d549ceb8fa, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c2c8552e7ccc28f4489318cc3dd45a89, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2189981261774552026, guid: ad12cbc94d617b74db0790d549ceb8fa, type: 3}
       insertIndex: 0
       addedObject: {fileID: 3825565995253553991}
-    m_AddedComponents: []
+    - targetCorrespondingSourceObject: {fileID: 4069927725118720956, guid: ad12cbc94d617b74db0790d549ceb8fa, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 1943268201196686223}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1906422642891029343, guid: ad12cbc94d617b74db0790d549ceb8fa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 518578105616594054}
   m_SourcePrefab: {fileID: 100100000, guid: ad12cbc94d617b74db0790d549ceb8fa, type: 3}
+--- !u!95 &4562962606052789578 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9127163981596626156, guid: ad12cbc94d617b74db0790d549ceb8fa, type: 3}
+  m_PrefabInstance: {fileID: 4753783706163102118}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6596696289682111225 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1906422642891029343, guid: ad12cbc94d617b74db0790d549ceb8fa, type: 3}
+  m_PrefabInstance: {fileID: 4753783706163102118}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &518578105616594054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6596696289682111225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb4a530ab53fb1a49b39ba388ebc5e0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeroProjectileShooter
+  hero: {fileID: 4845708118487408652}
 --- !u!4 &6889580828736699004 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2189981261774552026, guid: ad12cbc94d617b74db0790d549ceb8fa, type: 3}
@@ -968,6 +1040,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28ac21711b0ec40a0812d33a586eb7ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &8756014362110675482 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4069927725118720956, guid: ad12cbc94d617b74db0790d549ceb8fa, type: 3}
+  m_PrefabInstance: {fileID: 4753783706163102118}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8773369360558576849 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4051429778895902071, guid: ad12cbc94d617b74db0790d549ceb8fa, type: 3}
