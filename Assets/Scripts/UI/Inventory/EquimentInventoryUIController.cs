@@ -57,8 +57,8 @@ public class EquimentInventoryController : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerInfo.Instance.OnEquipmentInventoryChanged -= OnEquipmentInventoryChanged;
-        PlayerInfo.Instance.OnEquipmentInventoryChanged += OnEquipmentInventoryChanged;
+        PlayerInfo.Instance.OnEquipmentInventoryChanged -= RefreshInventorySlots;
+        PlayerInfo.Instance.OnEquipmentInventoryChanged += RefreshInventorySlots;
 
         InitializeEquippedSlots();
         RefreshHeroSlots();
@@ -68,7 +68,7 @@ public class EquimentInventoryController : MonoBehaviour
 
     private void OnDisable()
     {
-        PlayerInfo.Instance.OnEquipmentInventoryChanged -= OnEquipmentInventoryChanged;
+        PlayerInfo.Instance.OnEquipmentInventoryChanged -= RefreshInventorySlots;
     }
 
     public void SetEquipMode()
@@ -197,12 +197,6 @@ public class EquimentInventoryController : MonoBehaviour
             inventorySlots[i].gameObject.SetActive(false);
         }
     }
-
-    private void OnEquipmentInventoryChanged()
-    {
-        RefreshInventorySlots();
-    }
-
     private HeroEquipmentSlot GetOrCreateInventorySlot(int index)
     {
         while (inventorySlots.Count <= index)
