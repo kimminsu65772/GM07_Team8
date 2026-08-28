@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class ArcherSkillProjectile : MonoBehaviour
+public class ArcherSkillProjectile : HeroAttackProjectileController
 {
     [SerializeField] private EffectPlayer vfx;
 
@@ -11,29 +11,54 @@ public class ArcherSkillProjectile : MonoBehaviour
     private Hero hero;
     private Transform target;
 
-    [SerializeField] private float moveSpeed = 15f;
+    [SerializeField] private float skillMoveSpeed = 15f;
 
     private Vector3 targetPosition;
     private bool isTargetDead = false;
+    private bool isExploded;
 
-    private void Start()
+    private Coroutine effectCoroutine;
+
+    private void OnEnable()
     {
+        isTargetDead = false;
+        isExploded = false;
+
         StartCoroutine(PlayEffectLoop());
-        Destroy(gameObject, 5f);
+    }
+
+    private void OnDisable()
+    {
+        if (effectCoroutine != null)
+        {
+            StopCoroutine(effectCoroutine);
+            effectCoroutine = null;
+        }
     }
 
     public void Init(Hero hero, GameObject target)
     {
         this.hero = hero;
-        this.target = target.transform;
+        this.target = target != null ? target.transform : null;
 
-        targetPosition = target.transform.position;
+        isTargetDead = false;
+        isExploded = false;
 
-        SetRotationToTarget();
+        if (this.target != null)
+        {
+            targetPosition = this.target.position;
+            SetRotationToTarget();
+        }
+
+        gameObject.SetActive(true);
     }
 
-    private void Update()
+    protected override void Update()
     {
+        if (isExploded)
+            return;
+
+        // 타겟이 살아있는 상태
         if (!isTargetDead)
         {
             if (target == null)
@@ -42,11 +67,14 @@ public class ArcherSkillProjectile : MonoBehaviour
                 return;
             }
 
-            if (target.TryGetComponent<EnemyStats>(out EnemyStats enemyStats))
+            if (target.TryGetComponent<EnemyStats>(
+                    out EnemyStats enemyStats))
             {
                 if (enemyStats.IsDead)
                 {
+                    // 죽은 순간의 위치를 저장
                     targetPosition = target.position;
+
                     isTargetDead = true;
                     target = null;
 
@@ -63,7 +91,7 @@ public class ArcherSkillProjectile : MonoBehaviour
             transform.position = Vector2.MoveTowards(
                 transform.position,
                 target.position,
-                moveSpeed * Time.deltaTime
+                skillMoveSpeed * Time.deltaTime
             );
 
             HitEnemy();
@@ -71,21 +99,37 @@ public class ArcherSkillProjectile : MonoBehaviour
             return;
         }
 
-        transform.position =
-            Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime
+        // 타겟이 죽은 상태
+        // 죽은 적의 마지막 위치까지 이동
+        transform.position = Vector2.MoveTowards(
+            transform.position,
+            targetPosition,
+            skillMoveSpeed * Time.deltaTime
         );
 
         SetRotationToTargetPosition();
 
-        if (Vector2.Distance(transform.position, targetPosition) <= 0.05f) Explode();
+        if (Vector2.Distance(
+                transform.position,
+                targetPosition) <= 0.05f)
+        {
+            Explode();
+        }
     }
 
     private IEnumerator PlayEffectLoop()
     {
         while (true)
         {
-            vfx.PlayAttackEffect(
-                Vector2.zero, new Vector2(0.7f, 0.7f), transform.eulerAngles + new Vector3(0f, 0f, 180f));
+            if (vfx != null)
+            {
+                vfx.PlayAttackEffect(
+                    Vector2.zero,
+                    new Vector2(0.7f, 0.7f),
+                    transform.eulerAngles +
+                    new Vector3(0f, 0f, 180f)
+                );
+            }
 
             yield return new WaitForSeconds(0.05f * 6);
         }
@@ -93,47 +137,90 @@ public class ArcherSkillProjectile : MonoBehaviour
 
     private void HitEnemy()
     {
-        if (target == null) return;
+        if (target == null)
+            return;
 
-        if (!target.TryGetComponent<IDamageable>(out IDamageable enemy)) return;
+        if (!target.TryGetComponent<IDamageable>(
+                out IDamageable enemy))
+        {
+            return;
+        }
 
-        float distance = Vector2.Distance(transform.position, target.position);
+        float distance = Vector2.Distance(
+            transform.position,
+            target.position
+        );
 
-        if (distance <= enemy.HitRadius) Explode();
+        if (distance <= enemy.HitRadius)
+        {
+            Explode();
+        }
     }
 
     private void Explode()
     {
+        if (isExploded)
+            return;
+
+        isExploded = true;
+
         transform.position = targetPosition;
 
-        hero.Attack.AreaAttack(0, transform, 4f, 1.8f);
-        hero.Attack.VFX.PlayTargetEffect(transform, posPreset, scalePreset);
+        if (hero != null)
+        {
+            if (hero.Attack != null)
+            {
+                hero.Attack.AreaAttack(
+                    0,
+                    transform,
+                    4f,
+                    1.8f
+                );
+            }
 
-        Destroy(gameObject);
+            if (hero.Attack != null &&
+                hero.Attack.VFX != null)
+            {
+                hero.Attack.VFX.PlayTargetEffect(
+                    transform,
+                    posPreset,
+                    scalePreset
+                );
+            }
+        }
+
+        ReturnToPool();
     }
 
     private void SetRotationToTarget()
     {
-        if (target == null) return;
+        if (target == null)
+            return;
 
-        Vector2 direction = target.position - transform.position;
+        Vector2 direction =
+            target.position - transform.position;
 
         SetRotation(direction);
     }
 
     private void SetRotationToTargetPosition()
     {
-        Vector2 direction = targetPosition - transform.position;
+        Vector2 direction =
+            targetPosition - transform.position;
 
         SetRotation(direction);
     }
 
     private void SetRotation(Vector2 direction)
     {
-        if (direction.sqrMagnitude <= 0.001f) return;
+        if (direction.sqrMagnitude <= 0.001f)
+            return;
 
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+        float angle =
+            Mathf.Atan2(direction.y, direction.x) *
+            Mathf.Rad2Deg - 90f;
 
-        transform.rotation = Quaternion.Euler(0f, 0f, angle);
+        transform.rotation =
+            Quaternion.Euler(0f, 0f, angle);
     }
 }
