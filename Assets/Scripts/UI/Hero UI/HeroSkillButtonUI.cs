@@ -46,7 +46,6 @@ public class HeroSkillButtonUI : MonoBehaviour
         else
         {
             heroAttack = null;
-            SetSkillIcon(null);
             gameObject.SetActive(false);
         }
         UpdateButtonState();
@@ -55,8 +54,11 @@ public class HeroSkillButtonUI : MonoBehaviour
     {
         if (skillIcon == null) return;
 
-        skillIcon.sprite = icon;
-        skillIcon.gameObject.SetActive(icon != null);
+        if (icon != null)
+        {
+            skillIcon.sprite = icon;
+            skillIcon.gameObject.SetActive(true);
+        }
     }
     public void ClearHero()
     {

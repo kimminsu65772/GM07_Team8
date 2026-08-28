@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: GemSO
   m_EditorClassIdentifier: Assembly-CSharp::CurrencySO
   currencyType: 2
-  currencyIcon: {fileID: -8272813528910887131, guid: fcec481f37e50fd4e92ec7d1da0f2b04, type: 3}
+  currencyIcon: {fileID: 21300000, guid: 619c9d4dde7f94ee190283a3ff3a9806, type: 3}
   description: "\uC601\uC6C5\uC744 \uD574\uAE08\uD560 \uB54C \uC0AC\uC6A9\uD558\uB294
     \uC7AC\uD654\uC785\uB2C8\uB2E4."

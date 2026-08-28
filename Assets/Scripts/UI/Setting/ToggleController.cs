@@ -12,13 +12,6 @@ public class ToggleController : MonoBehaviour
             targetUI = this.gameObject;
         }
     }
-    private void Update()
-    {
-        if (targetUI.activeSelf && Input.GetKeyDown(KeyCode.Escape))
-        {
-            Close();
-        }
-    }
     // UI 켜고 끄는 함수
     public void Toggle()
     {

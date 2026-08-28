@@ -9,8 +9,20 @@ public class HeroArrangeStatUI : MonoBehaviour
     [SerializeField] private TMP_Text heroNameText;
     [SerializeField] private Image skillIcon;
 
+    [Header("스킬 툴팁 데이터 연동")]
+    [SerializeField] private Button skillIconButton;     // 스킬 아이콘 버튼
+    [SerializeField] private SkillToolTipUI skillToolTipUI; // 데이터 셋팅을 위한 툴팁 컴포넌트
+
     private HeroEntry currentHeroEntry;
 
+    private void Awake()
+    {
+        // 스킬 아이콘 버튼 클릭 시 툴팁 데이터 갱신 메서드 연결
+        if (skillIconButton != null)
+        {
+            skillIconButton.onClick.AddListener(OnClickSkillIcon);
+        }
+    }
     public void SetHeroStatUIs(HeroEntry heroEntry)
     {
         ClearHeroStatUIs();
@@ -41,6 +53,7 @@ public class HeroArrangeStatUI : MonoBehaviour
         SetStatValue(3, heroStat.Def);
         SetStatValue(4, 0f);
         SetStatValue(5, heroEntry.SkillCooldown);
+
 
         if (heroFormationText != null)
         {
@@ -101,6 +114,17 @@ public class HeroArrangeStatUI : MonoBehaviour
         {
             heroNameText.text = string.Empty;
         }
+    }
+    private void OnClickSkillIcon()
+    {
+        if (currentHeroEntry == null || skillToolTipUI == null) return;
+
+        skillToolTipUI.SetToolTipData(
+            currentHeroEntry.SkillIcon,
+            currentHeroEntry.SkillName,
+            currentHeroEntry.SkillCooldown,
+            currentHeroEntry.SkillDescription
+        );
     }
 
     private void SetStatValue(int index, double value)

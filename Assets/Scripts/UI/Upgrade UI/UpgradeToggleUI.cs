@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 public class UpgradeToggleUI : MonoBehaviour
@@ -14,6 +15,8 @@ public class UpgradeToggleUI : MonoBehaviour
 
     private int currentUpgradeMode = 1;
     public int CurrentUpgradeMode => currentUpgradeMode;
+
+    public event Action<int> OnModeChanged;
     void Start()
     {
         SetUpgradeMode(1);
@@ -40,5 +43,6 @@ public class UpgradeToggleUI : MonoBehaviour
                 if (checkImage100 != null) checkImage100.SetActive(true);
                 break;
         }
+        OnModeChanged?.Invoke(currentUpgradeMode);
     }
 }
