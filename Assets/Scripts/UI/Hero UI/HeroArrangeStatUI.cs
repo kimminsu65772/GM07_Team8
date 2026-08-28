@@ -39,7 +39,6 @@ public class HeroArrangeStatUI : MonoBehaviour
         SetStatValue(1, heroStat.MaxHP);
         SetStatValue(2, heroStat.Atk);
         SetStatValue(3, heroStat.Def);
-        // TODO: 크리티컬은 장비 시스템 완성되면 적용
         SetStatValue(4, 0f);
         SetStatValue(5, heroEntry.SkillCooldown);
 
