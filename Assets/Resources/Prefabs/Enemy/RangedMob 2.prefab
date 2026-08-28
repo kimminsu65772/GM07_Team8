@@ -141,6 +141,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
   target: {fileID: 0}
   heroStopRange: 1.3
+  airshipStopRange: 10
+  useAirshipStopRange: 1
+  useEnemyStacking: 1
+  stackGroup: 6
+  stackingDistance: 0.5
+  stackingLineRange: 0.3
 --- !u!114 &4527213543350081925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,6 +286,7 @@ MonoBehaviour:
   explosionEffectDuration: 1
   castDelay: 0.1
   explosionYOffset: 0.5
+  explosionEffectScale: 0.02
 --- !u!1001 &7252390278922786561
 PrefabInstance:
   m_ObjectHideFlags: 0
