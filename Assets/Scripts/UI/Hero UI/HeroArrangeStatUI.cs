@@ -6,15 +6,6 @@ public class HeroArrangeStatUI : MonoBehaviour
     [SerializeField] private HeroStatUI[] heroStatUIs;
     [SerializeField] private Image skillIcon;
 
-<<<<<<< Updated upstream
-=======
-    [Header("스킬 툴팁 연동")]
-    [SerializeField] private Button skillIconButton;
-    [SerializeField] private SkillToolTipUI skillToolTipUI;
-
-    private HeroEntry currentHeroEntry;
-
->>>>>>> Stashed changes
     public void SetHeroStatUIs(HeroEntry heroEntry)
     {
         ClearHeroStatUIs();
@@ -71,32 +62,8 @@ public class HeroArrangeStatUI : MonoBehaviour
         {
             skillIcon.enabled = false;
         }
-<<<<<<< Updated upstream
     }   
-=======
 
-        if (heroFormationText != null)
-        {
-            heroFormationText.text = string.Empty;
-        }
-
-        if (heroNameText != null)
-        {
-            heroNameText.text = string.Empty;
-        }
-    }
-    private void OnClickSkillIcon()
-    {
-        if (currentHeroEntry == null || skillToolTipUI == null) return;
->>>>>>> Stashed changes
-
-        skillToolTipUI.SetToolTipData(
-            currentHeroEntry.SkillIcon,
-            currentHeroEntry.SkillName,
-            currentHeroEntry.SkillCooldown,
-            currentHeroEntry.SkillDescription
-        );
-    }
     private void SetStatValue(int index, double value)
     {
         if (heroStatUIs == null ||
