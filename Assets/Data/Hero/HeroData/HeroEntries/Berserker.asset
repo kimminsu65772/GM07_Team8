@@ -18,7 +18,7 @@ MonoBehaviour:
   heroLocation: 0
   isDefaultOwned: 1
   defaultLevel: 1
-  skillIcon: {fileID: 0}
+  skillIcon: {fileID: -787632321, guid: 27bbd6712ee59ba44b1309ba39e91176, type: 3}
   skillName: 
   skillDescription: 
   skillCooldown: 0
