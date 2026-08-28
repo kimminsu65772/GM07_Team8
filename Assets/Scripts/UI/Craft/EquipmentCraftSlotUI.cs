@@ -29,6 +29,8 @@ public class EquipmentCraftSlotUI : MonoBehaviour
     {
         PlayerInfo.Instance.OnItemAmountChanged -= Refresh;
         PlayerInfo.Instance.OnItemAmountChanged += Refresh;
+
+        Refresh();
     }
 
     private void OnDisable()

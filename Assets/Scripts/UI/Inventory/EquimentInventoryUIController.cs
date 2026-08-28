@@ -1,18 +1,27 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using TMPro;
 
 public class EquimentInventoryController : MonoBehaviour
 {
+    private enum EquipmentInventoryMode
+    {
+        Equip,
+        Decompose
+    }
+
     [Header("장비 데이터")]
     [SerializeField] private EquipmentDB equipmentDB;
 
     [Header("히어로 선택 관련 UI")]
     [SerializeField] private Transform heroSlotRoot;
     [SerializeField] private HeroSlotUI heroSlotPrefab;
-    [SerializeField] private Image selectedHeroIcon;
 
     [Header("장비 슬롯 설정")]
+    [SerializeField] private HeroDisplayController heroDisplayController;
+    [SerializeField] private TMP_Text heroNameText;
+    [SerializeField] private TMP_Text heroLevelText;
     [SerializeField] private HeroEquipmentSlot weaponSlot;
     [SerializeField] private HeroEquipmentSlot bodySlot;
     [SerializeField] private HeroEquipmentSlot accSlot;
@@ -27,12 +36,20 @@ public class EquimentInventoryController : MonoBehaviour
     [SerializeField] private Vector2 spacing = new Vector2(12f, 12f);
     [SerializeField] private Vector2 padding = new Vector2(16f, 16f);
 
+    [Header("분해 UI")]
+    [SerializeField] private EquipmentDecomposeUIController decomposeUIController;
+
+    private EquipmentInventoryMode currentMode = EquipmentInventoryMode.Equip;
+
     [Header("성능 비교용 플래그")]
     [SerializeField] private bool useLoopCheckForEquipped = false;
 
     // 영웅 슬롯과 장비 슬롯 캐싱을 위한 리스트
     private readonly List<HeroSlotUI> heroSlots = new();
     private readonly List<HeroEquipmentSlot> inventorySlots = new();
+
+    // 보유중인 영웅을 랜덤하게 선택하기 위한 후보 리스트
+    private readonly List<(HeroEntry entry, HeroSaveData saveData)> ownedHeroCandidates = new();
 
     // 장착하지 않은 장비만 인벤토리 슬롯에 표시하기 위한 리스트
     private readonly List<EquipmentSaveData> visibleEquipments = new();
@@ -46,10 +63,36 @@ public class EquimentInventoryController : MonoBehaviour
 
     private void OnEnable()
     {
+        PlayerInfo.Instance.OnEquipmentInventoryChanged -= RefreshInventorySlots;
+        PlayerInfo.Instance.OnEquipmentInventoryChanged += RefreshInventorySlots;
+
         InitializeEquippedSlots();
         RefreshHeroSlots();
-        ClearSelectedHero();
+        RefreshSelectedHeroDisPlayView();
         RefreshInventorySlots();
+    }
+
+    private void OnDisable()
+    {
+        ClearSelectedHero();
+        RefreshHeroSlots();
+        heroDisplayController.ClearDisplay();
+        PlayerInfo.Instance.OnEquipmentInventoryChanged -= RefreshInventorySlots;
+    }
+
+    public void SetEquipMode()
+    {
+        currentMode = EquipmentInventoryMode.Equip;
+
+        if (decomposeUIController != null)
+        {
+            decomposeUIController.ClearSelection();
+        }
+    }
+
+    public void SetDecomposeMode()
+    {
+        currentMode = EquipmentInventoryMode.Decompose;
     }
 
 
@@ -76,6 +119,7 @@ public class EquimentInventoryController : MonoBehaviour
         IReadOnlyList<HeroEntry> heroEntries = PlayerInfo.Instance.HeroEntries;
 
         int slotIndex = 0;
+        ownedHeroCandidates.Clear();
 
         for (int i = 0; i < heroEntries.Count; i++)
         {
@@ -85,6 +129,8 @@ public class EquimentInventoryController : MonoBehaviour
             if (!PlayerInfo.Instance.TryGetHeroData(heroEntry.HeroId, out HeroSaveData heroSaveData)) continue;
             if (heroSaveData == null || !heroSaveData.IsOwned) continue;
 
+            ownedHeroCandidates.Add((heroEntry, heroSaveData));
+
             HeroSlotUI heroSlot = GetOrCreateHeroSlot(slotIndex);
             heroSlot.gameObject.SetActive(true);
             heroSlot.SetDragEnabled(false);
@@ -93,11 +139,36 @@ public class EquimentInventoryController : MonoBehaviour
             slotIndex++;
         }
 
-        // 캐싱한 슬롯이 오히려 
+        // 캐싱한 슬롯이 오히려 남는 경우는 비활성화 처리
         for (int i = slotIndex; i < heroSlots.Count; i++)
         {
             heroSlots[i].gameObject.SetActive(false);
         }
+
+        if (selectedHeroEntry == null && ownedHeroCandidates.Count > 0)
+        {
+            int randomIndex = Random.Range(0, ownedHeroCandidates.Count);
+            SelectHero(
+                ownedHeroCandidates[randomIndex].entry,
+                ownedHeroCandidates[randomIndex].saveData
+            );
+        }
+    }
+
+    private void SelectHero(HeroEntry entry, HeroSaveData saveData)
+    {
+        if (entry == null || saveData == null)
+        {
+            ClearSelectedHero();
+            return;
+        }
+
+        selectedHeroEntry = entry;
+        selectedHeroSaveData = saveData;
+
+        RefreshSelectedHeroDisPlayView();
+        RefreshEquippedSlots();
+        RefreshInventorySlots();
     }
 
     private HeroSlotUI GetOrCreateHeroSlot(int index)
@@ -116,8 +187,7 @@ public class EquimentInventoryController : MonoBehaviour
         selectedHeroEntry = null;
         selectedHeroSaveData = null;
 
-        RefreshSelectedHeroIcon();
-        RefreshStatView();
+        RefreshSelectedHeroDisPlayView();
         RefreshEquippedSlots();
         RefreshInventorySlots();
     }
@@ -163,7 +233,6 @@ public class EquimentInventoryController : MonoBehaviour
             inventorySlots[i].gameObject.SetActive(false);
         }
     }
-
     private HeroEquipmentSlot GetOrCreateInventorySlot(int index)
     {
         while (inventorySlots.Count <= index)
@@ -348,30 +417,29 @@ public class EquimentInventoryController : MonoBehaviour
         }
     }
 
-    private void RefreshStatView()
+    private void RefreshSelectedHeroDisPlayView()
     {
-    }
-    private void RefreshSelectedHeroIcon()
-    {
-        if (selectedHeroIcon == null)
-        {
-            return;
-        }
+        if (heroDisplayController == null) return;
 
         if (selectedHeroEntry == null)
         {
-            selectedHeroIcon.sprite = null;
-            selectedHeroIcon.gameObject.SetActive(false);
+            heroDisplayController.ClearDisplay();
             return;
         }
 
-        selectedHeroIcon.sprite = selectedHeroEntry.HeroIcon;
-        selectedHeroIcon.gameObject.SetActive(true);
+        heroNameText.text = selectedHeroEntry.HeroName;
+        heroLevelText.text = $"Lv. {selectedHeroSaveData.Level}";
+        heroDisplayController.DisplayHero(selectedHeroEntry);
     }
 
     // 장착된 장비 슬롯을 클릭하면 해당 장비를 해제하도록 처리한다.
     private void OnEquippedSlotClicked(HeroEquipmentSlot slot)
-    {
+    { 
+        if (currentMode == EquipmentInventoryMode.Decompose)
+        {
+            return;
+        }
+
         if (slot == null) return;
         if (slot.EquipmentSaveData == null) return;
 
@@ -381,29 +449,34 @@ public class EquimentInventoryController : MonoBehaviour
 
         RefreshEquippedSlots();
         RefreshInventorySlots();
-        RefreshStatView();
     }
 
     private void OnHeroSlotClicked(HeroEntry entry, HeroSaveData saveData)
     {
-        if (entry == null || saveData == null) return;
-        selectedHeroEntry = entry;
-        selectedHeroSaveData = saveData;
-
-        RefreshSelectedHeroIcon();
-        RefreshEquippedSlots();
-        RefreshInventorySlots();
-        RefreshStatView();
+        SelectHero(entry, saveData);
     }
 
     private void OnInventorySlotClicked(HeroEquipmentSlot slot)
     {
         if (slot == null) return;
-        if (selectedHeroEntry == null || selectedHeroSaveData == null) return;
-
+        
         EquipmentSaveData equipData = slot.EquipmentSaveData;
 
         if (equipData == null) return;
+
+        if (currentMode == EquipmentInventoryMode.Decompose)
+        {
+            if (decomposeUIController == null)
+            {
+                Debug.LogWarning("분해 UI 컨트롤러가 연결되지 않았습니다.");
+                return;
+            }
+
+            decomposeUIController.ToggleEquipment(equipData);
+            return;
+        }
+
+        if (selectedHeroEntry == null || selectedHeroSaveData == null) return;
 
         bool result = PlayerInfo.Instance.SetHeroEquippedEquipmentId(selectedHeroEntry.HeroId, equipData.EquipPart, equipData.EquipId);
 
@@ -411,6 +484,5 @@ public class EquimentInventoryController : MonoBehaviour
 
         RefreshEquippedSlots();
         RefreshInventorySlots();
-        RefreshStatView();
     }
 }
