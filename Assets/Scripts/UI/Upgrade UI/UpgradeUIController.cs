@@ -4,6 +4,7 @@ using UnityEngine;
 public class UpgradeUIController : MonoBehaviour
 {
     [SerializeField] private AirshipUpgradeController upgradeController;
+    [SerializeField] private UpgradeToggleUI toggleUI;
     [SerializeField] private List<UpgradeSlot> slots;
 
     private void Start()
@@ -21,7 +22,14 @@ public class UpgradeUIController : MonoBehaviour
         }
 
         upgradeController.OnUpgradeChanged += RefreshAllSlots;
-        PlayerInfo.Instance.OnCurrencyChanged += HandleCurrencyChanged;
+        if (PlayerInfo.Instance != null)
+        {
+            PlayerInfo.Instance.OnCurrencyChanged += HandleCurrencyChanged;
+        }
+        if (toggleUI != null)
+        {
+            toggleUI.OnModeChanged += HandleModeChanged;
+        }
         RefreshAllSlots(upgradeController.UpgradeState);
     }
     private void OnDestroy()
@@ -45,8 +53,10 @@ public class UpgradeUIController : MonoBehaviour
             }
         }
     }
-    
-    
+    private void HandleModeChanged(int newMode)
+    {
+        RefreshAllSlots(upgradeController.UpgradeState);
+    }
     private void HandleCurrencyChanged(
         CurrencyType changedCurrencyType)
     {

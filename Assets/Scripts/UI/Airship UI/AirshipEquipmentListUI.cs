@@ -72,6 +72,15 @@ public class AirshipEquipmentListUI : MonoBehaviour
                     if (!isOwned)
                     {
                         slotUI.SetUnlockAvailable(canUnlock);
+                        if (unlockCatalog != null)
+                        {
+                            UnlockResult unlockResult = unlockCatalog.CheckCannonUnlock(data.CannonType);
+
+                            string conditionDesc = unlockResult.Reason;       
+                            int costAmount = (int)unlockResult.Cost.Amount;
+
+                            slotUI.SetUnlockInfo(conditionDesc, costAmount);
+                        }
                         Button unlockButton = slotUI.UnlockButton;
                         if (unlockButton != null)
                         {
@@ -139,6 +148,15 @@ public class AirshipEquipmentListUI : MonoBehaviour
                     if (!isOwned)
                     {
                         slotUI.SetUnlockAvailable(canUnlock);
+                        if (unlockCatalog != null)
+                        {
+                            UnlockResult unlockResult = unlockCatalog.CheckGearUnlock(data.GearType);
+
+                            string conditionDesc = unlockResult.Reason;     
+                            int costAmount = (int)unlockResult.Cost.Amount;
+
+                            slotUI.SetUnlockInfo(conditionDesc, costAmount);
+                        }
                         Button unlockButton = slotUI.UnlockButton;
                         if (unlockButton != null)
                         {

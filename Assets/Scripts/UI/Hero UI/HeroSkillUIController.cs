@@ -93,11 +93,10 @@ public class HeroSkillUIController : MonoBehaviour
                 skillButtons[i].SetHero(hero);
                 if (heroCatalog != null && heroCatalog.TryGetHeroEntry((HeroNameEnum)hero.HeroID, out HeroEntry entry))
                 {
-                    skillButtons[i].SetSkillIcon(entry.SkillIcon);
-                }
-                else
-                {
-                    skillButtons[i].SetSkillIcon(null);
+                    if (entry.SkillIcon != null)
+                    {
+                        skillButtons[i].SetSkillIcon(entry.SkillIcon);
+                    }
                 }
             }
             else

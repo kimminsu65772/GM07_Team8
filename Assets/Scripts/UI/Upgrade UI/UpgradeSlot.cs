@@ -24,6 +24,27 @@ public class UpgradeSlot : MonoBehaviour
             soundPlayerComponent = upgradeButton.GetComponent<ButtonSoundPlayer>();
         }
     }
+    private void OnEnable()
+    {
+        if (upgradeToggleUI != null)
+        {
+            upgradeToggleUI.OnModeChanged += HandleModeChanged;
+        }
+    }
+    private void OnDisable()
+    {
+        if (upgradeToggleUI != null)
+        {
+            upgradeToggleUI.OnModeChanged -= HandleModeChanged;
+        }
+    }
+    private void HandleModeChanged(int newMode)
+    {
+        if (controller != null)
+        {
+            RefreshUI(controller.UpgradeState);
+        }
+    }
     public void Init(AirshipUpgradeController controller)
     {
         this.controller = controller;
