@@ -17,14 +17,4 @@ public class SettingsUI : MonoBehaviour
             closeButton.onClick.AddListener(settingsToggle.Toggle);
         }    
     }
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (settingsToggle != null)
-            {
-                settingsToggle.Toggle();
-            }
-        }
-    }
 }

@@ -24,6 +24,27 @@ public class UpgradeSlot : MonoBehaviour
             soundPlayerComponent = upgradeButton.GetComponent<ButtonSoundPlayer>();
         }
     }
+    private void OnEnable()
+    {
+        if (upgradeToggleUI != null)
+        {
+            upgradeToggleUI.OnModeChanged += HandleModeChanged;
+        }
+    }
+    private void OnDisable()
+    {
+        if (upgradeToggleUI != null)
+        {
+            upgradeToggleUI.OnModeChanged -= HandleModeChanged;
+        }
+    }
+    private void HandleModeChanged(int newMode)
+    {
+        if (controller != null)
+        {
+            RefreshUI(controller.UpgradeState);
+        }
+    }
     public void Init(AirshipUpgradeController controller)
     {
         this.controller = controller;
@@ -66,7 +87,7 @@ public class UpgradeSlot : MonoBehaviour
         {
             nameLevelText.text = $"{statType} LV.{currentLevel}";
             upgradeButton.interactable = controller.CanAffordUpgrade(statType, upgradeLevelCount);
-            if (costText != null) costText.text = $"비용: {GameFormatUtils.ToIdleNumber(cost)}";
+            if (costText != null) costText.text = $"{GameFormatUtils.ToIdleNumber(cost)}";
 
             // MAX가 아닐 때 호버 스케일과 사운드 플레이어 켜기
             if (hoverScaleComponent != null) hoverScaleComponent.enabled = true;

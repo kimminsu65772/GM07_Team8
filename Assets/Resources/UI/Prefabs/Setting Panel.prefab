@@ -473,7 +473,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8877005126219128256}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5354014556727917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -883,13 +895,14 @@ GameObject:
   - component: {fileID: 214975786675988073}
   - component: {fileID: 8831288501318966152}
   - component: {fileID: 5856320066765742845}
+  - component: {fileID: 3967883022449253635}
   m_Layer: 5
   m_Name: Setting Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8692541316176613817
 RectTransform:
   m_ObjectHideFlags: 0
@@ -982,6 +995,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SettingsUI
   settingsToggle: {fileID: 8831288501318966152}
   closeButton: {fileID: 716002107221229456}
+--- !u!114 &3967883022449253635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888636644790881807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 357e856e7b61cfe46800af66c230f48c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::QuitButton
+  quitButton: {fileID: 8027953269407743521}
 --- !u!1 &2085620240026127066
 GameObject:
   m_ObjectHideFlags: 0
@@ -1015,7 +1041,7 @@ RectTransform:
   m_Father: {fileID: 9019145142882825921}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1899,7 +1925,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2826466632600682138}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: ToggleController, Assembly-CSharp
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1264036356691075675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2050,7 +2088,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8386246501522372222}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 538023889613130615}
+        m_TargetAssemblyTypeName: ToggleController, Assembly-CSharp
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4628089292406204217
 GameObject:
   m_ObjectHideFlags: 0
@@ -2683,6 +2733,7 @@ GameObject:
   - component: {fileID: 882114646491587640}
   - component: {fileID: 8919592165300823332}
   - component: {fileID: 1870917825704992763}
+  - component: {fileID: 8382607421995540130}
   m_Layer: 5
   m_Name: Yes Button
   m_TagString: Untagged
@@ -2792,6 +2843,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8382607421995540130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7529551766627222962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cd99cc6f3babe44ab1c5e72fcbb4c7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ResetButton
 --- !u!1 &7701881993902866246
 GameObject:
   m_ObjectHideFlags: 0
@@ -2825,7 +2888,7 @@ RectTransform:
   m_Father: {fileID: 4111312387899819636}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2975,7 +3038,7 @@ RectTransform:
   m_Father: {fileID: 4685522022777678382}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
