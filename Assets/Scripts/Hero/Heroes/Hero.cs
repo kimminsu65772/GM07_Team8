@@ -369,6 +369,17 @@ public abstract class Hero : MonoBehaviour, IDamageable
         HeroCriChance += equip.BonusCriChance;
     }
 
+    public void EquipStatRemove(Equipment equip)
+    {
+        if (equip == null) return;
+
+        HeroMaxHP -= equip.BonusHP;
+        HeroCurrentHP -= equip.BonusHP;
+        HeroAtk -= equip.BonusAtk;
+        HeroDef -= equip.BonusDef;
+        HeroCriChance -= equip.BonusCriChance;
+    }
+
     public Equipment[] EquipInfo()
     {
         return new Equipment[]
