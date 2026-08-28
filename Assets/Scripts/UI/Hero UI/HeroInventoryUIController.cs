@@ -31,6 +31,8 @@ public class HeroInventoryUIController : MonoBehaviour
     [Header("중앙 영웅 시각화 컨트롤러")]
     [SerializeField] private HeroDisplayController heroDisplayController;
 
+    [Header("영웅 장비 컨트롤러")]
+    [SerializeField] HeroEquipmentUIController heroEquipmentUIController;
 
     private readonly List<HeroSlotUI> heroSlotPool = new();
 
@@ -67,7 +69,7 @@ public class HeroInventoryUIController : MonoBehaviour
     private void OnEnable()
     {
         RefreshInventory();
-        ClearDetailInfo();
+        
         if (heroLevelUpUIController != null)
         {
             heroLevelUpUIController.OnHeroLevelUp += RefreshInventory;
@@ -82,11 +84,6 @@ public class HeroInventoryUIController : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        RefreshInventory();
-        ClearDetailInfo();
-    }
     //인벤토리 목록 생성 및 갱신
     public void RefreshInventory()
     {
@@ -122,6 +119,10 @@ public class HeroInventoryUIController : MonoBehaviour
         if (selectedHeroEntry != null && selectedHeroSaveData != null)
         {
             ShowDetailInfo(selectedHeroEntry, selectedHeroSaveData);
+        }
+        else if (IngameHeroList.Count > 0)
+        {
+            ShowDetailInfo(IngameHeroList[0].entry, IngameHeroList[0].heroSaveData);
         }
         else
         {
@@ -275,18 +276,29 @@ public class HeroInventoryUIController : MonoBehaviour
 
         HeroStat stat = entry.GetHeroStat();
 
+        PlayerInfo.Instance.GetHeroEquippedEquipments(entry.HeroId, 
+            out EquipmentSaveData weapon, 
+            out EquipmentSaveData body, 
+            out EquipmentSaveData acc);
+
+        double totalAtkBonus = (weapon?.BonusAtk ?? 0) + (body?.BonusAtk ?? 0) + (acc?.BonusAtk ?? 0);
+        double totalDefBonus = (weapon?.BonusDef ?? 0) + (body?.BonusDef ?? 0) + (acc?.BonusDef ?? 0);
+        double totalHPBonus = (weapon?.BonusHP ?? 0) + (body?.BonusHP ?? 0) + (acc?.BonusHP ?? 0);
+        float totalCriChanceBonus = ((weapon?.BonusCriChance ?? 0) + (body?.BonusCriChance ?? 0) + (acc?.BonusCriChance ?? 0)) / 100f;
+
         double[] values =
         {
-            stat.Atk,
-            stat.Def,
-            stat.MaxHP,
-            0
+            stat.Atk + totalAtkBonus,
+            stat.Def + totalDefBonus,
+            stat.MaxHP + totalHPBonus,
         };
 
         for (int i = 0; i < heroStatUIs.Length && i < values.Length; i++)
         {
             heroStatUIs[i].SetValue(values[i]);
         }
+
+        heroStatUIs[3].SetValue(totalCriChanceBonus);
     }
 
 

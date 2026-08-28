@@ -17634,6 +17634,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1619610674}
     m_Modifications:
+    - target: {fileID: 784281089204571010, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 784281089204571010, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 823001184756259644, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 823001184756259644, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 935563039615310687, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 935563039615310687, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 2410393687757781229, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 2410393687757781229, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.66
+      objectReference: {fileID: 0}
     - target: {fileID: 2707489679330176877, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -17645,6 +17677,14 @@ PrefabInstance:
     - target: {fileID: 3601249629661744666, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
       propertyPath: m_Name
       value: Airship
+      objectReference: {fileID: 0}
+    - target: {fileID: 5204805811059217606, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 5204805811059217606, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.06
       objectReference: {fileID: 0}
     - target: {fileID: 6333519300694953608, guid: 0f0c5315fb8d1cd439039b171af1420e, type: 3}
       propertyPath: m_AnchorMax.x

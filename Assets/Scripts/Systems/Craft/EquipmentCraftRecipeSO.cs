@@ -11,7 +11,7 @@ public class EquipmentCraftRecipeSO : ScriptableObject
     [TextArea]
     [SerializeField] private string recipeDescription;
     [SerializeField] private List<EquipmentGradeRate> gradeRates;
-    [SerializeField] private List<ItemCost> requiredMaterials;
+    [SerializeField] private List<ItemAmount> requiredMaterials;
     [SerializeField] private int craftDurationInSeconds;
 
     public int RecipeId => recipeId;
@@ -19,7 +19,7 @@ public class EquipmentCraftRecipeSO : ScriptableObject
     public Sprite RecipeIcon => recipeIcon;
     public string RecipeDescription => recipeDescription;
     public IReadOnlyList<EquipmentGradeRate> GradeRates => gradeRates;
-    public IReadOnlyList<ItemCost> RequiredMaterials => requiredMaterials;
+    public IReadOnlyList<ItemAmount> RequiredMaterials => requiredMaterials;
     public int CraftDuration => craftDurationInSeconds;
 
     private void OnValidate()
@@ -40,7 +40,7 @@ public class EquipmentCraftRecipeSO : ScriptableObject
 }
 
 [Serializable]
-public class ItemCost
+public class ItemAmount
 {
     public int itemId;
     public int amount;
