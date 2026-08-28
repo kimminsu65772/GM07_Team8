@@ -127,7 +127,74 @@ public class HeroAttack : MonoBehaviour
             vfx.PlayAttackEffect(hero.AtkPosPreset, hero.AtkScalePreset);
 
             // Debug.Log(gameObject.name + "의 원거리 공격, 피해량 : " + damage);
+            if (hero is Hero23_RapidMage rapidMage && rapidMage.IsAdditionalAttackActive)
+            {
+                AttackAdditionalTarget();
+            }
         }
+    }
+
+    private void AttackAdditionalTarget()
+    {
+        Collider2D[] enemies =
+            Physics2D.OverlapCircleAll(
+                transform.position,
+                hero.SearchRange,
+                hero.EnemyLayer
+            );
+
+        Transform additionalTarget = null;
+        float closestDistance = Mathf.Infinity;
+
+        foreach (Collider2D coll in enemies)
+        {
+            if (!coll.gameObject.activeSelf)
+                continue;
+
+            if (coll.TryGetComponent<EnemyStats>(
+                out EnemyStats enemyStats))
+            {
+                if (enemyStats.IsDead)
+                    continue;
+            }
+
+            // 현재 공격 중인 대상은 제외
+            if (hero.TargetEnemy != null &&
+                coll.gameObject == hero.TargetEnemy)
+            {
+                continue;
+            }
+
+            float distance =
+                (coll.transform.position -
+                 transform.position).sqrMagnitude;
+
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                additionalTarget = coll.transform;
+            }
+        }
+
+        if (additionalTarget == null)
+            return;
+
+        float criRan = Random.Range(1f, 100f);
+        double damage = hero.HeroAtk;
+
+        bool isCrit = false;
+
+        if (criRan <= hero.HeroCriChance)
+        {
+            damage *= 2f;
+            isCrit = true;
+        }
+
+        // 기존 원거리 공격과 동일하게 투사체 발사
+        ThrowProjectile(
+            additionalTarget,
+            new DamageInfo(damage, isCrit)
+        );
     }
 
     // areaShape = 0(원), 1(사각형)

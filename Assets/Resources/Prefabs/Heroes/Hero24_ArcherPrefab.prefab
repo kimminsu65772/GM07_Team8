@@ -231,7 +231,19 @@ MonoBehaviour:
   targetEffect: {fileID: 1187726597109193246}
   attackFrames: []
   skillFrames: []
-  targetFrames: []
+  targetFrames:
+  - {fileID: -1885571919, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
+  - {fileID: -1885571919, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
+  - {fileID: 363840434, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
+  - {fileID: 363840434, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
+  - {fileID: 336832284, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
+  - {fileID: 336832284, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
+  - {fileID: -1341164914, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
+  - {fileID: -1341164914, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
+  - {fileID: 734439779, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
+  - {fileID: 734439779, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
+  - {fileID: -1315001741, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
+  - {fileID: -1315001741, guid: cb7a5610d869eb948b420bb59c8090ed, type: 3}
   frameTime: 0.05
 --- !u!1 &2185290070318136992
 GameObject:
@@ -300,6 +312,8 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+  projectileType: 5
+  firePoint: {fileID: 3435246392573695212}
 --- !u!114 &2084143984608393051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,7 +327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroAttack
   skillTimer: 0
-  projectileType: 3
+  projectileType: 4
   firePoint: {fileID: 3435246392573695212}
 --- !u!114 &8225879880734689440
 MonoBehaviour:
