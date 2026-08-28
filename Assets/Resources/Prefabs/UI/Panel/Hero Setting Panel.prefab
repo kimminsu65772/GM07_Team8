@@ -14310,7 +14310,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3263877286570427182, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3269643900925377414, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -14434,7 +14434,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6558646760429786177, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6558646760429786177, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
@@ -14443,6 +14443,10 @@ PrefabInstance:
     - target: {fileID: 6558646760429786177, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
+      objectReference: {fileID: 7450704626322230625}
+    - target: {fileID: 6558646760429786177, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
       objectReference: {fileID: 3652082884980432816}
     - target: {fileID: 6558646760429786177, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
@@ -14450,14 +14454,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6558646760429786177, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Open
+      objectReference: {fileID: 0}
+    - target: {fileID: 6558646760429786177, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
       value: SetEquipMode
       objectReference: {fileID: 0}
     - target: {fileID: 6558646760429786177, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: ToggleController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6558646760429786177, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
       value: EquimentInventoryController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6558646760429786177, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6558646760429786177, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6975174619203598335, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
@@ -14494,7 +14510,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8054618047487802116, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8097636832071492864, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
       propertyPath: m_IsActive
@@ -14603,6 +14619,17 @@ MonoBehaviour:
 --- !u!114 &7287931166984977255 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7926989353984719600, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
+  m_PrefabInstance: {fileID: 802129024295682455}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc4d33628a31d54408fde67f40dfbe2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ToggleController
+--- !u!114 &7450704626322230625 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7802350533987470582, guid: e559996c14b78474cae995eb1351ad3b, type: 3}
   m_PrefabInstance: {fileID: 802129024295682455}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
