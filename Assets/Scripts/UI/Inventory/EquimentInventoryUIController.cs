@@ -4,6 +4,12 @@ using System.Collections.Generic;
 
 public class EquimentInventoryController : MonoBehaviour
 {
+    private enum EquipmentInventoryMode
+    {
+        Equip,
+        Decompose
+    }
+
     [Header("장비 데이터")]
     [SerializeField] private EquipmentDB equipmentDB;
 
@@ -27,6 +33,11 @@ public class EquimentInventoryController : MonoBehaviour
     [SerializeField] private Vector2 spacing = new Vector2(12f, 12f);
     [SerializeField] private Vector2 padding = new Vector2(16f, 16f);
 
+    [Header("분해 UI")]
+    [SerializeField] private EquipmentDecomposeUIController decomposeUIController;
+
+    private EquipmentInventoryMode currentMode = EquipmentInventoryMode.Equip;
+
     [Header("성능 비교용 플래그")]
     [SerializeField] private bool useLoopCheckForEquipped = false;
 
@@ -46,10 +57,33 @@ public class EquimentInventoryController : MonoBehaviour
 
     private void OnEnable()
     {
+        PlayerInfo.Instance.OnEquipmentInventoryChanged -= RefreshInventorySlots;
+        PlayerInfo.Instance.OnEquipmentInventoryChanged += RefreshInventorySlots;
+
         InitializeEquippedSlots();
         RefreshHeroSlots();
         ClearSelectedHero();
         RefreshInventorySlots();
+    }
+
+    private void OnDisable()
+    {
+        PlayerInfo.Instance.OnEquipmentInventoryChanged -= RefreshInventorySlots;
+    }
+
+    public void SetEquipMode()
+    {
+        currentMode = EquipmentInventoryMode.Equip;
+
+        if (decomposeUIController != null)
+        {
+            decomposeUIController.ClearSelection();
+        }
+    }
+
+    public void SetDecomposeMode()
+    {
+        currentMode = EquipmentInventoryMode.Decompose;
     }
 
 
@@ -163,7 +197,6 @@ public class EquimentInventoryController : MonoBehaviour
             inventorySlots[i].gameObject.SetActive(false);
         }
     }
-
     private HeroEquipmentSlot GetOrCreateInventorySlot(int index)
     {
         while (inventorySlots.Count <= index)
@@ -371,7 +404,12 @@ public class EquimentInventoryController : MonoBehaviour
 
     // 장착된 장비 슬롯을 클릭하면 해당 장비를 해제하도록 처리한다.
     private void OnEquippedSlotClicked(HeroEquipmentSlot slot)
-    {
+    { 
+        if (currentMode == EquipmentInventoryMode.Decompose)
+        {
+            return;
+        }
+
         if (slot == null) return;
         if (slot.EquipmentSaveData == null) return;
 
@@ -399,11 +437,24 @@ public class EquimentInventoryController : MonoBehaviour
     private void OnInventorySlotClicked(HeroEquipmentSlot slot)
     {
         if (slot == null) return;
-        if (selectedHeroEntry == null || selectedHeroSaveData == null) return;
-
+        
         EquipmentSaveData equipData = slot.EquipmentSaveData;
 
         if (equipData == null) return;
+
+        if (currentMode == EquipmentInventoryMode.Decompose)
+        {
+            if (decomposeUIController == null)
+            {
+                Debug.LogWarning("분해 UI 컨트롤러가 연결되지 않았습니다.");
+                return;
+            }
+
+            decomposeUIController.ToggleEquipment(equipData);
+            return;
+        }
+
+        if (selectedHeroEntry == null || selectedHeroSaveData == null) return;
 
         bool result = PlayerInfo.Instance.SetHeroEquippedEquipmentId(selectedHeroEntry.HeroId, equipData.EquipPart, equipData.EquipId);
 
