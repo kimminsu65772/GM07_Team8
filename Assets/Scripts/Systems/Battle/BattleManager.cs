@@ -41,6 +41,19 @@ public class BattleManager : MonoBehaviour
     public AirshipController Airship => airship;
     public IReadOnlyList<Hero> SpawnedHeroes => spawnedHeroes;
 
+    private void OnEnable()
+    {
+        PlayerInfo.Instance.OnHeroEquippedChanged -= HandleHeroEquippedChanged;
+        PlayerInfo.Instance.OnHeroEquippedChanged += HandleHeroEquippedChanged;
+    }
+    private void OnDisable()
+    {
+        if (PlayerInfo.Instance != null)
+        {
+            PlayerInfo.Instance.OnHeroEquippedChanged -= HandleHeroEquippedChanged;
+        }
+    }
+
     private void Start()
     {
         Initialize();
@@ -261,5 +274,13 @@ public class BattleManager : MonoBehaviour
         equipmentManager.GetWeapon(weapon);
         equipmentManager.GetBody(body);
         equipmentManager.GetAcc(acc);
+    }
+
+    private void HandleHeroEquippedChanged(HeroNameEnum heroId)
+    {
+        if (heroCache.TryGetValue(heroId, out Hero hero))
+        {
+            ApplyEquipments(hero);
+        }
     }
 }

@@ -56,7 +56,12 @@ public class SaveDataFactory
             },
             Inventory = new InventorySaveData
             {
-                Items = new Dictionary<int, ItemStackSaveData>()
+                Items = new Dictionary<int, ItemStackSaveData>
+                {
+                    { 10000, new ItemStackSaveData { Amount = 100 } },
+                    { 10001, new ItemStackSaveData { Amount = 100 } },
+                    { 10002, new ItemStackSaveData { Amount = 100 } }
+                }
             },
             EquipmentInventory = new EquipmentInventorySaveData
             {
