@@ -55,6 +55,13 @@ public class HeroEquipmentManager : MonoBehaviour
 
     public void GetWeapon(Equipment weapon)
     {
+        if (currentWeaponEquip != null)
+        {
+            hero.EquipStatRemove(currentWeaponEquip);
+            currentWeaponEquip = null;
+            currentWeaponID = 0;
+        }
+
         if (weapon.EquipPart != EquipPartEnum.Weapon) return;
 
         currentWeaponEquip = weapon;
@@ -64,6 +71,13 @@ public class HeroEquipmentManager : MonoBehaviour
 
     public void GetBody(Equipment body)
     {
+        if (currentAccEquip != null)
+        {
+            hero.EquipStatRemove(currentBodyEquip);
+            currentAccEquip = null;
+            currentAccID = 0;
+        }
+
         if (body.EquipPart != EquipPartEnum.Body) return;
 
         currentBodyEquip = body;
@@ -73,6 +87,13 @@ public class HeroEquipmentManager : MonoBehaviour
 
     public void GetAcc(Equipment acc)
     {
+        if (currentAccEquip != null)
+        {
+            hero.EquipStatRemove(currentAccEquip);
+            currentAccEquip = null;
+            currentAccID = 0;
+        }
+
         if (acc.EquipPart != EquipPartEnum.Acc) return;
 
         currentAccEquip = acc;

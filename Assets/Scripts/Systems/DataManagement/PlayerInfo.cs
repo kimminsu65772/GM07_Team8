@@ -43,6 +43,9 @@ public class PlayerInfo : MonoBehaviour
     // UI에서 캐싱한 Hero 목록 상태를 갱신할 수 있도록 Hero 소유 여부 변경 시 이벤트 발생
     public event Action<HeroNameEnum, bool> OnHeroOwnedChanged;
 
+    // 영웅이 착용한 장비 스탯이 바로 적용될 수 있도록 장비 착용/해제 시 이벤트 발생
+    public event Action<HeroNameEnum> OnHeroEquippedChanged;
+
     private SaveDataWriter saveDataWriter;
 
     private void Awake()
@@ -608,6 +611,7 @@ public class PlayerInfo : MonoBehaviour
                 return false;
         }
 
+        OnHeroEquippedChanged?.Invoke(heroId);
         RequestSave(savePolicy);
         return true;
     }
@@ -636,6 +640,7 @@ public class PlayerInfo : MonoBehaviour
                 return false;
         }
 
+        OnHeroEquippedChanged?.Invoke(heroId);
         RequestSave(savePolicy);
         return true;
     }
