@@ -27,9 +27,9 @@ public class MaterialCostSlotUI : MonoBehaviour
 
         if (amountText != null)
         {
-            int ownedAmount = playerInfo != null ? playerInfo.GetItemAmount(cost.itemId) : 0;
-            bool hasEnough = playerInfo != null && playerInfo.HasEnoughItem(cost.itemId, cost.amount);
-            amountText.text = $"{ownedAmount}/{cost.amount}";
+            int ownedAmount = playerInfo != null ? playerInfo.GetItemAmount(cost.ItemId) : 0;
+            bool hasEnough = playerInfo != null && playerInfo.HasEnoughItem(cost.ItemId, cost.Amount);
+            amountText.text = $"{ownedAmount}/{cost.Amount}";
             amountText.color = hasEnough ? enoughColor : notEnoughColor;
         }
 

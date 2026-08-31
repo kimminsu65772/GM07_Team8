@@ -6,7 +6,7 @@ public class InventorySlot : MonoBehaviour
     [SerializeField] private Image iconImage;
     [SerializeField] private TMP_Text itemCountText;
 
-    public void SetItem(Sprite itemSprite, int amount)
+    public void SetItem(Sprite itemSprite, long amount)
     {
         if (itemSprite == null || amount <= 0)
         {
@@ -19,7 +19,8 @@ public class InventorySlot : MonoBehaviour
 
         if (itemCountText != null)
         {
-            itemCountText.text = "x" + amount;
+            string formattedAmount = GameFormatUtils.ToIdleNumber(amount);
+            itemCountText.text = "x" + formattedAmount;
             itemCountText.gameObject.SetActive(true);
         }
     }

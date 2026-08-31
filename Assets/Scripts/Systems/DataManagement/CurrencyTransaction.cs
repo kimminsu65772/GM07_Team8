@@ -28,6 +28,18 @@ public struct RewardBundle
     }
 }
 
+public struct OfflineReward
+{
+    public CurrencyReward[] CurrencyRewards;
+    public ItemAmount[] ItemRewards;
+
+    public OfflineReward(CurrencyReward[] currencyRewards, ItemAmount[] itemRewards)
+    {
+        CurrencyRewards = currencyRewards;
+        ItemRewards = itemRewards;
+    }
+}
+
 [Serializable]
 public struct CurrencyCost
 {

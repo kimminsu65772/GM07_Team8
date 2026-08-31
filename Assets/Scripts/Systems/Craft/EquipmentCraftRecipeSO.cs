@@ -29,7 +29,7 @@ public class EquipmentCraftRecipeSO : ScriptableObject
             int totalWeight = 0;
             foreach (var rate in gradeRates)
             {
-                totalWeight += rate.weight;
+                totalWeight += rate.Weight;
             }
             if (totalWeight != 100)
             {
@@ -42,13 +42,13 @@ public class EquipmentCraftRecipeSO : ScriptableObject
 [Serializable]
 public class ItemAmount
 {
-    public int itemId;
-    public int amount;
+    public int ItemId;
+    public int Amount;
 }
 
 [Serializable]
 public class EquipmentGradeRate
 {
-    public EquipGradeEnum grade;
-    public int weight;
+    public EquipGradeEnum Grade;
+    public int Weight;
 }
