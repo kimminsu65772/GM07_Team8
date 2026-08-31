@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 3557926573473546890}
   - component: {fileID: 6383302869918091040}
   - component: {fileID: 7222256627826579004}
-  - component: {fileID: 2508430506665358655}
+  - component: {fileID: 3340924801715117880}
   m_Layer: 6
   m_Name: BossHpCanvas
   m_TagString: Untagged
@@ -228,7 +228,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2508430506665358655
+--- !u!114 &3340924801715117880
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -535,6 +535,10 @@ MonoBehaviour:
   heroStopRange: 1.3
   airshipStopRange: 1.5
   useAirshipStopRange: 0
+  useEnemyStacking: 0
+  stackGroup: 0
+  stackingDistance: 0.5
+  stackingLineRange: 0.3
 --- !u!114 &4527213543350081925
 MonoBehaviour:
   m_ObjectHideFlags: 0
