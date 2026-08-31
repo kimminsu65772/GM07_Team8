@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26d8ad8942967f0489b443454c35a2ae, type: 3}
+  m_Name: 3NamedWave
+  m_EditorClassIdentifier: Assembly-CSharp::WaveData
+  enemySpawns:
+  - enemyPrefab: {fileID: 7931180812232907860, guid: 19417c8b64eb6054fa18388a37544181, type: 3}
+    spawnCount: 15
+    spawnInterval: 1
+  - enemyPrefab: {fileID: 7931180812232907860, guid: e71e38612beb00e4783cc01bb830d294, type: 3}
+    spawnCount: 9
+    spawnInterval: 0.5
+  - enemyPrefab: {fileID: 7931180812232907860, guid: c423999774d727d4c9ce0ff928a4c617, type: 3}
+    spawnCount: 2
+    spawnInterval: 1
+  nextWaveDelay: 1
+  isBossWave: 0
+  timeLimit: 75
