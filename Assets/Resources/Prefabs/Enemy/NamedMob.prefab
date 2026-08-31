@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 404162827256366293}
   - component: {fileID: 1005584122304875758}
   - component: {fileID: 3061991873819342548}
-  - component: {fileID: 5223709313664226500}
+  - component: {fileID: 282522453553230825}
   m_Layer: 6
   m_Name: BossHpCanvas
   m_TagString: Untagged
@@ -378,7 +378,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5223709313664226500
+--- !u!114 &282522453553230825
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -532,6 +532,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
   target: {fileID: 0}
   heroStopRange: 1.3
+  airshipStopRange: 1.5
+  useAirshipStopRange: 0
+  useEnemyStacking: 1
+  stackGroup: 0
+  stackingDistance: 0.5
+  stackingLineRange: 0.3
 --- !u!114 &4527213543350081925
 MonoBehaviour:
   m_ObjectHideFlags: 0

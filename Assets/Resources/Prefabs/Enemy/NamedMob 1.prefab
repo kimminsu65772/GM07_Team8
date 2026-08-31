@@ -318,7 +318,7 @@ GameObject:
   - component: {fileID: 404162827256366293}
   - component: {fileID: 1005584122304875758}
   - component: {fileID: 3061991873819342548}
-  - component: {fileID: 5223709313664226500}
+  - component: {fileID: 6466070014112710839}
   m_Layer: 6
   m_Name: BossHpCanvas
   m_TagString: Untagged
@@ -334,7 +334,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7580176299994090350}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 6.9814954}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -367,7 +367,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!114 &1005584122304875758
 MonoBehaviour:
@@ -409,7 +409,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5223709313664226500
+--- !u!114 &6466070014112710839
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -565,6 +565,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
   target: {fileID: 0}
   heroStopRange: 1.3
+  airshipStopRange: 1.5
+  useAirshipStopRange: 0
+  useEnemyStacking: 1
+  stackGroup: 0
+  stackingDistance: 0.5
+  stackingLineRange: 0.3
 --- !u!114 &4527213543350081925
 MonoBehaviour:
   m_ObjectHideFlags: 0
