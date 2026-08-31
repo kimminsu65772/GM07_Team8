@@ -586,6 +586,32 @@ public class PlayerInfo : MonoBehaviour
         };
     }
 
+    public bool TryGetEquippedHero(int equipmentId, out HeroNameEnum heroId)
+    {
+        heroId = HeroNameEnum.None;
+
+        if (!CheckInitialized() || SaveData == null) return false;
+        if (equipmentId <= 0) return false;
+
+        foreach ((HeroNameEnum currentHeroId, HeroSaveData heroData) in SaveData.Heroes)
+        {
+            if (heroData == null)
+            {
+                continue;
+            }
+
+            if (heroData.EquippedWeaponId == equipmentId ||
+                heroData.EquippedBodyId == equipmentId ||
+                heroData.EquippedAccId == equipmentId)
+            {
+                heroId = currentHeroId;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public bool SetHeroEquippedEquipmentId(HeroNameEnum heroId, EquipPartEnum equipPart, int equipmentId, SavePolicy savePolicy = SavePolicy.Soon)
     {
         if (!CheckInitialized() || SaveData == null) return false;

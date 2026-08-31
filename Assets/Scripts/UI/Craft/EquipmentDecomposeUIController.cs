@@ -4,14 +4,11 @@ using UnityEngine.UI;
 
 public class EquipmentDecomposeUIController : MonoBehaviour
 {
-    [SerializeField] private EquipmentDB equipmentDB;
-    [SerializeField] private HeroEquipmentSlot[] decomposeSlots;
-
     [Header("결과 패널")]
     [SerializeField] private DecomposeResultPanelUI resultPanelUI;
 
     [Header("버튼")]
-    [SerializeField] private Button decomposeButton;
+    [SerializeField] private Button confirmDecomposeButton;
 
     private readonly List<EquipmentSaveData> selectedEquipments = new();
     private readonly Dictionary<int, EquipmentSaveData> selectedEquipmentById = new();
@@ -19,10 +16,10 @@ public class EquipmentDecomposeUIController : MonoBehaviour
 
     private void OnEnable()
     {
-        if (decomposeButton != null)
+        if (confirmDecomposeButton != null)
         {
-            decomposeButton.onClick.RemoveListener(OnDecomposeButtonClicked);
-            decomposeButton.onClick.AddListener(OnDecomposeButtonClicked);
+            confirmDecomposeButton.onClick.RemoveListener(OnDecomposeButtonClicked);
+            confirmDecomposeButton.onClick.AddListener(OnDecomposeButtonClicked);
         }
 
         if (resultPanelUI != null)
@@ -30,14 +27,14 @@ public class EquipmentDecomposeUIController : MonoBehaviour
             resultPanelUI.Hide();
         }
 
-        RefreshSlots();
+        RefreshDecomposeButton();
     }
 
     private void OnDisable()
     {
-        if (decomposeButton != null)
+        if (confirmDecomposeButton != null)
         {
-            decomposeButton.onClick.RemoveListener(OnDecomposeButtonClicked);
+            confirmDecomposeButton.onClick.RemoveListener(OnDecomposeButtonClicked);
         }
     }
 
@@ -48,27 +45,26 @@ public class EquipmentDecomposeUIController : MonoBehaviour
             return false;
         }
 
-        if (selectedEquipmentById.ContainsKey(equipment.EquipId))
+        if (IsSelected(equipment.EquipId))
         {
             selectedEquipmentById.Remove(equipment.EquipId);
             RemoveSelectedEquipment(equipment.EquipId);
-            RefreshSlots();
-            return true;
-        }
-
-        if (decomposeSlots == null ||
-            selectedEquipments.Count >= decomposeSlots.Length)
-        {
-            Debug.LogWarning("모든 슬롯이 가득 찼습니다.");
+            RefreshDecomposeButton();
             return false;
         }
 
         selectedEquipments.Add(equipment);
         selectedEquipmentById.Add(equipment.EquipId, equipment);
 
-        RefreshSlots();
+        RefreshDecomposeButton();
         return true;
     }
+
+    public bool IsSelected(int equipId)
+    {
+        return selectedEquipmentById.ContainsKey(equipId);
+    }
+
     private void RemoveSelectedEquipment(int equipId)
     {
         for (int i = 0; i < selectedEquipments.Count; i++)
@@ -84,55 +80,20 @@ public class EquipmentDecomposeUIController : MonoBehaviour
 
     public void ClearSelection()
     {
-        if (decomposeSlots == null) return;
-
         selectedEquipments.Clear();
         selectedEquipmentById.Clear();
 
-        RefreshSlots();
-    }
-
-    private void RefreshSlots()
-    {
-        if (decomposeSlots == null) return;
-
-        for (int i = 0; i < decomposeSlots.Length; i++)
-        {
-            HeroEquipmentSlot slot = decomposeSlots[i];
-
-            if (slot == null) continue;
-
-            if (i >= selectedEquipments.Count)
-            {
-                slot.SetClickAction(null);
-                slot.ClearSlot();
-                continue;
-            }
-
-            EquipmentSaveData equipment = selectedEquipments[i];
-
-            if (equipment == null)
-            {
-                slot.SetClickAction(null);
-                slot.ClearSlot();
-                continue;
-            }
-
-            EquipmentSO equipmentSO = equipmentDB != null ? equipmentDB.GetEquipmentSO(equipment.EquipDataId) : null;
-
-            slot.SetSlot(equipment, equipmentSO, false);
-            slot.SetClickAction(OnDecomposeSlotClicked);
-        }
         RefreshDecomposeButton();
     }
+
     private void RefreshDecomposeButton()
     {
-        if (decomposeButton == null)
+        if (confirmDecomposeButton == null)
         {
             return;
         }
 
-        decomposeButton.interactable = selectedEquipments.Count > 0;
+        confirmDecomposeButton.interactable = selectedEquipments.Count > 0;
     }
 
     private void OnDecomposeButtonClicked()
@@ -166,22 +127,5 @@ public class EquipmentDecomposeUIController : MonoBehaviour
         {
             resultPanelUI.Show(rewards);
         }
-    }
-
-    private void OnDecomposeSlotClicked(HeroEquipmentSlot slot)
-    {
-        if (slot == null)
-        {
-            return;
-        }
-
-        EquipmentSaveData equipment = slot.EquipmentSaveData;
-
-        if (equipment == null)
-        {
-            return;
-        }
-
-        ToggleEquipment(equipment);
     }
 }

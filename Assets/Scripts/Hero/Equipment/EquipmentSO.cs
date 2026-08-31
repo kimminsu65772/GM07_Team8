@@ -7,6 +7,8 @@ public class EquipmentSO : ScriptableObject
     [SerializeField] private int equipDataId;
     [SerializeField] private string equipName;
     [SerializeField] private Sprite equipIcon;
+    [SerializeField] private string equipDescription;
+
     [Header("장비 스탯")]
     [SerializeField] private EquipGradeEnum equipGrade;
     [SerializeField] private EquipPartEnum equipPart;
@@ -17,6 +19,7 @@ public class EquipmentSO : ScriptableObject
 
     public int EquipDataId => equipDataId;
     public string EquipName => equipName;
+    public string EquipDescription => equipDescription;
     public Sprite EquipIcon => equipIcon;
     public EquipGradeEnum EquipGrade => equipGrade;
     public EquipPartEnum EquipPart => equipPart;

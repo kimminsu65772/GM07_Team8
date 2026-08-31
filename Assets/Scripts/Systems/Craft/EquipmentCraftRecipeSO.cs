@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "EquipmentCraftRecipeSO", menuName = "Game/Craft/EquipmentCraftRecipeSO")]
 public class EquipmentCraftRecipeSO : ScriptableObject
@@ -42,13 +43,19 @@ public class EquipmentCraftRecipeSO : ScriptableObject
 [Serializable]
 public class ItemAmount
 {
+    [FormerlySerializedAs("itemId")]
     public int ItemId;
+
+    [FormerlySerializedAs("amount")]
     public int Amount;
 }
 
 [Serializable]
 public class EquipmentGradeRate
 {
+    [FormerlySerializedAs("grade")]
     public EquipGradeEnum Grade;
+
+    [FormerlySerializedAs("weight")]
     public int Weight;
 }
