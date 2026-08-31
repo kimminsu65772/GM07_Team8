@@ -567,7 +567,7 @@ MonoBehaviour:
   heroStopRange: 1.3
   airshipStopRange: 1.5
   useAirshipStopRange: 0
-  useEnemyStacking: 1
+  useEnemyStacking: 0
   stackGroup: 0
   stackingDistance: 0.5
   stackingLineRange: 0.3
