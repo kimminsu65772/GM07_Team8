@@ -125,6 +125,10 @@ public class HeroArrangeUIController : MonoBehaviour
             {
                 slot.ClearHero();
                 statUI.ClearHeroStatUIs();
+                //추가
+                HeroPowerDisplay powerDisplay = statUI.GetComponent<HeroPowerDisplay>();
+                if (powerDisplay == null) powerDisplay = statUI.GetComponentInChildren<HeroPowerDisplay>();
+                if (powerDisplay != null) powerDisplay.ClearHero();
                 continue;
             }
             if (heroCatalog == null || !heroCatalog.TryGetHeroEntry(saveSlot.HeroId, out HeroEntry heroEntry))
@@ -137,6 +141,14 @@ public class HeroArrangeUIController : MonoBehaviour
             if (slot.TrySetHero(heroEntry))
             {
                 statUI.SetHeroStatUIs(heroEntry);
+                //추가
+                HeroPowerDisplay powerDisplay = statUI.GetComponent<HeroPowerDisplay>();
+                if (powerDisplay == null) powerDisplay = statUI.GetComponentInChildren<HeroPowerDisplay>();
+
+                if (powerDisplay != null)
+                {
+                    powerDisplay.SetHero(heroEntry);
+                }
             }
         }
     }
