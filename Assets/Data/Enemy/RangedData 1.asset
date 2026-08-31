@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30173b17adc04634aa724104a20d5a31, type: 3}
   m_Name: RangedData 1
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  maxHealth: 170
-  attackPower: 20
+  maxHealth: 200
+  attackPower: 10
   moveSpeed: 3
   attackRange: 12
   attackInterval: 1
