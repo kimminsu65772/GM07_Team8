@@ -433,6 +433,11 @@ public abstract class Hero : MonoBehaviour, IDamageable
         HeroAttackTime = duration;
     }
 
+    protected void SetCriChance(float duration)
+    {
+        HeroCriChance = duration;
+    }
+
     private void OnDrawGizmos()
     {
         // 근거리 공격 사거리

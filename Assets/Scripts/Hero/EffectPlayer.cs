@@ -14,6 +14,8 @@ public class EffectPlayer : MonoBehaviour
     private Coroutine selfEffectCoroutine;
     private Coroutine targetEffectCoroutine;
 
+    private Sprite[] tmpFrames;
+
     private void Awake()
     {
         if (selfEffect == null)
@@ -118,5 +120,12 @@ public class EffectPlayer : MonoBehaviour
             selfEffectCoroutine = null;
         else
             targetEffectCoroutine = null;
+    }
+
+    public void ChangeFrames()
+    {
+        tmpFrames = attackFrames;
+        attackFrames = targetFrames;
+        targetFrames = tmpFrames;
     }
 }

@@ -33,11 +33,15 @@ public class Hero15_Rogue : Hero
 
         SetAttackTime(buffedAttackTime);
         animator.SetFloat("bonusSpeed", attackBuffAmount);
+        Attack.VFX.ChangeFrames();
+        SetAttackEffectPreset(-0.5f, 0.3f, -2.5f, 2.5f);
 
         yield return new WaitForSeconds(5f);
 
         SetAttackTime(originalAttackTime);
         animator.SetFloat("bonusSpeed", 1f);
+        Attack.VFX.ChangeFrames();
+        SetAttackEffectPreset(-0.5f, 0.3f, -1.5f, 1.5f);
 
         attackTimeBuffCo = null;
     }
@@ -52,5 +56,7 @@ public class Hero15_Rogue : Hero
 
         HeroAttackTime = originalAttackTime;
         animator.SetFloat("bonusSpeed", 1f);
+        Attack.VFX.ChangeFrames();
+        SetAttackEffectPreset(-0.5f, 0.3f, -1.5f, 1.5f);
     }
 }
