@@ -7,6 +7,7 @@ public class Hero25_RapidArcher : Hero
     private float attackBuffAmount = 2.5f;
     private float originalAttackTime = 1f;
     [SerializeField] private Animator animator;
+    private StageManager stageManager;
 
     protected override void Awake()
     {
@@ -15,6 +16,7 @@ public class Hero25_RapidArcher : Hero
         SetSkillEffectPreset(0f, 0f, 1f, 1f);
         SetTargetEffectPreset(0f, 0f, 1f, 1f);
         Init(25, originalAttackTime, 10f, HeroLocationEnum.Back);
+        stageManager = FindFirstObjectByType<StageManager>();
     }
 
     public override void Skill(GameObject enemy)
@@ -36,21 +38,34 @@ public class Hero25_RapidArcher : Hero
 
         yield return new WaitForSeconds(5f);
 
+        ClearBuff();
+    }
+
+    private void ClearBuff()
+    {
         SetAttackTime(originalAttackTime);
         animator.SetFloat("bonusSpeed", 1f);
-
         attackTimeBuffCo = null;
+    }
+
+    private void HandleWaveCompleted(int wave)
+    {
+        ClearBuff();
+    }
+
+    private void OnEnable()
+    {
+        stageManager.OnWaveCompleted += HandleWaveCompleted;
     }
 
     private void OnDisable()
     {
+        stageManager.OnWaveCompleted -= HandleWaveCompleted;
+
         if (attackTimeBuffCo != null)
         {
             StopCoroutine(attackTimeBuffCo);
-            attackTimeBuffCo = null;
+            ClearBuff();
         }
-
-        HeroAttackTime = originalAttackTime;
-        animator.SetFloat("bonusSpeed", 1f);
     }
 }

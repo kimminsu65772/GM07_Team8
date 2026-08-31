@@ -8,6 +8,7 @@ public class Hero14_Berserker : Hero
     private float originalAttackTime = 0.9f;
     private float originalCriChance;
     [SerializeField] private Animator animator;
+    [SerializeField] private StageManager stageManager;
 
     protected override void Awake()
     {
@@ -16,6 +17,7 @@ public class Hero14_Berserker : Hero
         SetSkillEffectPreset(0f, 0.4f, 3f, 3f);
         SetTargetEffectPreset(0f, 0f, 1f, 1f);
         Init(14, originalAttackTime, 10f, HeroLocationEnum.Front);
+        stageManager = FindFirstObjectByType<StageManager>();
     }
 
     public override void Skill(GameObject enemy)
@@ -41,27 +43,37 @@ public class Hero14_Berserker : Hero
 
         yield return new WaitForSeconds(5f);
 
+        ClearBuff();
+    }
+
+    private void ClearBuff()
+    {
         SetAttackTime(originalAttackTime);
         SetCriChance(originalCriChance);
         Attack.VFX.ChangeFrames();
         SetAttackEffectPreset(-0.6f, 0.5f, -1.7f, 1.4f);
         animator.SetFloat("bonusSpeed", 1f);
-
         berserkerBuffCo = null;
+    }
+
+    private void HandleWaveCompleted(int wave)
+    {
+        ClearBuff();
+    }
+
+    private void OnEnable()
+    {
+        stageManager.OnWaveCompleted += HandleWaveCompleted;
     }
 
     private void OnDisable()
     {
+        stageManager.OnWaveCompleted -= HandleWaveCompleted;
+
         if (berserkerBuffCo != null)
         {
             StopCoroutine(berserkerBuffCo);
-            berserkerBuffCo = null;
+            ClearBuff();
         }
-
-        SetAttackTime(originalAttackTime);
-        SetCriChance(originalCriChance);
-        Attack.VFX.ChangeFrames();
-        SetAttackEffectPreset(-0.6f, 0.5f, -1.7f, 1.4f);
-        animator.SetFloat("bonusSpeed", 1f);
     }
 }
