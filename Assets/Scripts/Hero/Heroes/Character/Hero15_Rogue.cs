@@ -64,6 +64,8 @@ public class Hero15_Rogue : Hero
 
     private void OnDisable()
     {
+        stageManager.OnWaveCompleted -= HandleWaveCompleted;
+
         if (attackTimeBuffCo != null)
         {
             StopCoroutine(attackTimeBuffCo);

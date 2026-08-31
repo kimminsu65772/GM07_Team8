@@ -95,7 +95,7 @@ public class EffectPlayer : MonoBehaviour
     {
         if (frames == null || frames.Length == 0)
         {
-            Debug.LogWarning($"{gameObject.name}: 이펙트 프레임이 비어 있습니다.");
+            // Debug.LogWarning($"{gameObject.name}: 이펙트 프레임이 비어 있습니다.");
 
             renderer.sprite = null;
 

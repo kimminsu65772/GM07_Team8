@@ -265,6 +265,7 @@ GameObject:
   - component: {fileID: 7368761889589239906}
   - component: {fileID: 1172658508862056650}
   - component: {fileID: 5071125624310665983}
+  - component: {fileID: -5258517289961717721}
   m_Layer: 7
   m_Name: Hero21_MagePrefab
   m_TagString: Untagged
@@ -314,10 +315,13 @@ MonoBehaviour:
   attackTime: 0
   skillTime: 0
   heroRoot: {fileID: 8903540859066819979}
-  moveSpeed: 8
+  moveSpeed: 5
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+  heroLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &3993062887785085684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,6 +379,42 @@ MonoBehaviour:
   currentWeaponID: 0
   currentBodyID: 0
   currentAccID: 0
+--- !u!58 &-5258517289961717721
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4136471860748260653}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.3}
+  m_Radius: 0.2
 --- !u!1 &4387312951727401991
 GameObject:
   m_ObjectHideFlags: 0
