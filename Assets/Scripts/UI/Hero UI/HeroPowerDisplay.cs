@@ -70,8 +70,15 @@ public class HeroPowerDisplay : MonoBehaviour
     }
     private void UpdateUI()
     {
-        if (attackPowerText != null) attackPowerText.text = TotalAttackPower.ToString("N0");
-        if (defensePowerText != null) defensePowerText.text = TotalDefensePower.ToString("N0");
+        if (attackPowerText != null)
+        {
+            attackPowerText.text = GameFormatUtils.ToIdleNumber(TotalAttackPower);
+        }
+
+        if (defensePowerText != null)
+        {
+            defensePowerText.text = GameFormatUtils.ToIdleNumber(TotalDefensePower);
+        }
     }
 
     private void ClearUI()
