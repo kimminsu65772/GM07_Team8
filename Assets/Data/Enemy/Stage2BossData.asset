@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30173b17adc04634aa724104a20d5a31, type: 3}
   m_Name: Stage2BossData
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  maxHealth: 2000
+  maxHealth: 30000
   attackPower: 100
   moveSpeed: 3
   attackRange: 10
-  attackInterval: 1
+  attackInterval: 1.3
   isBoss: 1

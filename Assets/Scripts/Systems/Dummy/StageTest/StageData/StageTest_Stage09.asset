@@ -15,4 +15,5 @@ MonoBehaviour:
   stageNumber: 9
   waves:
   - {fileID: 11400000, guid: 945ba84e37914694f8ed5a7a3233bbe8, type: 2}
-  - {fileID: 11400000, guid: e8b00ac49c40ae04c9bcfcb5205f2fb5, type: 2}
+  - {fileID: 11400000, guid: ef33e2aa21573864486419495299d562, type: 2}
+  - {fileID: 11400000, guid: 61addf99cec263f4a9166ca8d57dfb8e, type: 2}

@@ -102,4 +102,18 @@ public class EnemyRangedAttack : MonoBehaviour
         attackTimer =
             enemyStats.AttackInterval;
     }
+    public void FireProjectile(Transform spawnPoint)
+    {
+        if (target == null || spawnPoint == null)
+        {
+            return;
+        }
+
+        // 풀에서 받아온 투사체를 지정한 발사 위치에서 생성한다.
+        EnemyProjectile projectile = PoolingManager.Instance.GetEnemyProjectile();
+
+        
+        projectile.transform.localScale = Vector3.one * projectileScale;
+        projectile.Init(spawnPoint.position, spawnPoint.rotation, target, enemyStats.AttackPower);
+    }
 }

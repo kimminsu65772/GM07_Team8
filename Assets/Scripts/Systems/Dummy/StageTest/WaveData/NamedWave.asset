@@ -17,11 +17,11 @@ MonoBehaviour:
     spawnCount: 6
     spawnInterval: 1
   - enemyPrefab: {fileID: 7931180812232907860, guid: 2d9687bbb1af7054eac23976dcc68c51, type: 3}
-    spawnCount: 4
-    spawnInterval: 1
+    spawnCount: 3
+    spawnInterval: 0.5
   - enemyPrefab: {fileID: 7931180812232907860, guid: 9cd69cc29160c9e46ad082a4534600a4, type: 3}
     spawnCount: 1
-    spawnInterval: 1
-  nextWaveDelay: 2
+    spawnInterval: 0.5
+  nextWaveDelay: 1
   isBossWave: 0
   timeLimit: 75
