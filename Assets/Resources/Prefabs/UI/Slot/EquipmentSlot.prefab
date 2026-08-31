@@ -39,7 +39,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7225353864849721791
 CanvasRenderer:
@@ -138,6 +138,8 @@ MonoBehaviour:
   gradeFrame: {fileID: 6321059012830005993}
   iconImage: {fileID: 6104032093250388418}
   equipBadge: {fileID: 7377321671501495554}
+  equipmentNameText: {fileID: 0}
+  equipmentStatText: {fileID: 0}
   equipPart: 0
   commonColor: {r: 1, g: 1, b: 1, a: 1}
   rareColor: {r: 0.61960787, g: 0.6784314, b: 1, a: 1}
