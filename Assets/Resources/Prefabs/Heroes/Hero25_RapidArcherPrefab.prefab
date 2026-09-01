@@ -1048,6 +1048,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4878182565438079201, guid: 7a49fd06773dbb04ab88907232f70e99, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2618919660606033256}
+    - targetCorrespondingSourceObject: {fileID: 4878182565438079201, guid: 7a49fd06773dbb04ab88907232f70e99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3363548894486680}
   m_SourcePrefab: {fileID: 100100000, guid: 7a49fd06773dbb04ab88907232f70e99, type: 3}
 --- !u!95 &4559018566330132406 stripped
 Animator:
@@ -1072,6 +1075,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroProjectileShooter
   hero: {fileID: 2510200816988622383}
+--- !u!114 &3363548894486680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5540416970810195008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7962559c6fb6c7c498267e4ae99e28dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SortingYPos
+  baseOrder: 5000
+  sortScale: 100
+  sortPivot: {fileID: 6194623346187057730}
 --- !u!4 &6194623346187057730 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6532176380401878755, guid: 7a49fd06773dbb04ab88907232f70e99, type: 3}
