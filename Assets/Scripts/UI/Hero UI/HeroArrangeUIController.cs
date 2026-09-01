@@ -74,7 +74,6 @@ public class HeroArrangeUIController : MonoBehaviour
             return;
         }
         currentSelectedSlotIndex = slotIndex;
-        Debug.Log($"{slotIndex}번 슬롯이 선택되었습니다. 아래 스크롤에서 배치할 영웅을 선택하세요.");
 
         if (dimPanelObject != null)
         {
@@ -87,6 +86,16 @@ public class HeroArrangeUIController : MonoBehaviour
             if (slot == null) continue;
             bool isTarget = (slot.SlotIndex == slotIndex);
             slot.SetHighlight(isTarget);
+        }
+        for (int i = 0; i < heroSlotPool.Count; i++)
+        {
+            var slotUI = heroSlotPool[i];
+            if (slotUI == null || !slotUI.gameObject.activeSelf) continue;
+
+            bool isInFormation = HeroFormationManager.Instance != null && HeroFormationManager.Instance.IsHeroInFormation(slotUI.GetHeroId());
+
+            // 파티에 안 들어간 영웅만 화살표 켜기
+            slotUI.SetArrowEffect(!isInFormation);
         }
     }
 
@@ -144,6 +153,13 @@ public class HeroArrangeUIController : MonoBehaviour
             foreach (var slot in heroArrangeSlots)
             {
                 slot?.SetHighlight(false);
+            }
+        }
+        foreach (var slotUI in heroSlotPool)
+        {
+            if (slotUI != null)
+            {
+                slotUI.SetArrowEffect(false);
             }
         }
     }
