@@ -158,7 +158,7 @@ public class EquipmentCraftSlotUI : MonoBehaviour
                 continue;
             }
 
-            ItemSO item = itemDB != null ? itemDB.GetItemById(cost.itemId) : null;
+            ItemSO item = itemDB != null ? itemDB.GetItemById(cost.ItemId) : null;
             slot.Bind(cost, item);
         }
     }
@@ -208,7 +208,7 @@ public class EquipmentCraftSlotUI : MonoBehaviour
                 continue;
             }
 
-            if (!playerInfo.HasEnoughItem(cost.itemId, cost.amount))
+            if (!playerInfo.HasEnoughItem(cost.ItemId, cost.Amount))
             {
                 return false;
             }

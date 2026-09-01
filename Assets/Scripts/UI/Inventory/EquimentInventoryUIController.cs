@@ -38,6 +38,12 @@ public class EquimentInventoryController : MonoBehaviour
 
     [Header("분해 UI")]
     [SerializeField] private EquipmentDecomposeUIController decomposeUIController;
+    [SerializeField] private Button decomposeModeButton;
+    [SerializeField] private GameObject decomposeButtonGroup;
+    [SerializeField] private Button decomposeCancelButton;
+
+    [Header("장비 상세 패널")]
+    [SerializeField] private EquipmentDetailPanelUIController detailPanelUIController;
 
     private EquipmentInventoryMode currentMode = EquipmentInventoryMode.Equip;
 
@@ -66,10 +72,26 @@ public class EquimentInventoryController : MonoBehaviour
         PlayerInfo.Instance.OnEquipmentInventoryChanged -= RefreshInventorySlots;
         PlayerInfo.Instance.OnEquipmentInventoryChanged += RefreshInventorySlots;
 
+        PlayerInfo.Instance.OnHeroEquippedChanged -= OnHeroEquippedChanged;
+        PlayerInfo.Instance.OnHeroEquippedChanged += OnHeroEquippedChanged;
+
+        if (decomposeModeButton != null)
+        {
+            decomposeModeButton.onClick.RemoveListener(SetDecomposeMode);
+            decomposeModeButton.onClick.AddListener(SetDecomposeMode);
+        }
+
+        if (decomposeCancelButton != null)
+        {
+            decomposeCancelButton.onClick.RemoveListener(SetEquipMode);
+            decomposeCancelButton.onClick.AddListener(SetEquipMode);
+        }
+
         InitializeEquippedSlots();
         RefreshHeroSlots();
         RefreshSelectedHeroDisPlayView();
         RefreshInventorySlots();
+        RefreshModeUI();
     }
 
     private void OnDisable()
@@ -78,6 +100,17 @@ public class EquimentInventoryController : MonoBehaviour
         RefreshHeroSlots();
         heroDisplayController.ClearDisplay();
         PlayerInfo.Instance.OnEquipmentInventoryChanged -= RefreshInventorySlots;
+        PlayerInfo.Instance.OnHeroEquippedChanged -= OnHeroEquippedChanged;
+
+        if (decomposeModeButton != null)
+        {
+            decomposeModeButton.onClick.RemoveListener(SetDecomposeMode);
+        }
+
+        if (decomposeCancelButton != null)
+        {
+            decomposeCancelButton.onClick.RemoveListener(SetEquipMode);
+        }
     }
 
     public void SetEquipMode()
@@ -88,11 +121,33 @@ public class EquimentInventoryController : MonoBehaviour
         {
             decomposeUIController.ClearSelection();
         }
+
+        RefreshInventorySlots();
+        RefreshModeUI();
     }
 
     public void SetDecomposeMode()
     {
         currentMode = EquipmentInventoryMode.Decompose;
+
+        RefreshInventorySlots();
+        detailPanelUIController.Clear();
+        RefreshModeUI();
+    }
+
+    private void RefreshModeUI()
+    {
+        bool isDecomposeMode = currentMode == EquipmentInventoryMode.Decompose;
+
+        if (decomposeModeButton != null)
+        {
+            decomposeModeButton.gameObject.SetActive(!isDecomposeMode);
+        }
+
+        if (decomposeButtonGroup != null)
+        {
+            decomposeButtonGroup.SetActive(isDecomposeMode);
+        }
     }
 
 
@@ -169,6 +224,11 @@ public class EquimentInventoryController : MonoBehaviour
         RefreshSelectedHeroDisPlayView();
         RefreshEquippedSlots();
         RefreshInventorySlots();
+
+        if (detailPanelUIController != null)
+        {
+            detailPanelUIController.SetSelectedHero(selectedHeroEntry, selectedHeroSaveData);
+        }
     }
 
     private HeroSlotUI GetOrCreateHeroSlot(int index)
@@ -190,6 +250,11 @@ public class EquimentInventoryController : MonoBehaviour
         RefreshSelectedHeroDisPlayView();
         RefreshEquippedSlots();
         RefreshInventorySlots();
+
+        if (detailPanelUIController != null)
+        {
+            detailPanelUIController.SetSelectedHero(null, null);
+        }
     }
 
     private void RefreshInventorySlots()
@@ -204,10 +269,7 @@ public class EquimentInventoryController : MonoBehaviour
         {
             EquipmentSaveData equipData = ownedEquiments[i];
             if (equipData == null) continue;
-            if (!IsEquippedByAnyHero(equipData.EquipId))
-            {
-                visibleEquipments.Add(equipData);
-            }
+            visibleEquipments.Add(equipData);
         }
 
         ResizeContent(visibleEquipments.Count);
@@ -223,7 +285,12 @@ public class EquimentInventoryController : MonoBehaviour
             HeroEquipmentSlot slot = GetOrCreateInventorySlot(i);
             slot.gameObject.SetActive(true);
             SetSlotPosition(slot, i);
-            slot.SetSlot(equipData, equipmentSO, false);
+
+            bool isEquipped = IsEquippedByAnyHero(equipData.EquipId);
+            bool isDecomposeSelected = decomposeUIController != null &&
+                                       decomposeUIController.IsSelected(equipData.EquipId);
+
+            slot.SetSlot(equipData, equipmentSO, isEquipped, isDecomposeSelected);
             slot.SetClickAction(OnInventorySlotClicked);
         }
 
@@ -441,14 +508,18 @@ public class EquimentInventoryController : MonoBehaviour
         }
 
         if (slot == null) return;
+
+        EquipmentSaveData equipData = slot.EquipmentSaveData;
         if (slot.EquipmentSaveData == null) return;
 
-        bool result = PlayerInfo.Instance.ClearHeroEquippedEquipmentId(selectedHeroEntry.HeroId, slot.EquipPart);
+        EquipmentSO equipmentSO = equipmentDB != null
+        ? equipmentDB.GetEquipmentSO(equipData.EquipDataId)
+        : null;
 
-        if (!result) return;
-
-        RefreshEquippedSlots();
-        RefreshInventorySlots();
+        if (detailPanelUIController != null)
+        {
+            detailPanelUIController.SetEquipment(equipData, equipmentSO);
+        }
     }
 
     private void OnHeroSlotClicked(HeroEntry entry, HeroSaveData saveData)
@@ -472,17 +543,37 @@ public class EquimentInventoryController : MonoBehaviour
                 return;
             }
 
+            if (IsEquippedByAnyHero(equipData.EquipId))
+            {
+                Debug.LogWarning("장착 중인 장비는 분해할 수 없습니다.");
+                return;
+            }
+
             decomposeUIController.ToggleEquipment(equipData);
+            RefreshInventorySlots();
             return;
         }
 
-        if (selectedHeroEntry == null || selectedHeroSaveData == null) return;
+        EquipmentSO equipmentSO = equipmentDB != null
+            ? equipmentDB.GetEquipmentSO(equipData.EquipDataId)
+            : null;
 
-        bool result = PlayerInfo.Instance.SetHeroEquippedEquipmentId(selectedHeroEntry.HeroId, equipData.EquipPart, equipData.EquipId);
+        if (detailPanelUIController != null)
+        {
+            detailPanelUIController.SetEquipment(equipData, equipmentSO);
+        }
 
-        if (!result) return;
+        return;
+    }
 
+    private void OnHeroEquippedChanged(HeroNameEnum heroId)
+    {
         RefreshEquippedSlots();
         RefreshInventorySlots();
+
+        if (detailPanelUIController != null)
+        {
+            detailPanelUIController.SetSelectedHero(selectedHeroEntry, selectedHeroSaveData);
+        }
     }
 }

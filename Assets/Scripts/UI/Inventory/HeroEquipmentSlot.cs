@@ -9,6 +9,7 @@ public class HeroEquipmentSlot : MonoBehaviour
     [SerializeField] private Image gradeFrame;
     [SerializeField] private Image iconImage;
     [SerializeField] private Image equipBadge;
+    [SerializeField] private Image checkBadge;
 
     [Header("장비 텍스트")]
     [SerializeField] private TMP_Text equipmentNameText;
@@ -56,7 +57,7 @@ public class HeroEquipmentSlot : MonoBehaviour
         slotBtn.onClick.RemoveListener(OnSlotClicked);
     }
 
-    public void SetSlot(EquipmentSaveData saveData, EquipmentSO equipmentData, bool isEquipped)
+    public void SetSlot(EquipmentSaveData saveData, EquipmentSO equipmentData, bool isEquipped, bool isDecomposeSelected = false)
     {
         equipmentSaveData = saveData;
         equipmentSO = equipmentData;
@@ -78,6 +79,7 @@ public class HeroEquipmentSlot : MonoBehaviour
         SetName(equipmentData, gradeColor);
         SetStatText(saveData);
         SetEquipped(isEquipped);
+        SetDecomposeSelected(isDecomposeSelected);
     }
 
     public void SetEquipped(bool isEquipped)
@@ -116,6 +118,7 @@ public class HeroEquipmentSlot : MonoBehaviour
         }
 
         SetEquipped(false);
+        SetDecomposeSelected(false);
     }
 
     public void SetClickAction(Action<HeroEquipmentSlot> onClickAction)
@@ -191,16 +194,30 @@ public class HeroEquipmentSlot : MonoBehaviour
 
         StringBuilder builder = new();
 
-        string formattedHP = GameFormatUtils.ToIdleNumber(saveData.BonusHP);
-        string formattedATK = GameFormatUtils.ToIdleNumber(saveData.BonusAtk);
-        string formattedDEF = GameFormatUtils.ToIdleNumber(saveData.BonusDef);
-        string formattedCRI = GameFormatUtils.ToPercent((float)(saveData.BonusCriChance/100));
+        if (saveData.BonusHP > 0)
+        {
+            string formattedHP = GameFormatUtils.ToIdleNumber(saveData.BonusHP);
+            AppendStat(builder, "HP", formattedHP);
+        } 
 
-        AppendStat(builder, "HP", formattedHP);
-        AppendStat(builder, "ATK", formattedATK);
-        AppendStat(builder, "DEF", formattedDEF);
-        AppendStat(builder, "CRI", formattedCRI);
+        if (saveData.BonusAtk > 0)
+        {
+            string formattedATK = GameFormatUtils.ToIdleNumber(saveData.BonusAtk);
+            AppendStat(builder, "ATK", formattedATK);
+        }
 
+        if (saveData.BonusDef > 0)
+        {
+            string formattedDEF = GameFormatUtils.ToIdleNumber(saveData.BonusDef);
+            AppendStat(builder, "DEF", formattedDEF);
+        }
+
+        if (saveData.BonusCriChance > 0)
+        {
+            string formattedCRI = GameFormatUtils.ToPercent((float)(saveData.BonusCriChance / 100f));
+            AppendStat(builder, "CRI", formattedCRI);
+        }
+        
         equipmentStatText.text = builder.ToString();
     }
 
@@ -213,5 +230,13 @@ public class HeroEquipmentSlot : MonoBehaviour
         }
 
         builder.Append($"{label} + {statText}{suffix}");
+    }
+
+    public void SetDecomposeSelected(bool isSelected)
+    {
+        if (checkBadge != null)
+        {
+            checkBadge.gameObject.SetActive(isSelected);
+        }
     }
 }

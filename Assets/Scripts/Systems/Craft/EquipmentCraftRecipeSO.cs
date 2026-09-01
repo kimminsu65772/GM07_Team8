@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "EquipmentCraftRecipeSO", menuName = "Game/Craft/EquipmentCraftRecipeSO")]
 public class EquipmentCraftRecipeSO : ScriptableObject
@@ -29,7 +30,7 @@ public class EquipmentCraftRecipeSO : ScriptableObject
             int totalWeight = 0;
             foreach (var rate in gradeRates)
             {
-                totalWeight += rate.weight;
+                totalWeight += rate.Weight;
             }
             if (totalWeight != 100)
             {
@@ -42,13 +43,19 @@ public class EquipmentCraftRecipeSO : ScriptableObject
 [Serializable]
 public class ItemAmount
 {
-    public int itemId;
-    public int amount;
+    [FormerlySerializedAs("itemId")]
+    public int ItemId;
+
+    [FormerlySerializedAs("amount")]
+    public int Amount;
 }
 
 [Serializable]
 public class EquipmentGradeRate
 {
-    public EquipGradeEnum grade;
-    public int weight;
+    [FormerlySerializedAs("grade")]
+    public EquipGradeEnum Grade;
+
+    [FormerlySerializedAs("weight")]
+    public int Weight;
 }

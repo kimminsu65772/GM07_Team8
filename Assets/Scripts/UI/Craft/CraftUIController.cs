@@ -69,20 +69,20 @@ public class CraftUIController : MonoBehaviour
 
             foreach (var material in recipe.RequiredMaterials)
         {
-            if (!PlayerInfo.Instance.HasEnoughItem(material.itemId, material.amount))
+            if (!PlayerInfo.Instance.HasEnoughItem(material.ItemId, material.Amount))
             {
-                Debug.LogWarning($"재료가 부족합니다: {itemDB.GetItemById(material.itemId)} x {material.amount}");
+                Debug.LogWarning($"재료가 부족합니다: {itemDB.GetItemById(material.ItemId)} x {material.Amount}");
                 return;
             }
         }
 
         foreach (var material in recipe.RequiredMaterials)
         {
-            bool result = PlayerInfo.Instance.TryConsumeItem(material.itemId, material.amount);
+            bool result = PlayerInfo.Instance.TryConsumeItem(material.ItemId, material.Amount);
 
             if (!result)
             {
-                Debug.LogWarning($"재료 소비 실패: {itemDB.GetItemById(material.itemId)} x {material.amount}");
+                Debug.LogWarning($"재료 소비 실패: {itemDB.GetItemById(material.ItemId)} x {material.Amount}");
                 return;
             }
         }
@@ -192,13 +192,13 @@ public class CraftUIController : MonoBehaviour
 
         foreach (var gradeRate in recipe.GradeRates)
         {
-            totalWeight += gradeRate.weight;
+            totalWeight += gradeRate.Weight;
         }
 
         if (totalWeight <= 0)
         {
             Debug.LogWarning("레시피의 등급 확률 총합이 0 이하입니다.");
-            return recipe.GradeRates[0].grade;
+            return recipe.GradeRates[0].Grade;
         }
 
         int randomValue = UnityEngine.Random.Range(0, totalWeight);
@@ -208,14 +208,14 @@ public class CraftUIController : MonoBehaviour
         // 가중치를 누적시키면서 랜덤 값과 비교하고 누적치가 랜덤 값보다 커지는 순간 해당 등급을 선택하도록 함.
         foreach (var gradeRate in recipe.GradeRates)
         {
-            accumulatedWeight += gradeRate.weight;
+            accumulatedWeight += gradeRate.Weight;
             if (randomValue < accumulatedWeight)
             {
-                return gradeRate.grade;
+                return gradeRate.Grade;
             }
         }
 
         // 만약 모든 가중치를 다 더했는데도 선택되지 않았다면, 제일 낮은 등급을 반환하도록 함.
-        return recipe.GradeRates[0].grade;
+        return recipe.GradeRates[0].Grade;
     }
 }

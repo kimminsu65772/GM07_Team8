@@ -43,9 +43,9 @@ public static class EquipmentDecomposeCalculator
 
             foreach (var reward in rewards)
             {
-                if (!totalRewards.TryAdd(reward.itemId, reward.amount))
+                if (!totalRewards.TryAdd(reward.ItemId, reward.Amount))
                 {
-                    totalRewards[reward.itemId] += reward.amount;
+                    totalRewards[reward.ItemId] += reward.Amount;
                 }
             }
         }
@@ -68,7 +68,7 @@ public static class EquipmentDecomposeCalculator
                     continue;
                 }
 
-                rewards.Add(new ItemAmount { itemId = range.itemId, amount = amount });
+                rewards.Add(new ItemAmount { ItemId = range.itemId, Amount = amount });
             }
         }
 
