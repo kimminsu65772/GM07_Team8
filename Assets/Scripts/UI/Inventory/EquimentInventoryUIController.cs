@@ -188,7 +188,6 @@ public class EquimentInventoryController : MonoBehaviour
 
             HeroSlotUI heroSlot = GetOrCreateHeroSlot(slotIndex);
             heroSlot.gameObject.SetActive(true);
-            heroSlot.SetDragEnabled(false);
             heroSlot.SetupSlot(heroEntry, heroSaveData, true, OnHeroSlotClicked);
 
             slotIndex++;

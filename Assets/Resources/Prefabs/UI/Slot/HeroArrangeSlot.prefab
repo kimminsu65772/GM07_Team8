@@ -97,6 +97,7 @@ MonoBehaviour:
   heroIcon: {fileID: 200003}
   formationOverlayImage: {fileID: 400003}
   formationStateText: {fileID: 500003}
+  canDrag: 1
 --- !u!225 &100005
 CanvasGroup:
   m_ObjectHideFlags: 0
