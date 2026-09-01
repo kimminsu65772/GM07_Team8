@@ -51,7 +51,7 @@ public class AirshipItemSlotUI : MonoBehaviour
     {
         if (data != null)
         {
-            if (iconImage != null) iconImage.sprite = data.GearImage;
+            if (iconImage != null) iconImage.sprite = data.UIImage;
             if (nameText != null) nameText.text = data.DisplayName;
             if (descText != null) descText.text = $"타입: {data.GearType}";
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AirshipCannon_Freeze
   m_EditorClassIdentifier: Assembly-CSharp::AirshipCannonData
   displayName: "\uBE59\uACB0\uD0C4"
-  uiImage: {fileID: 0}
+  uiImage: {fileID: 21300000, guid: 88e2cac932bd5044fb590d25bf470c17, type: 3}
   barrelImage: {fileID: 21300000, guid: ab81659f9e5945a46b1607ae095375a8, type: 3}
   cannonType: 1
   projectilePrefab: {fileID: -4218226267792731221, guid: 2e258cc4bb28c9448b808f70147497c1, type: 3}

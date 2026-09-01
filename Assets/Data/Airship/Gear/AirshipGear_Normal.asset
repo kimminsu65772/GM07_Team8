@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AirshipGear_Normal
   m_EditorClassIdentifier: Assembly-CSharp::AirshipGearData
   displayName: "\uAE30\uBCF8\uBD80\uD488"
-  uiImage: {fileID: 0}
+  uiImage: {fileID: 21300000, guid: 8869a997ff5e961489f9e1c32b3dd96d, type: 3}
   gearImage: {fileID: 21300000, guid: 8869a997ff5e961489f9e1c32b3dd96d, type: 3}
   gearType: 0
   buffData: {fileID: 0}
