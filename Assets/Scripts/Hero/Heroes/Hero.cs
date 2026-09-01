@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using System;
+using TMPro;
 
 public abstract class Hero : MonoBehaviour, IDamageable
 {
@@ -24,6 +25,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
     [SerializeField] private Transform heroRoot;
     [SerializeField] private float moveSpeed = 8f;
     [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask heroLayer;
     private const float PlacementFollowSpeedMultiplier = 1.2f;
     private GameObject targetEnemy;
     private Transform placementPoint;
@@ -432,6 +434,11 @@ public abstract class Hero : MonoBehaviour, IDamageable
     {
         HeroAttackTime = duration;
     }
+
+    protected void SetCriChance(float amount)
+    {
+        HeroCriChance = amount;
+    }                                                                                                                                                                                                                                                                                                                          
 
     private void OnDrawGizmos()
     {
