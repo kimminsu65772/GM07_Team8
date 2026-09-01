@@ -86,16 +86,26 @@ public class HeroSlotUI : MonoBehaviour
     private IEnumerator AnimateArrow()
     {
         RectTransform rectTrans = arrowEffectObject.GetComponent<RectTransform>();
+        Image arrowImage = arrowEffectObject.GetComponent<Image>();
+
         if (rectTrans == null) yield break;
 
         Vector2 originalPos = rectTrans.anchoredPosition;
-        float speed = 6f;
-        float distance = 8f; // 움직이는 범위 (픽셀)
+        float speed = 8f;    
+        float distance = 3f;  
 
         while (true)
         {
             float pingPong = Mathf.Sin(Time.time * speed) * distance;
             rectTrans.anchoredPosition = originalPos + new Vector2(0, pingPong);
+
+            if (arrowImage != null)
+            {
+                Color color = arrowImage.color;
+                color.a = Mathf.Lerp(0.3f, 1.0f, (Mathf.Sin(Time.time * speed * 1.5f) + 1f) / 2f);
+                arrowImage.color = color;
+            }
+
             yield return null;
         }
     }
