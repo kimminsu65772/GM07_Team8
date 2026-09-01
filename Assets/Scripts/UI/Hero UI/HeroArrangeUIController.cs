@@ -7,6 +7,11 @@ public class HeroArrangeUIController : MonoBehaviour
     [Header("배치 슬롯 설정")]
     [SerializeField] private AirshipDropSlot[] heroArrangeSlots;
 
+    [Header("영웅 배치 잠금 시스템")]
+    [SerializeField] private GameObject[] slotLockPanels; 
+    [SerializeField] private int baseUnlockedSlotCount = 2; // 기본으로 열려있는 칸 수 
+    [SerializeField] private int[] unlockStageRequirements = { 0, 0, 5, 10, 15 }; // 각 슬롯별 해금 스테이지 조건
+
     [Header("영웅 리스트 관련 설정")]
     [SerializeField] private Transform heroListContent;
     [SerializeField] private GameObject heroSlotPrefab;
@@ -63,6 +68,11 @@ public class HeroArrangeUIController : MonoBehaviour
 
     private void HandleSlotClicked(int slotIndex)
     {
+        if (slotIndex >= GetUnlockedSlotCount())
+        {
+            Debug.LogWarning($"{slotIndex}번 슬롯은 아직 잠겨있습니다!");
+            return;
+        }
         currentSelectedSlotIndex = slotIndex;
         Debug.Log($"{slotIndex}번 슬롯이 선택되었습니다. 아래 스크롤에서 배치할 영웅을 선택하세요.");
 
@@ -140,8 +150,53 @@ public class HeroArrangeUIController : MonoBehaviour
 
     private void RefreshUI()
     {
+        RefreshLockPanels();
         RefreshArrangeSlot();
         RefreshHeroList();
+    }
+
+    private void RefreshLockPanels()
+    {
+        int unlockedCount = GetUnlockedSlotCount();
+
+        for (int i = 0; i < heroArrangeSlots.Length; i++)
+        {
+            bool isLocked = i >= unlockedCount;
+
+            if (slotLockPanels != null && i < slotLockPanels.Length && slotLockPanels[i] != null)
+            {
+                slotLockPanels[i].SetActive(isLocked);
+            }
+        }
+    }
+
+    private int GetUnlockedSlotCount()
+    {
+        int currentStage = GetCurrentClearedStage(); // 현재 클리어한 스테이지
+
+        int unlockedCount = baseUnlockedSlotCount;
+
+        for (int i = baseUnlockedSlotCount; i < unlockStageRequirements.Length; i++)
+        {
+            if (currentStage >= unlockStageRequirements[i])
+            {
+                unlockedCount = i + 1;
+            }
+            else
+            {
+                break;
+            }
+        }
+        return Mathf.Clamp(unlockedCount, 1, MaxHeroSlots);
+    }
+
+    private int GetCurrentClearedStage()
+    {
+        if (PlayerInfo.Instance != null)
+        {
+            return PlayerInfo.Instance.MaxClearedStage;
+        }
+        return 0;
     }
 
     private void RefreshArrangeSlot()
@@ -215,7 +270,6 @@ public class HeroArrangeUIController : MonoBehaviour
             bool isInFormation = HeroFormationManager.Instance != null && HeroFormationManager.Instance.IsHeroInFormation(entry.HeroId);
 
             slotUI.SetFormationState(isInFormation);
-            slotUI.SetDragEnabled(false);
 
             Button slotButton = slotUI.GetComponent<Button>();
             if (slotButton == null)
