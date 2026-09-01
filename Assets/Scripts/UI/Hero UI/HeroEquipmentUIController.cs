@@ -13,7 +13,6 @@ public class HeroEquipmentUIController : MonoBehaviour
     [Header("장비 정보")]
     [SerializeField] private EquipmentDB equipmentDB;
 
-
     private void OnEnable()
     {
         if (heroInventoryUIController == null) return;
