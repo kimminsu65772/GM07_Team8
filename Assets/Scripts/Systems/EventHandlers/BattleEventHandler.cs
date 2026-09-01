@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class BattleEventHandler : MonoBehaviour
 {
@@ -36,6 +37,13 @@ public class BattleEventHandler : MonoBehaviour
             CurrencyReward reward = rewardBundle.Rewards[i];
             Debug.Log($"적 처치 보상: {reward.Amount} {reward.Type}");
             PlayerInfo.Instance.AddCurrency(reward.Type, reward.Amount);
+        }
+
+        List<ItemAmount> itemDrops = EnemyDropRewardCalculator.RollEnemyKillDrops(PlayerInfo.Instance.CurrentStage);
+
+        foreach (ItemAmount itemDrop in itemDrops)
+        {
+            PlayerInfo.Instance.AddItem(itemDrop.ItemId, itemDrop.Amount, SavePolicy.Deferred);
         }
     }
 
