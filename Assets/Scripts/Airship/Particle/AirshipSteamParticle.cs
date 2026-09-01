@@ -82,6 +82,13 @@ public class AirshipSteamParticle : MonoBehaviour
             steamParticles.Play();
         }
     }
+    public void ClearParticles()
+    {
+        if (steamParticles == null)
+            return;
+
+        steamParticles.Clear(true);
+    }
 
     private void OnDisable()
     {

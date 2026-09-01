@@ -14,6 +14,9 @@ public class AirshipController : MonoBehaviour
     [SerializeField] private AirshipMovement movement;
     [SerializeField] private AirshipEnemyChecker enemyChecker;
     
+    [SerializeField] private AirshipDeathVfxController deathVfxController;
+    [SerializeField] private AirshipSteamParticle[] steamVfxs;
+    
     private AirshipStateMachine stateMachine;
 
     public AirshipHealth Health => health;
@@ -90,6 +93,8 @@ public class AirshipController : MonoBehaviour
     }
     private void HandleDestroyed()
     {
+        deathVfxController.PlayDeadAnimAndVfx();
+        
         stateMachine.ChangeState(stateMachine.DestroyedState);
     }
     private void Update()
@@ -103,6 +108,13 @@ public class AirshipController : MonoBehaviour
     }
     public void Respawn()
     {
+        deathVfxController.InitObjs();
+        for (int i = 0; i < steamVfxs.Length; i++)
+        {
+            if (steamVfxs[i] != null)
+                steamVfxs[i].ClearParticles();
+        }
+        
         statController.ResetTemporaryBuffs();
         health.ResetHealth();
         movement.StopImmediately();
