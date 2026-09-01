@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f748369105617a14bafedad021f8ccd1
+guid: 0c5025de0719eb3439d0d18faaf74da7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8180171696930044909
-    second: Warrior_0
+      213: -8512249874456106666
+    second: ArcherIcon_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Warrior_0
+      name: ArcherIcon_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 14
-        width: 229
-        height: 173
+        x: 234
+        y: 168
+        width: 347
+        height: 306
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 314c7ca9e213a7e80800000000000000
-      internalID: -8180171696930044909
+      spriteID: 6592ea9c6d96ed980800000000000000
+      internalID: -8512249874456106666
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Warrior_0: -8180171696930044909
+      ArcherIcon_0: -8512249874456106666
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

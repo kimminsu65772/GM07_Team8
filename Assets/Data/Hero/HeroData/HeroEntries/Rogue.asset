@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Rogue
   m_EditorClassIdentifier: Assembly-CSharp::HeroEntry
   heroId: 15
-  heroIcon: {fileID: 0}
+  heroIcon: {fileID: 21300000, guid: 7169827d989a6a946b88b0ab873f3722, type: 3}
   heroPrefab: {fileID: 3931466257896633082, guid: 110b281e1205b074dbed33ac48fe51a0, type: 3}
   heroLocation: 0
   isDefaultOwned: 1

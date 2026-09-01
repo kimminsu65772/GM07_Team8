@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 51f5dbd2a545b714fbd3e0370b321334
+guid: 2e4ef5324c3f3af48b52b372d449e98a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7285376162372006033
-    second: Mage_0
+      213: -6223677478972551737
+    second: steampunk_healing_projectile_130_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 130
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Mage_0
+      name: steampunk_healing_projectile_130_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 29
-        width: 229
-        height: 187
+        x: 0
+        y: 0
+        width: 130
+        height: 130
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f6fc7badaf425ea90800000000000000
-      internalID: -7285376162372006033
+      spriteID: 7cd0e3dae4e01a9a0800000000000000
+      internalID: -6223677478972551737
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Mage_0: -7285376162372006033
+      steampunk_healing_projectile_130_0: -6223677478972551737
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -333,7 +333,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         Attack.StopIsAttacking();
         Attack.StopIsSkilling();
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(10f);
 
         isDead = false;
         HeroCurrentHP = heroMaxHP;
