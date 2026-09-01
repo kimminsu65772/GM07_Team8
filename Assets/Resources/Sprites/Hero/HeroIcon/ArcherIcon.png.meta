@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 51f5dbd2a545b714fbd3e0370b321334
+guid: 0c5025de0719eb3439d0d18faaf74da7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7285376162372006033
-    second: Mage_0
+      213: -8512249874456106666
+    second: ArcherIcon_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Mage_0
+      name: ArcherIcon_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 29
-        width: 229
-        height: 187
+        x: 234
+        y: 168
+        width: 347
+        height: 306
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f6fc7badaf425ea90800000000000000
-      internalID: -7285376162372006033
+      spriteID: 6592ea9c6d96ed980800000000000000
+      internalID: -8512249874456106666
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Mage_0: -7285376162372006033
+      ArcherIcon_0: -8512249874456106666
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

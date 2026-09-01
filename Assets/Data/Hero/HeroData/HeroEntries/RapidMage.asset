@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RapidMage
   m_EditorClassIdentifier: Assembly-CSharp::HeroEntry
   heroId: 23
-  heroIcon: {fileID: 0}
+  heroIcon: {fileID: 21300000, guid: f3b6fb24be988fb49b419b8ced0df42a, type: 3}
   heroPrefab: {fileID: 4645190578520512926, guid: d958e285e47510848ba1e6a91e2d815a, type: 3}
   heroLocation: 1
   isDefaultOwned: 1
