@@ -58,7 +58,7 @@ public class AirshipItemSlotUI : MonoBehaviour
             // 기어 데이터(AirshipGearData) 내부에 설명/효과 변수 추가시 여기에 연결하세요.
         }
     }
-    public void SetUnlockInfo(string conditionDesc, int costAmount)
+    public void SetUnlockInfo(string conditionDesc, string costTextString)
     {
         if (conditionText != null)
         {
@@ -67,7 +67,7 @@ public class AirshipItemSlotUI : MonoBehaviour
 
         if (costText != null)
         {
-            costText.text = $"x{costAmount}";    
+            costText.text = $"x{costTextString}";    
         }
 
         if (costObject != null)
