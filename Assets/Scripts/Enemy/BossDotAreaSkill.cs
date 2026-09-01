@@ -21,7 +21,9 @@ public class BossDotAreaSkill : MonoBehaviour
 
     private Coroutine skillCoroutine;
     private bool isCasting;
+    private bool isAutoUse = true;
 
+    public bool IsCasting => isCasting;
     private void Awake()
     {
         enemyStats = GetComponent<EnemyStats>();
@@ -32,39 +34,66 @@ public class BossDotAreaSkill : MonoBehaviour
 
     private void OnEnable()
     {
-        skillCoroutine = StartCoroutine(SkillRoutine());
+        if (isAutoUse)
+        {
+            skillCoroutine = StartCoroutine(SkillRoutine());
+        }
+    }
+    // 최종 보스 컨트롤러에서 자동 발동을 끈다.
+    public void SetAutoUse(bool value)
+    {
+        isAutoUse = value;
+
+        if (!isAutoUse && skillCoroutine != null)
+        {
+            StopCoroutine(skillCoroutine);
+            skillCoroutine = null;
+        }
     }
 
+    // 최종 보스 컨트롤러가 장판 스킬을 직접 실행한다.
+    public bool UseSkill()
+    {
+        if (isCasting || enemyStats == null || enemyStats.IsDead || dotAreaPrefab == null)
+        {
+            return false;
+        }
+
+        StartCoroutine(UseSkillRoutine());
+        return true;
+    }
     private IEnumerator SkillRoutine()
     {
         yield return new WaitForSeconds(firstSkillDelay);
 
         while (enemyStats != null && !enemyStats.IsDead)
         {
-            isCasting = true;
-
-            // 광역기 시전 중에는 기본 공격이 함께 실행되지 않도록 막는다.
-            if (enemyAttack != null)
-            {
-                enemyAttack.enabled = false;
-            }
-
-            animationController?.PlayDotAreaSkill();
-
-            yield return new WaitForSeconds(skillAnimationDuration);
-
-            if (enemyAttack != null)
-            {
-                enemyAttack.enabled = true;
-            }
-
-            isCasting = false;
+            yield return StartCoroutine(UseSkillRoutine());
 
             yield return new WaitForSeconds(skillCooldown);
         }
     }
+    private IEnumerator UseSkillRoutine()
+    {
+        isCasting = true;
 
-    // 광역기 애니메이션 이벤트에서 호출한다.
+        // 광역기 시전 중에는 기본 공격이 함께 실행되지 않도록 막는다.
+        if (enemyAttack != null)
+        {
+            enemyAttack.enabled = false;
+        }
+
+        animationController?.PlayDotAreaSkill();
+
+        yield return new WaitForSeconds(skillAnimationDuration);
+
+        if (enemyAttack != null)
+        {
+            enemyAttack.enabled = true;
+        }
+
+        isCasting = false;
+    }
     // 광역기 애니메이션 이벤트에서 호출한다.
     public void CastDotArea()
     {
