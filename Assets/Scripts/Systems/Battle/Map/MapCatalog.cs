@@ -14,6 +14,13 @@ public class MapCatalog : ScriptableObject
         FillMapPrefabs();
     }
 
+    public MapEntry GetMapEntry(int currentStage)
+    {
+        int mapKey = GetMapKey(currentStage);
+        mapPrefabs.TryGetValue(mapKey, out MapEntry entry);
+        return entry;
+    }
+
     public GameObject GetMapPrefab(int currentStage)
     {
         int mapKey = GetMapKey(currentStage);

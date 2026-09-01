@@ -156,8 +156,8 @@ public static class OfflineRewardProvider
             return 0f;
         }
 
-        int bonusChance = maxClearedStage / 5;
-        float chance = MidBaseChance + bonusChance * MidChancePerFiveStage;
+        int stageStep = maxClearedStage / 5;
+        float chance = MidBaseChance + stageStep * MidChancePerFiveStage;
 
         return Mathf.Clamp(chance, 0f, MaxMidChance);
     }
@@ -168,8 +168,8 @@ public static class OfflineRewardProvider
         {
             return 0f;
         }
-        int bonusChance = maxClearedStage / 10;
-        float chance = HighBaseChance + bonusChance * HighChancePerTenStage;
+        int stageStep = maxClearedStage / 10;
+        float chance = HighBaseChance + stageStep * HighChancePerTenStage;
         return Mathf.Clamp(chance, 0f, MaxHighChance);
     }
 

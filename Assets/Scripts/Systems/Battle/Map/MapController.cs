@@ -18,13 +18,23 @@ public class MapController : MonoBehaviour
 
         try
         {
-            GameObject mapPrefab = mapCatalog.GetMapPrefab(stageNumber);
+            MapEntry mapEntry = mapCatalog.GetMapEntry(stageNumber);
 
-            if (mapPrefab == null)
+            if (mapEntry == null)
             {
                 Debug.LogError($"Stage {stageNumber}에 해당하는 맵 프리팹을 찾을 수 없습니다.");
                 return;
             }
+
+            GameObject mapPrefab = mapEntry.MapPrefab;
+
+            if (mapPrefab == null)
+            {
+                Debug.LogError($"Stage {stageNumber}에 해당하는 맵 프리팹이 null입니다.");
+                return;
+            }
+
+            SoundId bgmId = mapEntry.bgmId;
 
             if (!mapCache.TryGetValue(mapPrefab, out GameObject cachedMap))
             {
@@ -58,8 +68,13 @@ public class MapController : MonoBehaviour
                 currentMap.SetActive(false);
             }
 
-            cachedMap.SetActive(true);
             currentMap = cachedMap;
+            cachedMap.SetActive(true);
+
+            if (bgmId != SoundId.None && SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlayBGM(bgmId);
+            }
         }
         finally
         {
