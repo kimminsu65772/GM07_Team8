@@ -18,7 +18,7 @@ MonoBehaviour:
   heroLocation: 1
   isDefaultOwned: 1
   defaultLevel: 1
-  skillIcon: {fileID: 1236400394, guid: 94cfe50d79cb1984e8e2ca6260a63456, type: 3}
+  skillIcon: {fileID: -5767279307617466266, guid: a11bbe9fa6294bf439e944fdde22add6, type: 3}
   skillName: "\uC554\uC11D \uCC0C\uB974\uAE30"
   skillDescription: "\uCEE4\uB2E4\uB780 \uB3CC\uC744 \uC0C1\uB300 \uC544\uB798\uC5D0
     \uC18C\uD658\uD558\uC5EC \uD070 \uD53C\uD574\uB97C \uC785\uD799\uB2C8\uB2E4."

@@ -1040,6 +1040,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1906422642891029343, guid: ad12cbc94d617b74db0790d549ceb8fa, type: 3}
       insertIndex: -1
       addedObject: {fileID: 518578105616594054}
+    - targetCorrespondingSourceObject: {fileID: 1906422642891029343, guid: ad12cbc94d617b74db0790d549ceb8fa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2610893216267305710}
+    - targetCorrespondingSourceObject: {fileID: 1906422642891029343, guid: ad12cbc94d617b74db0790d549ceb8fa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 789539275293238202}
   m_SourcePrefab: {fileID: 100100000, guid: ad12cbc94d617b74db0790d549ceb8fa, type: 3}
 --- !u!95 &4562962606052789578 stripped
 Animator:
@@ -1064,6 +1070,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroProjectileShooter
   hero: {fileID: 4845708118487408652}
+--- !u!114 &2610893216267305710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6596696289682111225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7962559c6fb6c7c498267e4ae99e28dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SortingYPos
+  baseOrder: 5000
+  sortScale: 100
+  sortPivot: {fileID: 6889580828736699004}
+--- !u!114 &789539275293238202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6596696289682111225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7962559c6fb6c7c498267e4ae99e28dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SortingYPos
+  baseOrder: 5000
+  sortScale: 100
+  sortPivot: {fileID: 6889580828736699004}
 --- !u!4 &6889580828736699004 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2189981261774552026, guid: ad12cbc94d617b74db0790d549ceb8fa, type: 3}
