@@ -33,4 +33,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5a3e30c0ed3629e4c8cbb9a7c201783d, type: 2}
   - {fileID: 11400000, guid: 43ba9a6c24b7eb443983f348270ed158, type: 2}
   - {fileID: 11400000, guid: c786cb28a9657cd4eba47d87a9fbb332, type: 2}
+  - {fileID: 11400000, guid: 4fe0f0dc4c9dc294a841b2f49afdfef0, type: 2}
+  - {fileID: 11400000, guid: 616cc3a1a68680e4a93a0020a5757019, type: 2}
+  - {fileID: 11400000, guid: 985c89a744eefa14e8e8a4169b8c05ce, type: 2}
+  - {fileID: 11400000, guid: d7d632025b3fe5b4cada4646976f8d83, type: 2}
+  - {fileID: 11400000, guid: 4e2737f573d31cf4fa47f9f425f293d9, type: 2}
   stageCycle: 10
