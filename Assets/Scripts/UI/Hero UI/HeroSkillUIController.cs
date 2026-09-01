@@ -6,15 +6,14 @@ using TMPro;
 
 public class HeroSkillUIController : MonoBehaviour
 {
-    [Header("영웅 배치")]
-    [SerializeField] private AirshipHeroPlacementPoints placementPoints;
-
     [Header("영웅 스킬 버튼")]
     [SerializeField] private HeroSkillButtonUI[] skillButtons;
 
     [Header("전체 자동 / 수동")]
     [SerializeField] private Button autoSkillButton;
-    [SerializeField] private TMP_Text autoSkillButtonText;
+    [SerializeField] private GameObject autoGlowObject;
+    [SerializeField] private RectTransform autoGlowTransform;
+    [SerializeField] private float rotationSpeed = 200f;
 
     [SerializeField] private HeroCatalog heroCatalog;
     private readonly List<Hero> placedHeroes = new();
@@ -34,7 +33,7 @@ public class HeroSkillUIController : MonoBehaviour
         {
             autoSkillButton.onClick.AddListener(OnClickAutoSkill);
         }
-        UpdateAutoSkillButtonText();
+        UpdateAutoSkillGlow();
     }
     private void OnEnable()
     {
@@ -56,6 +55,10 @@ public class HeroSkillUIController : MonoBehaviour
         {
             refreshTimer = 0f;
             RefreshSkillButtons();
+        }
+        if (isAutoSkill && autoGlowTransform != null)
+        {
+            autoGlowTransform.Rotate(0f, 0f, -rotationSpeed * Time.unscaledDeltaTime);
         }
     }
     private IEnumerator WaitForHeroesAndRefresh()
@@ -104,6 +107,17 @@ public class HeroSkillUIController : MonoBehaviour
                 skillButtons[i].ClearHero();
             }
         }
+
+        bool hasHeroes = placedHeroes.Count > 0;
+
+        if (autoSkillButton != null)
+        {
+            autoSkillButton.gameObject.SetActive(hasHeroes);
+        }
+        if (autoGlowObject != null)
+        {
+            autoGlowObject.SetActive(hasHeroes && isAutoSkill);
+        }
         ApplyAutoSkillMode();
     }
     /// 전열 + 후열 영웅 찾기
@@ -140,7 +154,7 @@ public class HeroSkillUIController : MonoBehaviour
         isAutoSkill = !isAutoSkill;
 
         ApplyAutoSkillMode();
-        UpdateAutoSkillButtonText();
+        UpdateAutoSkillGlow();
     }
     private void ApplyAutoSkillMode()
     {
@@ -155,10 +169,12 @@ public class HeroSkillUIController : MonoBehaviour
             heroAttack.SetAutoSkill(isAutoSkill);
         }
     }
-    private void UpdateAutoSkillButtonText()
+    private void UpdateAutoSkillGlow()
     {
-        if (autoSkillButtonText == null) return;
-        autoSkillButtonText.text = isAutoSkill ? "자동" : "수동";
+        if (autoGlowObject != null)
+        {
+            autoGlowObject.SetActive(isAutoSkill);
+        }
     }
     public void Refresh()
     {
