@@ -14,6 +14,8 @@ public class EffectPlayer : MonoBehaviour
     private Coroutine selfEffectCoroutine;
     private Coroutine targetEffectCoroutine;
 
+    private Sprite[] tmpFrames;
+
     private void Awake()
     {
         if (selfEffect == null)
@@ -93,7 +95,7 @@ public class EffectPlayer : MonoBehaviour
     {
         if (frames == null || frames.Length == 0)
         {
-            Debug.LogWarning($"{gameObject.name}: 이펙트 프레임이 비어 있습니다.");
+            // Debug.LogWarning($"{gameObject.name}: 이펙트 프레임이 비어 있습니다.");
 
             renderer.sprite = null;
 
@@ -118,5 +120,12 @@ public class EffectPlayer : MonoBehaviour
             selfEffectCoroutine = null;
         else
             targetEffectCoroutine = null;
+    }
+
+    public void ChangeFrames()
+    {
+        tmpFrames = attackFrames;
+        attackFrames = targetFrames;
+        targetFrames = tmpFrames;
     }
 }

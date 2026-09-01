@@ -3,16 +3,16 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class AirshipDropSlot : MonoBehaviour, IDropHandler
+public class AirshipDropSlot : MonoBehaviour
 {
     [SerializeField, Range(0, 4)] private int slotIndex;//현재 비행선 위의 이 칸이 몇 번 슬롯인지 지정합니다.
     [SerializeField] private Image heroIcon;
+    [SerializeField] private GameObject highlightObject;
 
     private Button btn;
+    private bool isOccupied = false; // 현재 슬롯에 영웅이 들어있는지 여부
 
-    // 영웅이 슬롯에 드롭되었을 때, 슬롯의 인덱스와 드롭된 영웅의 이름을 전달하여 배치를 처리할 수 있도록 함.
-    public event Action<int, HeroNameEnum> OnHeroDropped;
-    // 슬롯 비우기 요청 이벤트
+    public event Action<int> OnSlotClicked;
     public event Action<int> OnSlotClearRequested;
 
     public int SlotIndex => slotIndex;
@@ -30,41 +30,18 @@ public class AirshipDropSlot : MonoBehaviour, IDropHandler
         {
             btn.onClick.AddListener(() =>
             {
-                OnSlotClearRequested?.Invoke(slotIndex);
+                if (isOccupied)
+                {
+                    OnSlotClearRequested?.Invoke(slotIndex);
+                }
+                else
+                {
+                    OnSlotClicked?.Invoke(slotIndex);
+                }
             });
         }
+        SetHighlight(false);
     }
-
-    //드롭 이벤트 감지
-    public void OnDrop(PointerEventData eventData)
-    {
-        GameObject droppedObject = eventData.pointerDrag;
-
-        if (droppedObject == null)
-        {
-            Debug.LogError("드롭된 오브젝트가 없습니다.");
-            return;
-        }
-
-        HeroSlotUI heroSlotUI = droppedObject.GetComponent<HeroSlotUI>();
-
-        if (heroSlotUI == null)
-        {
-            Debug.LogError("드롭된 오브젝트가 HeroSlotUI 컴포넌트를 가지고 있지 않습니다.");
-            return;
-        }
-
-        HeroNameEnum heroId = heroSlotUI.GetHeroId();
-        
-        if (heroId == HeroNameEnum.None)
-        {
-            Debug.LogError("배치하려는 영웅의 Id가 없습니다.");
-            return;
-        }
-
-        OnHeroDropped?.Invoke(slotIndex, heroId); 
-    }
-
     // 슬롯 채우기
     public void SetHero(HeroEntry entry)
     {
@@ -85,19 +62,13 @@ public class AirshipDropSlot : MonoBehaviour, IDropHandler
 
     public bool TrySetHero(HeroEntry entry)
     {
-        if (entry == null)
+        if (entry == null) return false;
+        if (heroIcon != null)
         {
-            Debug.LogError("SetHero 호출 시 entry가 null입니다.");
-            return false;
+            heroIcon.sprite = entry.HeroIcon;
+            heroIcon.gameObject.SetActive(true);
         }
-        if (heroIcon == null)
-        {
-            Debug.LogError("heroIcon이 할당되지 않았습니다.");
-            return false;
-        }
-
-        heroIcon.sprite = entry.HeroIcon;
-        heroIcon.gameObject.SetActive(true);
+        isOccupied = true;
         return true;
     }
 
@@ -107,6 +78,15 @@ public class AirshipDropSlot : MonoBehaviour, IDropHandler
         {
             heroIcon.sprite = null;
             heroIcon.gameObject.SetActive(false);
+        }
+        isOccupied = false;
+        SetHighlight(false); // 비워질 때 강조도 함께 해제
+    }
+    public void SetHighlight(bool isActive)
+    {
+        if (highlightObject != null)
+        {
+            highlightObject.SetActive(isActive);
         }
     }
 }

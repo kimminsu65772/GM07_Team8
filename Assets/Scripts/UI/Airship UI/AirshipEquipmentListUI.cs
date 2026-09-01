@@ -76,10 +76,11 @@ public class AirshipEquipmentListUI : MonoBehaviour
                         {
                             UnlockResult unlockResult = unlockCatalog.CheckCannonUnlock(data.CannonType);
 
-                            string conditionDesc = unlockResult.Reason;       
-                            int costAmount = (int)unlockResult.Cost.Amount;
+                            string conditionDesc = unlockResult.Reason;
+                            double costAmount = unlockResult.Cost.Amount;
+                            string formattedCost = GameFormatUtils.ToIdleNumber(costAmount);
 
-                            slotUI.SetUnlockInfo(conditionDesc, costAmount);
+                            slotUI.SetUnlockInfo(conditionDesc, formattedCost);
                         }
                         Button unlockButton = slotUI.UnlockButton;
                         if (unlockButton != null)
@@ -98,21 +99,17 @@ public class AirshipEquipmentListUI : MonoBehaviour
                 }
                 if (btnText != null)
                 {
-                    btnText.text = isEquipped ? "해제" : "장착";
+                    btnText.text = isEquipped ? "장착 중" : "장착";
                 }
 
                 if (btn != null)
                 {
                     btn.onClick.AddListener(() => {
-                        if (isEquipped)
-                        {
-                            ToggleUnequipCannon();
-                        }
-                        else
+                        if (!isEquipped)
                         {
                             OnClickEquipCannonButton(data.CannonType);
+                            RefreshList(); 
                         }
-                        RefreshList(); // 클릭 후 버튼 텍스트와 상태 즉시 갱신
                     });
                 }
             }
@@ -152,10 +149,11 @@ public class AirshipEquipmentListUI : MonoBehaviour
                         {
                             UnlockResult unlockResult = unlockCatalog.CheckGearUnlock(data.GearType);
 
-                            string conditionDesc = unlockResult.Reason;     
-                            int costAmount = (int)unlockResult.Cost.Amount;
+                            string conditionDesc = unlockResult.Reason;
+                            double costAmount = unlockResult.Cost.Amount;
+                            string formattedCost = GameFormatUtils.ToIdleNumber(costAmount);
 
-                            slotUI.SetUnlockInfo(conditionDesc, costAmount);
+                            slotUI.SetUnlockInfo(conditionDesc, formattedCost);
                         }
                         Button unlockButton = slotUI.UnlockButton;
                         if (unlockButton != null)
@@ -174,22 +172,18 @@ public class AirshipEquipmentListUI : MonoBehaviour
                 }
                 if (btnText != null)
                 {
-                    btnText.text = isEquipped ? "해제" : "장착";
+                    btnText.text = isEquipped ? "장착 중" : "장착";
                 }
 
                 if (btn != null)
                 {
                     btn.onClick.AddListener(() => 
                     {
-                        if (isEquipped)
-                        {
-                            ToggleUnequipGear();
-                        }
-                        else
+                        if (!isEquipped)
                         {
                             OnClickEquipGearButton(data.GearType);
+                            RefreshList();
                         }
-                        RefreshList();
                     });
                 }
             }
@@ -282,42 +276,6 @@ public class AirshipEquipmentListUI : MonoBehaviour
             unlockFailPanel.SetActive(false);
         }
         unlockFailCoroutine = null;
-    }
-    private void ToggleUnequipCannon()
-    {
-        if (equipmentController == null) return;
-
-        MethodInfo method = equipmentController.GetType().GetMethod("UnequipCannon", BindingFlags.NonPublic | BindingFlags.Instance);
-        if (method != null)
-        {
-            method.Invoke(equipmentController, null);
-
-            FieldInfo field = equipmentController.GetType().GetField("OnCannonChanged", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-            if (field != null)
-            {
-                System.Action<AirshipCannonData> del = field.GetValue(equipmentController) as System.Action<AirshipCannonData>;
-                del?.Invoke(null);
-            }
-            equipmentController.EquipCannon(AirshipCannonType.Normal);
-        }
-    }
-    private void ToggleUnequipGear()
-    {
-        if (equipmentController == null) return;
-
-        MethodInfo method = equipmentController.GetType().GetMethod("UnequipGear", BindingFlags.NonPublic | BindingFlags.Instance);
-        if (method != null)
-        {
-            method.Invoke(equipmentController, null);
-
-            FieldInfo field = equipmentController.GetType().GetField("OnGearChanged", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-            if (field != null)
-            {
-                System.Action<AirshipGearData> del = field.GetValue(equipmentController) as System.Action<AirshipGearData>;
-                del?.Invoke(null);
-            }
-            equipmentController.EquipGear(AirshipGearType.Normal);
-        }
     }
     private List<T> GetPrivateFieldList<T>(object target, string fieldName) where T : class
     {

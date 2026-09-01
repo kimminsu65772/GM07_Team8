@@ -263,6 +263,7 @@ GameObject:
   - component: {fileID: 7740795204363032001}
   - component: {fileID: 5192162657575141187}
   - component: {fileID: 689260732565296914}
+  - component: {fileID: -6834896535264171857}
   m_Layer: 7
   m_Name: Hero13_ShieldmanPrefab
   m_TagString: Untagged
@@ -312,10 +313,13 @@ MonoBehaviour:
   attackTime: 0
   skillTime: 0
   heroRoot: {fileID: 551821304725996985}
-  moveSpeed: 8
+  moveSpeed: 5
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+  heroLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &3397566840670672911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,6 +374,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c64a2c56d9f880f4880f549499c15fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroEquipmentManager
+  currentWeaponID: 0
+  currentBodyID: 0
+  currentAccID: 0
+--- !u!58 &-6834896535264171857
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5338311504596496945}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.3}
+  m_Radius: 0.2
 --- !u!1 &6502988401253513572
 GameObject:
   m_ObjectHideFlags: 0

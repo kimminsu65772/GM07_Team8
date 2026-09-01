@@ -1227,6 +1227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AirshipDropSlot
   slotIndex: 0
   heroIcon: {fileID: 1754899452009011206}
+  highlightObject: {fileID: 0}
 --- !u!1 &705967505907704384
 GameObject:
   m_ObjectHideFlags: 0
@@ -2618,6 +2619,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AirshipDropSlot
   slotIndex: 4
   heroIcon: {fileID: 2808618385140171587}
+  highlightObject: {fileID: 0}
 --- !u!1 &1323169897996964089
 GameObject:
   m_ObjectHideFlags: 0
@@ -3423,6 +3425,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AirshipDropSlot
   slotIndex: 1
   heroIcon: {fileID: 371361623506917591}
+  highlightObject: {fileID: 0}
 --- !u!1 &2372456957772930352
 GameObject:
   m_ObjectHideFlags: 0
@@ -7210,6 +7213,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AirshipDropSlot
   slotIndex: 3
   heroIcon: {fileID: 5714816613032863416}
+  highlightObject: {fileID: 0}
 --- !u!1 &4762653390270080295
 GameObject:
   m_ObjectHideFlags: 0
@@ -10869,6 +10873,7 @@ MonoBehaviour:
   - {fileID: 5626085593336975195}
   - {fileID: 6709989970685055691}
   - {fileID: 1892379414414948105}
+  dimPanelObject: {fileID: 0}
 --- !u!1 &6675382322530882784
 GameObject:
   m_ObjectHideFlags: 0
@@ -13996,6 +14001,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AirshipDropSlot
   slotIndex: 2
   heroIcon: {fileID: 3090073565345755290}
+  highlightObject: {fileID: 0}
 --- !u!1 &9054387246021435652
 GameObject:
   m_ObjectHideFlags: 0
