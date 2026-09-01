@@ -17,6 +17,8 @@ public class BossRangedBarrageSkill : MonoBehaviour
     private EnemyRangedAttack enemyRangedAttack;
     private EnemyAttack enemyAttack;
     private bool isCasting;
+    private bool isAutoUse = true;
+    public bool IsCasting => isCasting;
     private float nextSkillTime;
 
     private void Awake()
@@ -27,6 +29,20 @@ public class BossRangedBarrageSkill : MonoBehaviour
 
         if (enemyAnimator == null) enemyAnimator = GetComponentInChildren<Animator>();
     }
+    // 최종 보스 컨트롤러에서 자동 발동을 끈다.
+    public void SetAutoUse(bool value)
+    {
+        isAutoUse = value;
+    }
+
+    // 최종 보스 컨트롤러가 연발 공격을 직접 실행한다.
+    public bool UseSkill()
+    {
+        if (isCasting || enemyStats == null || enemyStats.IsDead) return false;
+
+        StartCoroutine(FireBarrage());
+        return true;
+    }
 
     private IEnumerator Start()
     {
@@ -36,11 +52,12 @@ public class BossRangedBarrageSkill : MonoBehaviour
 
     private void Update()
     {
-        if (isCasting || enemyStats.IsDead || Time.time < nextSkillTime) return;
+        if (!isAutoUse || isCasting || enemyStats.IsDead || Time.time < nextSkillTime) return;
 
         StartCoroutine(FireBarrage());
     }
-
+ 
+   
     private IEnumerator FireBarrage()
     {
         isCasting = true;
@@ -64,5 +81,21 @@ public class BossRangedBarrageSkill : MonoBehaviour
         enemyRangedAttack.enabled = true;
         nextSkillTime = Time.time + skillCooldown;
         isCasting = false;
+    }
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+
+        isCasting = false;
+
+        if (enemyAttack != null)
+        {
+            enemyAttack.enabled = true;
+        }
+
+        if (enemyRangedAttack != null)
+        {
+            enemyRangedAttack.enabled = true;
+        }
     }
 }

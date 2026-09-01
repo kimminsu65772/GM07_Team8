@@ -22,3 +22,5 @@ MonoBehaviour:
     MapPrefab: {fileID: 8565523364691489044, guid: f9ccc72d8333b52408f542bad3778e40, type: 3}
   - RegionId: 4
     MapPrefab: {fileID: 1665196681240893271, guid: 99f8493b3f65a5648b5b89fda28e5875, type: 3}
+  - RegionId: 4
+    MapPrefab: {fileID: 5193486225382941099, guid: 8eae8cfc1ff57764aa0612c076bf8a4b, type: 3}
