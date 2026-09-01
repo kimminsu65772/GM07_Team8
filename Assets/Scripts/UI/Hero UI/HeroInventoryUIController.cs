@@ -113,7 +113,6 @@ public class HeroInventoryUIController : MonoBehaviour
             (HeroEntry entry, HeroSaveData heroSaveData) hero = IngameHeroList[i];
             heroSlotPool[i].SetupSlot(hero.entry, hero.heroSaveData, hero.heroSaveData.IsOwned, ShowDetailInfo);
             heroSlotPool[i].SetFormationState(false);
-            heroSlotPool[i].SetDragEnabled(false);
         }
 
         if (selectedHeroEntry != null && selectedHeroSaveData != null)

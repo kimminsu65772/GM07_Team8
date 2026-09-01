@@ -1,10 +1,9 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 using System;
-
-public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+using System.Collections;
+public class HeroSlotUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private Image heroIcon;
@@ -13,8 +12,9 @@ public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     [SerializeField] private Image formationOverlayImage;
     [SerializeField] private TMP_Text formationStateText;
 
-    [Header("영웅 배치 슬롯 사용 구분")]
-    [SerializeField] private bool canDrag = true;
+    [Header("화살표 효과 설정")]
+    [SerializeField] private GameObject arrowEffectObject; // 화살표 UI 오브젝트 연결
+    private Coroutine arrowAnimationCoroutine;
 
     private HeroNameEnum heroId;
     private string heroName;
@@ -22,21 +22,6 @@ public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     private HeroSaveData currentSaveData;
     private Action<HeroEntry, HeroSaveData> onClickCallback;
 
-    private Transform originalParent;
-    private CanvasGroup canvasGroup;
-    private Transform canvasTransform;
-
-    private void Awake()
-    {
-        canvasGroup = GetComponent<CanvasGroup>();
-        if (canvasGroup == null) canvasGroup = gameObject.AddComponent<CanvasGroup>();
-
-        Canvas rootCanvas = GetComponentInParent<Canvas>();
-        if (rootCanvas != null)
-        {
-            canvasTransform = rootCanvas.rootCanvas.transform;
-        }
-    }
     public void SetupSlot(HeroEntry entry, HeroSaveData saveData, bool isOwned, Action<HeroEntry, HeroSaveData> onClick = null)
     {
         currentEntry = entry;
@@ -65,45 +50,6 @@ public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         }
     }
     public HeroNameEnum GetHeroId() => heroId;
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        if (currentSaveData == null || !currentSaveData.IsOwned || !canDrag) return;
-
-        originalParent = transform.parent;
-
-        if (canvasTransform != null)
-        {
-            transform.SetParent(canvasTransform);
-        }
-        canvasGroup.blocksRaycasts = false;
-    }
-    public void OnDrag(PointerEventData eventData)
-    {
-        if (currentSaveData == null || !currentSaveData.IsOwned || !canDrag) return;
-
-        RectTransform rect = GetComponent<RectTransform>();
-        if (rect != null && canvasTransform != null)
-        {
-            RectTransformUtility.ScreenPointToWorldPointInRectangle(
-                canvasTransform as RectTransform,
-                eventData.position,
-                eventData.pressEventCamera,
-                out Vector3 worldPoint
-            );
-            rect.position = worldPoint;
-        }
-    }
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        if (currentSaveData == null || !currentSaveData.IsOwned) return;
-        canvasGroup.blocksRaycasts = true;
-
-        if (transform.parent == canvasTransform)
-        {
-            transform.SetParent(originalParent);
-            GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-        }
-    }
     public void SetFormationState(bool isInFormation)
     {
         if (formationOverlayImage != null)
@@ -117,8 +63,40 @@ public class HeroSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             formationStateText.text = isInFormation ? "배치중" : string.Empty;
         }
     }
-    public void SetDragEnabled(bool enabled)
+    public void SetArrowEffect(bool isActive)
     {
-        canDrag = enabled;
+        if (arrowEffectObject == null) return;
+
+        arrowEffectObject.SetActive(isActive);
+
+        if (isActive)
+        {
+            if (arrowAnimationCoroutine != null) StopCoroutine(arrowAnimationCoroutine);
+            arrowAnimationCoroutine = StartCoroutine(AnimateArrow());
+        }
+        else
+        {
+            if (arrowAnimationCoroutine != null)
+            {
+                StopCoroutine(arrowAnimationCoroutine);
+                arrowAnimationCoroutine = null;
+            }
+        }
+    }
+    private IEnumerator AnimateArrow()
+    {
+        RectTransform rectTrans = arrowEffectObject.GetComponent<RectTransform>();
+        if (rectTrans == null) yield break;
+
+        Vector2 originalPos = rectTrans.anchoredPosition;
+        float speed = 6f;
+        float distance = 8f; // 움직이는 범위 (픽셀)
+
+        while (true)
+        {
+            float pingPong = Mathf.Sin(Time.time * speed) * distance;
+            rectTrans.anchoredPosition = originalPos + new Vector2(0, pingPong);
+            yield return null;
+        }
     }
 }
