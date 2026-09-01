@@ -16,7 +16,7 @@ public class Hero14_Berserker : Hero
         SetAttackEffectPreset(-0.6f, 0.5f, -1.7f, 1.4f);
         SetSkillEffectPreset(0f, 0.4f, 3f, 3f);
         SetTargetEffectPreset(0f, 0f, 1f, 1f);
-        Init(14, originalAttackTime, 10f, HeroLocationEnum.Front);
+        Init(14, originalAttackTime, 12f, HeroLocationEnum.Front);
         stageManager = FindFirstObjectByType<StageManager>();
     }
 
@@ -41,7 +41,7 @@ public class Hero14_Berserker : Hero
         SetAttackEffectPreset(-0.6f, 0.3f, -2.3f, 2f);
         animator.SetFloat("bonusSpeed", attackBuffAmount);
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(4f);
 
         ClearBuff();
     }
