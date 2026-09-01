@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AirshipGear_MaxHp
   m_EditorClassIdentifier: Assembly-CSharp::AirshipGearData
   displayName: "\uCD5C\uB300\uCCB4\uB825\uC99D\uAC00\uBD80\uD488"
-  uiImage: {fileID: 0}
+  uiImage: {fileID: 21300000, guid: 12e43b283b2fd814783637ff3ae86c51, type: 3}
   gearImage: {fileID: 21300000, guid: 12e43b283b2fd814783637ff3ae86c51, type: 3}
   gearType: 1
   buffData: {fileID: 11400000, guid: 1e7fe01efeb09fc4b8c655281c9e7c2c, type: 2}

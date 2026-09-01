@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AirshipCannon_Heal
   m_EditorClassIdentifier: Assembly-CSharp::AirshipCannonData
   displayName: "\uCE58\uC720\uD0C4"
-  uiImage: {fileID: 0}
+  uiImage: {fileID: 21300000, guid: 2e4ef5324c3f3af48b52b372d449e98a, type: 3}
   barrelImage: {fileID: 21300000, guid: 7bbe42f3e097dc949bbf1f53395f9498, type: 3}
   cannonType: 3
   projectilePrefab: {fileID: 7841467219157905698, guid: b45ffb3d053098b4493df46760ff1099, type: 3}

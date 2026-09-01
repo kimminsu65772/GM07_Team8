@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AirshipCannon_Rapid
   m_EditorClassIdentifier: Assembly-CSharp::AirshipCannonData
   displayName: "\uC5F0\uC0AC\uD0C4"
-  uiImage: {fileID: 0}
+  uiImage: {fileID: 21300000, guid: 5ca307fddf92c9e4f8e7ea1b9f1d9dfd, type: 3}
   barrelImage: {fileID: 21300000, guid: 1d234179085d9774fbacf448cb8e772c, type: 3}
   cannonType: 2
   projectilePrefab: {fileID: 193875028588587811, guid: 54351d19f9be66541909aa8de035a6af, type: 3}
