@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f748369105617a14bafedad021f8ccd1
+guid: a7f30f1192554234bb0b68023897719c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8180171696930044909
-    second: Warrior_0
+      213: -1095142813833911359
+    second: SorceryIcon_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Warrior_0
+      name: SorceryIcon_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 14
-        width: 229
-        height: 173
+        x: 208
+        y: 149
+        width: 392
+        height: 337
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 314c7ca9e213a7e80800000000000000
-      internalID: -8180171696930044909
+      spriteID: 1c3ab13c9654dc0f0800000000000000
+      internalID: -1095142813833911359
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Warrior_0: -8180171696930044909
+      SorceryIcon_0: -1095142813833911359
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
