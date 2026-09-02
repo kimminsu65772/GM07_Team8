@@ -82,6 +82,7 @@ public class SaveDataFactory
                     }
                 }
             },
+            AutoSkillEnabled = false,
             // 마지막 저장 시간은 단순히 오프라인 보상 계산이나 기타 시간 기반 로직 수행 시 시간 차이를 계산하기 위함이기 때문에
             // 별도로 한국 시간으로 변환하지 않고 UTC 기준으로 저장한다.
             LastSavedAtUtc = System.DateTime.UtcNow.ToString("o")
@@ -118,5 +119,5 @@ public class SaveDataFactory
 // 나중에 데이터 구조가 변경되었을 때 버전 관리 및 비교 후 보정 작업을 위해 현재 세이브 데이터의 버전을 상수로 정의한다.
 public static class SaveDataVersion
 {
-    public const int CurrentVersion = 7;
+    public const int CurrentVersion = 8;
 }

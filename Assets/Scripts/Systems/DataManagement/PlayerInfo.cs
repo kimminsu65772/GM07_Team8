@@ -130,6 +130,7 @@ public class PlayerInfo : MonoBehaviour
     public int CurrentStage => SaveData.StageProgress.CurrentStage;
     public int MaxClearedStage => SaveData.StageProgress.MaxClearedStage;
     public bool RepeatClearedStage => SaveData.StageProgress.RepeatClearedStage;
+    public bool AutoSkillEnabled => SaveData.AutoSkillEnabled;
     public Dictionary<HeroNameEnum, HeroSaveData> Heroes => SaveData.Heroes;
 
     public IReadOnlyList<HeroEntry> HeroEntries => heroCatalog.InGameHeroEntries;
@@ -247,6 +248,16 @@ public class PlayerInfo : MonoBehaviour
         if (StageProgress.RepeatClearedStage == repeatClearedStage) return true;
 
         StageProgress.RepeatClearedStage = repeatClearedStage;
+        RequestSave(savePolicy);
+        return true;
+    }
+
+    public bool SetAutoSkillEnabled(bool isEnabled, SavePolicy savePolicy = SavePolicy.Deferred)
+    {
+        if (!CheckInitialized()) return false;
+        if (SaveData.AutoSkillEnabled == isEnabled) return true;
+
+        SaveData.AutoSkillEnabled = isEnabled;
         RequestSave(savePolicy);
         return true;
     }
@@ -811,6 +822,7 @@ public class PlayerInfo : MonoBehaviour
     // v4: 비행선 파츠 소유 데이터 추가 (기본 장비를 소유 목록에 넣지 않는 에러 발견)
     // v5: 비행선 파츠 소유 HashSet 초기화/마이그레이션 보정
     // v6: 아이템 인벤토리, 장비 인벤토리, 영웅 장비 착용 상태, 장비 제작 진행 상태 추가
+    // v8: 자동 스킬 사용 여부 저장
     // 장비 데이터 저장 방식이 아예 바뀌어서 의미가 있나 싶다...
     private bool MigrateSaveDataIfNeeded()
     {
@@ -829,6 +841,11 @@ public class PlayerInfo : MonoBehaviour
         if (SaveData.SaveVersion < 6)
         {
             MigrateInventoryAndEquipmentCraft();
+        }
+
+        if (SaveData.SaveVersion < 8)
+        {
+            SaveData.AutoSkillEnabled = true;
         }
 
         SaveData.SaveVersion = SaveDataVersion.CurrentVersion;
