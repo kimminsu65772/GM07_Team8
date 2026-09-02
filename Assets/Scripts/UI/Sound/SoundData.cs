@@ -10,24 +10,12 @@ public enum SoundId
     UIButtonHover,
     UIButtonClick,
 
-    // 적 관련
-    EnemyDeath,
-    EnemyAttack,
-    EnemyUseSkills, // 스킬의 경우 고유의 사운드를 가지고 있으므로 그에 대한 정의가 필요함.
-
-    // 영웅 관련
-    HeroDeath,
-    HeroAttack,
-    HeroUseSkills, // 영웅 스킬도 마찬가지
-
-    // 비행선 관련
-    AirshipDestroyed,
-    AirshipMove,
-    AirshipAttack,
-
     // BGM
-    TitleBGM,
-    PrairieBGM,
+    Region1BGM,
+    Region2BGM,
+    Region3BGM,
+    Region4BGM,
+    Region5BGM,
     SmithyBGM,
 }
 
