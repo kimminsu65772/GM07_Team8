@@ -10,19 +10,16 @@ public class EnemyStats : MonoBehaviour, IDamageable
     [Header("Runtime Information")]
     [SerializeField] private int currentHealth;
 
+    [Header("Stun")]
+    [SerializeField] private bool canBeStunned = true;
+    [SerializeField] private bool isStunned;
+
+    private Coroutine stunCoroutine;
     [Header("Hit")]
     [SerializeField, Min(0f)]
     private float hitRadius = 1f;
 
-    /*[Header("Hit Stun")]
-    // 피격 후 이동과 공격이 잠시 중단되는 시간
-    [SerializeField, Min(0f)]
-    private float hitStunDuration = 0.2f;
-
-    private float hitStunEndTime;
-
-    public bool IsHitStunned =>
-        !IsDead && Time.time < hitStunEndTime;*/
+   
 
     [Header("Death")]
     [SerializeField, Min(0f)]
@@ -31,6 +28,8 @@ public class EnemyStats : MonoBehaviour, IDamageable
     public event Action<EnemyStats> EnemyDamaged;
     public event Action<EnemyStats> EnemyDied;
     public event Action<EnemyStats> EnemyDeathCompleted;
+    public event Action<EnemyStats> EnemyStunned;
+    public event Action<EnemyStats> EnemyStunEnded;
 
     public int CurrentHealth => currentHealth;
 
@@ -54,6 +53,8 @@ public class EnemyStats : MonoBehaviour, IDamageable
 
     public bool IsDead => currentHealth <= 0;
 
+    public bool IsStunned => isStunned;
+
     // IDamageable 인터페이스 구현
     public float HitRadius => hitRadius;
 
@@ -65,6 +66,8 @@ public class EnemyStats : MonoBehaviour, IDamageable
     {
         // 이전 사용에서 실행 중이던 사망 코루틴을 중단한다.
         StopAllCoroutines();
+        stunCoroutine = null;
+        isStunned = false;
 
         // 체력과 EnemyStats 상태를 초기화한다.
         currentHealth = MaxHealth;
@@ -104,7 +107,38 @@ public class EnemyStats : MonoBehaviour, IDamageable
     }
     public void Stun(float duration)
     {
-        // 추후 스턴 처리
+        if (!canBeStunned || IsBoss || IsDead || duration <= 0f)
+        {
+            return;
+        }
+
+        if (stunCoroutine != null)
+        {
+            StopCoroutine(stunCoroutine);
+        }
+
+        isStunned = true;
+
+        Rigidbody2D enemyRigidbody2D =  GetComponent<Rigidbody2D>();
+
+        if (enemyRigidbody2D != null)
+        {
+            enemyRigidbody2D.linearVelocity = Vector2.zero;
+        }
+
+        EnemyStunned?.Invoke(this);
+
+        stunCoroutine = StartCoroutine(StunRoutine(duration));
+    }
+
+    private IEnumerator StunRoutine(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        isStunned = false;
+        stunCoroutine = null;
+
+        EnemyStunEnded?.Invoke(this);
     }
     // IDamageable 인터페이스 구현
     public void TakeDamage(DamageInfo damageInfo)
