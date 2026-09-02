@@ -44,30 +44,61 @@ public class AirshipEnemyChecker : MonoBehaviour
         return hit != null;
     }
     
-    public Transform FindNearestEnemy()
+    public EnemyStats FindNearestEnemy()
     {
-        Collider2D[] hits = Physics2D.OverlapBoxAll(
-            GetBoxCenter(attackTargetWidth),
-            GetBoxSize(attackTargetWidth, attackTargetHeight),
-            0f,
-            enemyLayer
-        );
+        var enemies =
+            BattleManager.Instance.StageManager?.TrackedEnemies;
 
-        Transform nearest = null;
+        if (enemies == null)
+            return null;
+
+        Vector2 boxCenter =
+            GetBoxCenter(attackTargetWidth);
+
+        Vector2 halfSize =
+            GetBoxSize(
+                attackTargetWidth,
+                attackTargetHeight
+            ) * 0.5f;
+
+        EnemyStats nearestEnemy = null;
         float nearestSqrDistance = float.MaxValue;
 
-        foreach (Collider2D hit in hits)
+        for (int i = 0; i < enemies.Count; i++)
         {
-            float sqrDistance = ((Vector2)hit.transform.position - (Vector2)transform.position).sqrMagnitude;
+            EnemyStats enemy = enemies[i];
+
+            if (enemy == null ||
+                enemy.IsDead ||
+                !enemy.gameObject.activeInHierarchy)
+            {
+                continue;
+            }
+
+            Vector2 enemyPosition =
+                enemy.transform.position;
+
+            bool outsideBox =
+                Mathf.Abs(enemyPosition.x - boxCenter.x) >
+                halfSize.x ||
+                Mathf.Abs(enemyPosition.y - boxCenter.y) >
+                halfSize.y;
+
+            if (outsideBox)
+                continue;
+
+            float sqrDistance =
+                ((Vector2)enemy.transform.position -
+                 (Vector2)transform.position).sqrMagnitude;
 
             if (sqrDistance < nearestSqrDistance)
             {
                 nearestSqrDistance = sqrDistance;
-                nearest = hit.transform;
+                nearestEnemy = enemy;
             }
         }
 
-        return nearest;
+        return nearestEnemy;
     }
 
     private Vector2 GetBoxPivot()

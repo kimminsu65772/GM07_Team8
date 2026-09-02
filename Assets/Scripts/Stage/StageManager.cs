@@ -50,6 +50,8 @@ public class StageManager : MonoBehaviour
     // 생성한 적 추적
     private readonly List<EnemyStats> trackedEnemies =
         new List<EnemyStats>();
+    public IReadOnlyList<EnemyStats> TrackedEnemies =>
+        trackedEnemies;
 
     private Coroutine stageRoutine;
 
