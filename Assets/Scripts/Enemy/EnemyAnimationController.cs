@@ -5,16 +5,15 @@ using UnityEngine;
 public class EnemyAnimationController : MonoBehaviour
 {
     private static readonly int MoveParameter = Animator.StringToHash("1_Move");
-
-    private static readonly int AttackParameter =  Animator.StringToHash("2_Attack");
-
-    private static readonly int DamagedParameter =  Animator.StringToHash("3_Damaged");
-
-    private static readonly int DeathParameter =  Animator.StringToHash("4_Death");
-
+    private static readonly int AttackParameter = Animator.StringToHash("2_Attack");
+    private static readonly int DamagedParameter = Animator.StringToHash("3_Damaged");
+    private static readonly int DeathParameter = Animator.StringToHash("4_Death");
+    private static readonly int DebuffParameter = Animator.StringToHash("5_Debuff");
     private static readonly int OtherParameter5 = Animator.StringToHash("5_Other");
+    private static readonly int OtherParameter6 = Animator.StringToHash("6_Other");
+    private static readonly int IsDeathParameter = Animator.StringToHash("isDeath");
+    private static readonly int IdleState = Animator.StringToHash("Base Layer.IDLE");
 
-    private static readonly int OtherParameter6 =  Animator.StringToHash("6_Other");
     // 풀에서 재사용할 때 복구할 SPUM 내부 Transform 정보
     private Transform[] animatedTransforms;
     private Vector3[] initialLocalPositions;
@@ -46,35 +45,22 @@ public class EnemyAnimationController : MonoBehaviour
         if (enemyAnimator == null)
         {
             Debug.LogError($"{name}: 자식 오브젝트에서 SPUM Animator를 찾지 못했습니다.");
-
             enabled = false;
             return;
         }
 
         // SPUM 내부 모든 자식 Transform을 가져온다.
-        animatedTransforms =
-            enemyAnimator.GetComponentsInChildren<Transform>(true);
-
-        initialLocalPositions =
-            new Vector3[animatedTransforms.Length];
-
-        initialLocalRotations =
-            new Quaternion[animatedTransforms.Length];
-
-        initialLocalScales =
-            new Vector3[animatedTransforms.Length];
+        animatedTransforms = enemyAnimator.GetComponentsInChildren<Transform>(true);
+        initialLocalPositions = new Vector3[animatedTransforms.Length];
+        initialLocalRotations = new Quaternion[animatedTransforms.Length];
+        initialLocalScales = new Vector3[animatedTransforms.Length];
 
         // 사망 애니메이션이 변경하기 전의 기본 Transform 값을 저장한다.
         for (int i = 0; i < animatedTransforms.Length; i++)
         {
-            initialLocalPositions[i] =
-                animatedTransforms[i].localPosition;
-
-            initialLocalRotations[i] =
-                animatedTransforms[i].localRotation;
-
-            initialLocalScales[i] =
-                animatedTransforms[i].localScale;
+            initialLocalPositions[i] = animatedTransforms[i].localPosition;
+            initialLocalRotations[i] = animatedTransforms[i].localRotation;
+            initialLocalScales[i] = animatedTransforms[i].localScale;
         }
     }
 
@@ -83,10 +69,7 @@ public class EnemyAnimationController : MonoBehaviour
         if (enemyAnimator != null)
         {
             // 새로 생성된 적은 살아 있는 상태로 시작한다.
-            enemyAnimator.SetBool(
-                IsDeathParameter,
-                false
-            );
+            enemyAnimator.SetBool(IsDeathParameter, false);
         }
 
         if (enemyStats == null)
@@ -95,63 +78,45 @@ public class EnemyAnimationController : MonoBehaviour
         }
 
         // EnemyStats가 알리는 피격·사망 이벤트를 구독한다.
-        enemyStats.EnemyDamaged +=
-            HandleEnemyDamaged;
-
-        enemyStats.EnemyDied +=
-            HandleEnemyDied;
+        enemyStats.EnemyDamaged += HandleEnemyDamaged;
+        enemyStats.EnemyDied += HandleEnemyDied;
+        enemyStats.EnemyStunned += HandleEnemyStunned;
+        enemyStats.EnemyStunEnded += HandleEnemyStunEnded;
     }
 
     private void Update()
     {
-        if (enemyAnimator == null ||
-            enemyStats == null)
+        if (enemyAnimator == null || enemyStats == null)
         {
             return;
         }
 
-        bool isMoving =
-            !enemyStats.IsDead &&
-            enemyRigidbody2D.linearVelocity.sqrMagnitude >
-            movementThreshold *
-            movementThreshold;
+        bool isMoving = !enemyStats.IsDead && !enemyStats.IsStunned && enemyRigidbody2D.linearVelocity.sqrMagnitude > movementThreshold * movementThreshold;
 
-        enemyAnimator.SetBool(  MoveParameter, isMoving  );
+        enemyAnimator.SetBool(MoveParameter, isMoving);
     }
 
     // EnemyAttack의 Attack Event에서 호출한다.
     public void PlayAttack()
     {
-        if (enemyAnimator == null ||
-            enemyStats == null ||
-            enemyStats.IsDead)
+        if (enemyAnimator == null || enemyStats == null || enemyStats.IsDead || enemyStats.IsStunned)
         {
             return;
         }
 
-        enemyAnimator.SetTrigger(
-            AttackParameter
-        );
+        enemyAnimator.SetTrigger(AttackParameter);
     }
 
     // 보스 몸통박치기 스킬에서 호출한다.
     public void PlayCharge()
     {
-        if (enemyAnimator == null ||
-            enemyStats == null ||
-            enemyStats.IsDead)
+        if (enemyAnimator == null || enemyStats == null || enemyStats.IsDead || enemyStats.IsStunned)
         {
             return;
         }
 
-        enemyAnimator.ResetTrigger(
-            AttackParameter
-        );
-
-        enemyAnimator.SetBool(
-            MoveParameter,
-            false
-        );
+        enemyAnimator.ResetTrigger(AttackParameter);
+        enemyAnimator.SetBool(MoveParameter, false);
 
         // 현재 캐릭터에 존재하는 Other 파라미터로 스킬을 실행한다.
         int otherParameter = GetOtherParameter();
@@ -161,10 +126,11 @@ public class EnemyAnimationController : MonoBehaviour
             enemyAnimator.SetTrigger(otherParameter);
         }
     }
+
     // 광역 도트 스킬의 Other 애니메이션을 재생한다.
     public void PlayDotAreaSkill()
     {
-        if (enemyAnimator == null || enemyStats == null || enemyStats.IsDead)
+        if (enemyAnimator == null || enemyStats == null || enemyStats.IsDead || enemyStats.IsStunned)
         {
             return;
         }
@@ -179,82 +145,79 @@ public class EnemyAnimationController : MonoBehaviour
             enemyAnimator.SetTrigger(otherParameter);
         }
     }
-    private void HandleEnemyDamaged(
-        EnemyStats damagedEnemy)
+
+    private void HandleEnemyDamaged(EnemyStats damagedEnemy)
     {
-        if (enemyAnimator == null)
-        {
-            return;
-        }
-        // 보스는 피격 모션을 재생하지 않는다.
-        if (damagedEnemy.IsBoss)
+        if (enemyAnimator == null || damagedEnemy.IsBoss || damagedEnemy.IsStunned)
         {
             return;
         }
 
-        enemyAnimator.SetTrigger(
-            DamagedParameter
-        );
+        enemyAnimator.SetTrigger(DamagedParameter);
     }
 
-    private void HandleEnemyDied(
-        EnemyStats deadEnemy)
+    private void HandleEnemyStunned(EnemyStats stunnedEnemy)
+    {
+        if (enemyAnimator == null || stunnedEnemy.IsDead || !HasAnimatorParameter(DebuffParameter))
+        {
+            return;
+        }
+
+        enemyAnimator.ResetTrigger(AttackParameter);
+        enemyAnimator.ResetTrigger(DamagedParameter);
+        enemyAnimator.SetBool(MoveParameter, false);
+        enemyAnimator.SetTrigger(DebuffParameter);
+    }
+
+    private void HandleEnemyStunEnded(EnemyStats recoveredEnemy)
+    {
+        if (enemyAnimator == null || recoveredEnemy.IsDead || !HasAnimatorParameter(DebuffParameter))
+        {
+            return;
+        }
+
+        enemyAnimator.ResetTrigger(DebuffParameter);
+        enemyAnimator.Play(IdleState, 0, 0f);
+    }
+
+    private void HandleEnemyDied(EnemyStats deadEnemy)
     {
         if (enemyAnimator == null)
         {
             return;
         }
 
-        enemyAnimator.SetBool(
-            MoveParameter,
-            false
-        );
+        enemyAnimator.SetBool(MoveParameter, false);
+        enemyAnimator.ResetTrigger(AttackParameter);
+        enemyAnimator.ResetTrigger(DamagedParameter);
 
-        enemyAnimator.ResetTrigger(
-            AttackParameter
-        );
-
-        enemyAnimator.ResetTrigger(
-            DamagedParameter
-        );
-
-       
+        if (HasAnimatorParameter(DebuffParameter))
+        {
+            enemyAnimator.ResetTrigger(DebuffParameter);
+        }
 
         // 먼저 사망 상태를 고정한 다음 사망 애니메이션을 실행한다.
-        enemyAnimator.SetBool(
-            IsDeathParameter,
-            true
-        );
-
-        enemyAnimator.SetTrigger(
-            DeathParameter
-        );
+        enemyAnimator.SetBool(IsDeathParameter, true);
+        enemyAnimator.SetTrigger(DeathParameter);
     }
-
-    // 사망 애니메이션 종료 후 IDLE로 돌아가지 않도록 유지한다.
-    private static readonly int IsDeathParameter =
-        Animator.StringToHash("isDeath");
 
     private void OnDisable()
     {
         if (enemyStats != null)
         {
             // 제거된 적의 이벤트 연결을 반드시 해제한다.
-            enemyStats.EnemyDamaged -=
-                HandleEnemyDamaged;
-
-            enemyStats.EnemyDied -=
-                HandleEnemyDied;
+            enemyStats.EnemyDamaged -= HandleEnemyDamaged;
+            enemyStats.EnemyDied -= HandleEnemyDied;
+            enemyStats.EnemyStunned -= HandleEnemyStunned;
+            enemyStats.EnemyStunEnded -= HandleEnemyStunEnded;
         }
 
         if (enemyAnimator != null)
         {
-            enemyAnimator.SetBool(
-                MoveParameter,
-                false
-            );
+            enemyAnimator.SetBool(MoveParameter, false);
         }
     }
+
     public void ResetForPool()
     {
         // 풀에서 다시 꺼낸 적의 애니메이션 상태를 초기화한다.
@@ -288,6 +251,11 @@ public class EnemyAnimationController : MonoBehaviour
         enemyAnimator.ResetTrigger(AttackParameter);
         enemyAnimator.ResetTrigger(DamagedParameter);
         enemyAnimator.ResetTrigger(DeathParameter);
+
+        if (HasAnimatorParameter(DebuffParameter))
+        {
+            enemyAnimator.ResetTrigger(DebuffParameter);
+        }
 
         // 현재 Animator에 존재하는 Other 트리거만 초기화한다.
         int otherParameter = GetOtherParameter();

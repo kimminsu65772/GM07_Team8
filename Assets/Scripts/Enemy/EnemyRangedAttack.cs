@@ -25,7 +25,7 @@ public class EnemyRangedAttack : MonoBehaviour
 
     private void Update()
     {
-        if (target == null || enemyStats == null || enemyStats.IsDead)
+        if (target == null || enemyStats == null || enemyStats.IsDead || enemyStats.IsStunned)
         {
             ResetAttackTimer();
             return;
@@ -59,7 +59,7 @@ public class EnemyRangedAttack : MonoBehaviour
 
     private void Attack()
     {
-        if (target == null)
+        if (target == null || enemyStats == null ||  enemyStats.IsDead || enemyStats.IsStunned)
         {
             return;
         }
@@ -70,16 +70,12 @@ public class EnemyRangedAttack : MonoBehaviour
     // 공격 애니메이션 이벤트에서 호출
     public void FireProjectile()
     {
-        if (firePoint == null ||
-            target == null ||
-            enemyStats == null ||
-            PoolingManager.Instance == null)
+        if (firePoint == null || target == null || enemyStats == null || enemyStats.IsDead || enemyStats.IsStunned ||  PoolingManager.Instance == null)
         {
             return;
         }
 
-        EnemyProjectile projectile =
-            PoolingManager.Instance.GetEnemyProjectile();
+        EnemyProjectile projectile = PoolingManager.Instance.GetEnemyProjectile();
 
         if (projectile == null)
         {
@@ -99,20 +95,23 @@ public class EnemyRangedAttack : MonoBehaviour
             return;
         }
 
-        attackTimer =
-            enemyStats.AttackInterval;
+        attackTimer =  enemyStats.AttackInterval;
     }
     public void FireProjectile(Transform spawnPoint)
     {
-        if (target == null || spawnPoint == null)
+        if (target == null || spawnPoint == null || enemyStats == null || enemyStats.IsDead || enemyStats.IsStunned || PoolingManager.Instance == null)
         {
             return;
         }
 
+
         // 풀에서 받아온 투사체를 지정한 발사 위치에서 생성한다.
         EnemyProjectile projectile = PoolingManager.Instance.GetEnemyProjectile();
+        if (projectile == null)
+        {
+            return;
+        }
 
-        
         projectile.transform.localScale = Vector3.one * projectileScale;
         projectile.Init(spawnPoint.position, spawnPoint.rotation, target, enemyStats.AttackPower);
     }
