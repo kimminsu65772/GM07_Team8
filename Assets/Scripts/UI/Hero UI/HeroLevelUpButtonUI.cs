@@ -67,7 +67,7 @@ public class HeroLevelUpButtonUI : MonoBehaviour
 
         if (costText != null)
         {
-            costText.text = cost.ToString();
+            costText.text = GameFormatUtils.ToIdleNumber(cost); 
             costText.color = canAfford ? affordableTextColor : insufficientTextColor;
         }
 

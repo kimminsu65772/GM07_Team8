@@ -13,7 +13,7 @@ public class Hero15_Rogue : Hero
     {
         statTable = new Hero15StatTable();
         SetAttackEffectPreset(-0.5f, 0.3f, -1.5f, 1.5f);
-        SetSkillEffectPreset(0f, 0.2f, 3f, 3f);
+        SetSkillEffectPreset(0f, 0.2f, 3.5f, 3.5f);
         SetTargetEffectPreset(0f, 0f, 1f, 1f);
         Init(15, originalAttackTime, 10f, HeroLocationEnum.Front);
         stageManager = FindFirstObjectByType<StageManager>();

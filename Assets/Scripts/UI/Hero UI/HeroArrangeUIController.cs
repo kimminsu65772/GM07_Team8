@@ -139,7 +139,7 @@ public class HeroArrangeUIController : MonoBehaviour
         RefreshUI();
     }
 
-    private void ResetSelectionState()
+    public void ResetSelectionState()
     {
         currentSelectedSlotIndex = -1;
 
