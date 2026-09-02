@@ -238,6 +238,14 @@ public class AirshipAttack : MonoBehaviour
         double finalDamage =
             attackDamage * (isCritical ? 2d : 1d);
 
+        if (currentCannon.FireSfxClip != null)
+        {
+            SoundManager.Instance.PlaySound(
+                currentCannon.FireSfxClip,
+                currentCannon.FireSfxVolume
+            );
+        }
+        
         projectile.Init(
             projectileSpawnPoint.position,
             aimPoint.rotation,
