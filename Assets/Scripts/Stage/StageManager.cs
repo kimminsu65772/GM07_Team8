@@ -12,6 +12,7 @@ public class StageManager : MonoBehaviour
     public event Action<int, int> OnStageStarted;
     public event Action<int, string> OnStageFailed;
 
+
     public int CurrentWave => currentWaveIndex + 1;
     public int TotalWaveCount { get; private set; }
 
@@ -34,6 +35,7 @@ public class StageManager : MonoBehaviour
 
     [Header("Boss UI")]
     [SerializeField] private BossTopHpUI bossTopHpUI;
+    [SerializeField] private float bossSpawnYOffset = -0.3f;
 
     [Header("Runtime Information")]
     [SerializeField] private int currentStageNumber;
@@ -191,7 +193,7 @@ public class StageManager : MonoBehaviour
         // 보스는 가운데에서 생성
         if (isBoss)
         {
-            yOffset = 0f;
+            yOffset = bossSpawnYOffset;
         }
         else
         {
