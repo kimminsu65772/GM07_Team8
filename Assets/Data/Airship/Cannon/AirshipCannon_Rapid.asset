@@ -18,3 +18,5 @@ MonoBehaviour:
   cannonType: 2
   projectilePrefab: {fileID: 193875028588587811, guid: 54351d19f9be66541909aa8de035a6af, type: 3}
   buffData: {fileID: 11400000, guid: bfabb41626e1ef043ad3702a95e9014b, type: 2}
+  fireSfxClip: {fileID: 8300000, guid: cdd488b765eb83248b2b5f2e7835c586, type: 3}
+  fireSfxVolume: 0.2

@@ -282,6 +282,15 @@ public class SoundManager : MonoBehaviour
         PlayerPrefs.SetFloat("GameVolume", volume);
         PlayerPrefs.Save();
     }
+    /// <summary>
+    /// 외부에서 볼륨설정값을 접근해 볼륨 설정하기 위한 함수
+    /// </summary>
+    /// <param name="localVolume"></param>
+    /// <returns></returns>
+    public float ApplySfxVolume(float localVolume)
+    {
+        return localVolume * sfxVolume * masterVolume;
+    }
 
     private void InitializeSoundTable()
     {
