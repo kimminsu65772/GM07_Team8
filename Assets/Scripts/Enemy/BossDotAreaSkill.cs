@@ -107,10 +107,12 @@ public class BossDotAreaSkill : MonoBehaviour
             return;
         }
 
-        // 현재 공격 대상과 상관없이 비행선 위치에 장판을 생성한다.
-        Vector3 spawnPosition = enemyMovement.AirshipTarget.position + areaPositionOffset;
+        Transform airshipTarget = enemyMovement.AirshipTarget;
+        Vector3 spawnPosition = airshipTarget.position + areaPositionOffset;
 
         DotDamageArea area = Instantiate(dotAreaPrefab, spawnPosition, Quaternion.identity);
+        area.transform.SetParent(airshipTarget, true);
+
         area.Initialize(enemyStats.AttackPower);
     }
 

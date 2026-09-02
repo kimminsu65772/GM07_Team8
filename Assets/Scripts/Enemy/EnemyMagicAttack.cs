@@ -21,16 +21,35 @@ public class EnemyMagicAttack : MonoBehaviour
     {
         enemyStats = GetComponent<EnemyStats>();
     }
-
+    private void OnEnable()
+    {
+        if (enemyStats != null)
+        {
+            enemyStats.EnemyStunned += CancelCast;
+        }
+    }
     private void OnDisable()
     {
+        if (enemyStats != null)
+        {
+            enemyStats.EnemyStunned -= CancelCast;
+        }
         if (castCoroutine != null)
         {
             StopCoroutine(castCoroutine);
             castCoroutine = null;
         }
     }
+    private void CancelCast(EnemyStats stunnedEnemy)
+    {
+        if (castCoroutine == null)
+        {
+            return;
+        }
 
+        StopCoroutine(castCoroutine);
+        castCoroutine = null;
+    }
     public void SetTarget(Transform newTarget)
     {
         target = newTarget;
@@ -39,7 +58,7 @@ public class EnemyMagicAttack : MonoBehaviour
 
     public void BeginCast()
     {
-        if (!isActiveAndEnabled || enemyStats == null || enemyStats.IsDead)
+        if (!isActiveAndEnabled || enemyStats == null || enemyStats.IsDead || enemyStats.IsStunned)
         {
             return;
         }
@@ -48,7 +67,7 @@ public class EnemyMagicAttack : MonoBehaviour
         {
             StopCoroutine(castCoroutine);
         }
-
+        
         castCoroutine = StartCoroutine(CastAfterDelay());
     }
 
@@ -61,7 +80,7 @@ public class EnemyMagicAttack : MonoBehaviour
 
     public void CastExplosion()
     {
-        if (target == null || targetDamageable == null || enemyStats == null || enemyStats.IsDead)
+        if (target == null || targetDamageable == null || enemyStats == null || enemyStats.IsDead || enemyStats.IsStunned)
         {
             return;
         }

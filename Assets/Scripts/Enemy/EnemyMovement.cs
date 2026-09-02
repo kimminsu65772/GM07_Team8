@@ -55,7 +55,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (target == null || enemyStats == null || enemyStats.IsDead)
+        if (target == null || enemyStats == null || enemyStats.IsDead || enemyStats.IsStunned)
         {
             StopMoving();
             return;
