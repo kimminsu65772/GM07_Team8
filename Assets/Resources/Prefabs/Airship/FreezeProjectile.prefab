@@ -162,9 +162,11 @@ MonoBehaviour:
   moveSpeed: 20
   projectileRadius: 0.2
   drawOnlyWhenSelected: 0
+  stunDuration: 2
   splashRadius: 1.5
   splashDamageMultiplier: 0.5
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
-  impactVfx: {fileID: 3391895794129409543, guid: 7de74a08c40e78941975622b05d0225c, type: 3}
+  explodeSfxClip: {fileID: 8300000, guid: 979f406703e86d84e9815ed72d5b2fa2, type: 3}
+  explodeSfxVolume: 0.6

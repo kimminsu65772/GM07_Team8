@@ -208,10 +208,19 @@ public class AirshipEquipmentController : MonoBehaviour
                 ? null
                 : equippedGear.GearImage;
     }
-    [ContextMenu("test")]
+    [ContextMenu("Freeze")]
     public void TestFreeze()
     {
         EquipCannon(AirshipCannonType.Freeze);
-        EquipGear(AirshipGearType.Shield);
+    }
+    [ContextMenu("Rapid")]
+    public void TestRapid()
+    {
+        EquipCannon(AirshipCannonType.Rapid);
+    }
+    [ContextMenu("Heal")]
+    public void TestHeal()
+    {
+        EquipCannon(AirshipCannonType.Heal);
     }
 }

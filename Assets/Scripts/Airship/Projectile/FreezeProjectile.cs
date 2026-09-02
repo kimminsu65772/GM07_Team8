@@ -13,6 +13,11 @@ public class FreezeProjectile : NormalProjectile
     [SerializeField]
     private LayerMask enemyLayer;
 
+    [SerializeField]
+    private AudioClip explodeSfxClip;
+    [SerializeField, Range(0f, 1f)]
+    private float explodeSfxVolume = 1f;
+
     protected override void OnHit()
     {
         base.OnHit();
@@ -83,6 +88,14 @@ public class FreezeProjectile : NormalProjectile
 
         vfx.transform.localScale =
             Vector3.one * 1.34f;
+        
+        if (explodeSfxClip != null)
+        {
+            SoundManager.Instance.PlaySound(
+                explodeSfxClip,
+                explodeSfxVolume
+            );
+        }
     }
     
     private void OnDrawGizmos()
