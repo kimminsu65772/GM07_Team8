@@ -153,6 +153,7 @@ public class StageManager : MonoBehaviour
         UnsubscribeAirshipEvent();
 
         ClearTrackedEnemies();
+        ClearDotDamageAreas();
         ResetRuntimeState();
     }
 
@@ -629,6 +630,7 @@ public class StageManager : MonoBehaviour
         }
 
         isAirshipDestroyed = true;
+        ClearDotDamageAreas();
 
         Debug.Log(
             "비행선 HP가 0이 되었습니다."
@@ -680,7 +682,19 @@ public class StageManager : MonoBehaviour
             bossTopHpUI.HideBossHp();
         }
     }
+    private void ClearDotDamageAreas()
+    {
+        DotDamageArea[] areas =
+            FindObjectsByType<DotDamageArea>( FindObjectsInactive.Include,  FindObjectsSortMode.None );
 
+        foreach (DotDamageArea area in areas)
+        {
+            if (area != null)
+            {
+                Destroy(area.gameObject);
+            }
+        }
+    }
     private void CompleteStage()
     {
         if (isStageFinished)
@@ -693,6 +707,7 @@ public class StageManager : MonoBehaviour
 
         Debug.Log(  $"Stage {currentStageNumber}의 모든 웨이브가 완료되었습니다." );
 
+        ClearDotDamageAreas();
         OnStageCompleted?.Invoke(
             currentStageNumber
         );
@@ -707,7 +722,7 @@ public class StageManager : MonoBehaviour
 
         isStageFinished = true;
         stageRoutine = null;
-
+        ClearDotDamageAreas();
         Debug.Log(  failureMessage  );
 
         OnStageFailed?.Invoke( currentStageNumber, failureMessage  );
