@@ -7,7 +7,7 @@ public class Hero12_SpellBlade : Hero
         statTable = new Hero12StatTable();
         SetAttackEffectPreset(-0.65f, 0.5f, -1.4f, 1.7f);
         SetSkillEffectPreset(0f, 0.5f, 3f, 3f);
-        SetTargetEffectPreset(0f, 1f, 6f, 6f);
+        SetTargetEffectPreset(0f, 1.3f, 6f, 6f);
         Init(12, 0.8f, 7f, HeroLocationEnum.Front);
     }
 

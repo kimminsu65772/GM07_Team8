@@ -5,6 +5,7 @@ public class HeroAttack : MonoBehaviour
 {
     private Hero hero;
     private EffectPlayer vfx;
+    private HeroAnimationController aniCon;
 
     [SerializeField] private bool isAttacking;
     [SerializeField] private bool isSkilling;
@@ -30,6 +31,7 @@ public class HeroAttack : MonoBehaviour
     {
         hero = GetComponent<Hero>();
         vfx = GetComponentInChildren<EffectPlayer>();
+        aniCon = GetComponent<HeroAnimationController>();
 
         isAttacking = false;
         isSkilling = false;
@@ -90,6 +92,7 @@ public class HeroAttack : MonoBehaviour
                 enemyHP.TakeDamage(new DamageInfo(damage, isCrit));
             }
 
+            aniCon.ResetPose();
             // Debug.Log(gameObject.name + "의 근접 공격, 피해량 : " + damage);
         }
     }
@@ -288,11 +291,13 @@ public class HeroAttack : MonoBehaviour
     public void StopIsAttacking()
     {
         isAttacking = false;
+        aniCon.ResetPose();
     }
 
     public void StopIsSkilling()
     {
         isSkilling = false;
+        aniCon.ResetPose();
     }
 
     public void ChangeCanAttack(bool value)
