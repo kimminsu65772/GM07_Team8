@@ -16,6 +16,11 @@ public class FollowCam : MonoBehaviour
 
     private bool isFollowing;
     private Vector3 startPosition;
+    
+    
+    // 낙엽용
+    private Vector3 previousPosition;
+    public float HorSpeed { get; private set; }
 
     private void Awake()
     {
@@ -28,6 +33,7 @@ public class FollowCam : MonoBehaviour
             Debug.LogError("FollowCam: 카메라 추적 시작 지점이 설정되지 않았습니다.");
         }
         startPosition = transform.position;
+        previousPosition = transform.position;
     }
     private void OnEnable()
     {
@@ -69,6 +75,8 @@ public class FollowCam : MonoBehaviour
     {
         if (target == null || !isFollowing)
         {
+            HorSpeed = 0f;
+            previousPosition = transform.position;
             return;
         }
 
@@ -82,6 +90,16 @@ public class FollowCam : MonoBehaviour
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
 
         transform.position = smoothCamera ? smoothedPosition : desiredPosition;
+        
+        // 낙엽용 스피드 계산
+        
+        HorSpeed = Time.deltaTime <= 0f
+            ? 0f
+            : Mathf.Abs(
+                transform.position.x -
+                previousPosition.x
+            ) / Time.deltaTime;
+        previousPosition = transform.position;
     }
     private void OnDrawGizmos()
     {
@@ -118,6 +136,8 @@ public class FollowCam : MonoBehaviour
     public void ResetCameraPosition()
     {
         transform.position = startPosition;
+        previousPosition = startPosition;
+        HorSpeed = 0f;
         isFollowing = false;
     }
 }
