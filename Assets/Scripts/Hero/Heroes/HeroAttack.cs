@@ -6,11 +6,11 @@ public class HeroAttack : MonoBehaviour
     private Hero hero;
     private EffectPlayer vfx;
 
-    private bool isAttacking;
-    private bool isSkilling;
-    private bool canAttack;
+    [SerializeField] private bool isAttacking;
+    [SerializeField] private bool isSkilling;
+    [SerializeField] private bool canAttack;
 
-    private float attackTimer;
+    [SerializeField] private float attackTimer;
     [SerializeField] private float skillTimer;
 
     private bool isAutoSkill = true;
@@ -45,31 +45,18 @@ public class HeroAttack : MonoBehaviour
     {
         if (attackTimer < hero.HeroAttackTime) attackTimer += Time.deltaTime;
         if (skillTimer < hero.HeroSkillTime) skillTimer += Time.deltaTime;
-        
-        if (isAttacking && hero.TargetEnemy != null)
-        {
-            if (hero.TargetEnemy.TryGetComponent<EnemyStats>(out EnemyStats enemy))
-            {
-                if (enemy.IsDead)
-                {
-                    isAttacking = false;
-                    hero.SearchEnemy();
-                }
-            }
-        }
+        if (hero.TargetEnemy == null) return;
 
-        if (isSkilling && hero.TargetEnemy != null)
+        if (hero.TargetEnemy.TryGetComponent<EnemyStats>(out EnemyStats enemy))
         {
-            if (hero.TargetEnemy.TryGetComponent<EnemyStats>(out EnemyStats enemy))
+            if (enemy.IsDead)
             {
-                if (enemy.IsDead)
-                {
-                    isSkilling = false;
-                    hero.SearchEnemy();
-                }
+                isAttacking = false;
+                isSkilling = false;
+
+                hero.SearchEnemy();
             }
         }
-        
     }
 
     public void MeleeAttack()
@@ -110,8 +97,8 @@ public class HeroAttack : MonoBehaviour
     public void RangeAttack()
     {
         if (hero.Location != HeroLocationEnum.Back || hero.IsDead || isAttacking || isSkilling) return;
-
         if (hero.TargetEnemy == null || !hero.TargetEnemy.activeSelf) hero.SearchEnemy();
+        if (hero.TargetEnemy == null) return;
 
         if (attackTimer >= hero.HeroAttackTime)
         {
@@ -279,10 +266,18 @@ public class HeroAttack : MonoBehaviour
     public void UseSkill(GameObject enemy)
     {
         if (hero.IsDead || isAttacking || isSkilling) return;
-
         if (skillTimer < hero.HeroSkillTime) return;
+        if (enemy == null) return;
+        if (enemy.TryGetComponent<EnemyStats>(out EnemyStats enemyStats))
+        {
+            if (enemyStats.IsDead)
+            {
+                hero.SearchEnemy();
+                enemy = hero.TargetEnemy;
 
-        if (enemy.GetComponent<EnemyStats>().IsDead) hero.SearchEnemy();
+                if (enemy == null) return;
+            }
+        }
 
         isSkilling = true;
         hero.Skill(enemy);

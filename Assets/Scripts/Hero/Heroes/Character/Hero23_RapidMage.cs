@@ -47,6 +47,8 @@ public class Hero23_RapidMage : Hero
 
     private void ClearBuff()
     {
+        if (attackTimeBuffCo == null) return;
+
         SetAttackTime(originalAttackTime);
         animator.SetFloat("bonusSpeed", originalAttackTime);
         IsAdditionalAttackActive = false;
