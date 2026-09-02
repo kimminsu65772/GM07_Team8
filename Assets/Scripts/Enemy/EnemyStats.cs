@@ -14,6 +14,10 @@ public class EnemyStats : MonoBehaviour, IDamageable
     [SerializeField] private bool canBeStunned = true;
     [SerializeField] private bool isStunned;
 
+    [Header("Boss Stun Immunity")]
+    [SerializeField, Min(0f)] private float bossStunImmunityDuration = 4f;
+    [SerializeField] private float bossStunImmuneEndTime;
+
     private Coroutine stunCoroutine;
     [Header("Hit")]
     [SerializeField, Min(0f)]
@@ -72,7 +76,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
         // 체력과 EnemyStats 상태를 초기화한다.
         currentHealth = MaxHealth;
         enabled = true;
-
+        bossStunImmuneEndTime = 0f;
         // 이전 이동 속도가 남지 않도록 정지시킨다.
         Rigidbody2D enemyRigidbody2D = GetComponent<Rigidbody2D>();
 
@@ -107,7 +111,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
     }
     public void Stun(float duration)
     {
-        if (!canBeStunned || IsBoss || IsDead || duration <= 0f)
+        if (!canBeStunned || IsDead || duration <= 0f || (IsBoss && (isStunned || Time.time < bossStunImmuneEndTime)))
         {
             return;
         }
@@ -118,7 +122,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
         }
 
         isStunned = true;
-
+       
         Rigidbody2D enemyRigidbody2D =  GetComponent<Rigidbody2D>();
 
         if (enemyRigidbody2D != null)
@@ -136,6 +140,10 @@ public class EnemyStats : MonoBehaviour, IDamageable
         yield return new WaitForSeconds(duration);
 
         isStunned = false;
+        if (IsBoss)
+        {
+            bossStunImmuneEndTime = Time.time + bossStunImmunityDuration;
+        }
         stunCoroutine = null;
 
         EnemyStunEnded?.Invoke(this);
