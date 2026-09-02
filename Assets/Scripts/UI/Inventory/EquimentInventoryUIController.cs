@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
+using System.Collections;
 
 public class EquimentInventoryController : MonoBehaviour
 {
@@ -45,6 +46,12 @@ public class EquimentInventoryController : MonoBehaviour
     [Header("장비 상세 패널")]
     [SerializeField] private EquipmentDetailPanelUIController detailPanelUIController;
 
+    [Header("장착 장비 분해 불가 안내창")]
+    [SerializeField] private GameObject warningPopup;
+    [SerializeField] private float warningDuration = 1.5f;
+    [SerializeField] private float warningFadeDuration = 0.3f;
+
+
     private EquipmentInventoryMode currentMode = EquipmentInventoryMode.Equip;
 
     [Header("성능 비교용 플래그")]
@@ -62,7 +69,8 @@ public class EquimentInventoryController : MonoBehaviour
 
     private readonly HashSet<int> equippedEquipmentIds = new();
 
-
+    private Coroutine warningCoroutine;
+    private CanvasGroup warningCanvasGroup;
 
     private HeroEntry selectedHeroEntry;
     private HeroSaveData selectedHeroSaveData;
@@ -86,6 +94,8 @@ public class EquimentInventoryController : MonoBehaviour
             decomposeCancelButton.onClick.RemoveListener(SetEquipMode);
             decomposeCancelButton.onClick.AddListener(SetEquipMode);
         }
+
+        InitializeWarningPopup();
 
         InitializeEquippedSlots();
         RefreshHeroSlots();
@@ -498,11 +508,11 @@ public class EquimentInventoryController : MonoBehaviour
         heroDisplayController.DisplayHero(selectedHeroEntry);
     }
 
-    // 장착된 장비 슬롯을 클릭하면 해당 장비를 해제하도록 처리한다.
     private void OnEquippedSlotClicked(HeroEquipmentSlot slot)
     { 
         if (currentMode == EquipmentInventoryMode.Decompose)
         {
+            ShowWarningPopup();
             return;
         }
 
@@ -519,6 +529,67 @@ public class EquimentInventoryController : MonoBehaviour
         {
             detailPanelUIController.SetEquipment(equipData, equipmentSO);
         }
+    }
+
+    private void ShowWarningPopup()
+    {
+        if (warningPopup == null) return;
+
+        if (warningCoroutine != null)
+        {
+            StopCoroutine(warningCoroutine);
+        }
+
+        warningPopup.SetActive(true);
+        if (warningCanvasGroup != null)
+        {
+            warningCanvasGroup.alpha = 1f;
+        }
+
+        warningCoroutine = StartCoroutine(HideWarningAfterDelay());
+    }
+
+    private IEnumerator HideWarningAfterDelay()
+    {
+        yield return new WaitForSecondsRealtime(warningDuration);
+
+        if (warningCanvasGroup != null && warningFadeDuration > 0f)
+        {
+            float elapsed = 0f;
+
+            while (elapsed < warningFadeDuration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                warningCanvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsed / warningFadeDuration);
+                yield return null;
+            }
+
+            warningCanvasGroup.alpha = 0f;
+        }
+
+        if (warningPopup != null)
+        {
+            warningPopup.SetActive(false);
+        }
+
+        warningCoroutine = null;
+    }
+
+    private void InitializeWarningPopup()
+    {
+        if (warningPopup == null)
+        {
+            return;
+        }
+
+        warningCanvasGroup = warningPopup.GetComponent<CanvasGroup>();
+        if (warningCanvasGroup == null)
+        {
+            warningCanvasGroup = warningPopup.AddComponent<CanvasGroup>();
+        }
+
+        warningCanvasGroup.alpha = 0f;
+        warningPopup.SetActive(false);
     }
 
     private void OnHeroSlotClicked(HeroEntry entry, HeroSaveData saveData)
@@ -545,6 +616,7 @@ public class EquimentInventoryController : MonoBehaviour
             if (IsEquippedByAnyHero(equipData.EquipId))
             {
                 Debug.LogWarning("장착 중인 장비는 분해할 수 없습니다.");
+                ShowWarningPopup();
                 return;
             }
 

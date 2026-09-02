@@ -15,15 +15,19 @@ public class SoundManager : MonoBehaviour
 
     [Header("BGM 전환 시간")]
     [SerializeField] private float bgmFadeDuration = 1f;
-    
-    
+
+    [Header("오디오 출력 관련 정책 설정")]
+    [SerializeField, Min(0f)] private float sfxCooldown = 0.05f; // 효과음 쿨타임
+    [SerializeField, Min(1)] private int sfxMaxSimultaneous = 3; // 동시에 재생 가능한 최대 효과음 개수
+
+
     private float masterVolume = 1f;
     private float sfxVolume = 1f;
     private float bgmVolume = 1f;
 
     private Dictionary<SoundId, SoundData> soundDictTable = new();
-    private Dictionary<SoundId, float> lastPlayedTime = new();
-    private Dictionary<SoundId, int> playingCount = new();
+    private Dictionary<AudioClip, float> lastPlayedTime = new();
+    private Dictionary<AudioClip, int> playingCount = new();
 
     private Coroutine bgmFadeCoroutine;
 
@@ -69,10 +73,24 @@ public class SoundManager : MonoBehaviour
     //효과음 재생 함수
     public void PlaySound(AudioClip clip, float volume = 1f)
     {
-        if (clip != null && sfxAudioSource != null)
+        if (sfxAudioSource == null)
         {
-            sfxAudioSource.PlayOneShot(clip, volume * sfxVolume * masterVolume);
+            Debug.LogWarning("sfxAudioSource가 없습니다.");
+            return;
         }
+
+        if (clip == null)
+        {
+            Debug.LogWarning("재생할 AudioClip이 없습니다.");
+            return;
+        }
+
+        if (!CanPlayClip(clip, sfxCooldown, sfxMaxSimultaneous)) return;
+
+        sfxAudioSource.PlayOneShot(clip, volume * sfxVolume * masterVolume);
+
+        float duration = clip.length;
+        StartCoroutine(ReleasePlayingCount(clip, duration));
     }
 
     public void PlaySound(SoundId soundId, float volumeMultiplier = 1f)
@@ -89,7 +107,7 @@ public class SoundManager : MonoBehaviour
             return;
         }
 
-        if (!CanPlaySound(soundData)) return;
+        if (!CanPlayClip(soundData.Clip, soundData.Cooldown, soundData.MaxSimultaneous)) return;
 
         float pitch = Random.Range(soundData.PitchRange.x, soundData.PitchRange.y);
         float volume = soundData.Volume * volumeMultiplier * sfxVolume * masterVolume;
@@ -99,43 +117,45 @@ public class SoundManager : MonoBehaviour
         sfxAudioSource.pitch = 1f;
 
         float duration = soundData.Clip.length / pitch;
-        StartCoroutine(ReleasePlayingCount(soundData.Id, duration));
+        StartCoroutine(ReleasePlayingCount(soundData.Clip, duration));
     }
 
-    private bool CanPlaySound(SoundData soundData)
+    private bool CanPlayClip(AudioClip clip, float cooldown, int maxSimultaneous)
     {
-        SoundId soundId = soundData.Id;
+        if (clip == null) return false;
+
 
         // 쿨타임이 다 돌았는지 체크하고 재생가능하면 쿨타임 갱신
-        if (soundData.Cooldown > 0f &&
-            lastPlayedTime.TryGetValue(soundId, out float lastTime))
+        if (cooldown > 0f &&
+            lastPlayedTime.TryGetValue(clip, out float lastTime))
         {
-            if (Time.unscaledTime - lastTime < soundData.Cooldown)
+            if (Time.unscaledTime - lastTime < cooldown)
             {
                 return false;
             }
         }
 
-        lastPlayedTime[soundId] = Time.unscaledTime;
-
         // 동시에 재생 가능한 최대 개수 체크
-        int currentCount = playingCount.TryGetValue(soundId, out int count) ? count : 0;
+        int currentCount = playingCount.TryGetValue(clip, out int count) ? count : 0;
 
-        if (currentCount >= soundData.MaxSimultaneous)
+        if (currentCount >= maxSimultaneous)
         {
             return false;
         }
 
-        playingCount[soundId] = currentCount + 1;
+        // 모든 재생 조건을 만족하면 쿨타임 갱신 및 재생 카운트 증가
+        lastPlayedTime[clip] = Time.unscaledTime;
+        playingCount[clip] = currentCount + 1;
+        
 
         return true;
     }
 
-    private IEnumerator ReleasePlayingCount(SoundId soundId, float cooldown)
+    private IEnumerator ReleasePlayingCount(AudioClip clip, float duration)
     {
-        yield return new WaitForSeconds(cooldown);
+        yield return new WaitForSecondsRealtime(duration);
 
-        if (!playingCount.TryGetValue(soundId, out int count))
+        if (!playingCount.TryGetValue(clip, out int count))
         {
             yield break;
         }
@@ -144,11 +164,11 @@ public class SoundManager : MonoBehaviour
 
         if (count <= 0)
         {
-            playingCount.Remove(soundId);
+            playingCount.Remove(clip);
         }
         else
         {
-            playingCount[soundId] = count;
+            playingCount[clip] = count;
         }
     }
 
