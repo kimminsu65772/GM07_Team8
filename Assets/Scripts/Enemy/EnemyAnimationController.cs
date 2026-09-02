@@ -27,9 +27,14 @@ public class EnemyAnimationController : MonoBehaviour
     [SerializeField, Min(0f)]
     private float movementThreshold = 0.01f;
 
+
     private Rigidbody2D enemyRigidbody2D;
     private EnemyStats enemyStats;
+    [Header("Boss Pose Lock")]
+    [SerializeField] private bool lockRootRotation;
+    [SerializeField] private Transform poseRoot;
 
+    private Quaternion initialPoseRootRotation;
     private void Awake()
     {
         enemyRigidbody2D = GetComponent<Rigidbody2D>();
@@ -40,7 +45,7 @@ public class EnemyAnimationController : MonoBehaviour
         {
             enemyAnimator = GetComponentInChildren<Animator>();
         }
-
+       
         // Animator가 없으면 초기화를 중단한다.
         if (enemyAnimator == null)
         {
@@ -48,7 +53,15 @@ public class EnemyAnimationController : MonoBehaviour
             enabled = false;
             return;
         }
+        if (poseRoot == null)
+        {
+            poseRoot = enemyAnimator.transform.Find("Root");
+        }
 
+        if (poseRoot != null)
+        {
+            initialPoseRootRotation = poseRoot.localRotation;
+        }
         // SPUM 내부 모든 자식 Transform을 가져온다.
         animatedTransforms = enemyAnimator.GetComponentsInChildren<Transform>(true);
         initialLocalPositions = new Vector3[animatedTransforms.Length];
@@ -66,11 +79,7 @@ public class EnemyAnimationController : MonoBehaviour
 
     private void OnEnable()
     {
-        if (enemyAnimator != null)
-        {
-            // 새로 생성된 적은 살아 있는 상태로 시작한다.
-            enemyAnimator.SetBool(IsDeathParameter, false);
-        }
+        ResetForPool();
 
         if (enemyStats == null)
         {
@@ -95,7 +104,16 @@ public class EnemyAnimationController : MonoBehaviour
 
         enemyAnimator.SetBool(MoveParameter, isMoving);
     }
+    private void LateUpdate()
+    {
+        if (!lockRootRotation ||  poseRoot == null ||  enemyStats == null ||  enemyStats.IsDead)
+        {
+            return;
+        }
 
+        // Animator가 스킬 모션을 적용한 뒤 최종보스 Root 회전을 원래 자세로 고정한다.
+        poseRoot.localRotation = initialPoseRootRotation;
+    }
     // EnemyAttack의 Attack Event에서 호출한다.
     public void PlayAttack()
     {
@@ -118,7 +136,6 @@ public class EnemyAnimationController : MonoBehaviour
         enemyAnimator.ResetTrigger(AttackParameter);
         enemyAnimator.SetBool(MoveParameter, false);
 
-        // 현재 캐릭터에 존재하는 Other 파라미터로 스킬을 실행한다.
         int otherParameter = GetOtherParameter();
 
         if (otherParameter != 0)
@@ -145,7 +162,6 @@ public class EnemyAnimationController : MonoBehaviour
             enemyAnimator.SetTrigger(otherParameter);
         }
     }
-
     private void HandleEnemyDamaged(EnemyStats damagedEnemy)
     {
         if (enemyAnimator == null || damagedEnemy.IsBoss || damagedEnemy.IsStunned)
@@ -231,21 +247,7 @@ public class EnemyAnimationController : MonoBehaviour
         // Animator Controller를 유지한 채 상태와 본래 포즈를 초기화한다.
         enemyAnimator.Rebind();
 
-        // 사망 애니메이션이 변경한 SPUM 내부 Transform을 기본값으로 복구한다.
-        if (animatedTransforms != null)
-        {
-            for (int i = 0; i < animatedTransforms.Length; i++)
-            {
-                if (animatedTransforms[i] == null)
-                {
-                    continue;
-                }
-
-                animatedTransforms[i].localPosition = initialLocalPositions[i];
-                animatedTransforms[i].localRotation = initialLocalRotations[i];
-                animatedTransforms[i].localScale = initialLocalScales[i];
-            }
-        }
+       
 
         // 이전 사용에서 남은 공통 트리거를 제거한다.
         enemyAnimator.ResetTrigger(AttackParameter);
@@ -268,9 +270,27 @@ public class EnemyAnimationController : MonoBehaviour
         // 이동 및 사망 상태를 살아 있는 기본 상태로 변경한다.
         enemyAnimator.SetBool(MoveParameter, false);
         enemyAnimator.SetBool(IsDeathParameter, false);
+        if (enemyAnimator.HasState(0, IdleState))
+        {
+            enemyAnimator.Play(IdleState, 0, 0f);
+        }
+            // 변경한 애니메이션 상태를 즉시 반영한다.
+            enemyAnimator.Update(0f);
+        // 사망 애니메이션이 변경한 SPUM 내부 Transform을 기본값으로 복구한다.
+        if (animatedTransforms != null)
+        {
+            for (int i = 0; i < animatedTransforms.Length; i++)
+            {
+                if (animatedTransforms[i] == null)
+                {
+                    continue;
+                }
 
-        // 변경한 애니메이션 상태를 즉시 반영한다.
-        enemyAnimator.Update(0f);
+                animatedTransforms[i].localPosition = initialLocalPositions[i];
+                animatedTransforms[i].localRotation = initialLocalRotations[i];
+                animatedTransforms[i].localScale = initialLocalScales[i];
+            }
+        }
     }
 
     // 현재 Animator에 해당 파라미터가 있는지 확인한다.
