@@ -47,10 +47,7 @@ public class FinalBossSkillController : MonoBehaviour
 
     private void Update()
     {
-        if (enemyStats == null ||
-            enemyStats.IsDead ||
-            isUsingSkill ||
-            Time.time < nextSkillTime)
+        if (enemyStats == null || enemyStats.IsDead || enemyStats.IsStunned || isUsingSkill ||  Time.time < nextSkillTime)
         {
             return;
         }
@@ -82,9 +79,11 @@ public class FinalBossSkillController : MonoBehaviour
 
     private bool TryUseNextSkill()
     {
-        float healthRatio =
-            enemyStats.CurrentHealth /
-            enemyStats.MaxHealth;
+        if (enemyStats == null || enemyStats.IsDead || enemyStats.IsStunned)
+        {
+            return false;
+        }
+        float healthRatio =  enemyStats.CurrentHealth /  enemyStats.MaxHealth;
 
         if (healthRatio > dotUnlockHealthRatio)
         {
