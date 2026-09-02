@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7822270974699365131}
   - component: {fileID: 6719851239628636327}
   - component: {fileID: 8649294049492559892}
+  - component: {fileID: 1047870407230056981}
   m_Layer: 0
   m_Name: ThunderEffects_0
   m_TagString: Untagged
@@ -114,3 +115,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!210 &1047870407230056981
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2167193776059125481}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 100
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
