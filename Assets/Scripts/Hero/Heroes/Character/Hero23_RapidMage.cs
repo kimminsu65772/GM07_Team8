@@ -37,7 +37,7 @@ public class Hero23_RapidMage : Hero
         float buffedAttackTime = originalAttackTime / attackBuffAmount;
 
         SetAttackTime(buffedAttackTime);
-        animator.SetFloat("bonusSpeed", attackBuffAmount);
+        animator.SetFloat("bonusSpeed", attackBuffAmount * 1.5f);
         IsAdditionalAttackActive = true;
 
         yield return new WaitForSeconds(5f);

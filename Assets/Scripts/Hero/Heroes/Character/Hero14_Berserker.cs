@@ -39,7 +39,7 @@ public class Hero14_Berserker : Hero
         SetCriChance(100f);
         Attack.VFX.ChangeFrames();
         SetAttackEffectPreset(-0.6f, 0.3f, -2.3f, 2f);
-        animator.SetFloat("bonusSpeed", attackBuffAmount);
+        animator.SetFloat("bonusSpeed", attackBuffAmount * 1.5f);
 
         yield return new WaitForSeconds(4f);
 

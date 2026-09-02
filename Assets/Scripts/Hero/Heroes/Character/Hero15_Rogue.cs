@@ -34,7 +34,7 @@ public class Hero15_Rogue : Hero
         float buffedAttackTime = originalAttackTime / attackBuffAmount;
 
         SetAttackTime(buffedAttackTime);
-        animator.SetFloat("bonusSpeed", attackBuffAmount);
+        animator.SetFloat("bonusSpeed", attackBuffAmount * 1.5f);
         Attack.VFX.ChangeFrames();
         SetAttackEffectPreset(-0.5f, 0.3f, -2.5f, 2.5f);
 
