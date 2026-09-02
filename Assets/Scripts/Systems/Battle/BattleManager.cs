@@ -40,6 +40,7 @@ public class BattleManager : MonoBehaviour
 
     public AirshipController Airship => airship;
     public IReadOnlyList<Hero> SpawnedHeroes => spawnedHeroes;
+    public StageManager StageManager => stageManager;
 
     private void OnEnable()
     {

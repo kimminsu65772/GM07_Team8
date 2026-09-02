@@ -76,6 +76,17 @@ public class AirshipAttack : MonoBehaviour
             return;
         if (health != null && health.IsStunned)
             return;
+        
+        if ((cachedDamageable is EnemyStats cachedEnemy &&
+             cachedEnemy.IsDead) ||
+            (cachedDamageable is Hero cachedHero &&
+             (!cachedHero.isActiveAndEnabled ||
+              cachedHero.IsDead)))
+        {
+            cachedTarget = null;
+            cachedDamageable = null;
+            targetRefreshTimer = 0f;
+        }
 
         attackTimer -= Time.deltaTime;
         targetRefreshTimer -= Time.deltaTime;
@@ -163,7 +174,11 @@ public class AirshipAttack : MonoBehaviour
         }
         else
         {
-            target = enemyChecker?.FindNearestEnemy();
+            EnemyStats enemy =
+                enemyChecker?.FindNearestEnemy();
+
+            target = enemy?.transform;
+            damageable = enemy;
         }
 
         // 같은 타겟이면 기존 캐시 유지
@@ -174,10 +189,8 @@ public class AirshipAttack : MonoBehaviour
 
         cachedTarget = target;
 
-        // 회복탄은 Hero를 바로 사용
-        // 일반탄만 타겟 변경 시 GetComponent 실행
-        cachedDamageable =
-            damageable ?? target?.GetComponentInParent<IDamageable>();
+        // 회복탄과 일반탄 모두 감지 결과의 IDamageable을 직접 사용
+        cachedDamageable = damageable;
     }
 
     private void Attack(Transform target)
