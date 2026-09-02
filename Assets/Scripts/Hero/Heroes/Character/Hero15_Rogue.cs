@@ -45,6 +45,8 @@ public class Hero15_Rogue : Hero
 
     private void ClearBuff()
     {
+        if (attackTimeBuffCo == null) return;
+
         SetAttackTime(originalAttackTime);
         animator.SetFloat("bonusSpeed", 1f);
         Attack.VFX.ChangeFrames();

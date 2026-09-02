@@ -16,10 +16,12 @@ public class HeroActionStateBehaviour : StateMachineBehaviour
         {
             case HeroStateEnum.Attack:
                 hero.AttackStop();
+                Debug.Log(hero.name + "공격 초기화");
                 break;
 
             case HeroStateEnum.Skill:
                 hero.SkillStop();
+                Debug.Log(hero.name + "스킬 초기화");
                 break;
         }
     }

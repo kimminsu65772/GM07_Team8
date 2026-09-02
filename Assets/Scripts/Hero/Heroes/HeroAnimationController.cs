@@ -4,6 +4,7 @@ public class HeroAnimationController : MonoBehaviour
 {
     [SerializeField] Hero hero;
     [SerializeField] SPUM_Prefabs ani;
+    private Animator animator;
 
     private HeroStateEnum currentState;
 
@@ -11,6 +12,7 @@ public class HeroAnimationController : MonoBehaviour
     {
         currentState = hero.HeroState;
         ani.OverrideControllerInit();
+        animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -50,5 +52,11 @@ public class HeroAnimationController : MonoBehaviour
                 ani.PlayAnimation(PlayerState.DEATH, 0);
                 break;
         }
+    }
+
+    public void ResetPose()
+    {
+        animator.Play("IDLE", 0, 0f);
+        animator.Update(0f);
     }
 }
