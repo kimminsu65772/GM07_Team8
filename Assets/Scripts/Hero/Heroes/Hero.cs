@@ -158,6 +158,8 @@ public abstract class Hero : MonoBehaviour, IDamageable
         heroState = HeroStateEnum.Idle;
         isMoving = false;
         targetEnemy = null;
+        Attack.StopIsAttacking();
+        Attack.StopIsSkilling();
         Attack.ClearCoolTime();
     }
 
@@ -176,6 +178,8 @@ public abstract class Hero : MonoBehaviour, IDamageable
         }
 
         ChangeState();
+
+        if (Input.GetKeyDown(KeyCode.C)) TakeDamage(new DamageInfo(1000000000, true));
     }
 
     public void TakeDamage(DamageInfo damageInfo)

@@ -43,6 +43,8 @@ public class Hero25_RapidArcher : Hero
 
     private void ClearBuff()
     {
+        if (attackTimeBuffCo == null) return;
+
         SetAttackTime(originalAttackTime);
         animator.SetFloat("bonusSpeed", 1f);
         attackTimeBuffCo = null;

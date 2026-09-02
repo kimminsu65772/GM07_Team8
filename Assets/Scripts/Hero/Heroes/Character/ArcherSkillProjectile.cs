@@ -5,7 +5,7 @@ public class ArcherSkillProjectile : HeroAttackProjectileController
 {
     [SerializeField] private EffectPlayer vfx;
 
-    private Vector2 posPreset = new Vector2(0f, 0.5f);
+    private Vector2 posPreset = new Vector2(0f, 0.8f);
     private Vector2 scalePreset = new Vector2(5f, 5f);
 
     private Hero hero;

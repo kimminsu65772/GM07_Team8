@@ -481,6 +481,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c1597d6a7af774caac878217c021c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroAttack
+  isAttacking: 0
+  isSkilling: 0
+  canAttack: 0
+  attackTimer: 0
   skillTimer: 0
   projectileType: 0
   firePoint: {fileID: 0}
@@ -865,10 +869,16 @@ MonoBehaviour:
   - {fileID: 1049454255, guid: 354ae67e6aa7bc844b33cffb4fe89b2b, type: 3}
   targetFrames:
   - {fileID: -367236432, guid: 5add7396dfe684b4a995120aab3ea01c, type: 3}
+  - {fileID: -367236432, guid: 5add7396dfe684b4a995120aab3ea01c, type: 3}
+  - {fileID: 1620485169, guid: 5add7396dfe684b4a995120aab3ea01c, type: 3}
   - {fileID: 1620485169, guid: 5add7396dfe684b4a995120aab3ea01c, type: 3}
   - {fileID: 1620605016, guid: 5add7396dfe684b4a995120aab3ea01c, type: 3}
+  - {fileID: 1620605016, guid: 5add7396dfe684b4a995120aab3ea01c, type: 3}
+  - {fileID: -348531477, guid: 5add7396dfe684b4a995120aab3ea01c, type: 3}
   - {fileID: -348531477, guid: 5add7396dfe684b4a995120aab3ea01c, type: 3}
   - {fileID: 2109200983, guid: 5add7396dfe684b4a995120aab3ea01c, type: 3}
+  - {fileID: 2109200983, guid: 5add7396dfe684b4a995120aab3ea01c, type: 3}
+  - {fileID: 1601009130, guid: 5add7396dfe684b4a995120aab3ea01c, type: 3}
   - {fileID: 1601009130, guid: 5add7396dfe684b4a995120aab3ea01c, type: 3}
   frameTime: 0.05
 --- !u!1001 &8289906312368360263
