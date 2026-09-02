@@ -3100,13 +3100,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1633258832408725776}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4001099179227516358}
-  m_Father: {fileID: 8009468785209304998}
+  m_Father: {fileID: 3900905945793765297}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5478,8 +5478,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3900905945793765297}
-  - {fileID: 8002545089811488364}
-  - {fileID: 5492161154282218770}
   m_Father: {fileID: 2911529341534669687}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6876,6 +6874,7 @@ GameObject:
   - component: {fileID: 5492161154282218770}
   - component: {fileID: 5078568361964573316}
   - component: {fileID: 198426538272984797}
+  - component: {fileID: 2830495497985611786}
   m_Layer: 5
   m_Name: warning Panel
   m_TagString: Untagged
@@ -6890,13 +6889,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3336686853032786987}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3768920736814397931}
-  m_Father: {fileID: 8009468785209304998}
+  m_Father: {fileID: 3900905945793765297}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6941,6 +6940,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &2830495497985611786
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3336686853032786987}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &3413528489970920752
 GameObject:
   m_ObjectHideFlags: 0
@@ -12141,6 +12152,8 @@ RectTransform:
   - {fileID: 6899156795213545648}
   - {fileID: 7889008476952029000}
   - {fileID: 6524669826747866298}
+  - {fileID: 8002545089811488364}
+  - {fileID: 5492161154282218770}
   m_Father: {fileID: 8009468785209304998}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -12231,6 +12244,9 @@ MonoBehaviour:
   decomposeButtonGroup: {fileID: 2638249199523512982}
   decomposeCancelButton: {fileID: 4849037166099838800}
   detailPanelUIController: {fileID: 7221449914954551925}
+  warningPopup: {fileID: 3336686853032786987}
+  warningDuration: 1.5
+  warningFadeDuration: 0.3
   useLoopCheckForEquipped: 0
 --- !u!114 &4994471340390026009
 MonoBehaviour:
