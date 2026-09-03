@@ -54,9 +54,7 @@ public class NormalProjectile : AirshipProjectileBase
             return;
         }
 
-        Vector3 targetPosition =
-            target.position +
-            Vector3.up * targetHeightOffset;
+        Vector3 targetPosition = target.position;
 
         transform.position = Vector3.MoveTowards(
             transform.position,
@@ -126,10 +124,9 @@ public class NormalProjectile : AirshipProjectileBase
             }
 
             Vector2 enemyPosition =
-                (Vector2)(
-                    enemy.transform.position +
-                    Vector3.up * targetHeightOffset
-                );
+                enemy.TargetPoint != null
+                    ? enemy.TargetPoint.position
+                    : enemy.transform.position;
 
             float combinedRadius =
                 projectileRadius + enemy.HitRadius;

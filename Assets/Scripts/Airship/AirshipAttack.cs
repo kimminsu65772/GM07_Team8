@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class AirshipAttack : MonoBehaviour
@@ -13,13 +14,15 @@ public class AirshipAttack : MonoBehaviour
 
     [Header("조준")]
     [SerializeField, Min(0f)] private float aimLerpSpeed = 25f;
-    [SerializeField] private float targetHeightOffset = 0.5f;
 
     [Header("타겟 갱신")]
     [SerializeField, Min(0.01f)] private float targetRefreshInterval = 0.1f;
     
     [Header("타겟 없으면 복귀")]
     [SerializeField, Min(0f)] private float noTargetDelay = 0.7f;
+
+    [SerializeField] private GameObject muzzleFlashVfx;
+    private Tween muzzleFlashTween;
 
     private float noTargetTimer;
 
@@ -49,6 +52,20 @@ public class AirshipAttack : MonoBehaviour
             equipmentController =
                 GetComponent<AirshipEquipmentController>();
         }
+        
+        muzzleFlashVfx.SetActive(false);
+        muzzleFlashTween =
+            DOVirtual.DelayedCall(
+                    0.03f,
+                    () => muzzleFlashVfx.SetActive(false)
+                )
+                .SetAutoKill(false)
+                .Pause()
+                .OnPlay(() =>
+                {
+                    muzzleFlashVfx.SetActive(false);
+                    muzzleFlashVfx.SetActive(true);
+                });
     }
 
     private void OnEnable()
@@ -177,8 +194,20 @@ public class AirshipAttack : MonoBehaviour
             EnemyStats enemy =
                 enemyChecker?.FindNearestEnemy();
 
-            target = enemy?.transform;
-            damageable = enemy;
+            if (enemy == null)
+            {
+                target = null;
+                damageable = null;
+            }
+            else
+            {
+                target =
+                    enemy.TargetPoint != null
+                        ? enemy.TargetPoint
+                        : enemy.transform;
+
+                damageable = enemy;
+            }
         }
 
         // 같은 타겟이면 기존 캐시 유지
@@ -268,21 +297,27 @@ public class AirshipAttack : MonoBehaviour
                 finalDamage,
                 isCritical,
                 isHeal
-            ),
-            targetHeightOffset
+            )
         );
+        PlayMuzzleFlash();
+    }
+    
+    private void PlayMuzzleFlash()
+    {
+        if (muzzleFlashVfx == null ||
+            muzzleFlashTween == null)
+        {
+            return;
+        }
+        muzzleFlashTween.Restart();
     }
 
     private void RotateAimPoint(Transform target)
     {
         if (aimPoint == null || target == null)
             return;
-
-        // Vector2 direction =
-        //     (Vector2)target.position -
-        //     (Vector2)aimPoint.position;
-        Vector2 direction =
-            (Vector2)(target.position + Vector3.up * targetHeightOffset) - (Vector2)aimPoint.position;
+        
+        Vector2 direction = (Vector2)target.position - (Vector2)aimPoint.position;
 
         if (direction.sqrMagnitude <= 0f)
             return;
