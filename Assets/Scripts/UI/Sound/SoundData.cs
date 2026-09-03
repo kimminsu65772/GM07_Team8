@@ -4,14 +4,14 @@ using UnityEngine;
 // 경로를 직접 입력하지 않고 enum으로 관리하여 사운드를 재생할 수 있도록 함.
 public enum SoundId
 {
-    None,
+    None = 0,
 
     // UI 버튼 관련
     UIButtonHover,
     UIButtonClick,
 
     // BGM
-    Region1BGM,
+    Region1BGM = 100,
     Region2BGM,
     Region3BGM,
     Region4BGM,
