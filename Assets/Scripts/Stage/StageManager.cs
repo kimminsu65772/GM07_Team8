@@ -146,11 +146,8 @@ public class StageManager : MonoBehaviour
 
     public void StopStage()
     {
-        if (stageRoutine != null)
-        {
-            StopCoroutine(stageRoutine);
-            stageRoutine = null;
-        }
+        StopAllCoroutines();
+        stageRoutine = null;
 
         UnsubscribeAirshipEvent();
 
