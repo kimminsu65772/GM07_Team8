@@ -92,7 +92,6 @@ public class HeroAttack : MonoBehaviour
                 enemyHP.TakeDamage(new DamageInfo(damage, isCrit));
             }
 
-            aniCon.ResetPose();
             // Debug.Log(gameObject.name + "의 근접 공격, 피해량 : " + damage);
         }
     }
