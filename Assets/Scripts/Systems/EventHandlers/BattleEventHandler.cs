@@ -6,6 +6,7 @@ public class BattleEventHandler : MonoBehaviour
     [SerializeField] private BattleManager battleManager;
     [SerializeField] private StageManager stageManager;
     [SerializeField] private StageTransitionController stageTransitionController;
+    [SerializeField] private ItemLogUIController itemLogUIController;
 
     private void OnEnable()
     {
@@ -45,6 +46,10 @@ public class BattleEventHandler : MonoBehaviour
         {
             PlayerInfo.Instance.AddItem(itemDrop.ItemId, itemDrop.Amount, SavePolicy.Deferred);
         }
+
+        if (itemLogUIController == null) return;
+        itemLogUIController.AddRewards(rewardBundle.Rewards, itemDrops);
+        itemLogUIController.AddKillCount();
     }
 
     private void HandleStageCompleted(int clearedStageNumber)
