@@ -113,6 +113,14 @@ public class PoolingManager : MonoBehaviour
     private readonly List<EnemyProjectile>
         inactiveEnemyProjectiles =
             new List<EnemyProjectile>();
+    
+    [Space]
+    [Header("데미지 팝업")]
+    [SerializeField] private DamagePopup damagePopupPrefab;
+    [SerializeField, Min(0)] private int damagePopupInitialSize = 20;
+
+    private readonly List<DamagePopup> inactiveDamagePopups =
+        new List<DamagePopup>();
 
     private void Awake()
     {
@@ -193,6 +201,8 @@ public class PoolingManager : MonoBehaviour
 
 
         PrewarmEnemyProjectile();
+        
+        PrewarmDamagePopup();
     }
 
     private void OnDestroy()
@@ -741,5 +751,108 @@ public class PoolingManager : MonoBehaviour
 
         projectile.gameObject.SetActive(false);
         inactiveEnemyProjectiles.Add(projectile);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    private void PrewarmDamagePopup()
+    {
+        if (damagePopupPrefab == null)
+        {
+            Debug.LogError(
+                "데미지 팝업 프리팹이 지정되지 않았습니다.",
+                this
+            );
+            return;
+        }
+
+        for (int i = 0; i < damagePopupInitialSize; i++)
+        {
+            inactiveDamagePopups.Add(
+                CreateDamagePopup()
+            );
+        }
+    }
+
+    private DamagePopup CreateDamagePopup()
+    {
+        DamagePopup popup =
+            Instantiate(
+                damagePopupPrefab,
+                transform
+            );
+
+        popup.SetPoolingManager(this);
+        popup.gameObject.SetActive(false);
+
+        return popup;
+    }
+
+    public DamagePopup GetDamagePopup(
+        Vector3 position,
+        Transform parent)
+    {
+        if (damagePopupPrefab == null ||
+            parent == null)
+        {
+            return null;
+        }
+
+        DamagePopup popup;
+
+        if (inactiveDamagePopups.Count > 0)
+        {
+            int lastIndex =
+                inactiveDamagePopups.Count - 1;
+
+            popup =
+                inactiveDamagePopups[lastIndex];
+
+            inactiveDamagePopups.RemoveAt(lastIndex);
+        }
+        else
+        {
+            popup = CreateDamagePopup();
+        }
+
+        popup.transform.SetParent(parent, false);
+        popup.transform.SetPositionAndRotation(
+            position,
+            Quaternion.identity
+        );
+
+        popup.gameObject.SetActive(true);
+
+        return popup;
+    }
+
+    public void ReleaseDamagePopup(
+        DamagePopup popup)
+    {
+        if (popup == null ||
+            !popup.gameObject.activeSelf)
+        {
+            return;
+        }
+
+        popup.gameObject.SetActive(false);
+        popup.transform.SetParent(transform, false);
+
+        inactiveDamagePopups.Add(popup);
     }
 }
