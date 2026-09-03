@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3704967911083422073
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6627954569565137464}
+  m_Layer: 0
+  m_Name: Damage Text Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6627954569565137464
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3704967911083422073}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.008726557, z: -0, w: 0.9999619}
+  m_LocalPosition: {x: -0.14000021, y: 0.61, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3696827608207704918}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7839636992591175219
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,6 +228,7 @@ MonoBehaviour:
   bossStunImmuneEndTime: 0
   hitRadius: 1
   targetPoint: {fileID: 4953690485866051921}
+  damageTextPoint: {fileID: 6627954569565137464}
   deathDestroyDelay: 0.5
 --- !u!114 &2952219784427838897
 MonoBehaviour:
@@ -405,6 +437,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3610885929160689904, guid: 431e7ebf33472465aac23f95e3095010, type: 3}
       insertIndex: 0
       addedObject: {fileID: 4953690485866051921}
+    - targetCorrespondingSourceObject: {fileID: 3610885929160689904, guid: 431e7ebf33472465aac23f95e3095010, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 6627954569565137464}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3049568796795790909, guid: 431e7ebf33472465aac23f95e3095010, type: 3}
       insertIndex: -1
