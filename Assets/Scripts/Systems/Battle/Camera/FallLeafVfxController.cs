@@ -18,6 +18,8 @@ public class FallLeafVfxController : MonoBehaviour
     [SerializeField] private float maxVelocityXMax = -7f;
     
     private ParticleSystem.VelocityOverLifetimeModule velocityOverLifetime;
+    
+    private ParticleSystem.Particle[] particleBuffer;
 
     private void Awake()
     {
@@ -67,5 +69,47 @@ public class FallLeafVfxController : MonoBehaviour
 
         velocityOverLifetime.x =
             new ParticleSystem.MinMaxCurve(minX, maxX);
+    }
+    
+    // 낙엽 색깔 바꾸는 외부호출용 함수
+    public void SetLeafColor(Color color)
+    {
+        if (leafParticles == null)
+            return;
+
+        ParticleSystem.MainModule main =
+            leafParticles.main;
+
+        // 이후 생성될 파티클 색상
+        main.startColor =
+            new ParticleSystem.MinMaxGradient(color);
+
+        int particleCount =
+            leafParticles.particleCount;
+
+        if (particleCount <= 0)
+            return;
+
+        if (particleBuffer == null ||
+            particleBuffer.Length < particleCount)
+        {
+            particleBuffer =
+                new ParticleSystem.Particle[particleCount];
+        }
+
+        int count =
+            leafParticles.GetParticles(particleBuffer);
+
+        // 이미 생성된 파티클 색상
+        for (int i = 0; i < count; i++)
+        {
+            particleBuffer[i].startColor =
+                color;
+        }
+
+        leafParticles.SetParticles(
+            particleBuffer,
+            count
+        );
     }
 }
