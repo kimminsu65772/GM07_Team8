@@ -11,13 +11,23 @@ public class DamagePopup : MonoBehaviour
     [Header("크리티컬")]
     [SerializeField] private Color criticalColor = Color.red;
 
+    [Header("힐 (회복)")]
+    [SerializeField] private Color healColor = Color.green;
+
     [SerializeField] private float moveSpeed = 1f;       
     [SerializeField] private float disappearTimer = 0.8f; 
     private Color textColor;
     public void Setup(DamageInfo damageInfo)
     {
+        Debug.Log($"Popup - Damage: {damageInfo.Damage}, IsHeal: {damageInfo.IsHeal}");
         damageText.text = GameFormatUtils.ToIdleNumber(damageInfo.Damage);
-        if (damageInfo.IsCritical)
+        bool isHealCondition = damageInfo.IsHeal || damageInfo.Damage < 0;
+        if (isHealCondition)
+        {
+            damageText.color = healColor;
+            damageText.fontStyle = FontStyles.Bold;
+        }
+        else if (damageInfo.IsCritical)
         {
             damageText.color = criticalColor;
             damageText.fontStyle = FontStyles.Bold;
