@@ -26,17 +26,6 @@ public class HeroProjectileShooter : MonoBehaviour
             if (enemy.IsDead) return;
         }
 
-        double damage = hero.HeroAtk;
-        float criRan = Random.Range(1f, 100f);
-        bool isCrit = false;
-
-        if (criRan <= hero.HeroCriChance)
-        {
-            damage *= 2f;
-            isCrit = true;
-        }
-
-        heroAttack.ThrowProjectile(targetEnemy.transform, new DamageInfo(damage, isCrit)
-        );
+        heroAttack.ThrowProjectile(targetEnemy.transform);
     }
 }

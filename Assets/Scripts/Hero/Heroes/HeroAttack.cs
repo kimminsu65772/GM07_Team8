@@ -69,9 +69,6 @@ public class HeroAttack : MonoBehaviour
 
         if (attackTimer >= hero.HeroAttackTime)
         {
-            float criRan = Random.Range(1f, 100f);
-            double damage = hero.HeroAtk;
-
             isAttacking = true;
             attackTimer = 0f;
 
@@ -80,16 +77,9 @@ public class HeroAttack : MonoBehaviour
 
             vfx.PlayAttackEffect(hero.AtkPosPreset, hero.AtkScalePreset);
 
-            bool isCrit = false;
-            if (criRan <= hero.HeroCriChance)
-            {
-                damage *= 2f;
-                isCrit = true;
-            }
-
             if (hero.TargetEnemy.TryGetComponent<IDamageable>(out IDamageable enemyHP))
             {
-                enemyHP.TakeDamage(new DamageInfo(damage, isCrit));
+                enemyHP.TakeDamage(GetDamageInfo(1));
             }
 
             // Debug.Log(gameObject.name + "의 근접 공격, 피해량 : " + damage);
@@ -168,22 +158,8 @@ public class HeroAttack : MonoBehaviour
         if (additionalTarget == null)
             return;
 
-        float criRan = Random.Range(1f, 100f);
-        double damage = hero.HeroAtk;
-
-        bool isCrit = false;
-
-        if (criRan <= hero.HeroCriChance)
-        {
-            damage *= 2f;
-            isCrit = true;
-        }
-
         // 기존 원거리 공격과 동일하게 투사체 발사
-        ThrowProjectile(
-            additionalTarget,
-            new DamageInfo(damage, isCrit)
-        );
+        ThrowProjectile(additionalTarget);
     }
 
     // areaShape = 0(원), 1(사각형)
@@ -209,7 +185,6 @@ public class HeroAttack : MonoBehaviour
             Debug.Log("광역 공격 감지 실패");
             return;
         }
-        Debug.Log($"광역 공격 감지 적 수: {enemies.Length}");
 
         Vector2 direction = target.position - transform.position;
         hero.FlipSprite(direction);
@@ -220,23 +195,12 @@ public class HeroAttack : MonoBehaviour
         {
             if (coll.gameObject.TryGetComponent<IDamageable>(out IDamageable enemyHP))
             {
-                float criRan = Random.Range(1f, 100f);
-                double damage = hero.HeroAtk * damageBonus;
-
-                bool isCrit = false;
-                if (criRan <= hero.HeroCriChance)
-                {
-                    damage *= 2f;
-                    isCrit = true;
-                }
-
-                enemyHP.TakeDamage(new DamageInfo(damage, isCrit));
-                Debug.Log($"{gameObject.name}의 광역 스킬, {coll.gameObject.name} 피해량 : {damage}");
+                enemyHP.TakeDamage(GetDamageInfo(damageBonus));
             }
         }
     }
 
-    public void ThrowProjectile(Transform enemy, DamageInfo damageInfo)
+    public void ThrowProjectile(Transform enemy)
     {
         if (projectileType == HeroProjectileType.None || firePoint == null || PoolingManager.Instance == null) return;
 
@@ -244,12 +208,7 @@ public class HeroAttack : MonoBehaviour
 
         if (projectile == null) return;
 
-        projectile.Init(
-            firePoint.position,
-            Quaternion.identity,
-            enemy,
-            damageInfo
-        );
+        projectile.Init(hero, firePoint.position, Quaternion.identity, enemy, 1);
     }
 
     public void UseSkill(GameObject enemy)
@@ -300,5 +259,21 @@ public class HeroAttack : MonoBehaviour
     public void SetAutoSkill(bool value)
     {
         isAutoSkill = value;
+    }
+
+    public DamageInfo GetDamageInfo(double damageBonus)
+    {
+        float criRan = Random.Range(1f, 100f);
+        double damage = hero.HeroAtk * damageBonus;
+
+        bool isCrit = false;
+
+        if (criRan <= hero.HeroCriChance)
+        {
+            damage *= 2f;
+            isCrit = true;
+        }
+
+        return new DamageInfo(damage, isCrit);
     }
 }

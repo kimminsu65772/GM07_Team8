@@ -8748,7 +8748,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0a6714962a19cd4995334cc83c82c61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageManager
-  damagePopupPrefab: {fileID: 2645928949933806780, guid: ebb03f09546432d4e83e1197d2c6440d, type: 3}
   worldCanvasTransform: {fileID: 670822879}
 --- !u!1 &401006068
 GameObject:
@@ -15520,6 +15519,7 @@ MonoBehaviour:
   battleManager: {fileID: 3390470149986790059}
   stageManager: {fileID: 183848531}
   stageTransitionController: {fileID: 280974633}
+  itemLogUIController: {fileID: 0}
 --- !u!4 &729156443
 Transform:
   m_ObjectHideFlags: 0
@@ -19635,6 +19635,7 @@ MonoBehaviour:
   mapCatalog: {fileID: 11400000, guid: 7343451f5f52b4448a763b8f19bd51ae, type: 2}
   mapRoot: {fileID: 255850661}
   mainCamera: {fileID: 402947804}
+  fallLeafVfxController: {fileID: 402947806}
 --- !u!4 &943786533
 Transform:
   m_ObjectHideFlags: 0
