@@ -15,24 +15,14 @@ public class Hero21_Mage : Hero
     {
         if (enemy == null || IsDead) return;
 
-        float criRan = Random.Range(1f, 100f);
-        double damage = HeroAtk * 2.0f;
-
         Vector2 direction = enemy.transform.position - transform.position;
         FlipSprite(direction);
 
         Attack.VFX.PlayTargetEffect(enemy.transform, TargetPosPreset, TargetScalePreset);
 
-        bool isCrit = false;
-        if (criRan <= HeroCriChance)
-        {
-            damage *= 2f;
-            isCrit = true;
-        }
-
         if (enemy.TryGetComponent<IDamageable>(out IDamageable enemyHP))
         {
-            enemyHP.TakeDamage(new DamageInfo(damage, isCrit));
+            enemyHP.TakeDamage(Attack.GetDamageInfo(2));
         }
         // Debug.Log(gameObject.name + "의 스킬, 피해량 : " + damage);
     }

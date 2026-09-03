@@ -30,6 +30,7 @@ public class Hero24_Archer : Hero
         if (skillArrow == null) return;
 
         projectile.transform.position = firePoint.position;
-        skillArrow.Init(this, enemy);
+
+        skillArrow.Init(this, firePoint.position, firePoint.rotation, enemy.transform, 2);
     }
 }
