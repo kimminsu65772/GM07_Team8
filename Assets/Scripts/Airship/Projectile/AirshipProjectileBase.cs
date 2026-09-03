@@ -6,7 +6,6 @@ public abstract class AirshipProjectileBase : MonoBehaviour
     protected IDamageable damageable;
     protected DamageInfo damageInfo;
     protected float targetRadius;
-    protected float targetHeightOffset;
 
     private PoolingManager poolingManager;
     private AirshipCannonType poolingType;
@@ -16,8 +15,7 @@ public abstract class AirshipProjectileBase : MonoBehaviour
         Quaternion startRotation,
         Transform target,
         IDamageable damageable,
-        DamageInfo damageInfo,
-        float targetHeightOffset = 0f)
+        DamageInfo damageInfo)
     {
         transform.SetPositionAndRotation(
             startPosition,
@@ -29,7 +27,6 @@ public abstract class AirshipProjectileBase : MonoBehaviour
         this.damageInfo = damageInfo;
 
         targetRadius = damageable.HitRadius;
-        this.targetHeightOffset = targetHeightOffset;
 
         gameObject.SetActive(true);
     }

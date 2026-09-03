@@ -8,6 +8,8 @@ public class AirshipDeathVfxController : MonoBehaviour
     [SerializeField] private Transform body;
     [SerializeField] private Transform bodyForPunch;
 
+    [SerializeField] private AudioClip boomSfx;
+
     private Sequence vfxSeq;
     private Tween bodyAnim;
     private Tween bodyPunchAnim;
@@ -23,27 +25,51 @@ public class AirshipDeathVfxController : MonoBehaviour
         vfxSeq
             .Join(DOVirtual.DelayedCall(
                 0.1f,
-                () => vfxs[0].SetActive(true)
+                () =>
+                {
+                    vfxs[0].SetActive(true);
+                    SoundManager.Instance.PlaySound(boomSfx, 0.7f);
+                }
             ))
             .Join(DOVirtual.DelayedCall(
                 0.2f,
-                () => vfxs[1].SetActive(true)
+                () =>
+                {
+                    vfxs[1].SetActive(true);
+                    SoundManager.Instance.PlaySound(boomSfx, 0.2f);
+                }
             ))
             .Join(DOVirtual.DelayedCall(
                 0.3f,
-                () => vfxs[2].SetActive(true)
+                () =>
+                {
+                    vfxs[2].SetActive(true);
+                    SoundManager.Instance.PlaySound(boomSfx, 0.2f);
+                }
             ))
             .Join(DOVirtual.DelayedCall(
                 0.65f,
-                () => vfxs[3].SetActive(true)
+                () =>
+                {
+                    vfxs[3].SetActive(true);
+                    SoundManager.Instance.PlaySound(boomSfx, 0.2f);
+                }
             ))
             .Join(DOVirtual.DelayedCall(
                 0.8f,
-                () => vfxs[4].SetActive(true)
+                () =>
+                {
+                    vfxs[4].SetActive(true);
+                    SoundManager.Instance.PlaySound(boomSfx, 0.2f);
+                }
             ))
             .Join(DOVirtual.DelayedCall(
                 1f,
-                () => vfxs[5].SetActive(true)
+                () =>
+                {
+                    vfxs[5].SetActive(true);
+                    SoundManager.Instance.PlaySound(boomSfx, 0.2f);
+                }
             ));
     }
 
