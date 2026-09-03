@@ -17,11 +17,11 @@ MonoBehaviour:
   - RegionId: 1
     MapPrefab: {fileID: 6566265419746517600, guid: e076b3a342af16e4d9196ef7d7359c37, type: 3}
     bgmId: 100
-    BackgroundVFXColor: {r: 0, g: 0, b: 0, a: 0}
+    BackgroundVFXColor: {r: 0, g: 1, b: 0.027461529, a: 0}
   - RegionId: 2
     MapPrefab: {fileID: 206727848632992039, guid: 176c65d84e5232f469b37102aaf51bf8, type: 3}
     bgmId: 101
-    BackgroundVFXColor: {r: 0, g: 0, b: 0, a: 0}
+    BackgroundVFXColor: {r: 0.93962264, g: 0.42119294, b: 0.11878247, a: 0}
   - RegionId: 3
     MapPrefab: {fileID: 8565523364691489044, guid: f9ccc72d8333b52408f542bad3778e40, type: 3}
     bgmId: 102

@@ -18,7 +18,7 @@ public class SoundManager : MonoBehaviour
 
     [Header("오디오 출력 관련 정책 설정")]
     [SerializeField, Min(0f)] private float sfxCooldown = 0.05f; // 효과음 쿨타임
-    [SerializeField, Min(1)] private int sfxMaxSimultaneous = 3; // 동시에 재생 가능한 최대 효과음 개수
+    [SerializeField, Min(1)] private int sfxMaxSimultaneous = 10; // 동시에 재생 가능한 최대 효과음 개수
 
 
     private float masterVolume = 1f;

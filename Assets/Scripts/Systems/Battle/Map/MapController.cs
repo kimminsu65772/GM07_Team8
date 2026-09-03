@@ -7,6 +7,7 @@ public class MapController : MonoBehaviour
     [SerializeField] private MapCatalog mapCatalog;
     [SerializeField] private Transform mapRoot;
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private FallLeafVfxController fallLeafVfxController;
 
     private GameObject currentMap;
 
@@ -75,6 +76,13 @@ public class MapController : MonoBehaviour
             if (bgmId != SoundId.None && SoundManager.Instance != null)
             {
                 SoundManager.Instance.PlayBGM(bgmId);
+            }
+
+            Color leafColor = mapEntry.BackgroundVFXColor;
+
+            if (leafColor != null)
+            {
+                fallLeafVfxController.SetLeafColor(leafColor);
             }
         }
         finally
