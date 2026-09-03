@@ -31,6 +31,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8877284870315069372}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7803344712004873702
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3888108073711996049}
+  m_Layer: 0
+  m_Name: Damage Text Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3888108073711996049
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7803344712004873702}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.008726557, z: -0, w: 0.9999619}
+  m_LocalPosition: {x: -0.14, y: 0.61, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8877284870315069372}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7931180812232907860
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,6 +228,7 @@ MonoBehaviour:
   bossStunImmuneEndTime: 0
   hitRadius: 1
   targetPoint: {fileID: 359418629741402365}
+  damageTextPoint: {fileID: 3888108073711996049}
   deathDestroyDelay: 0.5
 --- !u!114 &2952219784427838897
 MonoBehaviour:
@@ -705,6 +737,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3015809669471892011, guid: 4010be241b57e4b37b4a2fd2b7087f39, type: 3}
       insertIndex: 0
       addedObject: {fileID: 359418629741402365}
+    - targetCorrespondingSourceObject: {fileID: 3015809669471892011, guid: 4010be241b57e4b37b4a2fd2b7087f39, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 3888108073711996049}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7685456188288423625, guid: 4010be241b57e4b37b4a2fd2b7087f39, type: 3}
       insertIndex: -1

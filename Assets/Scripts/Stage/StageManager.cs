@@ -11,7 +11,7 @@ public class StageManager : MonoBehaviour
     public event Action<int> OnWaveCompleted;
     public event Action<int, int> OnStageStarted;
     public event Action<int, string> OnStageFailed;
-
+    public event Action OnBossSpawned;
 
     public int CurrentWave => currentWaveIndex + 1;
     public int TotalWaveCount { get; private set; }
@@ -257,7 +257,10 @@ public class StageManager : MonoBehaviour
                 );
             }
         }
-
+        if (enemyStats.IsBoss)
+        {
+            OnBossSpawned?.Invoke();
+        }
         aliveEnemyCount++;
         remainingEnemyCount++;
 

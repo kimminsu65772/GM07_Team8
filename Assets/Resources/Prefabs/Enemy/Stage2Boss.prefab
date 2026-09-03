@@ -200,6 +200,7 @@ MonoBehaviour:
   bossStunImmuneEndTime: 0
   hitRadius: 1
   targetPoint: {fileID: 3839456456107172141}
+  damageTextPoint: {fileID: 3611872330482928772}
   deathDestroyDelay: 1.2
 --- !u!114 &2952219784427838897
 MonoBehaviour:
@@ -348,6 +349,37 @@ MonoBehaviour:
   castDelay: 0.3
   explosionYOffset: 0.5
   explosionEffectScale: 0.02
+--- !u!1 &8985939529493651712
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3611872330482928772}
+  m_Layer: 0
+  m_Name: Damage Text Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3611872330482928772
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8985939529493651712}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.008726557, z: -0, w: 0.9999619}
+  m_LocalPosition: {x: -0.3, y: 1.99, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 2630319367566124052}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3663148076088320258
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -468,6 +500,9 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 1755188508885490069, guid: 5fcf49736dcdf4df09a7c81318d51648, type: 3}
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1609711699231606038, guid: 5fcf49736dcdf4df09a7c81318d51648, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3611872330482928772}
     - targetCorrespondingSourceObject: {fileID: 1609711699231606038, guid: 5fcf49736dcdf4df09a7c81318d51648, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3839456456107172141}

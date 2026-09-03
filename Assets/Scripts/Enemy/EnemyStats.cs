@@ -26,7 +26,9 @@ public class EnemyStats : MonoBehaviour, IDamageable
     [Header("Target Point")]
     [SerializeField] private Transform targetPoint;
 
-    public Transform TargetPoint => targetPoint;
+    [Header("Damage Text Point")]
+    [SerializeField] private Transform damageTextPoint;
+    
 
     [Header("Death")]
     [SerializeField, Min(0f)]
@@ -37,26 +39,21 @@ public class EnemyStats : MonoBehaviour, IDamageable
     public event Action<EnemyStats> EnemyDeathCompleted;
     public event Action<EnemyStats> EnemyStunned;
     public event Action<EnemyStats> EnemyStunEnded;
-
+    public Transform TargetPoint => targetPoint;
+    public Transform DamageTextPoint => damageTextPoint;
     public int CurrentHealth => currentHealth;
 
-    public int MaxHealth =>
-        enemyData != null ? enemyData.MaxHealth : 0;
+    public int MaxHealth =>    enemyData != null ? enemyData.MaxHealth : 0;
 
-    public int AttackPower =>
-        enemyData != null ? enemyData.AttackPower : 0;
+    public int AttackPower =>    enemyData != null ? enemyData.AttackPower : 0;
 
-    public float MoveSpeed =>
-        enemyData != null ? enemyData.MoveSpeed : 0f;
+    public float MoveSpeed =>     enemyData != null ? enemyData.MoveSpeed : 0f;
 
-    public float AttackRange =>
-        enemyData != null ? enemyData.AttackRange : 0f;
+    public float AttackRange =>   enemyData != null ? enemyData.AttackRange : 0f;
 
-    public float AttackInterval =>
-        enemyData != null ? enemyData.AttackInterval : 1f;
+    public float AttackInterval =>  enemyData != null ? enemyData.AttackInterval : 1f;
 
-    public bool IsBoss =>
-    enemyData != null &&   enemyData.IsBoss;
+    public bool IsBoss =>   enemyData != null &&   enemyData.IsBoss;
 
     public bool IsDead => currentHealth <= 0;
 
