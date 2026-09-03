@@ -29,10 +29,13 @@ public class HeroSkillUIController : MonoBehaviour
 
     private void Awake()
     {
+        LoadAutoSkillMode();
+
         if (autoSkillButton != null)
         {
             autoSkillButton.onClick.AddListener(OnClickAutoSkill);
         }
+
         UpdateAutoSkillGlow();
     }
     private void OnEnable()
@@ -67,9 +70,9 @@ public class HeroSkillUIController : MonoBehaviour
 
         while (timer < 3f)
         {
-            Hero[] heroes = FindObjectsByType<Hero>(FindObjectsInactive.Exclude, FindObjectsSortMode.None );
+            IReadOnlyList<Hero> spawnedHeroes = BattleManager.Instance.SpawnedHeroes;
 
-            if (heroes.Length > 0)
+            if (spawnedHeroes.Count > 0)
             {
                 yield return null;
 
@@ -112,8 +115,32 @@ public class HeroSkillUIController : MonoBehaviour
 
         if (autoSkillButton != null)
         {
+            RectTransform firstSkillRect =
+                skillButtons.Length > 0 && skillButtons[0] != null
+                    ? skillButtons[0].GetComponent<RectTransform>()
+                    : null;
+
+            RectTransform autoSkillRect = autoSkillButton.GetComponent<RectTransform>();
+
+            if (hasHeroes && firstSkillRect != null && autoSkillRect != null)
+            {
+                Vector2 autoPosition = autoSkillRect.anchoredPosition;
+                autoPosition.x = firstSkillRect.anchoredPosition.x - placedHeroes.Count * 90f;
+                autoSkillRect.anchoredPosition = autoPosition;
+
+                if (autoGlowObject != null)
+                {
+                    RectTransform autoGlowRect = autoGlowObject.GetComponent<RectTransform>();
+                    if (autoGlowRect != null)
+                    {
+                        autoGlowRect.anchoredPosition = autoPosition;
+                    }
+                }
+            }
+
             autoSkillButton.gameObject.SetActive(hasHeroes);
         }
+
         if (autoGlowObject != null)
         {
             autoGlowObject.SetActive(hasHeroes && isAutoSkill);
@@ -124,8 +151,8 @@ public class HeroSkillUIController : MonoBehaviour
     private void CollectPlacedHeroes()
     {
         placedHeroes.Clear();
-        Hero[] allHeroes = FindObjectsByType<Hero>(FindObjectsInactive.Exclude,FindObjectsSortMode.None);
-        foreach (Hero hero in allHeroes)
+        IReadOnlyList<Hero> spawnedHeroes = BattleManager.Instance.SpawnedHeroes;
+        foreach (Hero hero in spawnedHeroes)
         {
             if (hero == null) continue;
             if (placedHeroes.Contains(hero)) continue;
@@ -152,9 +179,21 @@ public class HeroSkillUIController : MonoBehaviour
     private void OnClickAutoSkill()
     {
         isAutoSkill = !isAutoSkill;
+        PlayerInfo.Instance.SetAutoSkillEnabled(isAutoSkill);
 
         ApplyAutoSkillMode();
         UpdateAutoSkillGlow();
+    }
+
+    private void LoadAutoSkillMode()
+    {
+        PlayerInfo playerInfo = PlayerInfo.Instance;
+        if (playerInfo == null || !playerInfo.IsInitialized)
+        {
+            return;
+        }
+
+        isAutoSkill = playerInfo.AutoSkillEnabled;
     }
     private void ApplyAutoSkillMode()
     {

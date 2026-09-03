@@ -35,6 +35,7 @@ public class MapController : MonoBehaviour
             }
 
             SoundId bgmId = mapEntry.bgmId;
+            Debug.Log($"Loading map for stage {stageNumber} with BGM ID: {bgmId}");
 
             if (!mapCache.TryGetValue(mapPrefab, out GameObject cachedMap))
             {
