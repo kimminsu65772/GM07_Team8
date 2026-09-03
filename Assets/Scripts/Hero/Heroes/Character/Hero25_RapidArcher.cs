@@ -34,7 +34,7 @@ public class Hero25_RapidArcher : Hero
         float buffedAttackTime = originalAttackTime / attackBuffAmount;
 
         SetAttackTime(buffedAttackTime);
-        animator.SetFloat("bonusSpeed", attackBuffAmount * 1.5f);
+        animator.SetFloat("bonusSpeed", attackBuffAmount * 1.8f);
 
         yield return new WaitForSeconds(5f);
 
