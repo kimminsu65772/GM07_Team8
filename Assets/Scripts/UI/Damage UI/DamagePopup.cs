@@ -1,6 +1,9 @@
+using System;
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using Random = UnityEngine.Random;
+
 public class DamagePopup : MonoBehaviour
 {
     [SerializeField] private TMP_Text damageText;
@@ -17,10 +20,21 @@ public class DamagePopup : MonoBehaviour
     [SerializeField] private float moveSpeed = 1f;       
     [SerializeField] private float disappearTimer = 0.8f; 
     private Color textColor;
-    
+
+    private float originFontSize;
     
     private PoolingManager poolingManager;
-    
+
+    private void Awake()
+    {
+        originFontSize = damageText.fontSize;
+    }
+
+    private void OnEnable()
+    {
+        damageText.fontSize = originFontSize;
+    }
+
     public void Setup(DamageInfo damageInfo)
     {
         StopAllCoroutines();
@@ -34,6 +48,7 @@ public class DamagePopup : MonoBehaviour
         else if (damageInfo.IsCritical)
         {
             damageText.color = criticalColor;
+            damageText.fontSize = originFontSize * 1.5f;
         }
         else
         {
