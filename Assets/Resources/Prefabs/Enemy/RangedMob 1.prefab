@@ -162,7 +162,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   enemyData: {fileID: 11400000, guid: 355e77d3543ed2344a1b4046a065f47c, type: 2}
   currentHealth: 0
+  canBeStunned: 1
+  isStunned: 0
+  bossStunImmunityDuration: 4
+  bossStunImmuneEndTime: 0
   hitRadius: 1
+  targetPoint: {fileID: 1950795644166462830}
   deathDestroyDelay: 0.5
 --- !u!114 &2952219784427838897
 MonoBehaviour:
@@ -255,6 +260,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAnimationController
   enemyAnimator: {fileID: 0}
   movementThreshold: 0.01
+  lockRootRotation: 0
+  poseRoot: {fileID: 0}
 --- !u!114 &-8656935154043448609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,6 +326,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7726521775204583220}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9175034183935504156
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1950795644166462830}
+  m_Layer: 0
+  m_Name: TargetPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1950795644166462830
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9175034183935504156}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.0000012172386, z: -0, w: 1}
+  m_LocalPosition: {x: -0.096000224, y: 0.239, z: -0.006000004}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 4683528067763702374}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1227634236301567655
 PrefabInstance:
@@ -419,7 +457,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 8374512322907744102, guid: 5181e3baf9c2b4c9c88deb1e70bb00d4, type: 3}
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 5906001574424767681, guid: 5181e3baf9c2b4c9c88deb1e70bb00d4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1950795644166462830}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 559689618426107107, guid: 5181e3baf9c2b4c9c88deb1e70bb00d4, type: 3}
       insertIndex: -1

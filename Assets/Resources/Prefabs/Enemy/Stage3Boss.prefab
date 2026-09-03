@@ -31,6 +31,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7265633569253252979}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7371722654295111372
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1881028798266812935}
+  m_Layer: 0
+  m_Name: TargetPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1881028798266812935
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7371722654295111372}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.0000012172386, z: -0, w: 1}
+  m_LocalPosition: {x: -0.056666743, y: 0.23333333, z: -0.0100000035}
+  m_LocalScale: {x: 0.33333334, y: 0.33333334, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 5484872454752690972}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7931180812232907860
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,7 +225,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   enemyData: {fileID: 11400000, guid: 257728ae596f43b4796ab459a404c6a7, type: 2}
   currentHealth: 0
+  canBeStunned: 1
+  isStunned: 0
+  bossStunImmunityDuration: 4
+  bossStunImmuneEndTime: 0
   hitRadius: 1
+  targetPoint: {fileID: 1881028798266812935}
   deathDestroyDelay: 0.5
 --- !u!114 &2952219784427838897
 MonoBehaviour:
@@ -287,6 +323,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAnimationController
   enemyAnimator: {fileID: 0}
   movementThreshold: 0.01
+  lockRootRotation: 0
+  poseRoot: {fileID: 0}
 --- !u!114 &-8656935154043448609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -486,6 +524,9 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8528978243186912428, guid: 299d2280630974d5b9c48a38bbf3e0a4, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 1881028798266812935}
     - targetCorrespondingSourceObject: {fileID: 6816090101728497859, guid: 299d2280630974d5b9c48a38bbf3e0a4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7330737286454826404}
@@ -511,6 +552,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5381ac3b83db130428926f42376f5c6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAnimationEventReceiver
+--- !u!4 &5484872454752690972 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8528978243186912428, guid: 299d2280630974d5b9c48a38bbf3e0a4, type: 3}
+  m_PrefabInstance: {fileID: 4198246461846785968}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &6549839450527843370 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 6964428348053670810, guid: 299d2280630974d5b9c48a38bbf3e0a4, type: 3}
