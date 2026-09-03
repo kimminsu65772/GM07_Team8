@@ -264,12 +264,12 @@ public class PlayerInfo : MonoBehaviour
         return true;
     }
 
-    public bool SetAlreadyShowedArrangeHeroTutorial(bool alreadyShowed, SavePolicy savePolicy = SavePolicy.Deferred)
+    public bool SetAlreadyShowedArrangeHeroTutorial(SavePolicy savePolicy = SavePolicy.Deferred)
     {
         if (!CheckInitialized()) return false;
-        if (SaveData.AlreadyShowedArrangeHeroTutorial == alreadyShowed) return true;
+        if (SaveData.AlreadyShowedArrangeHeroTutorial == true) return true;
 
-        SaveData.AlreadyShowedArrangeHeroTutorial = alreadyShowed;
+        SaveData.AlreadyShowedArrangeHeroTutorial = true;
         RequestSave(savePolicy);
         return true;
     }
