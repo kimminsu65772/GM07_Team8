@@ -111,7 +111,12 @@ public class EnemyStats : MonoBehaviour, IDamageable
     }
     public void Stun(float duration)
     {
-        if (!canBeStunned || IsDead || duration <= 0f || (IsBoss && (isStunned || Time.time < bossStunImmuneEndTime)))
+        if (!isActiveAndEnabled || IsDead)
+        {
+            return;
+        }
+
+        if (!canBeStunned ||  duration <= 0f || (IsBoss && (isStunned || Time.time < bossStunImmuneEndTime)))
         {
             return;
         }
@@ -151,11 +156,18 @@ public class EnemyStats : MonoBehaviour, IDamageable
     // IDamageable 인터페이스 구현
     public void TakeDamage(DamageInfo damageInfo)
     {
-        float damageAmount = (float)damageInfo.Damage;
-        if (damageAmount <= 0f || IsDead)
+        if (!isActiveAndEnabled || IsDead)
         {
             return;
         }
+
+        float damageAmount = (float)damageInfo.Damage;
+
+        if (damageAmount <= 0f)
+        {
+            return;
+        }
+       
 
         int finalDamage =
             Mathf.RoundToInt(damageAmount);
@@ -165,9 +177,12 @@ public class EnemyStats : MonoBehaviour, IDamageable
             0);
         //데미지 팝업
         if (DamageManager.Instance != null)
-        {
-            DamageManager.Instance.ShowDamage(damageInfo, transform.position);
-        }
+        
+            { Vector3 damageTextPosition =  DamageTextPoint != null? DamageTextPoint.position   : transform.position;
+
+                DamageManager.Instance.ShowDamage( damageInfo,  damageTextPosition );
+            }
+        
 
         EnemyDamaged?.Invoke(this);
         Debug.Log(
@@ -185,6 +200,10 @@ public class EnemyStats : MonoBehaviour, IDamageable
 
     private void Die()
     {
+        if (!isActiveAndEnabled)
+        {
+            return;
+        }
         EnemyDied?.Invoke(this);
 
         StartCoroutine(CompleteDeath());
@@ -192,8 +211,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
 
     private IEnumerator CompleteDeath()
     {
-        yield return new WaitForSeconds(
-            deathDestroyDelay);
+        yield return new WaitForSeconds(  deathDestroyDelay);
 
         EnemyDeathCompleted?.Invoke(this);
 
