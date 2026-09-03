@@ -975,6 +975,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SoundManager
   sfxAudioSource: {fileID: 0}
   bgmAudioSource: {fileID: 0}
+  soundTable: {fileID: 11400000, guid: 4c7a5c2f361900b409da62b1c9e95290, type: 2}
+  bgmFadeDuration: 1
+  sfxCooldown: 0.05
+  sfxMaxSimultaneous: 10
 --- !u!4 &1365552396
 Transform:
   m_ObjectHideFlags: 0
