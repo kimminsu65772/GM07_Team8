@@ -9,7 +9,6 @@ public class ArcherSkillProjectile : HeroAttackProjectileController
     private Vector2 scalePreset = new Vector2(5f, 5f);
 
     private Hero hero;
-    private Transform target;
 
     [SerializeField] private float skillMoveSpeed = 15f;
 
@@ -39,14 +38,14 @@ public class ArcherSkillProjectile : HeroAttackProjectileController
     public void Init(Hero hero, GameObject target)
     {
         this.hero = hero;
-        this.target = target != null ? target.transform : null;
+        targetPos = target != null ? target.transform : null;
 
         isTargetDead = false;
         isExploded = false;
 
-        if (this.target != null)
+        if (targetPos != null)
         {
-            targetPosition = this.target.position;
+            targetPosition = targetPos.position;
             SetRotationToTarget();
         }
 
@@ -61,22 +60,22 @@ public class ArcherSkillProjectile : HeroAttackProjectileController
         // 타겟이 살아있는 상태
         if (!isTargetDead)
         {
-            if (target == null)
+            if (targetPos == null)
             {
                 Explode();
                 return;
             }
 
-            if (target.TryGetComponent<EnemyStats>(
+            if (targetPos.TryGetComponent<EnemyStats>(
                     out EnemyStats enemyStats))
             {
                 if (enemyStats.IsDead)
                 {
                     // 죽은 순간의 위치를 저장
-                    targetPosition = target.position;
+                    targetPosition = targetPos.position;
 
                     isTargetDead = true;
-                    target = null;
+                    targetPos = null;
 
                     SetRotationToTargetPosition();
 
@@ -84,13 +83,13 @@ public class ArcherSkillProjectile : HeroAttackProjectileController
                 }
             }
 
-            targetPosition = target.position;
+            targetPosition = targetPos.position;
 
             SetRotationToTarget();
 
             transform.position = Vector2.MoveTowards(
                 transform.position,
-                target.position,
+                targetPos.position,
                 skillMoveSpeed * Time.deltaTime
             );
 
@@ -137,10 +136,10 @@ public class ArcherSkillProjectile : HeroAttackProjectileController
 
     private void HitEnemy()
     {
-        if (target == null)
+        if (targetPos == null)
             return;
 
-        if (!target.TryGetComponent<IDamageable>(
+        if (!targetPos.TryGetComponent<IDamageable>(
                 out IDamageable enemy))
         {
             return;
@@ -148,7 +147,7 @@ public class ArcherSkillProjectile : HeroAttackProjectileController
 
         float distance = Vector2.Distance(
             transform.position,
-            target.position
+            targetPos.position
         );
 
         if (distance <= enemy.HitRadius)
@@ -194,11 +193,11 @@ public class ArcherSkillProjectile : HeroAttackProjectileController
 
     private void SetRotationToTarget()
     {
-        if (target == null)
+        if (targetPos == null)
             return;
 
         Vector2 direction =
-            target.position - transform.position;
+            targetPos.position - transform.position;
 
         SetRotation(direction);
     }

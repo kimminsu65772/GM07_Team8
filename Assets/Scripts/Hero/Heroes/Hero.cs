@@ -28,10 +28,11 @@ public abstract class Hero : MonoBehaviour, IDamageable
     [SerializeField] private float runSpeed = 10f;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private LayerMask heroLayer;
-    private const float PlacementFollowSpeedMultiplier = 1.2f;
+    // private const float PlacementFollowSpeedMultiplier = 1.2f;
     private GameObject targetEnemy;
     private Transform placementPoint;
     private AirshipMovement airshipMovement;
+    private HeroAnimationController ani;
     private bool isMoving;
     
     public float SearchRange { get; private set; } = 12f;
@@ -128,6 +129,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         isMoving = true;
         heroEquip = GetComponent<HeroEquipmentManager>();
         Attack = GetComponent<HeroAttack>();
+        ani = GetComponentInChildren<HeroAnimationController>();
 
         FlipSprite(new Vector2(1, 0));
     }
@@ -168,8 +170,8 @@ public abstract class Hero : MonoBehaviour, IDamageable
     protected virtual void Update()
     {
         HPRatio = (float)HeroCurrentHP / (float)HeroMaxHP;
-        
-        if (transform.position.x < airshipMovement.transform.position.x) moveSpeed = runSpeed;
+
+        if (transform.position.x < airshipMovement.transform.position.x + 0.5f) moveSpeed = runSpeed;
         else moveSpeed = walkSpeed;
 
         if (targetEnemy != null && targetEnemy.GetComponent<EnemyStats>().IsDead) targetEnemy = null;
@@ -320,12 +322,12 @@ public abstract class Hero : MonoBehaviour, IDamageable
         }
 
         isMoving = true;
-        float followSpeed = airshipMovement.CurrentMoveSpeed * PlacementFollowSpeedMultiplier;
+        // float followSpeed = airshipMovement.CurrentMoveSpeed * PlacementFollowSpeedMultiplier;
 
         transform.position = Vector3.MoveTowards(
             transform.position,
             targetPosition,
-            followSpeed * Time.deltaTime);
+            runSpeed * Time.deltaTime);
 
         FlipSprite(new Vector2(1, 0));
     }
@@ -349,6 +351,7 @@ public abstract class Hero : MonoBehaviour, IDamageable
         yield return new WaitForSeconds(10f);
 
         isDead = false;
+        ani.ResetPose();
         HeroCurrentHP = heroMaxHP;
 
         targetEnemy = null;

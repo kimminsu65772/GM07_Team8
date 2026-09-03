@@ -236,26 +236,13 @@ public class HeroAttack : MonoBehaviour
         }
     }
 
-    public void ThrowProjectile(
-        Transform enemy,
-        DamageInfo damageInfo)
+    public void ThrowProjectile(Transform enemy, DamageInfo damageInfo)
     {
-        if (projectileType == HeroProjectileType.None ||
-            firePoint == null ||
-            PoolingManager.Instance == null)
-        {
-            return;
-        }
+        if (projectileType == HeroProjectileType.None || firePoint == null || PoolingManager.Instance == null) return;
 
-        HeroAttackProjectileController projectile =
-            PoolingManager.Instance.GetHeroProjectile(
-                projectileType
-            );
+        HeroAttackProjectileController projectile = PoolingManager.Instance.GetHeroProjectile(projectileType);
 
-        if (projectile == null)
-        {
-            return;
-        }
+        if (projectile == null) return;
 
         projectile.Init(
             firePoint.position,

@@ -15,7 +15,8 @@ public class HeroAttackProjectileController : MonoBehaviour
     [SerializeField] private float moveSpeed = 8f;
     [SerializeField, Min(0.1f)] private float lifeTime = 3f;
 
-    private Transform target;
+    protected Transform targetPos;
+    private EnemyStats target;
     private DamageInfo damageInfo;
     private float remainingLifeTime;
 
@@ -41,8 +42,9 @@ public class HeroAttackProjectileController : MonoBehaviour
             startRotation
         );
 
-        this.target = target;
+        targetPos = target;
         this.damageInfo = damageInfo;
+        this.target = targetPos.GetComponent<EnemyStats>();
         remainingLifeTime = lifeTime;
 
         gameObject.SetActive(true);
@@ -50,7 +52,7 @@ public class HeroAttackProjectileController : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (target == null)
+        if (target == null || target.IsDead)
         {
             ReturnToPool();
             return;
@@ -64,13 +66,13 @@ public class HeroAttackProjectileController : MonoBehaviour
             return;
         }
 
-        Vector2 direction = target.position - transform.position;
+        Vector2 direction = targetPos.position - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
 
         transform.position = Vector2.MoveTowards(
             transform.position,
-            target.position,
+            targetPos.position,
             moveSpeed * Time.deltaTime
         );
 
@@ -79,11 +81,14 @@ public class HeroAttackProjectileController : MonoBehaviour
         {
             float distance = Vector2.Distance(
                 transform.position,
-                target.position
+                targetPos.position
             );
 
             if (distance <= enemy.HitRadius)
             {
+                EnemyStats enemyStats = target.GetComponent<EnemyStats>();
+                if (!target.gameObject.activeSelf || enemyStats.IsDead) return;
+
                 enemy.TakeDamage(damageInfo);
                 ReturnToPool();
             }

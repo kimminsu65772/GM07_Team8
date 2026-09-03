@@ -15,11 +15,11 @@ public class HeroProjectileShooter : MonoBehaviour
 
     public void FireProjectile()
     {
-        if (hero == null || heroAttack == null) return;
+        if (hero == null || heroAttack == null || hero.TargetEnemy == null) return;
 
-        GameObject targetEnemy = hero.TargetEnemy;
+        Transform targetEnemy = hero.TargetEnemy.GetComponent<EnemyStats>().TargetPoint;
 
-        if (targetEnemy == null || !targetEnemy.activeSelf) return;
+        if (targetEnemy == null || !targetEnemy.gameObject.activeSelf) return;
 
         if (targetEnemy.TryGetComponent<EnemyStats>(out EnemyStats enemy))
         {
