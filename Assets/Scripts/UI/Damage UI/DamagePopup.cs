@@ -9,7 +9,7 @@ public class DamagePopup : MonoBehaviour
     [SerializeField] private Color normalColor = Color.white;
 
     [Header("크리티컬")]
-    [SerializeField] private Color criticalColor = Color.red;
+    [SerializeField] private Color criticalColor = Color.yellow;
 
     [Header("힐 (회복)")]
     [SerializeField] private Color healColor = Color.green;
@@ -17,25 +17,27 @@ public class DamagePopup : MonoBehaviour
     [SerializeField] private float moveSpeed = 1f;       
     [SerializeField] private float disappearTimer = 0.8f; 
     private Color textColor;
+    
+    
+    private PoolingManager poolingManager;
+    
     public void Setup(DamageInfo damageInfo)
     {
+        StopAllCoroutines();
         Debug.Log($"Popup - Damage: {damageInfo.Damage}, IsHeal: {damageInfo.IsHeal}");
         damageText.text = GameFormatUtils.ToIdleNumber(damageInfo.Damage);
         bool isHealCondition = damageInfo.IsHeal || damageInfo.Damage < 0;
         if (isHealCondition)
         {
             damageText.color = healColor;
-            damageText.fontStyle = FontStyles.Bold;
         }
         else if (damageInfo.IsCritical)
         {
             damageText.color = criticalColor;
-            damageText.fontStyle = FontStyles.Bold;
         }
         else
         {
             damageText.color = normalColor;
-            damageText.fontStyle = FontStyles.Normal;
         }
         textColor = damageText.color;
         StartCoroutine(PopupRoutine());
@@ -55,6 +57,19 @@ public class DamagePopup : MonoBehaviour
             }
             yield return null;
         }
-        Destroy(gameObject);
+        if (poolingManager != null)
+        {
+            poolingManager.ReleaseDamagePopup(this);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
+    }
+    
+    public void SetPoolingManager(
+        PoolingManager poolingManager)
+    {
+        this.poolingManager = poolingManager;
     }
 }

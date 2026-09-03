@@ -66,3 +66,5 @@ MonoBehaviour:
   heroArrowSkillInitialSize: 3
   enemyProjectilePrefab: {fileID: 1616738449389842227, guid: 338b897b00b96c246ae9492661761ab8, type: 3}
   enemyProjectileInitialSize: 10
+  damagePopupPrefab: {fileID: 7456165614903584952, guid: ebb03f09546432d4e83e1197d2c6440d, type: 3}
+  damagePopupInitialSize: 20

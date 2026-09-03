@@ -85,7 +85,7 @@ public class AirshipDeathVfxController : MonoBehaviour
                 12,
                 1f,
                 false)
-            .SetAutoKill(true)
+            .SetAutoKill(false)
             .Pause()
             .OnComplete(() => bodyForPunch.localPosition = Vector3.zero);
     }
