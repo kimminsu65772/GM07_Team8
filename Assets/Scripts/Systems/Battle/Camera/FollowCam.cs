@@ -82,11 +82,13 @@ public class FollowCam : MonoBehaviour
 
         Camera.main.orthographicSize = lockCameraSize ? 5f : cameraSize;
 
-        //float targetDistanceY = Camera.main.orthographicSize * targetOffsetY;
         float targetDistanceX = Camera.main.orthographicSize * -targetOffsetX;
         float smoothSpeed = 5.0f;
 
-        Vector3 desiredPosition = new Vector3(target.position.x + targetDistanceX, transform.position.y, -10f);
+        float desiredX = target.position.x + targetDistanceX;
+        desiredX = Mathf.Max(transform.position.x, desiredX);
+
+        Vector3 desiredPosition = new Vector3(desiredX, transform.position.y, -10f);
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
 
         transform.position = smoothCamera ? smoothedPosition : desiredPosition;

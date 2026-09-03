@@ -37,6 +37,7 @@ public class PlayerSaveData
     public EquipmentInventorySaveData EquipmentInventory { get; set; }
 
     public EquipmentCraftSaveData EquipmentCraft { get; set; }
+    public bool AutoSkillEnabled { get; set; }
     // 플레이어가 마지막으로 세이브한 시각을 국제 시간 기준으로 저장하는 데이터
     public string LastSavedAtUtc { get; set; }
 }

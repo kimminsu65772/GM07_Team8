@@ -7,4 +7,5 @@ public class MapEntry
     public int RegionId;
     public GameObject MapPrefab;
     public SoundId bgmId;
+    public Color BackgroundVFXColor;
 }
