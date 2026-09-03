@@ -5,6 +5,9 @@ public class ToggleController : MonoBehaviour
     [Header("토글 UI")]
     [SerializeField] private GameObject targetUI;
 
+    [Header("최초 1회 제한 설정")]
+    [SerializeField] private bool runOnlyOnce = false;
+
     private void Awake()
     {
         if (targetUI == null)
@@ -15,11 +18,19 @@ public class ToggleController : MonoBehaviour
     // UI 켜고 끄는 함수
     public void Toggle()
     {
-        if (targetUI != null)
+        if (targetUI == null) return;
+
+        bool isActive = targetUI.activeSelf;
+
+        if (runOnlyOnce && !isActive)
         {
-            bool isActive = targetUI.activeSelf;
-            targetUI.SetActive(!isActive);
+            if (PlayerInfo.Instance != null)
+            {
+                if (PlayerInfo.Instance.AlreadyShowedArrangeHeroTutorial) return;
+                PlayerInfo.Instance.SetAlreadyShowedArrangeHeroTutorial();
+            }
         }
+        targetUI.SetActive(!isActive);
     }
     // 켜기
     public void Open()
