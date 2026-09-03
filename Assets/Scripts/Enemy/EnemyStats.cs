@@ -23,7 +23,10 @@ public class EnemyStats : MonoBehaviour, IDamageable
     [SerializeField, Min(0f)]
     private float hitRadius = 1f;
 
-   
+    [Header("Target Point")]
+    [SerializeField] private Transform targetPoint;
+
+    public Transform TargetPoint => targetPoint;
 
     [Header("Death")]
     [SerializeField, Min(0f)]
