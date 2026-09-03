@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6220623964555618058
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 590373587288680402}
+  m_Layer: 0
+  m_Name: TargetPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &590373587288680402
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6220623964555618058}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.0000012172386, z: -0, w: 1}
+  m_LocalPosition: {x: -0.29904705, y: 1.381, z: -0.0042197453}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 310538418949891073}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7931180812232907860
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,6 +175,10 @@ MonoBehaviour:
   heroStopRange: 1.3
   airshipStopRange: 8
   useAirshipStopRange: 1
+  useEnemyStacking: 1
+  stackGroup: 0
+  stackingDistance: 0.5
+  stackingLineRange: 0.3
 --- !u!114 &4527213543350081925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,7 +193,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   enemyData: {fileID: 11400000, guid: 9c4e501976d665f4fb258ff6a176f0ba, type: 2}
   currentHealth: 0
+  canBeStunned: 1
+  isStunned: 0
+  bossStunImmunityDuration: 4
+  bossStunImmuneEndTime: 0
   hitRadius: 1
+  targetPoint: {fileID: 590373587288680402}
   deathDestroyDelay: 1.2
 --- !u!114 &2952219784427838897
 MonoBehaviour:
@@ -203,6 +243,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAnimationController
   enemyAnimator: {fileID: 0}
   movementThreshold: 0.01
+  lockRootRotation: 0
+  poseRoot: {fileID: 0}
 --- !u!114 &-7637164879160013161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -401,7 +443,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 258042455942162041, guid: df8ae4add8006443991f8a639a5cb6fb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 590373587288680402}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4627215531065106259, guid: df8ae4add8006443991f8a639a5cb6fb, type: 3}
       insertIndex: -1

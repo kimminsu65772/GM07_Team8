@@ -23,7 +23,9 @@ public abstract class Hero : MonoBehaviour, IDamageable
     protected IHeroStatTable statTable;
 
     [SerializeField] private Transform heroRoot;
-    [SerializeField] private float moveSpeed = 8f;
+    private float moveSpeed;
+    [SerializeField] private float walkSpeed = 5f;
+    [SerializeField] private float runSpeed = 10f;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private LayerMask heroLayer;
     private const float PlacementFollowSpeedMultiplier = 1.2f;
@@ -166,6 +168,9 @@ public abstract class Hero : MonoBehaviour, IDamageable
     protected virtual void Update()
     {
         HPRatio = (float)HeroCurrentHP / (float)HeroMaxHP;
+        
+        if (transform.position.x < airshipMovement.transform.position.x) moveSpeed = runSpeed;
+        else moveSpeed = walkSpeed;
 
         if (targetEnemy != null && targetEnemy.GetComponent<EnemyStats>().IsDead) targetEnemy = null;
         if (targetEnemy == null) SearchEnemy();
@@ -178,8 +183,6 @@ public abstract class Hero : MonoBehaviour, IDamageable
         }
 
         ChangeState();
-
-        if (Input.GetKeyDown(KeyCode.C)) TakeDamage(new DamageInfo(1000000000, true));
     }
 
     public void TakeDamage(DamageInfo damageInfo)
@@ -216,6 +219,12 @@ public abstract class Hero : MonoBehaviour, IDamageable
         }
 
         HeroCurrentHP += actualHeal;
+        DamageInfo healPopupInfo = new DamageInfo(actualHeal, damageInfo.IsCritical, isHeal: true);
+
+        if (DamageManager.Instance != null)
+        {
+            DamageManager.Instance.ShowDamage(healPopupInfo, transform.position);
+        }
     }
 
     public void SearchEnemy()
