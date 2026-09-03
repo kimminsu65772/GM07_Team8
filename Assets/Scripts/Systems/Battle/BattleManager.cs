@@ -208,7 +208,7 @@ public class BattleManager : MonoBehaviour
             }
             spawnedHero.transform.SetPositionAndRotation(startPoint.position, startPoint.rotation);
             spawnedHero.gameObject.SetActive(true);
-            spawnedHero.Initialize(startPoint, airship.Movement);
+            spawnedHero.Initialize(startPoint);
             ApplyEquipments(spawnedHero);
 
             spawnedHeroes.Add(spawnedHero);
