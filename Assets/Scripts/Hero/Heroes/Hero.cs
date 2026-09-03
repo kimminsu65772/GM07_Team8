@@ -216,6 +216,12 @@ public abstract class Hero : MonoBehaviour, IDamageable
         }
 
         HeroCurrentHP += actualHeal;
+        DamageInfo healPopupInfo = new DamageInfo(actualHeal, damageInfo.IsCritical, isHeal: true);
+
+        if (DamageManager.Instance != null)
+        {
+            DamageManager.Instance.ShowDamage(healPopupInfo, transform.position);
+        }
     }
 
     public void SearchEnemy()
