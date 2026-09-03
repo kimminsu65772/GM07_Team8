@@ -56,6 +56,8 @@ public class HeroAnimationController : MonoBehaviour
 
     public void ResetPose()
     {
+        if (hero.IsDead) return;
+
         animator.Play("IDLE", 0, 0f);
         animator.Update(0f);
     }
