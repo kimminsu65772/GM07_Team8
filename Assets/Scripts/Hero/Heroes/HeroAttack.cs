@@ -86,8 +86,7 @@ public class HeroAttack : MonoBehaviour
                 enemyHP.TakeDamage(GetDamageInfo(1));
             }
 
-            if (attackAudio != null) SoundManager.Instance.PlaySound(attackAudio.clip, 3f);
-            // Debug.Log(gameObject.name + "의 근접 공격, 피해량 : " + damage);
+            if (attackAudio != null) SoundManager.Instance.PlaySound(attackAudio.clip, 1f);
         }
     }
 
@@ -110,7 +109,6 @@ public class HeroAttack : MonoBehaviour
 
             vfx.PlayAttackEffect(hero.AtkPosPreset, hero.AtkScalePreset);
 
-            // Debug.Log(gameObject.name + "의 원거리 공격, 피해량 : " + damage);
             if (hero is Hero23_RapidMage rapidMage && rapidMage.IsAdditionalAttackActive)
             {
                 AttackAdditionalTarget();
@@ -181,13 +179,11 @@ public class HeroAttack : MonoBehaviour
                 enemies = Physics2D.OverlapBoxAll(target.transform.position, new Vector2(range, range), 0f, hero.EnemyLayer);
                 break;
             default:
-                Debug.Log("잘못된 areaShape 값");
                 break;
         }
 
         if (enemies == null)
         {
-            Debug.Log("광역 공격 감지 실패");
             return;
         }
 
@@ -213,7 +209,7 @@ public class HeroAttack : MonoBehaviour
         if (projectile == null) return;
 
         projectile.Init(hero, firePoint.position, Quaternion.identity, enemy, 1);
-        if (attackAudio != null) SoundManager.Instance.PlaySound(attackAudio.clip, 3f);
+        if (attackAudio != null) SoundManager.Instance.PlaySound(attackAudio.clip, 1f);
     }
 
     public void UseSkill(GameObject enemy)
@@ -237,7 +233,7 @@ public class HeroAttack : MonoBehaviour
         vfx.PlaySkillEffect(hero.SkillPosPreset, hero.SkillScalePreset);
         skillTimer = 0f;
 
-        if (skillAudio != null) SoundManager.Instance.PlaySound(skillAudio.clip, 3f);
+        if (skillAudio != null) SoundManager.Instance.PlaySound(skillAudio.clip, 1f);
     }
 
     public void StopIsAttacking()
