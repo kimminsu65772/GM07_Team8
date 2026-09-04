@@ -16,6 +16,8 @@ public class HeroAttackProjectileController : MonoBehaviour
     [SerializeField] private float moveSpeed = 8f;
     [SerializeField, Min(0.1f)] private float lifeTime = 3f;
 
+    [SerializeField] protected AudioSource projectileAudio;
+
     protected Hero hero;
     protected Transform targetPos;
     protected EnemyStats target;
@@ -158,6 +160,8 @@ public class HeroAttackProjectileController : MonoBehaviour
         damageInfo = hero.Attack.GetDamageInfo(damageBonus);
         enemy.TakeDamage(damageInfo);
 
+        if (projectileAudio != null) SoundManager.Instance.PlaySound(projectileAudio.clip, 2f);
+
         ReturnToPool();
     }
 
@@ -178,8 +182,6 @@ public class HeroAttackProjectileController : MonoBehaviour
     {
         if (poolingManager == null)
         {
-            Debug.LogError("영웅 투사체에 PoolingManager가 연결되지 않았습니다.", this);
-
             gameObject.SetActive(false);
             return;
         }

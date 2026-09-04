@@ -150,7 +150,6 @@ public abstract class Hero : MonoBehaviour, IDamageable
 
         if (HeroID == 0)
         {
-            Debug.LogError("HeroID가 설정되지 않았습니다.");
             return;
         }   
         HeroSaveData heroData = PlayerInfo.Instance.TryGetHeroData((HeroNameEnum)HeroID, out heroData) ? heroData : null;

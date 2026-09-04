@@ -20,6 +20,10 @@ public class HeroAttack : MonoBehaviour
     [SerializeField] private HeroProjectileType projectileType;
     [SerializeField] private Transform firePoint;
 
+    [Header("SFX")]
+    [SerializeField] private AudioSource attackAudio;
+    [SerializeField] private AudioSource skillAudio;
+
     public EffectPlayer VFX => vfx;
     public bool IsAttacking => isAttacking;
     public bool IsSkilling => isSkilling;
@@ -82,6 +86,7 @@ public class HeroAttack : MonoBehaviour
                 enemyHP.TakeDamage(GetDamageInfo(1));
             }
 
+            if (attackAudio != null) SoundManager.Instance.PlaySound(attackAudio.clip, 3f);
             // Debug.Log(gameObject.name + "의 근접 공격, 피해량 : " + damage);
         }
     }
@@ -188,7 +193,6 @@ public class HeroAttack : MonoBehaviour
 
         Vector2 direction = target.position - transform.position;
         hero.FlipSprite(direction);
-
         vfx.PlayTargetEffect(target, hero.TargetPosPreset, hero.TargetScalePreset);
 
         foreach (Collider2D coll in enemies)
@@ -209,6 +213,7 @@ public class HeroAttack : MonoBehaviour
         if (projectile == null) return;
 
         projectile.Init(hero, firePoint.position, Quaternion.identity, enemy, 1);
+        if (attackAudio != null) SoundManager.Instance.PlaySound(attackAudio.clip, 3f);
     }
 
     public void UseSkill(GameObject enemy)
@@ -231,6 +236,8 @@ public class HeroAttack : MonoBehaviour
         hero.Skill(enemy);
         vfx.PlaySkillEffect(hero.SkillPosPreset, hero.SkillScalePreset);
         skillTimer = 0f;
+
+        if (skillAudio != null) SoundManager.Instance.PlaySound(skillAudio.clip, 3f);
     }
 
     public void StopIsAttacking()
