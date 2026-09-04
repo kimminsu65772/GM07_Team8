@@ -219,7 +219,6 @@ public class EquipmentDetailPanelUIController : MonoBehaviour
 
         if (selectedHeroEntry == null || selectedHeroSaveData == null)
         {
-            Debug.LogWarning("장비를 장착할 영웅이 선택되지 않았습니다.");
             return;
         }
 
@@ -234,6 +233,7 @@ public class EquipmentDetailPanelUIController : MonoBehaviour
             return;
         }
 
+        SoundManager.Instance.PlaySound(SoundId.EquipmentEquip);
         Refresh();
     }
 
@@ -260,6 +260,7 @@ public class EquipmentDetailPanelUIController : MonoBehaviour
             return;
         }
 
+        SoundManager.Instance.PlaySound(SoundId.EquipmentUnequip);
         Refresh();
     }
 

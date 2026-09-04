@@ -20,11 +20,6 @@ public class EquipmentSpawner : MonoBehaviour
 
         //EquipmentManager.EquipDic.Add(id, spawnedEquip);
 
-        //foreach (var equip in EquipmentManager.EquipDic)
-        //{
-        //    Debug.Log($"ID: {equip.Key}, Equipment: {equip.Value}\n");
-        //}
-
         return spawnedEquip;
     }
 
@@ -46,7 +41,6 @@ public class EquipmentSpawner : MonoBehaviour
                 equipSOSelectedNum = 9;
                 break;
             default:
-                Debug.Log("randGradeNum 잘못된 값 생성");
                 break;
         }
         randPartNum = Random.Range(0, 3);
@@ -61,7 +55,6 @@ public class EquipmentSpawner : MonoBehaviour
                 equipSOSelectedNum += 2;
                 break;
             default:
-                Debug.Log("randPartNum 잘못된 값 생성");
                 break;
         }
     }
@@ -87,10 +80,6 @@ public class EquipmentSpawner : MonoBehaviour
 
         EquipmentManager.EquipDic.Add(id, spawnedEquip);
 
-        foreach (var equip in EquipmentManager.EquipDic)
-        {
-            Debug.Log($"ID: {equip.Key}, Equipment: {equip.Value}\n");
-        }
     }
 
     private void RandomInfo()
@@ -113,7 +102,6 @@ public class EquipmentSpawner : MonoBehaviour
                 equipSOSelectedNum = 9;
                 break;
             default:
-                Debug.Log("randGradeNum 잘못된 값 생성");
                 break;
         }
 
@@ -128,7 +116,6 @@ public class EquipmentSpawner : MonoBehaviour
                 equipSOSelectedNum += 2;
                 break;
             default:
-                Debug.Log("randPartNum 잘못된 값 생성");
                 break;
         }
     }

@@ -72,12 +72,10 @@ public class PlayerInfo : MonoBehaviour
 
         if (heroCatalog == null)
         {
-            Debug.LogError("PlayerInfo: HeroCatalog가 할당되지 않았습니다.");
             return;
         }
 
         string saveDataPath = Path.Combine(Application.persistentDataPath, "PlayerSaveData.json");
-        Debug.Log($"PlayerInfo: SaveDataPath = {saveDataPath}");
         saveDataWriter = new SaveDataWriter(saveDataPath);
         SaveDataLoader saveDataLoader = new SaveDataLoader(saveDataPath);
 
@@ -92,8 +90,6 @@ public class PlayerInfo : MonoBehaviour
         }
 
         bool isMigratedSaveData = MigrateSaveDataIfNeeded();
-
-        Debug.Log(saveDataPath);
 
         SaveScheduler.Instance.Initialize(SaveData, saveDataWriter);
 
@@ -153,7 +149,6 @@ public class PlayerInfo : MonoBehaviour
 
         if (amount < 0)
         {
-            Debug.LogError("AddCurrency: amount는 음수일 수 없습니다.");
             return;
         }
 
@@ -177,17 +172,14 @@ public class PlayerInfo : MonoBehaviour
 
         if (amount < 0)
         {
-            Debug.LogError("TrySpendCurrency: amount는 음수일 수 없습니다.");
             return false;
         }
         if (!Wallet.Currencies.TryGetValue(type, out CurrencySaveData currency))
         {
-            Debug.LogError($"TrySpendCurrency: 정의되지 않은 타입의 재화입니다. Type: {type}");
             return false;
         }
         if (currency.Amount < amount)
         {
-            Debug.LogWarning($"TrySpendCurrency: 재화가 부족합니다. Type: {type}, Required: {amount}, Available: {currency.Amount}");
             return false;
         }
         currency.Amount -= amount;
@@ -207,12 +199,10 @@ public class PlayerInfo : MonoBehaviour
         if (!CheckInitialized()) return false;
         if (stage < 1)
         {
-            Debug.LogError("SetCurrentStage: stage는 1 이상이어야 합니다.");
             return false;
         }
         if (stage > SaveData.StageProgress.MaxClearedStage + 1)
         {
-            Debug.LogWarning("SetCurrentStage: 현재 도전이 불가능한 스테이지를 선택하려고 합니다.");
             return false;
         }
         if (stage == SaveData.StageProgress.CurrentStage)
@@ -231,12 +221,10 @@ public class PlayerInfo : MonoBehaviour
         if (!CheckInitialized()) return false;
         if (stage < 1)
         {
-            Debug.LogError("TryUpdateMaxClearedStage: stage는 1 이상이어야 합니다.");
             return false;
         }
         if (stage <= SaveData.StageProgress.MaxClearedStage)
         {
-            Debug.LogWarning("TryUpdateMaxClearedStage: 현재 최대 클리어 스테이지보다 낮거나 같은 값을 설정하려고 합니다.");
             return false;
         }
         StageProgress.MaxClearedStage = stage;
@@ -356,10 +344,8 @@ public class PlayerInfo : MonoBehaviour
         Airship.OwnedCannons ??= new HashSet<AirshipCannonType>();
         if (!Airship.OwnedCannons.Add(cannonType))
         {
-            Debug.LogWarning($"SetOwnedCannonId: 이미 소유한 캐논입니다. CannonType: {cannonType}");
             return;
         }
-        Debug.Log($"SetOwnedCannonId: 캐논 해금 완료. CannonType: {cannonType}");
         RequestSave(savePolicy);
     }
 
@@ -374,10 +360,8 @@ public class PlayerInfo : MonoBehaviour
         Airship.OwnedGears ??= new HashSet<AirshipGearType>();
         if (!Airship.OwnedGears.Add(gearType))
         {
-            Debug.LogWarning($"SetOwnedGearId: 이미 소유한 기어입니다. GearType: {gearType}");
             return;
         }
-        Debug.Log($"SetOwnedGearId: 기어 해금 완료. GearType: {gearType}");
         RequestSave(savePolicy);
     }
 
@@ -807,7 +791,6 @@ public class PlayerInfo : MonoBehaviour
     {
         if (!IsInitialized)
         {
-            Debug.LogError("PlayerInfo가 초기화되지 않았습니다.");
             return false;
         }
         return true;
@@ -817,7 +800,6 @@ public class PlayerInfo : MonoBehaviour
     {
         if (SaveScheduler.Instance == null)
         {
-            Debug.LogWarning("SaveScheduler가 없어 저장 요청을 수행하지 못했습니다.");
             return;
         }
 

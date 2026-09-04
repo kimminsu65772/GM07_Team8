@@ -11,6 +11,7 @@ public class CraftUI : MonoBehaviour
     [SerializeField] private Slider progressSlider;
     [SerializeField] private Button craftButton;
 
+    private bool isFurnaceSoundPlaying;
     private EquipmentCraftRecipeDB recipeDB;
     private Action onCraftCompleted;
     private Coroutine refreshCo;
@@ -110,6 +111,18 @@ public class CraftUI : MonoBehaviour
         {
             Clear();
             return;
+        }
+
+        bool isCrafting = craftSlot.IsCrafting;
+
+        if (isCrafting && !isFurnaceSoundPlaying)
+        {
+            isFurnaceSoundPlaying = true;
+            SoundManager.Instance.PlaySound(SoundId.Crafting);
+        }
+        else if (!isCrafting && isFurnaceSoundPlaying)
+        {
+            isFurnaceSoundPlaying = false;
         }
 
         EquipmentCraftRecipeSO recipe = recipeDB != null

@@ -23,7 +23,6 @@ public class EquipmentDB : ScriptableObject
         }
         else
         {
-            Debug.LogWarning($"장비 ID {equipDataId}에 해당하는 장비를 찾을 수 없습니다.");
             return null;
         }
     }
@@ -37,7 +36,6 @@ public class EquipmentDB : ScriptableObject
 
         if (equipmentDB == null || equipmentDB.Length == 0)
         {
-            Debug.LogWarning("장비 DB가 비어있습니다.");
             equipmentDictionary = new Dictionary<int, EquipmentSO>();
             return;
         }
@@ -47,7 +45,6 @@ public class EquipmentDB : ScriptableObject
         {
             if (equipmentDictionary.ContainsKey(equip.EquipDataId))
             {
-                Debug.LogWarning($"{equip.EquipDataId}는 이미 등록된 장비입니다.");
                 continue;
             }
 

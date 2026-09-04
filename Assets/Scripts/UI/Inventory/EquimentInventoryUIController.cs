@@ -609,13 +609,11 @@ public class EquimentInventoryController : MonoBehaviour
         {
             if (decomposeUIController == null)
             {
-                Debug.LogWarning("분해 UI 컨트롤러가 연결되지 않았습니다.");
                 return;
             }
 
             if (IsEquippedByAnyHero(equipData.EquipId))
             {
-                Debug.LogWarning("장착 중인 장비는 분해할 수 없습니다.");
                 ShowWarningPopup();
                 return;
             }
