@@ -52,7 +52,6 @@ public class EnemyAnimationController : MonoBehaviour
         // Animator가 없으면 초기화를 중단한다.
         if (enemyAnimator == null)
         {
-            Debug.LogError($"{name}: 자식 오브젝트에서 SPUM Animator를 찾지 못했습니다.");
             enabled = false;
             return;
         }

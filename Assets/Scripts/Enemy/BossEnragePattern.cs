@@ -69,18 +69,11 @@ public class BossEnragePattern : MonoBehaviour
         isEnraged = true;
 
         // 공격속도 증가
-        enemyAttack.SetAttackSpeedMultiplier(
-            attackSpeedMultiplier
-        );
+        enemyAttack.SetAttackSpeedMultiplier( attackSpeedMultiplier  );
 
         // 보스 크기 증가
-        transform.localScale =
-            originalScale *
-            sizeMultiplier;
+        transform.localScale = originalScale *    sizeMultiplier;
 
-        Debug.Log(
-            "보스 광폭화 - 공격속도 및 크기 증가"
-        );
     }
 
     private void OnDisable()
@@ -90,7 +83,6 @@ public class BossEnragePattern : MonoBehaviour
             return;
         }
 
-        enemyStats.EnemyDamaged -=
-            HandleEnemyDamaged;
+        enemyStats.EnemyDamaged -= HandleEnemyDamaged;
     }
 }

@@ -79,10 +79,6 @@ public class EnemyAttack : MonoBehaviour
 
         targetDamageable = target != null   ? target.GetComponentInParent<IDamageable>()  : null;
 
-        if (target != null && targetDamageable == null)
-        {
-            Debug.LogWarning( $"{name}: {target.name}에서 IDamageable을 찾지 못했습니다."   );
-        }
 
         ResetAttackTimer();
     }
