@@ -11,7 +11,6 @@ public class EnemyPoolManager : MonoBehaviour
     {
         if (enemyPrefab == null)
         {
-            Debug.LogError("가져올 적 프리팹이 없습니다.", this);
             return null;
         }
 
@@ -34,7 +33,6 @@ public class EnemyPoolManager : MonoBehaviour
 
             if (enemyStats == null)
             {
-                Debug.LogError($"{enemyPrefab.name}에 EnemyStats가 없습니다.", enemyPrefab);
                 Destroy(enemyObject);
                 return null;
             }
@@ -68,7 +66,6 @@ public class EnemyPoolManager : MonoBehaviour
 
         if (!enemyPrefabByInstance.TryGetValue(enemyStats, out GameObject enemyPrefab))
         {
-            Debug.LogError($"{enemyStats.name}의 원본 프리팹을 찾지 못했습니다.", enemyStats);
             return;
         }
 
