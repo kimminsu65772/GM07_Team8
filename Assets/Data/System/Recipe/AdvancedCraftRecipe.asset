@@ -18,15 +18,15 @@ MonoBehaviour:
   recipeDescription: "\uB808\uC5B4~\uB808\uC804\uB354\uB9AC \uB4F1\uAE09\uC758 \uC7A5\uBE44
     1\uAC1C\uB97C \uC11C\uB85C \uB2E4\uB978 \uD655\uB960\uB85C \uC81C\uC791\uD569\uB2C8\uB2E4."
   gradeRates:
-  - grade: 2
-    weight: 70
-  - grade: 3
-    weight: 30
+  - Grade: 2
+    Weight: 70
+  - Grade: 3
+    Weight: 30
   requiredMaterials:
-  - itemId: 10000
-    amount: 8
-  - itemId: 10001
-    amount: 5
-  - itemId: 10002
-    amount: 1
-  craftDurationInSeconds: 5
+  - ItemId: 10000
+    Amount: 8
+  - ItemId: 10001
+    Amount: 5
+  - ItemId: 10002
+    Amount: 1
+  craftDurationInSeconds: 3600

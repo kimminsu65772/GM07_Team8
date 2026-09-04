@@ -45,7 +45,11 @@ public class HeroSlotUI : MonoBehaviour
 
             if (onClickCallback != null)
             {
-                btn.onClick.AddListener(() => onClickCallback.Invoke(currentEntry, currentSaveData));
+                btn.onClick.AddListener(() =>
+                {
+                    onClickCallback.Invoke(currentEntry, currentSaveData);
+                    SoundManager.Instance.PlaySound(SoundId.UIButtonClick);
+                });
             }
         }
     }

@@ -27,4 +27,4 @@ MonoBehaviour:
   requiredMaterials:
   - ItemId: 10000
     Amount: 3
-  craftDurationInSeconds: 5
+  craftDurationInSeconds: 600

@@ -26,7 +26,19 @@ public class HeroLevelUpButtonUI : MonoBehaviour
         button.onClick.RemoveAllListeners();
         if (onClicked != null)
         {
-            button.onClick.AddListener(() => onClicked.Invoke());
+            button.onClick.AddListener(() =>
+            {
+                PlayClickSound();
+                onClicked.Invoke();
+            });
+        }
+    }
+
+    private void PlayClickSound()
+    {
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySound(SoundId.UIButtonClick);
         }
     }
 
