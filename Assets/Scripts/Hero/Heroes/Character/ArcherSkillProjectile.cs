@@ -1,39 +1,17 @@
 
-using System.Collections;
 using UnityEngine;
 
-public class ArcherSkillProjectile
-    : HeroAttackProjectileController
+public class ArcherSkillProjectile : HeroAttackProjectileController
 {
-    [SerializeField] private EffectPlayer vfx;
-
-    private Vector2 posPreset =
-        new Vector2(0f, 0.8f);
-
-    private Vector2 scalePreset =
-        new Vector2(5f, 5f);
-
-    private Hero hero;
-
     private bool isExploded;
 
-    private Coroutine effectCoroutine;
+    [Header("Target Effect Preset")]
+    [SerializeField] protected Vector2 targetPosPreset = new Vector2(0f, 0f);
+    [SerializeField] protected Vector2 targetScalePreset = new Vector2(5f, 5f);
 
     private void OnEnable()
     {
         isExploded = false;
-
-        effectCoroutine =
-            StartCoroutine(PlayEffectLoop());
-    }
-
-    private void OnDisable()
-    {
-        if (effectCoroutine != null)
-        {
-            StopCoroutine(effectCoroutine);
-            effectCoroutine = null;
-        }
     }
 
     protected override void Update()
@@ -53,19 +31,7 @@ public class ArcherSkillProjectile
         Explode();
     }
 
-    private IEnumerator PlayEffectLoop()
-    {
-        while (true)
-        {
-            if (vfx != null)
-            {
-                vfx.PlayAttackEffect(Vector2.zero, new Vector2(0.7f, 0.7f), transform.eulerAngles +
-                    new Vector3(0f, 0f, 180f));
-            }
-
-            yield return new WaitForSeconds(0.05f * 6);
-        }
-    }
+    
 
     private void Explode()
     {
@@ -85,7 +51,7 @@ public class ArcherSkillProjectile
 
             if (hero.Attack != null && hero.Attack.VFX != null)
             {
-                hero.Attack.VFX.PlayTargetEffect(transform, posPreset, scalePreset);
+                hero.Attack.VFX.PlayTargetEffect(transform, targetPosPreset, targetScalePreset);
             }
         }
 

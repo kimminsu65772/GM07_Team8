@@ -16,6 +16,9 @@ public class EffectPlayer : MonoBehaviour
 
     private Sprite[] tmpFrames;
 
+    public float FrameTime => frameTime;
+    public Sprite[] AttackFrames => attackFrames;
+
     private void Awake()
     {
         if (selfEffect == null)

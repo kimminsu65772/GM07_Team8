@@ -205,7 +205,7 @@ public class HeroAttack : MonoBehaviour
         if (projectileType == HeroProjectileType.None || firePoint == null || PoolingManager.Instance == null) return;
 
         HeroAttackProjectileController projectile = PoolingManager.Instance.GetHeroProjectile(projectileType);
-
+        
         if (projectile == null) return;
 
         projectile.Init(hero, firePoint.position, Quaternion.identity, enemy, 1);
