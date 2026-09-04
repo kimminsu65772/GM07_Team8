@@ -12,7 +12,9 @@ public class BossDotAreaSkill : MonoBehaviour
     [Header("Dot Area")]
     [SerializeField] private DotDamageArea dotAreaPrefab;
     [SerializeField] private Transform areaSpawnPoint;
-    [SerializeField] private Vector3 areaPositionOffset;
+    [SerializeField] private Vector3 areaPositionOffset; 
+    [SerializeField] private AudioClip dotAreaSound;
+    [SerializeField, Range(0f, 2f)] private float dotAreaVolume = 1f;
 
     private EnemyMovement enemyMovement;
     private EnemyStats enemyStats;
@@ -109,6 +111,11 @@ public class BossDotAreaSkill : MonoBehaviour
 
         Transform airshipTarget = enemyMovement.AirshipTarget;
         Vector3 spawnPosition = airshipTarget.position + areaPositionOffset;
+
+        if (dotAreaSound != null)
+        {
+            SoundManager.Instance.PlaySound(dotAreaSound, dotAreaVolume);
+        }
 
         DotDamageArea area = Instantiate(dotAreaPrefab, spawnPosition, Quaternion.identity);
         area.transform.SetParent(airshipTarget, true);

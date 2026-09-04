@@ -133,4 +133,4 @@ MonoBehaviour:
     m_Bits: 129
   duration: 5
   damageInterval: 1
-  damageMultiplier: 0.3
+  damageMultiplier: 1

@@ -274,7 +274,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAnimationController
   enemyAnimator: {fileID: 0}
-  movementThreshold: 0.01
+  movementThreshold: 0.23
+  deathSound: {fileID: 8300000, guid: 8cc2e2af8d6f3214f8730dfb86417bdc, type: 3}
+  deathVolume: 1
   lockRootRotation: 0
   poseRoot: {fileID: 0}
 --- !u!114 &-7637164879160013161
@@ -290,9 +292,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyTargetSelector
   airshipTarget: {fileID: 0}
-  heroLayerMask:
-    serializedVersion: 2
-    m_Bits: 129
 --- !u!58 &8981681246167486618
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -350,6 +349,8 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 129
+  chargeSound: {fileID: 8300000, guid: bc898cff4104db94c8a8b62fe55589e5, type: 3}
+  chargeVolume: 1
 --- !u!114 &-4246649044039315807
 MonoBehaviour:
   m_ObjectHideFlags: 0

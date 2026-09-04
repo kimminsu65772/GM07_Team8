@@ -17,6 +17,11 @@ public class BossChargeSkill : MonoBehaviour
     [SerializeField] private float hitRadius = 1.2f;
     [SerializeField] private LayerMask targetLayer;
 
+
+    [SerializeField] private AudioClip chargeSound;
+    [SerializeField, Range(0f, 1f)] private float chargeVolume = 1f;
+
+
     private Rigidbody2D enemyRigidbody2D;
     private EnemyStats enemyStats;
     private EnemyAttack enemyAttack;
@@ -125,7 +130,10 @@ public class BossChargeSkill : MonoBehaviour
         {
             return;
         }
-
+        if (chargeSound != null)
+        {
+            SoundManager.Instance.PlaySound(chargeSound, chargeVolume);
+        }
         StartCoroutine( ChargeRoutine());
     }
 
