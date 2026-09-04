@@ -158,8 +158,9 @@ public class AirshipWorldHealthBar : MonoBehaviour
             delayedFollowing = false;
             delayedVelocity = 0f;
 
-            delayedHealthSlider.normalizedValue =
-                targetRatio;
+            delayedTimer = 0f;
+            delayedFollowing = true;
+            delayedVelocity = 0f;
 
             return;
         }
