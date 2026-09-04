@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public enum HeroProjectileType
@@ -29,6 +30,13 @@ public class HeroAttackProjectileController : MonoBehaviour
 
     // 타겟이 사라졌거나 죽었는지
     protected bool isTargetLost;
+
+    [Header("Attack Effect Preset")]
+    [SerializeField] protected Vector2 posPreset = new Vector2(0f, 0f);
+    [SerializeField] protected Vector2 scalePreset = new Vector2(4f, 4f);
+
+    [SerializeField] protected EffectPlayer vfx;
+    protected Coroutine effectCoroutine;
 
     private PoolingManager poolingManager;
     private HeroProjectileType poolingType;
@@ -62,6 +70,20 @@ public class HeroAttackProjectileController : MonoBehaviour
         this.damageBonus = damageBonus;
 
         gameObject.SetActive(true);
+    }
+
+    private void OnEnable()
+    {
+        if (vfx != null) effectCoroutine = StartCoroutine(PlayEffectLoop());
+    }
+
+    protected void OnDisable()
+    {
+        if (effectCoroutine != null)
+        {
+            StopCoroutine(effectCoroutine);
+            effectCoroutine = null;
+        }
     }
 
     protected virtual void Update()
@@ -162,5 +184,18 @@ public class HeroAttackProjectileController : MonoBehaviour
         }
 
         poolingManager.ReleaseHeroProjectile(this, poolingType);
+    }
+
+    protected IEnumerator PlayEffectLoop()
+    {
+        while (true)
+        {
+            if (vfx != null)
+            {
+                vfx.PlayAttackEffect(posPreset, scalePreset);
+            }
+
+            yield return new WaitForSeconds(0.05f * vfx.AttackFrames.Length);
+        }
     }
 }
