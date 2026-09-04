@@ -245,6 +245,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAnimationController
   enemyAnimator: {fileID: 0}
   movementThreshold: 0.01
+  deathSound: {fileID: 8300000, guid: 91724b85488d60e49aef50877c6102ae, type: 3}
+  deathVolume: 1
   lockRootRotation: 0
   poseRoot: {fileID: 0}
 --- !u!114 &-7637164879160013161
@@ -260,9 +262,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyTargetSelector
   airshipTarget: {fileID: 0}
-  heroLayerMask:
-    serializedVersion: 2
-    m_Bits: 129
 --- !u!58 &8981681246167486618
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -332,6 +331,8 @@ MonoBehaviour:
   dotAreaPrefab: {fileID: 3076071805420712885, guid: e03a85e79368f974f9813f26bc12e212, type: 3}
   areaSpawnPoint: {fileID: 0}
   areaPositionOffset: {x: 0, y: 0, z: 0}
+  dotAreaSound: {fileID: 8300000, guid: 4ae67ac459f7b364bb0295e2eb3c2fb2, type: 3}
+  dotAreaVolume: 1.55
 --- !u!114 &-8391066914483452767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,11 +345,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79b404fcb4c93a74ea8348c7e41bce46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMagicAttack
-  explosionEffectPrefab: {fileID: 1148100095273426946, guid: 9b573135e65221642b9145edd298e9ae, type: 3}
+  explosionEffectPrefab: {fileID: 2167193776059125481, guid: 9829a25878d1042438bdd0f1a3751631, type: 3}
   explosionEffectDuration: 0.75
   castDelay: 0.3
   explosionYOffset: 0.5
   explosionEffectScale: 0.02
+  explosionSound: {fileID: 8300000, guid: 7418f4853db77134f83e1ecba7247878, type: 3}
+  explosionVolume: 0.5
 --- !u!1 &8985939529493651712
 GameObject:
   m_ObjectHideFlags: 0

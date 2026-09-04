@@ -295,6 +295,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAnimationController
   enemyAnimator: {fileID: 0}
   movementThreshold: 0.01
+  deathSound: {fileID: 8300000, guid: 8cc2e2af8d6f3214f8730dfb86417bdc, type: 3}
+  deathVolume: 1
   lockRootRotation: 1
   poseRoot: {fileID: 5747608228884849292}
 --- !u!114 &-8656935154043448609
@@ -310,9 +312,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyTargetSelector
   airshipTarget: {fileID: 0}
-  heroLayerMask:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!114 &5211364050596019351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,11 +366,13 @@ MonoBehaviour:
   chargeDuration: 0.08
   chargeCooldown: 6
   teleportDelay: 0.04
-  chargeDamageMultiplier: 2.5
+  chargeDamageMultiplier: 5
   hitRadius: 1.2
   targetLayer:
     serializedVersion: 2
     m_Bits: 129
+  chargeSound: {fileID: 8300000, guid: bc898cff4104db94c8a8b62fe55589e5, type: 3}
+  chargeVolume: 1
 --- !u!114 &2182754630817743285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,6 +391,8 @@ MonoBehaviour:
   dotAreaPrefab: {fileID: 3076071805420712885, guid: 0164a75ebe15e394ea9d23ef6cd0970e, type: 3}
   areaSpawnPoint: {fileID: 0}
   areaPositionOffset: {x: 0, y: 0, z: 0}
+  dotAreaSound: {fileID: 8300000, guid: 4ae67ac459f7b364bb0295e2eb3c2fb2, type: 3}
+  dotAreaVolume: 1.55
 --- !u!114 &8844599417075763619
 MonoBehaviour:
   m_ObjectHideFlags: 0

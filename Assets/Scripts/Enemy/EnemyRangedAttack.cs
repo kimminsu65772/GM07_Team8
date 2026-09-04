@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(EnemyStats))]
+
 public class EnemyRangedAttack : MonoBehaviour
 {
     [Header("Target")]
@@ -114,5 +115,22 @@ public class EnemyRangedAttack : MonoBehaviour
 
         projectile.transform.localScale = Vector3.one * projectileScale;
         projectile.Init(spawnPoint.position, spawnPoint.rotation, target, enemyStats.AttackPower);
+    }
+    public void FireProjectile(Transform spawnPoint, Transform projectileTarget)
+    {
+        if (projectileTarget == null || spawnPoint == null || enemyStats == null || enemyStats.IsDead || enemyStats.IsStunned || PoolingManager.Instance == null)
+        {
+            return;
+        }
+
+        EnemyProjectile projectile = PoolingManager.Instance.GetEnemyProjectile();
+
+        if (projectile == null)
+        {
+            return;
+        }
+
+        projectile.transform.localScale = Vector3.one * projectileScale;
+        projectile.Init(spawnPoint.position, spawnPoint.rotation, projectileTarget, enemyStats.AttackPower);
     }
 }
