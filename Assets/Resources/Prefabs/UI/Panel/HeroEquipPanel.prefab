@@ -12433,7 +12433,7 @@ MonoBehaviour:
   accSlot: {fileID: 3630589487505940823}
   contentRect: {fileID: 4825282376631128127}
   slotPrefab: {fileID: 3254060099694052423, guid: 34f1d11be8cabae4e93ade4b9d37a2c9, type: 3}
-  columnCount: 5
+  columnCount: 6
   cellSize: {x: 100, y: 100}
   spacing: {x: 12, y: 12}
   padding: {x: 16, y: 16}
