@@ -11,6 +11,8 @@ public class EnemyMagicAttack : MonoBehaviour
     [SerializeField] private float castDelay = 0.3f;
     [SerializeField] private float explosionYOffset = 0.5f;
     [SerializeField] private float explosionEffectScale = 0.02f;
+    [SerializeField] private AudioClip explosionSound;
+    [SerializeField, Range(0f, 1f)] private float explosionVolume = 0.5f;
 
     private Transform target;
     private IDamageable targetDamageable;
@@ -86,6 +88,10 @@ public class EnemyMagicAttack : MonoBehaviour
         }
 
         Vector3 explosionPosition = target.position + Vector3.up * explosionYOffset;
+        if (explosionSound != null)
+        {
+            SoundManager.Instance.PlaySound(explosionSound, explosionVolume);
+        }
 
         if (explosionEffectPrefab != null)
         {
@@ -116,6 +122,8 @@ public class EnemyMagicAttack : MonoBehaviour
                 explosionRect.sizeDelta = new Vector2(64f, 64f);
                 explosionRect.localScale = Vector3.one * explosionEffectScale;
             }
+
+            explosionEffect.transform.SetParent(target, true);
 
             Destroy(explosionEffect, explosionEffectDuration);
         }

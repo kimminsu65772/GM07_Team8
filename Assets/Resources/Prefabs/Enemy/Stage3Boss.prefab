@@ -406,10 +406,11 @@ MonoBehaviour:
   enemyAnimator: {fileID: 6549839450527843370}
   firstSkillDelay: 3
   skillCooldown: 5
-  shotInterval: 0.08
+  shotInterval: 0.115
   shotCount: 5
   animationLeadTime: 0.48
   skillFirePoint: {fileID: 7330737286454826404}
+  barrageSound: {fileID: 8300000, guid: 36cab525e6456f247a5eb0a94d5d21d3, type: 3}
 --- !u!1 &8756829213476003952
 GameObject:
   m_ObjectHideFlags: 0
