@@ -36,7 +36,7 @@ public class AirshipDeathVfxController : MonoBehaviour
                 () =>
                 {
                     vfxs[1].SetActive(true);
-                    SoundManager.Instance.PlaySound(boomSfx, 0.2f);
+                    SoundManager.Instance.PlaySound(boomSfx, 0.7f);
                 }
             ))
             .Join(DOVirtual.DelayedCall(
@@ -44,7 +44,7 @@ public class AirshipDeathVfxController : MonoBehaviour
                 () =>
                 {
                     vfxs[2].SetActive(true);
-                    SoundManager.Instance.PlaySound(boomSfx, 0.2f);
+                    SoundManager.Instance.PlaySound(boomSfx, 0.7f);
                 }
             ))
             .Join(DOVirtual.DelayedCall(
@@ -52,7 +52,7 @@ public class AirshipDeathVfxController : MonoBehaviour
                 () =>
                 {
                     vfxs[3].SetActive(true);
-                    SoundManager.Instance.PlaySound(boomSfx, 0.2f);
+                    SoundManager.Instance.PlaySound(boomSfx, 0.7f);
                 }
             ))
             .Join(DOVirtual.DelayedCall(
@@ -60,7 +60,7 @@ public class AirshipDeathVfxController : MonoBehaviour
                 () =>
                 {
                     vfxs[4].SetActive(true);
-                    SoundManager.Instance.PlaySound(boomSfx, 0.2f);
+                    SoundManager.Instance.PlaySound(boomSfx, 0.7f);
                 }
             ))
             .Join(DOVirtual.DelayedCall(
@@ -68,7 +68,7 @@ public class AirshipDeathVfxController : MonoBehaviour
                 () =>
                 {
                     vfxs[5].SetActive(true);
-                    SoundManager.Instance.PlaySound(boomSfx, 0.2f);
+                    SoundManager.Instance.PlaySound(boomSfx, 0.7f);
                 }
             ));
     }

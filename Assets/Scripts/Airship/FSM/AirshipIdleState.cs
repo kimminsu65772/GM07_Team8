@@ -12,9 +12,5 @@ public class AirshipIdleState : AirshipStateBase
     public override void Tick()
     {
         base.Tick();
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            StateMachine.ChangeState(StateMachine.MoveForwardState);
-        }
     }
 }

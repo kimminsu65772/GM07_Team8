@@ -31,10 +31,6 @@ public class VfxAnimationEventReceiver : MonoBehaviour
 
         if (poolingManager == null)
         {
-            Debug.LogError(
-                "VFX에 PoolingManager가 연결되지 않았습니다.",
-                this
-            );
 
             pooledVfx.SetActive(false);
             return;
