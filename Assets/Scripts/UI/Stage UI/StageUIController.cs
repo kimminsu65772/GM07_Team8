@@ -45,15 +45,18 @@ public class StageUIController : MonoBehaviour
     {
         stageManager.OnWaveCompleted -= HandleWaveCompleted;
         stageManager.OnStageStarted -= HandleStageStarted;
+        stageManager.OnBossSpawned -= HideStageBar;
 
         stageManager.OnWaveCompleted += HandleWaveCompleted;
         stageManager.OnStageStarted += HandleStageStarted;
+        stageManager.OnBossSpawned += HideStageBar;
     }
 
     private void OnDisable()
     {
         stageManager.OnWaveCompleted -= HandleWaveCompleted;
         stageManager.OnStageStarted -= HandleStageStarted;
+        stageManager.OnBossSpawned -= HideStageBar;
 
         StopFillAnimation();
     }
@@ -90,6 +93,7 @@ public class StageUIController : MonoBehaviour
     private void StageProgressBarInit()
     {
         UpdateStageProgressBar(0);
+        ShowStageBar();
     }
 
     private void UpdateStageProgressBar(int waveNumber)
@@ -171,5 +175,16 @@ public class StageUIController : MonoBehaviour
         currentStageNumber = stageNumber;
         UpdateStageTextUI(currentStageNumber);
         StageProgressBarInit();
+    }
+    public void HideStageBar()
+    {
+        if (stageText != null) stageText.gameObject.SetActive(false);
+        if (stageProgressSlider != null) stageProgressSlider.gameObject.SetActive(false);
+    }
+
+    public void ShowStageBar()
+    {
+        if (stageText != null) stageText.gameObject.SetActive(true);
+        if (stageProgressSlider != null) stageProgressSlider.gameObject.SetActive(true);
     }
 }

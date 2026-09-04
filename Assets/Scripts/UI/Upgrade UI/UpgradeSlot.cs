@@ -76,7 +76,7 @@ public class UpgradeSlot : MonoBehaviour
 
         if (isMax)
         {
-            nameLevelText.text = $"{statType} MAX";
+            nameLevelText.text = "MAX";
             upgradeButton.interactable = false;
             if (costText != null) costText.text = "MAX";
             // MAX일 때 호버 스케일과 사운드 플레이어 끄기
@@ -85,7 +85,7 @@ public class UpgradeSlot : MonoBehaviour
         }
         else
         {
-            nameLevelText.text = $"{statType} LV.{currentLevel}";
+            nameLevelText.text = $"LV.{currentLevel}";
             upgradeButton.interactable = controller.CanAffordUpgrade(statType, upgradeLevelCount);
             if (costText != null) costText.text = $"{GameFormatUtils.ToIdleNumber(cost)}";
 

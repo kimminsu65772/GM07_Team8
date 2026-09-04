@@ -13,25 +13,14 @@ public class Hero13_Shieldman : Hero
 
     public override void Skill(GameObject enemy)
     {
-        // 데미지 적용
-        float criRan = Random.Range(1f, 100f);
-        double damage = HeroAtk * 1.2f;
-
         Vector2 direction = enemy.transform.position - transform.position;
         FlipSprite(direction);
 
         Attack.VFX.PlayTargetEffect(enemy.transform, TargetPosPreset, TargetScalePreset);
 
-        bool isCrit = false;
-        if (criRan <= HeroCriChance)
-        {
-            damage *= 2f;
-            isCrit = true;
-        }
-
         if (enemy.TryGetComponent<IDamageable>(out IDamageable enemyHP))
         {
-            enemyHP.TakeDamage(new DamageInfo(damage, isCrit));
+            enemyHP.TakeDamage(Attack.GetDamageInfo(1.2));
         }
 
         // 기절 적용

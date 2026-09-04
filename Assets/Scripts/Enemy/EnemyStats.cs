@@ -26,7 +26,9 @@ public class EnemyStats : MonoBehaviour, IDamageable
     [Header("Target Point")]
     [SerializeField] private Transform targetPoint;
 
-    public Transform TargetPoint => targetPoint;
+    [Header("Damage Text Point")]
+    [SerializeField] private Transform damageTextPoint;
+    
 
     [Header("Death")]
     [SerializeField, Min(0f)]
@@ -37,26 +39,21 @@ public class EnemyStats : MonoBehaviour, IDamageable
     public event Action<EnemyStats> EnemyDeathCompleted;
     public event Action<EnemyStats> EnemyStunned;
     public event Action<EnemyStats> EnemyStunEnded;
-
+    public Transform TargetPoint => targetPoint;
+    public Transform DamageTextPoint => damageTextPoint;
     public int CurrentHealth => currentHealth;
 
-    public int MaxHealth =>
-        enemyData != null ? enemyData.MaxHealth : 0;
+    public int MaxHealth =>    enemyData != null ? enemyData.MaxHealth : 0;
 
-    public int AttackPower =>
-        enemyData != null ? enemyData.AttackPower : 0;
+    public int AttackPower =>    enemyData != null ? enemyData.AttackPower : 0;
 
-    public float MoveSpeed =>
-        enemyData != null ? enemyData.MoveSpeed : 0f;
+    public float MoveSpeed =>     enemyData != null ? enemyData.MoveSpeed : 0f;
 
-    public float AttackRange =>
-        enemyData != null ? enemyData.AttackRange : 0f;
+    public float AttackRange =>   enemyData != null ? enemyData.AttackRange : 0f;
 
-    public float AttackInterval =>
-        enemyData != null ? enemyData.AttackInterval : 1f;
+    public float AttackInterval =>  enemyData != null ? enemyData.AttackInterval : 1f;
 
-    public bool IsBoss =>
-    enemyData != null &&   enemyData.IsBoss;
+    public bool IsBoss =>   enemyData != null &&   enemyData.IsBoss;
 
     public bool IsDead => currentHealth <= 0;
 
@@ -114,7 +111,12 @@ public class EnemyStats : MonoBehaviour, IDamageable
     }
     public void Stun(float duration)
     {
-        if (!canBeStunned || IsDead || duration <= 0f || (IsBoss && (isStunned || Time.time < bossStunImmuneEndTime)))
+        if (!isActiveAndEnabled || IsDead)
+        {
+            return;
+        }
+
+        if (!canBeStunned ||  duration <= 0f || (IsBoss && (isStunned || Time.time < bossStunImmuneEndTime)))
         {
             return;
         }
@@ -154,11 +156,18 @@ public class EnemyStats : MonoBehaviour, IDamageable
     // IDamageable 인터페이스 구현
     public void TakeDamage(DamageInfo damageInfo)
     {
-        float damageAmount = (float)damageInfo.Damage;
-        if (damageAmount <= 0f || IsDead)
+        if (!isActiveAndEnabled || IsDead)
         {
             return;
         }
+
+        float damageAmount = (float)damageInfo.Damage;
+
+        if (damageAmount <= 0f)
+        {
+            return;
+        }
+       
 
         int finalDamage =
             Mathf.RoundToInt(damageAmount);
@@ -168,9 +177,12 @@ public class EnemyStats : MonoBehaviour, IDamageable
             0);
         //데미지 팝업
         if (DamageManager.Instance != null)
-        {
-            DamageManager.Instance.ShowDamage(damageInfo, transform.position);
-        }
+        
+            { Vector3 damageTextPosition =  DamageTextPoint != null? DamageTextPoint.position   : transform.position;
+
+                DamageManager.Instance.ShowDamage( damageInfo,  damageTextPosition );
+            }
+        
 
         EnemyDamaged?.Invoke(this);
         Debug.Log(
@@ -188,6 +200,10 @@ public class EnemyStats : MonoBehaviour, IDamageable
 
     private void Die()
     {
+        if (!isActiveAndEnabled)
+        {
+            return;
+        }
         EnemyDied?.Invoke(this);
 
         StartCoroutine(CompleteDeath());
@@ -195,8 +211,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
 
     private IEnumerator CompleteDeath()
     {
-        yield return new WaitForSeconds(
-            deathDestroyDelay);
+        yield return new WaitForSeconds(  deathDestroyDelay);
 
         EnemyDeathCompleted?.Invoke(this);
 
