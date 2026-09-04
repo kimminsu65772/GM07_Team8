@@ -55,16 +55,12 @@ public class UpgradeSlot : MonoBehaviour
     }
     private void OnUpgradeButtonClicked()
     {
+        if (controller == null || upgradeToggleUI == null) return;
         int upgradeLevelCount = upgradeToggleUI.CurrentUpgradeMode;
 
-        if (controller.TryUpgrade(statType, upgradeLevelCount))
-        {
-            Debug.Log($"{statType} 업그레이드 성공!");
-        }
-        else
-        {
-            Debug.Log("재화가 부족하거나 최대 레벨입니다.");
-        }
+        // 실제로 업그레이드를 시도하는 로직
+        if (controller.TryUpgrade(statType, upgradeLevelCount)) { }
+
     }
     public void RefreshUI(AirshipUpgradeState state)
     {

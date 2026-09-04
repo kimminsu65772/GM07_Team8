@@ -665,6 +665,7 @@ GameObject:
   - component: {fileID: 3307925081499621740}
   - component: {fileID: 7897089526044195610}
   - component: {fileID: 4150087727262684891}
+  - component: {fileID: 9052879597064844398}
   m_Layer: 5
   m_Name: Equip Button
   m_TagString: Untagged
@@ -789,6 +790,21 @@ MonoBehaviour:
   hoverScale: 1.02
   duration: 0.2
   easeType: 27
+--- !u!114 &9052879597064844398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2425324508637471892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e6aa1b609623945bd21bc0313ec9ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: 026843468c5809f40a64c089ab3782b4, type: 3}
+  soundVolume: 1
 --- !u!1 &2665798455831558979
 GameObject:
   m_ObjectHideFlags: 0
@@ -1045,6 +1061,7 @@ GameObject:
   - component: {fileID: 4046575613950463282}
   - component: {fileID: 3626174912627743351}
   - component: {fileID: 9188908609859913546}
+  - component: {fileID: 6102470080137082970}
   m_Layer: 5
   m_Name: UnlockButton
   m_TagString: Untagged
@@ -1169,6 +1186,21 @@ MonoBehaviour:
   hoverScale: 1.05
   duration: 0.2
   easeType: 27
+--- !u!114 &6102470080137082970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4084042143568654078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e6aa1b609623945bd21bc0313ec9ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: dcac8cc03ebaa7d408876c76a05a97fc, type: 3}
+  soundVolume: 1
 --- !u!1 &4230515098095045010
 GameObject:
   m_ObjectHideFlags: 0

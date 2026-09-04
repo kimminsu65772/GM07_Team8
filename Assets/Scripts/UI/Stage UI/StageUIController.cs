@@ -24,19 +24,16 @@ public class StageUIController : MonoBehaviour
     {
         if (stageText == null) 
         {
-            Debug.LogError("StageUIController: stageText가 할당되지 않았습니다.");
             return;
         }
 
         if (stageProgressSlider == null) 
         {
-            Debug.LogError("StageUIController: stageProgressSlider가 할당되지 않았습니다.");
             return;
         }
 
         if (stageManager == null) 
         {
-            Debug.LogError("StageUIController: stageManager가 할당되지 않았습니다.");
             return;
         }   
     }
@@ -65,18 +62,18 @@ public class StageUIController : MonoBehaviour
     {
         if (stageManager == null) 
         {
-            Debug.LogError("StageUIController: stageManager가 할당되지 않았습니다.");
             return;
         }
         currentStageNumber = PlayerInfo.Instance.CurrentStage;
         UpdateStageTextUI(currentStageNumber);
+
+        ShowStageBar();
     }
 
     private void UpdateStageTextUI(int stageNumber)
     {
         if (stageCatalog.StageCycle <= 0)
-        {
-            Debug.LogError("StageUIController: stageCatalog.StageCycle이 0 이하입니다. StageCycle은 0 이하가 될 수 없습니다.");
+        {   
             return;
         }
         currentRegion = ((stageNumber - 1) / stageCatalog.StageCycle) + 1;
@@ -100,8 +97,7 @@ public class StageUIController : MonoBehaviour
     {
         if (currentWaveInStage <= 0)
         {
-            Debug.LogError(
-                "StageUIController: 전체 웨이브 수는 1 이상이어야 합니다.");
+            if (stageProgressSlider != null) stageProgressSlider.normalizedValue = 0f;
             return;
         }
 
