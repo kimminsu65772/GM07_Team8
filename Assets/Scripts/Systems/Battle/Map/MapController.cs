@@ -23,7 +23,6 @@ public class MapController : MonoBehaviour
 
             if (mapEntry == null)
             {
-                Debug.LogError($"Stage {stageNumber}에 해당하는 맵 프리팹을 찾을 수 없습니다.");
                 return;
             }
 
@@ -31,12 +30,10 @@ public class MapController : MonoBehaviour
 
             if (mapPrefab == null)
             {
-                Debug.LogError($"Stage {stageNumber}에 해당하는 맵 프리팹이 null입니다.");
                 return;
             }
 
             SoundId bgmId = mapEntry.bgmId;
-            Debug.Log($"Loading map for stage {stageNumber} with BGM ID: {bgmId}");
 
             if (!mapCache.TryGetValue(mapPrefab, out GameObject cachedMap))
             {
