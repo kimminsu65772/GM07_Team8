@@ -4737,6 +4737,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FadeScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 45384522546537710, guid: f68ec3e8c00223347a6f2b7de9531360, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3554913719221628743, guid: f68ec3e8c00223347a6f2b7de9531360, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -13620,7 +13624,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2802501899564625559, guid: d55f4fb26f506324f9985830ab419fcb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3552005101804560729, guid: d55f4fb26f506324f9985830ab419fcb, type: 3}
       propertyPath: m_Pivot.x
@@ -43132,6 +43136,7 @@ MonoBehaviour:
   mainCamera: {fileID: 402947805}
   stageManager: {fileID: 183848531}
   mapController: {fileID: 943786532}
+  stageTransitionController: {fileID: 280974633}
   airshipStartPoint: {fileID: 1269773613}
   airship: {fileID: 1882879764}
 --- !u!1 &4290260284094567499

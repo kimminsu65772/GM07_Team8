@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyMovement))]
@@ -7,14 +8,12 @@ public class EnemyTargetSelector : MonoBehaviour
     [Header("Fallback Target")]
     [SerializeField] private Transform airshipTarget;
 
-    [Header("Hero Search")]
-    [SerializeField] private LayerMask heroLayerMask;
-
     private EnemyMovement enemyMovement;
     private EnemyAttack enemyAttack;
     private Transform currentTarget;
     private EnemyRangedAttack enemyRangedAttack;
     private EnemyMagicAttack enemyMagicAttack;
+    private BattleManager battleManager;
 
     private void Awake()
     {
@@ -22,6 +21,7 @@ public class EnemyTargetSelector : MonoBehaviour
         enemyAttack = GetComponent<EnemyAttack>();
         enemyRangedAttack = GetComponent<EnemyRangedAttack>();
         enemyMagicAttack = GetComponent<EnemyMagicAttack>();
+        battleManager = BattleManager.Instance;
     }
 
     private void Start()
@@ -73,55 +73,43 @@ public class EnemyTargetSelector : MonoBehaviour
     public Transform GetPriorityTarget(Vector3 enemyPosition)
     {
         Transform closestHero = null;
-        float closestDistance = float.MaxValue;
+        float closestDistanceSqr = float.MaxValue;
 
-        Transform[] sceneTransforms =
-            FindObjectsByType<Transform>(
-                FindObjectsSortMode.None);
-
-        foreach (Transform candidate in sceneTransforms)
+        if (battleManager == null)
         {
-            if (!candidate.gameObject.activeInHierarchy)
+            return airshipTarget;
+        }
+
+        IReadOnlyList<Hero> spawnedHeroes =
+            battleManager.SpawnedHeroes;
+
+        for (int i = 0; i < spawnedHeroes.Count; i++)
+        {
+            Hero hero = spawnedHeroes[i];
+
+            if (hero == null ||
+                !hero.gameObject.activeInHierarchy)
             {
                 continue;
             }
-
-            int candidateLayerMask =
-                1 << candidate.gameObject.layer;
-
-            // Hero Layer가 아니면 제외
-            if ((heroLayerMask.value & candidateLayerMask) == 0)
-            {
-                continue;
-            }
-
-            Hero hero =
-                candidate.GetComponentInParent<Hero>();
-
-            if (hero == null)
-            {
-                continue;
-            }
-
-
 
             // 죽어 있는 영웅은 제외
             if (hero.IsDead ||
                 hero.HeroCurrentHP <= 0f)
             {
-                Debug.Log(  $"{name}: 죽은 영웅 제외 | " + $"{hero.name}, IsDead: {hero.IsDead}, HP: {hero.HeroCurrentHP}" );
                 continue;
             }
 
-            float distance =
-                Vector2.Distance(
-                    enemyPosition,
-                    candidate.position);
+            Vector2 offset =
+                hero.transform.position - enemyPosition;
 
-            if (distance < closestDistance)
+            float distanceSqr =
+                offset.sqrMagnitude;
+
+            if (distanceSqr < closestDistanceSqr)
             {
-                closestDistance = distance;
-                closestHero = candidate;
+                closestDistanceSqr = distanceSqr;
+                closestHero = hero.transform;
             }
         }
 

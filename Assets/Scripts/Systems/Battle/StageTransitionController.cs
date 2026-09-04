@@ -25,6 +25,11 @@ public class StageTransitionController : MonoBehaviour
         return true;
     }
 
+    public IEnumerator FadeInFromLoading()
+    {
+        yield return FadeInScreen();
+    }
+
     private IEnumerator TransitionToNextStage(int nextStageNumber)
     {
         battleManager.StopStage();
@@ -33,8 +38,7 @@ public class StageTransitionController : MonoBehaviour
         yield return FadeOutScreen();
 
         // 배틀 매니저에게 다음 스테이지 세팅 요청
-        battleManager.SetUpStage(nextStageNumber);
-        yield return new WaitForSeconds(0.5f); // 스테이지 세팅 완료 대기
+        yield return battleManager.SetUpStageRoutine(nextStageNumber);
         yield return FadeInScreen();
         battleManager.StartStage();
 

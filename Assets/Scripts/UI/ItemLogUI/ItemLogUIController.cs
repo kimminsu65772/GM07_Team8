@@ -8,6 +8,9 @@ public class ItemLogUIController : MonoBehaviour
     [Header("패널")]
     [SerializeField] private GameObject panelRoot;
 
+    [Header("버튼")]
+    [SerializeField] private GameObject ItemLogBtn;
+
     [Header("획득 목록")]
     [SerializeField] private RectTransform contentRect;
     [SerializeField] private InventorySlot slotPrefab;
@@ -75,6 +78,11 @@ public class ItemLogUIController : MonoBehaviour
             panelRoot.SetActive(true);
         }
 
+        if (ItemLogBtn != null)
+        {
+            ItemLogBtn.SetActive(false);
+        }
+
         RefreshPlayTimeText();
         RefreshKillCountText();
         RefreshRewardSlots();
@@ -84,6 +92,11 @@ public class ItemLogUIController : MonoBehaviour
         if (panelRoot != null)
         {
             panelRoot.SetActive(false);
+        }
+
+        if (ItemLogBtn != null)
+        {
+            ItemLogBtn.SetActive(true);
         }
     }
 

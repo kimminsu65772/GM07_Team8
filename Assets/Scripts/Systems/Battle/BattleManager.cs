@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Profiling;
@@ -7,6 +8,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private FollowCam mainCamera;
     [SerializeField] private StageManager stageManager;
     [SerializeField] private MapController mapController;
+    [SerializeField] private StageTransitionController stageTransitionController;
 
     [Header("Start Settings")]
     [SerializeField] private Transform airshipStartPoint;
@@ -35,12 +37,24 @@ public class BattleManager : MonoBehaviour
     private readonly Dictionary<HeroNameEnum, Hero> heroCache = new();
     private int currentStage;
     private bool isInitialized;
+    private bool isInitializing;
 
     private HeroFormationManager heroFormationManager;
 
     public AirshipController Airship => airship;
     public IReadOnlyList<Hero> SpawnedHeroes => spawnedHeroes;
     public StageManager StageManager => stageManager;
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Debug.LogWarning("BattleManager 인스턴스가 이미 존재합니다.", this);
+            return;
+        }
+
+        instance = this;
+    }
 
     private void OnEnable()
     {
@@ -55,17 +69,29 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
-        Initialize();
+        yield return InitializeRoutine();
     }
 
     public void Initialize()
     {
-        if (isInitialized)
+        if (isInitialized || isInitializing)
         {
             return;
         }
+
+        StartCoroutine(InitializeRoutine());
+    }
+
+    private IEnumerator InitializeRoutine()
+    {
+        if (isInitialized || isInitializing)
+        {
+            yield break;
+        }
+
+        isInitializing = true;
 
         if (mainCamera == null)
         {
@@ -75,24 +101,58 @@ public class BattleManager : MonoBehaviour
 
         currentStage = PlayerInfo.Instance.CurrentStage;
         airship.Init();
-        SetUpStage(currentStage);
+        if (!TrySetUpStage(currentStage))
+        {
+            isInitializing = false;
+            yield break;
+        }
+
+        yield return WaitForStageSetUpToRender();
+
+        if (stageTransitionController != null)
+        {
+            yield return stageTransitionController.FadeInFromLoading();
+        }
+
         StartStage();
 
         isInitialized = true;
+        isInitializing = false;
     }
 
     public void SetUpStage(int stageNumber)
     {
+        TrySetUpStage(stageNumber);
+    }
+
+    public IEnumerator SetUpStageRoutine(int stageNumber)
+    {
+        if (!TrySetUpStage(stageNumber))
+        {
+            yield break;
+        }
+
+        yield return WaitForStageSetUpToRender();
+    }
+
+    private static IEnumerator WaitForStageSetUpToRender()
+    {
+        yield return null;
+        yield return new WaitForEndOfFrame();
+    }
+
+    private bool TrySetUpStage(int stageNumber)
+    {
         if (stageNumber < 1 || stageNumber > stageManager.LastStage)
         {
             Debug.LogError($"유효하지 않은 스테이지입니다: {stageNumber}");
-            return;
+            return false;
         }
 
         if (!PlayerInfo.Instance.TrySetCurrentStage(stageNumber))
         {
             Debug.LogError($"설정할 수 없는 스테이지입니다: {stageNumber}");
-            return;
+            return false;
         }
 
         StopStage();
@@ -102,6 +162,8 @@ public class BattleManager : MonoBehaviour
         ResetPlayerPosition();
 
         PlaceFormationHeroes();
+
+        return true;
     }
 
     public void StartStage()
