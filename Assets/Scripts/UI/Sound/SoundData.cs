@@ -17,6 +17,21 @@ public enum SoundId
     Region4BGM,
     Region5BGM,
     SmithyBGM,
+
+    // Craft 관련
+    Crafting = 200,
+    CraftCommon,
+    CraftRare,
+    CraftEpic,
+    CraftLegendary,
+
+    // 장비 관련
+    EquipmentEquip = 300,
+    EquipmentUnequip,
+    ClickEquipment,
+    DecomposeEquipment,
+    WarningPopup,
+
 }
 
 [Serializable]

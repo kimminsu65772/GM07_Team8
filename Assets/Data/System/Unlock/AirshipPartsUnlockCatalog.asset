@@ -21,43 +21,43 @@ MonoBehaviour:
       requiredMaxClearedStage: 5
       requiredAirshipUpgradeStat: 0
       requiredAirshipUpgradeLevel: 10
-  - cannonType: 2
+  - cannonType: 3
     currencyCost:
       Type: 1
       Amount: 20000
     unlockRequirement:
-      requiredMaxClearedStage: 10
-      requiredAirshipUpgradeStat: 0
-      requiredAirshipUpgradeLevel: 20
-  - cannonType: 3
-    currencyCost:
-      Type: 1
-      Amount: 0
-    unlockRequirement:
       requiredMaxClearedStage: 5
       requiredAirshipUpgradeStat: 1
       requiredAirshipUpgradeLevel: 20
-  gearUnlocks:
-  - gearType: 1
+  - cannonType: 2
     currencyCost:
-      Type: 0
-      Amount: 0
+      Type: 1
+      Amount: 50000
     unlockRequirement:
-      requiredMaxClearedStage: 5
-      requiredAirshipUpgradeStat: 2
-      requiredAirshipUpgradeLevel: 20
+      requiredMaxClearedStage: 10
+      requiredAirshipUpgradeStat: 0
+      requiredAirshipUpgradeLevel: 30
+  gearUnlocks:
   - gearType: 2
     currencyCost:
-      Type: 0
-      Amount: 0
+      Type: 1
+      Amount: 10000
     unlockRequirement:
       requiredMaxClearedStage: 0
       requiredAirshipUpgradeStat: 0
       requiredAirshipUpgradeLevel: 0
+  - gearType: 1
+    currencyCost:
+      Type: 1
+      Amount: 30000
+    unlockRequirement:
+      requiredMaxClearedStage: 5
+      requiredAirshipUpgradeStat: 2
+      requiredAirshipUpgradeLevel: 20
   - gearType: 3
     currencyCost:
-      Type: 0
-      Amount: 0
+      Type: 1
+      Amount: 50000
     unlockRequirement:
       requiredMaxClearedStage: 10
       requiredAirshipUpgradeStat: 2

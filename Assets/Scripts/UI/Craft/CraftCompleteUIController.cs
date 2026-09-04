@@ -45,6 +45,7 @@ public class CraftCompleteUIController : MonoBehaviour
             itemNameText.text = equipmentData.EquipName;
             SetItemNameColor(equipmentData);
         }
+        SetPlaySoundByGrade(equipmentData.EquipGrade);
     }
 
     public void Hide()
@@ -79,6 +80,22 @@ public class CraftCompleteUIController : MonoBehaviour
                 _ => Color.white
             };
             itemNameText.color = color;
+        }
+    }
+
+    private void SetPlaySoundByGrade(EquipGradeEnum grade)
+    {
+        SoundId soundId = grade switch
+        {
+            EquipGradeEnum.Common => SoundId.CraftCommon,
+            EquipGradeEnum.Rare => SoundId.CraftRare,
+            EquipGradeEnum.Epic => SoundId.CraftEpic,
+            EquipGradeEnum.Legendary => SoundId.CraftLegendary,
+            _ => SoundId.None
+        };
+        if (soundId != SoundId.None && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySound(soundId);
         }
     }
 }

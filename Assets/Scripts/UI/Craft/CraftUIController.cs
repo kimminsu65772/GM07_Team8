@@ -32,7 +32,6 @@ public class CraftUIController : MonoBehaviour
         {
             if (recipeSlots[i] == null)
             {
-                Debug.LogWarning($"{i}번째 장비 제작 레시피 슬롯이 할당되지 않았습니다.");
                 continue;
             }
 
@@ -52,18 +51,15 @@ public class CraftUIController : MonoBehaviour
         EquipmentCraftSlotSaveData craftSlot = PlayerInfo.Instance.GetEquipmentCraftSlot(0);
         if (craftSlot != null && craftSlot.IsCrafting)
         {
-            Debug.LogWarning("이미 장비를 제작중입니다.");
             return;
         }
         if (recipe == null)
         {
-            Debug.LogWarning("선택된 레시피가 없습니다.");
             return;
         }
 
         if (recipe.RequiredMaterials == null)
         {
-            Debug.LogWarning("레시피 재료 정보가 없습니다.");
             return;
         }
 
@@ -71,7 +67,6 @@ public class CraftUIController : MonoBehaviour
         {
             if (!PlayerInfo.Instance.HasEnoughItem(material.ItemId, material.Amount))
             {
-                Debug.LogWarning($"재료가 부족합니다: {itemDB.GetItemById(material.ItemId)} x {material.Amount}");
                 return;
             }
         }
@@ -82,7 +77,6 @@ public class CraftUIController : MonoBehaviour
 
             if (!result)
             {
-                Debug.LogWarning($"재료 소비 실패: {itemDB.GetItemById(material.ItemId)} x {material.Amount}");
                 return;
             }
         }
@@ -93,7 +87,6 @@ public class CraftUIController : MonoBehaviour
 
         if (!isStart)
         {
-            Debug.LogWarning("장비 제작 시작 실패");
             return;
         }
 
@@ -107,19 +100,16 @@ public class CraftUIController : MonoBehaviour
 
         if (craftSlot == null || !craftSlot.IsCrafting)
         {
-            Debug.LogWarning("제작 슬롯 정보가 없거나 제작 중이 아닙니다.");
             return;
         }
 
         if (!PlayerInfo.Instance.IsEquipmentCraftComplete(0, DateTime.UtcNow))
         {
-            Debug.LogWarning("제작이 아직 완료되지 않았습니다.");
             return;
         }
 
         if (equipmentSpawner == null)
         {
-            Debug.LogWarning("EquipmentSpawner가 할당되지 않았습니다.");
             return;
         }
 
@@ -128,7 +118,6 @@ public class CraftUIController : MonoBehaviour
 
         if (recipe == null)
         {
-            Debug.LogWarning("제작 완료 처리에 필요한 레시피를 찾을 수 없습니다.");
             return;
         }
         
@@ -139,7 +128,6 @@ public class CraftUIController : MonoBehaviour
 
         if (equipment == null)
         {
-            Debug.LogWarning("장비 제작 실패...");
             return;
         }
 
@@ -159,7 +147,6 @@ public class CraftUIController : MonoBehaviour
         bool result = PlayerInfo.Instance.AddEquipment(equipmentSaveData);
         if (!result)
         {
-            Debug.LogWarning("장비 인벤토리에 추가 실패...");
             return;
         }
 
@@ -182,7 +169,6 @@ public class CraftUIController : MonoBehaviour
     {
         if (recipe == null || recipe.GradeRates == null || recipe.GradeRates.Count == 0)
         {
-            Debug.LogWarning("레시피의 등급 확률 정보가 없습니다.");
             return default;
         }
 
@@ -197,7 +183,6 @@ public class CraftUIController : MonoBehaviour
 
         if (totalWeight <= 0)
         {
-            Debug.LogWarning("레시피의 등급 확률 총합이 0 이하입니다.");
             return recipe.GradeRates[0].Grade;
         }
 

@@ -23,7 +23,6 @@ public class EquipmentCraftRecipeDB : ScriptableObject
         {
             return recipe;
         }
-        Debug.LogError($"레시피 ID {recipeId}에 해당하는 레시피를 찾을 수 없습니다.");
         return null;
     }
     public bool ContainsRecipeId(int recipeId)
@@ -45,13 +44,11 @@ public class EquipmentCraftRecipeDB : ScriptableObject
         {
             if (recipe == null)
             {
-                Debug.LogError("EquipmentCraftRecipeDB에 null 레시피가 포함되어 있습니다.");
                 continue;
             }
 
             if (recipeDict.ContainsKey(recipe.RecipeId))
             {
-                Debug.LogError($"중복된 레시피 ID {recipe.RecipeId}가 존재합니다.");
                 continue;
             }
 
