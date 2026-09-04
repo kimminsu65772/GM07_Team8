@@ -395,7 +395,6 @@ GameObject:
   - component: {fileID: 3714560305622700612}
   - component: {fileID: 6189362490579622563}
   - component: {fileID: 2944837908541974356}
-  - component: {fileID: 4937299892094040746}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -517,21 +516,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4937299892094040746
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3945197061015377473}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71e6aa1b609623945bd21bc0313ec9ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 8300000, guid: f0b720ab595bf6e4dbccd582a24b863d, type: 3}
-  soundVolume: 1
 --- !u!1 &4758727319823398850
 GameObject:
   m_ObjectHideFlags: 0
@@ -1643,7 +1627,6 @@ GameObject:
   - component: {fileID: 4787496028096445108}
   - component: {fileID: 3367266675774894812}
   - component: {fileID: 4609061592764300745}
-  - component: {fileID: 6173501383728705442}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -1764,18 +1747,3 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &6173501383728705442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8745503180657966299}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71e6aa1b609623945bd21bc0313ec9ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 8300000, guid: f0b720ab595bf6e4dbccd582a24b863d, type: 3}
-  soundVolume: 1

@@ -4578,7 +4578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
   hoverSound: {fileID: 0}
-  clickSound: {fileID: 8300000, guid: f0b720ab595bf6e4dbccd582a24b863d, type: 3}
+  clickSound: {fileID: 8300000, guid: dcac8cc03ebaa7d408876c76a05a97fc, type: 3}
   soundVolume: 1
 --- !u!1 &2398928808111824430
 GameObject:
@@ -10870,7 +10870,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
   hoverSound: {fileID: 0}
-  clickSound: {fileID: 8300000, guid: f0b720ab595bf6e4dbccd582a24b863d, type: 3}
+  clickSound: {fileID: 8300000, guid: dcac8cc03ebaa7d408876c76a05a97fc, type: 3}
   soundVolume: 1
 --- !u!1 &5464034427935738648
 GameObject:
