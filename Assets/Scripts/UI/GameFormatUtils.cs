@@ -36,6 +36,7 @@ public static class GameFormatUtils
 
             case AirshipStatType.Attack:
             case AirshipStatType.Recovery:
+                return rawValue.ToString("F1");
             case AirshipStatType.MaxHealth:
                 return ToIdleNumber(rawValue);
 
