@@ -17,10 +17,6 @@ public class AirshipMoveForwardState : AirshipStateBase
     public override void Tick()
     {
         base.Tick();
-        if (Input.GetKey(KeyCode.W))
-        {
-            StateMachine.ChangeState(StateMachine.IdleState);
-        }
         // 범위 안에 적이 있는지 매프레임 체크
         if (Controller.EnemyChecker.HasEnemy())
         {

@@ -34,7 +34,6 @@ public class AirshipUpgradeController : MonoBehaviour
 
         if (saveData == null)
         {
-            Debug.LogError("Airship save data is missing.");
             return;
         }
 
@@ -95,7 +94,6 @@ public class AirshipUpgradeController : MonoBehaviour
                 upgradeCurrency,
                 totalCost))
         {
-            Debug.Log("재화 부족");
             return false;
         }
 

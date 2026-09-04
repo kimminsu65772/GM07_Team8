@@ -27,6 +27,9 @@ public class EnemyAnimationController : MonoBehaviour
     [SerializeField, Min(0f)]
     private float movementThreshold = 0.01f;
 
+    [SerializeField] private AudioClip deathSound;
+    [SerializeField, Range(0f, 1f)] private float deathVolume = 1f;
+
 
     private Rigidbody2D enemyRigidbody2D;
     private EnemyStats enemyStats;
@@ -49,7 +52,6 @@ public class EnemyAnimationController : MonoBehaviour
         // Animator가 없으면 초기화를 중단한다.
         if (enemyAnimator == null)
         {
-            Debug.LogError($"{name}: 자식 오브젝트에서 SPUM Animator를 찾지 못했습니다.");
             enabled = false;
             return;
         }
@@ -233,7 +235,13 @@ public class EnemyAnimationController : MonoBehaviour
             enemyAnimator.SetBool(MoveParameter, false);
         }
     }
-
+    public void PlayDeathSound()
+    {
+        if (deathSound != null)
+        {
+            SoundManager.Instance.PlaySound(deathSound, deathVolume);
+        }
+    }
     public void ResetForPool()
     {
         // 풀에서 다시 꺼낸 적의 애니메이션 상태를 초기화한다.

@@ -185,15 +185,14 @@ public class EnemyStats : MonoBehaviour, IDamageable
         
 
         EnemyDamaged?.Invoke(this);
-        Debug.Log(
-            $"{gameObject.name} 피격! 피해량: {finalDamage}, 남은 체력: {currentHealth}");
+        
 
         if (IsDead)
         {
             Die();
             return;
         }
-        Debug.Log($"EnemyStats TakeDamage 호출됨: {damageAmount}");
+       
         
     }
     public void Heal(DamageInfo damageInfo){}

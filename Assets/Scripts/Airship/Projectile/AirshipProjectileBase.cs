@@ -48,10 +48,6 @@ public abstract class AirshipProjectileBase : MonoBehaviour
     {
         if (poolingManager == null)
         {
-            Debug.LogError(
-                "투사체에 PoolingManager가 연결되지 않았습니다.",
-                this
-            );
 
             gameObject.SetActive(false);
             return;

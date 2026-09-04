@@ -24,7 +24,6 @@ public class AirshipHeroPlacementPoints : MonoBehaviour
             num <= 0 ||
             num > placementPoints.Length)
         {
-            Debug.LogWarning("잘못된 배열 접근");
             return new Transform[0];
         }
 

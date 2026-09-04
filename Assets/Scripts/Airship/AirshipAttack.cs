@@ -245,12 +245,6 @@ public class AirshipAttack : MonoBehaviour
                 currentCannon.CannonType,
                 currentCannon.ProjectilePrefab))
         {
-            Debug.LogError(
-                $"{currentCannon.CannonType}의 투사체 프리팹과 " +
-                "PoolingManager의 프리팹이 다릅니다.",
-                this
-            );
-
             return;
         }
 

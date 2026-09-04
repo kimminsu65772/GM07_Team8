@@ -17,6 +17,11 @@ public class BossChargeSkill : MonoBehaviour
     [SerializeField] private float hitRadius = 1.2f;
     [SerializeField] private LayerMask targetLayer;
 
+
+    [SerializeField] private AudioClip chargeSound;
+    [SerializeField, Range(0f, 1f)] private float chargeVolume = 1f;
+
+
     private Rigidbody2D enemyRigidbody2D;
     private EnemyStats enemyStats;
     private EnemyAttack enemyAttack;
@@ -84,7 +89,7 @@ public class BossChargeSkill : MonoBehaviour
 
     private void PrepareCharge()
     {
-        Debug.Log("보스 몸통박치기 준비");
+      
 
         isUsingSkill = true;
 
@@ -120,18 +125,21 @@ public class BossChargeSkill : MonoBehaviour
     // Animation Event에서 호출
     public void StartCharge()
     {
-        Debug.Log("StartCharge Animation Event 호출");
+       
         if (!isUsingSkill ||isCharging)
         {
             return;
         }
-
+        if (chargeSound != null)
+        {
+            SoundManager.Instance.PlaySound(chargeSound, chargeVolume);
+        }
         StartCoroutine( ChargeRoutine());
     }
 
     private IEnumerator ChargeRoutine()
     {
-        Debug.Log("몸통박치기 실제 돌진 시작");
+       
         isCharging = true;
 
         Vector2 chargeTarget = originPosition +  Vector2.left * chargeDistance;
@@ -190,8 +198,6 @@ public class BossChargeSkill : MonoBehaviour
 
         if (hits.Length == 0)
         {
-            Debug.Log( "몸통박치기 대상 없음"  );
-
             return;
         }
 
@@ -218,8 +224,6 @@ public class BossChargeSkill : MonoBehaviour
             damagedTargets.Add(target);
 
             target.TakeDamage(  new DamageInfo(   chargeDamage )   );
-
-            Debug.Log( $"몸통박치기 적중! 대상: " + $"{hit.collider.name}, " +   $"데미지: {chargeDamage}" );
         }
 
         if (damagedTargets.Count > 0)
