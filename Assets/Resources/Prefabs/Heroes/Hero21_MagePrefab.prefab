@@ -64,10 +64,16 @@ MonoBehaviour:
   - {fileID: 1727070810, guid: 53cfac587ec0f244b9b229bb176e9fdc, type: 3}
   targetFrames:
   - {fileID: 1018848883, guid: 94cfe50d79cb1984e8e2ca6260a63456, type: 3}
+  - {fileID: 1018848883, guid: 94cfe50d79cb1984e8e2ca6260a63456, type: 3}
+  - {fileID: -1215193530, guid: 94cfe50d79cb1984e8e2ca6260a63456, type: 3}
   - {fileID: -1215193530, guid: 94cfe50d79cb1984e8e2ca6260a63456, type: 3}
   - {fileID: 1236400394, guid: 94cfe50d79cb1984e8e2ca6260a63456, type: 3}
+  - {fileID: 1236400394, guid: 94cfe50d79cb1984e8e2ca6260a63456, type: 3}
+  - {fileID: 1922429911, guid: 94cfe50d79cb1984e8e2ca6260a63456, type: 3}
   - {fileID: 1922429911, guid: 94cfe50d79cb1984e8e2ca6260a63456, type: 3}
   - {fileID: 751265383, guid: 94cfe50d79cb1984e8e2ca6260a63456, type: 3}
+  - {fileID: 751265383, guid: 94cfe50d79cb1984e8e2ca6260a63456, type: 3}
+  - {fileID: -1904174687, guid: 94cfe50d79cb1984e8e2ca6260a63456, type: 3}
   - {fileID: -1904174687, guid: 94cfe50d79cb1984e8e2ca6260a63456, type: 3}
   frameTime: 0.05
 --- !u!1 &219766223265362410
@@ -147,9 +153,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 696841935
+  m_SortingLayer: 2
+  m_SortingOrder: 15
   m_MaskInteraction: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -314,7 +320,8 @@ MonoBehaviour:
   attackTime: 0
   skillTime: 0
   heroRoot: {fileID: 8903540859066819979}
-  moveSpeed: 5
+  walkSpeed: 5
+  runSpeed: 10
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -333,6 +340,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c1597d6a7af774caac878217c021c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroAttack
+  isAttacking: 0
+  isSkilling: 0
+  canAttack: 0
+  attackTimer: 0
   skillTimer: 0
   projectileType: 1
   firePoint: {fileID: 2292950087620158637}
@@ -677,9 +688,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 696841935
+  m_SortingLayer: 2
+  m_SortingOrder: 15
   m_MaskInteraction: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

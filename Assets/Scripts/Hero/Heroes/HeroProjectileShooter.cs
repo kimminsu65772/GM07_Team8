@@ -3,13 +3,11 @@ using UnityEngine;
 public class HeroProjectileShooter : MonoBehaviour
 {
     [SerializeField] private Hero hero;
-
     private HeroAttack heroAttack;
 
     private void Awake()
     {
         if (hero == null) hero = GetComponentInParent<Hero>();
-
         if (hero != null) heroAttack = hero.GetComponent<HeroAttack>();
     }
 
@@ -22,9 +20,7 @@ public class HeroProjectileShooter : MonoBehaviour
         if (targetEnemy == null || !targetEnemy.gameObject.activeSelf) return;
 
         if (targetEnemy.TryGetComponent<EnemyStats>(out EnemyStats enemy))
-        {
             if (enemy.IsDead) return;
-        }
 
         heroAttack.ThrowProjectile(targetEnemy.transform);
     }

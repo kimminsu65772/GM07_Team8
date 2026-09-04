@@ -749,6 +749,8 @@ MonoBehaviour:
   castDelay: 0.1
   explosionYOffset: 2
   explosionEffectScale: 0.11
+  explosionSound: {fileID: 8300000, guid: 7418f4853db77134f83e1ecba7247878, type: 3}
+  explosionVolume: 0.17
 --- !u!1001 &8138901282579532748
 PrefabInstance:
   m_ObjectHideFlags: 0

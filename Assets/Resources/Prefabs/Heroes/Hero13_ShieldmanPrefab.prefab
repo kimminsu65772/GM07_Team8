@@ -312,7 +312,8 @@ MonoBehaviour:
   attackTime: 0
   skillTime: 0
   heroRoot: {fileID: 551821304725996985}
-  moveSpeed: 5
+  walkSpeed: 5
+  runSpeed: 10
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -331,6 +332,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c1597d6a7af774caac878217c021c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroAttack
+  isAttacking: 0
+  isSkilling: 0
+  canAttack: 0
+  attackTimer: 0
   skillTimer: 0
   projectileType: 0
   firePoint: {fileID: 0}
@@ -857,9 +862,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingLayerID: 696841935
+  m_SortingLayer: 2
+  m_SortingOrder: 15
   m_MaskInteraction: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -12,6 +12,7 @@ public class BossRangedBarrageSkill : MonoBehaviour
     [SerializeField] private int shotCount = 3;
     [SerializeField] private float animationLeadTime = 0.3f;
     [SerializeField] private Transform skillFirePoint;
+    [SerializeField] private AudioClip barrageSound;
 
     private EnemyStats enemyStats;
     private EnemyRangedAttack enemyRangedAttack;
@@ -67,6 +68,11 @@ public class BossRangedBarrageSkill : MonoBehaviour
         enemyAnimator.SetTrigger("6_Other");
 
         yield return new WaitForSeconds(animationLeadTime);
+
+        if (barrageSound != null)
+        {
+            SoundManager.Instance.PlaySound(barrageSound);
+        }
 
         for (int i = 0; i < shotCount; i++)
         {
