@@ -49,7 +49,6 @@ public class BattleManager : MonoBehaviour
     {
         if (instance != null && instance != this)
         {
-            Debug.LogWarning("BattleManager 인스턴스가 이미 존재합니다.", this);
             return;
         }
 
@@ -145,13 +144,11 @@ public class BattleManager : MonoBehaviour
     {
         if (stageNumber < 1 || stageNumber > stageManager.LastStage)
         {
-            Debug.LogError($"유효하지 않은 스테이지입니다: {stageNumber}");
             return false;
         }
 
         if (!PlayerInfo.Instance.TrySetCurrentStage(stageNumber))
         {
-            Debug.LogError($"설정할 수 없는 스테이지입니다: {stageNumber}");
             return false;
         }
 
@@ -180,7 +177,6 @@ public class BattleManager : MonoBehaviour
     {
         if (airshipStartPoint == null || airship == null)
         {
-            Debug.LogError("비행선 시작 위치가 설정되지 않았습니다.");
             return;
         }
 
@@ -196,7 +192,6 @@ public class BattleManager : MonoBehaviour
         {
             if (airship == null)
             {
-                Debug.LogError("비행선이 설정되지 않았습니다.");
                 return;
             }
 
@@ -205,13 +200,11 @@ public class BattleManager : MonoBehaviour
 
             if (placementPoints == null)
             {
-                Debug.LogError("배치 지점이 설정되지 않았습니다.");
                 return;
             }
 
             if (heroFormationManager == null)
             {
-                Debug.LogWarning("영웅 배치 매니저를 찾을 수 없습니다.");
                 return;
             }
 
@@ -260,7 +253,6 @@ public class BattleManager : MonoBehaviour
 
             if (spawnedHero == null)
             {
-                Debug.LogError($"영웅을 생성할 수 없습니다: {slot.HeroId}");
                 continue;
             }
 
@@ -305,7 +297,6 @@ public class BattleManager : MonoBehaviour
 
             if (newHero == null)
             {
-                Debug.LogError($"영웅 프리팹에 Hero 컴포넌트가 없습니다: {slot.HeroEntry.HeroPrefab.name}");
                 Destroy(newHeroObj);
                 return null;
             }
