@@ -34,6 +34,7 @@ public class HeroAttackProjectileController : MonoBehaviour
     [Header("Attack Effect Preset")]
     [SerializeField] protected Vector2 posPreset = new Vector2(0f, 0f);
     [SerializeField] protected Vector2 scalePreset = new Vector2(4f, 4f);
+    [SerializeField] protected Vector3 rotationPreset = new Vector3(0f, 0f, 0f);
 
     [SerializeField] protected EffectPlayer vfx;
     protected Coroutine effectCoroutine;
@@ -192,10 +193,10 @@ public class HeroAttackProjectileController : MonoBehaviour
         {
             if (vfx != null)
             {
-                vfx.PlayAttackEffect(posPreset, scalePreset);
+                vfx.PlayAttackEffect(posPreset, scalePreset, rotationPreset);
             }
 
-            yield return new WaitForSeconds(0.05f * vfx.AttackFrames.Length);
+            yield return new WaitForSeconds(vfx.FrameTime * vfx.AttackFrames.Length);
         }
     }
 }
