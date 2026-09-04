@@ -9,12 +9,14 @@ public class SoundManager : MonoBehaviour
     [Header("오디오 관리")]
     [SerializeField] private AudioSource sfxAudioSource;
     [SerializeField] private AudioSource bgmAudioSource;
+    [SerializeField] private AudioSource overrideBgmAudioSource; // 패널 전용 브금 오디오 소스
 
     [Header("오디오 테이블")]
     [SerializeField] private SoundTableSO soundTable;
 
     [Header("BGM 전환 시간")]
     [SerializeField] private float bgmFadeDuration = 1f;
+    [SerializeField, Range(0f, 1f)] private float bgmOverrideDuckedVolume = 0f;
 
     [Header("오디오 출력 관련 정책 설정")]
     [SerializeField, Min(0f)] private float sfxCooldown = 0.05f; // 효과음 쿨타임
@@ -30,6 +32,23 @@ public class SoundManager : MonoBehaviour
     private Dictionary<AudioClip, int> playingCount = new();
 
     private Coroutine bgmFadeCoroutine;
+    private BgmTrack baseBgmTrack;
+
+    // 특정 브금이 재생되는 패널이 여러 개라면 닫히는 순서에 따라
+    // 브금이 차례대로 종료되고 이전 브금이 재생될 수 있도록 스택으로 관리
+    private readonly Stack<BgmTrack> bgmOverrideStack = new();
+
+    private struct BgmTrack
+    {
+        public AudioClip Clip;
+        public float Volume;
+
+        public BgmTrack(AudioClip clip, float volume)
+        {
+            Clip = clip;
+            Volume = volume;
+        }
+    }
 
     private void Awake()
     {
@@ -48,16 +67,19 @@ public class SoundManager : MonoBehaviour
         {
             sfxAudioSource = gameObject.AddComponent<AudioSource>();
         }
-        sfxAudioSource.spatialBlend = 0f;
-        sfxAudioSource.playOnAwake = false;
+        ConfigureAudioSource(sfxAudioSource, false);
 
         if (bgmAudioSource ==null)
         {
             bgmAudioSource = gameObject.AddComponent<AudioSource>();
         }
-        bgmAudioSource.spatialBlend = 0f;
-        bgmAudioSource.playOnAwake = false;
-        bgmAudioSource.loop = true;
+        ConfigureAudioSource(bgmAudioSource, true);
+
+        if (overrideBgmAudioSource == null)
+        {
+            overrideBgmAudioSource = gameObject.AddComponent<AudioSource>();
+        }
+        ConfigureAudioSource(overrideBgmAudioSource, true);
 
         masterVolume = PlayerPrefs.GetFloat("GameVolume", 0.5f);
         sfxVolume = PlayerPrefs.GetFloat("SFX_Volume", 0.5f);
@@ -69,6 +91,21 @@ public class SoundManager : MonoBehaviour
         }
 
         InitializeSoundTable();
+    }
+
+    // 오디오 설정 코드가 중복되어서 별도의 메서드로 분리함.
+    private static void ConfigureAudioSource(
+        AudioSource audioSource,
+        bool loop)
+    {
+        if (audioSource == null)
+        {
+            return;
+        }
+
+        audioSource.spatialBlend = 0f;
+        audioSource.playOnAwake = false;
+        audioSource.loop = loop;
     }
     //효과음 재생 함수
     public void PlaySound(AudioClip clip, float volume = 1f)
@@ -176,15 +213,13 @@ public class SoundManager : MonoBehaviour
     public void PlayBGM(AudioClip bgmClip)
     {
         if (bgmClip == null) return;
-        if (bgmAudioSource.clip == bgmClip && bgmAudioSource.isPlaying)
-        {
-            bgmAudioSource.volume = bgmVolume * masterVolume;
-            return;
-        }
 
-        bgmAudioSource.clip = bgmClip;
-        bgmAudioSource.volume = bgmVolume * masterVolume;
-        bgmAudioSource.Play();
+        SetBaseBGM(
+            new BgmTrack(
+                bgmClip,
+                1f
+            )
+        );
     }
 
     public void PlayBGM(SoundId soundId)
@@ -201,55 +236,166 @@ public class SoundManager : MonoBehaviour
             return;
         }
 
-        AudioClip bgmClip = soundData.Clip;
-        float volume = soundData.Volume * bgmVolume * masterVolume;
+        SetBaseBGM(
+            new BgmTrack(
+                soundData.Clip,
+                soundData.Volume
+            )
+        );
+    }
 
-        if (bgmAudioSource.clip == bgmClip && bgmAudioSource.isPlaying)
+    // 패널에서 특정 브금을 덮어쓰는 경우를 위한 메서드
+    public void PushBgmOverride(SoundId soundId)
+    {
+        if (!soundDictTable.TryGetValue(soundId, out SoundData soundData) ||
+            soundData.Clip == null)
         {
-            bgmAudioSource.volume = volume;
+            Debug.LogWarning($"SoundId {soundId}에 해당하는 BGM SoundData가 없습니다.");
             return;
         }
 
+        bgmOverrideStack.Push(
+            new BgmTrack(
+                soundData.Clip,
+                soundData.Volume
+            )
+        );
+
+        ApplyBgmState();
+    }
+
+    public void PopBgmOverride()
+    {
+        if (bgmOverrideStack.Count == 0)
+        {
+            return;
+        }
+
+        bgmOverrideStack.Pop();
+        ApplyBgmState();
+    }
+
+    private void SetBaseBGM(BgmTrack track)
+    {
+        baseBgmTrack = track;
+        ApplyBgmState();
+    }
+
+    private void ApplyBgmState()
+    {
         if (bgmFadeCoroutine != null)
         {
             StopCoroutine(bgmFadeCoroutine);
         }
 
-        bgmFadeCoroutine = StartCoroutine(ChangeBGMWithFade(soundData));
+        bgmFadeCoroutine = StartCoroutine(ApplyBgmStateRoutine());
     }
 
-    private IEnumerator ChangeBGMWithFade(SoundData soundData)
+    private IEnumerator ApplyBgmStateRoutine()
     {
-        float targetVolume = soundData.Volume * bgmVolume * masterVolume;
-        float startVolume = bgmAudioSource.volume;
+        BgmTrack activeOverride =
+            bgmOverrideStack.Count > 0
+                ? bgmOverrideStack.Peek()
+                : default;
+
+        bool hasOverride =
+            bgmOverrideStack.Count > 0 &&
+            activeOverride.Clip != null;
+
+        BgmTrack overrideTrack =
+            hasOverride
+                ? activeOverride
+                : default;
+
+        if (baseBgmTrack.Clip != null)
+        {
+            PlaySourceIfNeeded(
+                bgmAudioSource,
+                baseBgmTrack
+            );
+        }
+
+        if (hasOverride)
+            PlaySourceIfNeeded(overrideBgmAudioSource, overrideTrack);
+
+        float baseStartVolume =
+            bgmAudioSource != null ? bgmAudioSource.volume : 0f;
+
+        float overrideStartVolume =
+            overrideBgmAudioSource != null ? overrideBgmAudioSource.volume : 0f;
+
+        float baseTargetVolume =
+            baseBgmTrack.Clip == null
+                ? 0f
+                : GetBgmVolume(baseBgmTrack.Volume) *
+                  (hasOverride ? bgmOverrideDuckedVolume : 1f);
+
+        float overrideTargetVolume =
+            hasOverride
+                ? GetBgmVolume(overrideTrack.Volume)
+                : 0f;
 
         float time = 0f;
 
-        // 먼저 현재 브금을 페이드 아웃 처리한다.
         while (time < bgmFadeDuration)
         {
             time += Time.unscaledDeltaTime;
             float t = Mathf.Clamp01(time / bgmFadeDuration);
-            bgmAudioSource.volume = Mathf.Lerp(startVolume, 0f, t);
+
+            if (bgmAudioSource != null)
+            {
+                bgmAudioSource.volume =
+                    Mathf.Lerp(baseStartVolume, baseTargetVolume, t);
+            }
+
+            if (overrideBgmAudioSource != null)
+            {
+                overrideBgmAudioSource.volume =
+                    Mathf.Lerp(overrideStartVolume, overrideTargetVolume, t);
+            }
+
             yield return null;
         }
 
-        bgmAudioSource.clip = soundData.Clip;
-        bgmAudioSource.volume = 0f;
-        bgmAudioSource.Play();
+        if (bgmAudioSource != null)
+            bgmAudioSource.volume = baseTargetVolume;
 
-        time = 0f;
-
-        while (time < bgmFadeDuration)
+        if (overrideBgmAudioSource != null)
         {
-            time += Time.unscaledDeltaTime;
-            float t = Mathf.Clamp01(time / bgmFadeDuration);
-            bgmAudioSource.volume = Mathf.Lerp(0f, targetVolume, t);
-            yield return null;
+            overrideBgmAudioSource.volume = overrideTargetVolume;
+
+            if (!hasOverride)
+            {
+                overrideBgmAudioSource.Stop();
+                overrideBgmAudioSource.clip = null;
+            }
         }
 
-        bgmAudioSource.volume = targetVolume;
         bgmFadeCoroutine = null;
+    }
+
+    private void PlaySourceIfNeeded(AudioSource audioSource, BgmTrack track)
+    {
+        if (audioSource == null ||
+            track.Clip == null)
+        {
+            return;
+        }
+
+        if (audioSource.clip == track.Clip &&
+            audioSource.isPlaying)
+        {
+            return;
+        }
+
+        audioSource.clip = track.Clip;
+        audioSource.volume = 0f;
+        audioSource.Play();
+    }
+
+    private float GetBgmVolume(float localVolume)
+    {
+        return localVolume * bgmVolume * masterVolume;
     }
 
     //효과음 볼륨 조절
@@ -265,7 +411,16 @@ public class SoundManager : MonoBehaviour
         bgmVolume = volume;
         if (bgmAudioSource != null)
         {
-            bgmAudioSource.volume = bgmVolume * masterVolume;
+            bgmAudioSource.volume =
+                GetBgmVolume(baseBgmTrack.Volume) *
+                (bgmOverrideStack.Count > 0 ? bgmOverrideDuckedVolume : 1f);
+        }
+
+        if (overrideBgmAudioSource != null &&
+            bgmOverrideStack.Count > 0)
+        {
+            overrideBgmAudioSource.volume =
+                GetBgmVolume(bgmOverrideStack.Peek().Volume);
         }
         PlayerPrefs.SetFloat("BGM_Volume", volume);
         PlayerPrefs.Save();
@@ -276,7 +431,16 @@ public class SoundManager : MonoBehaviour
 
         if (bgmAudioSource != null)
         {
-            bgmAudioSource.volume = bgmVolume * masterVolume;
+            bgmAudioSource.volume =
+                GetBgmVolume(baseBgmTrack.Volume) *
+                (bgmOverrideStack.Count > 0 ? bgmOverrideDuckedVolume : 1f);
+        }
+
+        if (overrideBgmAudioSource != null &&
+            bgmOverrideStack.Count > 0)
+        {
+            overrideBgmAudioSource.volume =
+                GetBgmVolume(bgmOverrideStack.Peek().Volume);
         }
 
         PlayerPrefs.SetFloat("GameVolume", volume);
