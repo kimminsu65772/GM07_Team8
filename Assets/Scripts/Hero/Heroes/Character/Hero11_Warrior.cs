@@ -22,6 +22,5 @@ public class Hero11_Warrior : Hero
         {
             enemyHP.TakeDamage(Attack.GetDamageInfo(1.5));
         }
-        // Debug.Log(gameObject.name + "의 스킬, 피해량 : " + damage);
     }
 }

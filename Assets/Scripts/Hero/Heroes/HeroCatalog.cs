@@ -71,7 +71,7 @@ public class HeroCatalog : ScriptableObject
 
             if (!heroEntryDictionary.TryAdd(entry.HeroId, entry))
             {
-                Debug.LogWarning($"중복된 영웅 Id입니다.: {entry.HeroId.ToString()}");
+                // Debug.LogWarning($"중복된 영웅 Id입니다.: {entry.HeroId.ToString()}");
             }
         }
     }

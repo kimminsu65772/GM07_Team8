@@ -5,9 +5,9 @@ public class Hero21_Mage : Hero
     protected override void Awake()
     {
         statTable = new Hero21StatTable();
-        SetAttackEffectPreset(0f, 0.05f, 1.3f, 1.3f);
-        SetSkillEffectPreset(0f, 0.05f, 1.5f, 1.7f);
-        SetTargetEffectPreset(0f, 0.1f, 1.5f, 1.5f);
+        SetAttackEffectPreset(0f, 0f, 1.7f, 1.7f);
+        SetSkillEffectPreset(0f, 0f, 2.0f, 2.2f);
+        SetTargetEffectPreset(0f, 0.1f, 1.7f, 1.7f);
         Init(21, 1f, 6f, HeroLocationEnum.Back);
     }
 
@@ -24,6 +24,5 @@ public class Hero21_Mage : Hero
         {
             enemyHP.TakeDamage(Attack.GetDamageInfo(2));
         }
-        // Debug.Log(gameObject.name + "의 스킬, 피해량 : " + damage);
     }
 }

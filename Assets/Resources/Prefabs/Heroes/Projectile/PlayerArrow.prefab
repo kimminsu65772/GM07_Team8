@@ -345,8 +345,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0fdcd71ad8e1384e88516719abc9049, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroAttackProjectileController
-  moveSpeed: 12
+  moveSpeed: 15
   lifeTime: 3
+  projectileAudio: {fileID: 0}
   posPreset: {x: 0, y: 0}
   scalePreset: {x: 4, y: 4}
   rotationPreset: {x: 0, y: 0, z: -90}

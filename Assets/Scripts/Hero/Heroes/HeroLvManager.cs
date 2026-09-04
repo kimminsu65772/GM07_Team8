@@ -21,9 +21,7 @@ public class HeroLvManager : MonoBehaviour
         }
     }
 
-    // private Hero hero;
     private HeroStat stat;
-
     public event Action<Hero> OnLevelUp;
 
     private void Awake()
@@ -41,9 +39,6 @@ public class HeroLvManager : MonoBehaviour
 
     public void LvUp(Hero hero)
     {
-        // 비용 지불 조건/기능 추가
-        // if () return;
-
         hero.HeroLv++;
         LvApply(hero.HeroLv, hero);
     }

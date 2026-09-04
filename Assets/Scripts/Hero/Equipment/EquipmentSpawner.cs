@@ -18,8 +18,6 @@ public class EquipmentSpawner : MonoBehaviour
 
         spawnedEquip.EquipInit(equipmentDB.EquipmentDBList[equipSOSelectedNum], id);
 
-        //EquipmentManager.EquipDic.Add(id, spawnedEquip);
-
         return spawnedEquip;
     }
 
@@ -68,56 +66,4 @@ public class EquipmentSpawner : MonoBehaviour
 
         return NextEquipmentID++;
     }
-
-    /*
-    public void CreateEquip()
-    {
-        Equipment spawnedEquip = new Equipment();
-        RandomInfo();
-        long id = GenerateEquipID();
-
-        spawnedEquip.EquipInit(equipSO[equipSOSelectedNum], id);
-
-        EquipmentManager.EquipDic.Add(id, spawnedEquip);
-
-    }
-
-    private void RandomInfo()
-    {
-        randGradeNum = Random.Range(0, 4);
-        randPartNum = Random.Range(0, 3);
-
-        switch (randGradeNum)
-        {
-            case 0:
-                equipSOSelectedNum = 0;
-                break;
-            case 1:
-                equipSOSelectedNum = 3;
-                break;
-            case 2:
-                equipSOSelectedNum = 6;
-                break;
-            case 3:
-                equipSOSelectedNum = 9;
-                break;
-            default:
-                break;
-        }
-
-        switch (randPartNum)
-        {
-            case 0:
-                break;
-            case 1:
-                equipSOSelectedNum += 1;
-                break;
-            case 2:
-                equipSOSelectedNum += 2;
-                break;
-            default:
-                break;
-        }
-    }
-    */
 }
