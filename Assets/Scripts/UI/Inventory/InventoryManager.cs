@@ -40,7 +40,6 @@ public class InventoryManager : MonoBehaviour
     //            return true; 
     //        }
     //    }
-    //    Debug.Log("인벤토리가 가득 찼습니다!");
     //    return false;
     //}
 }

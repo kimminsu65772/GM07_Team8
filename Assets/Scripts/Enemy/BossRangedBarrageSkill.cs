@@ -17,6 +17,7 @@ public class BossRangedBarrageSkill : MonoBehaviour
     private EnemyStats enemyStats;
     private EnemyRangedAttack enemyRangedAttack;
     private EnemyAttack enemyAttack;
+    private EnemyMovement enemyMovement;
     private bool isCasting;
     private bool isAutoUse = true;
     public bool IsCasting => isCasting;
@@ -27,9 +28,14 @@ public class BossRangedBarrageSkill : MonoBehaviour
         enemyStats = GetComponent<EnemyStats>();
         enemyRangedAttack = GetComponent<EnemyRangedAttack>();
         enemyAttack = GetComponent<EnemyAttack>();
+        enemyMovement = GetComponent<EnemyMovement>();
 
-        if (enemyAnimator == null) enemyAnimator = GetComponentInChildren<Animator>();
+        if (enemyAnimator == null)
+        {
+            enemyAnimator = GetComponentInChildren<Animator>();
+        }
     }
+
     // 최종 보스 컨트롤러에서 자동 발동을 끈다.
     public void SetAutoUse(bool value)
     {
@@ -39,7 +45,10 @@ public class BossRangedBarrageSkill : MonoBehaviour
     // 최종 보스 컨트롤러가 연발 공격을 직접 실행한다.
     public bool UseSkill()
     {
-        if (isCasting || enemyStats == null || enemyStats.IsDead) return false;
+        if (isCasting || enemyStats == null || enemyStats.IsDead)
+        {
+            return false;
+        }
 
         StartCoroutine(FireBarrage());
         return true;
@@ -53,12 +62,14 @@ public class BossRangedBarrageSkill : MonoBehaviour
 
     private void Update()
     {
-        if (!isAutoUse || isCasting || enemyStats.IsDead || Time.time < nextSkillTime) return;
+        if (!isAutoUse || isCasting || enemyStats.IsDead || Time.time < nextSkillTime)
+        {
+            return;
+        }
 
         StartCoroutine(FireBarrage());
     }
- 
-   
+
     private IEnumerator FireBarrage()
     {
         isCasting = true;
@@ -76,11 +87,17 @@ public class BossRangedBarrageSkill : MonoBehaviour
 
         for (int i = 0; i < shotCount; i++)
         {
-            if (enemyStats.IsDead) break;
+            if (enemyStats.IsDead)
+            {
+                break;
+            }
 
-            enemyRangedAttack.FireProjectile(skillFirePoint);
+            enemyRangedAttack.FireProjectile( skillFirePoint, enemyMovement.AirshipTarget  );
 
-            if (i < shotCount - 1) yield return new WaitForSeconds(shotInterval);
+            if (i < shotCount - 1)
+            {
+                yield return new WaitForSeconds(shotInterval);
+            }
         }
 
         enemyAttack.enabled = true;
@@ -88,6 +105,7 @@ public class BossRangedBarrageSkill : MonoBehaviour
         nextSkillTime = Time.time + skillCooldown;
         isCasting = false;
     }
+
     private void OnDisable()
     {
         StopAllCoroutines();

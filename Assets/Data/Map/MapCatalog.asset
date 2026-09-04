@@ -15,22 +15,22 @@ MonoBehaviour:
   mapCycle: 5
   entries:
   - RegionId: 1
-    MapPrefab: {fileID: 6566265419746517600, guid: e076b3a342af16e4d9196ef7d7359c37, type: 3}
+    MapPrefab: {fileID: 886160218942472838, guid: c4dc933405543224081d2beade36baed, type: 3}
     bgmId: 100
-    BackgroundVFXColor: {r: 0.9411765, g: 0.41960785, b: 0.11764706, a: 1}
+    BackgroundVFXColor: {r: 0.14605063, g: 0.9622642, b: 0, a: 1}
   - RegionId: 2
-    MapPrefab: {fileID: 206727848632992039, guid: 176c65d84e5232f469b37102aaf51bf8, type: 3}
+    MapPrefab: {fileID: 6566265419746517600, guid: e076b3a342af16e4d9196ef7d7359c37, type: 3}
     bgmId: 101
     BackgroundVFXColor: {r: 0.93962264, g: 0.42119294, b: 0.11878247, a: 1}
   - RegionId: 3
-    MapPrefab: {fileID: 8565523364691489044, guid: f9ccc72d8333b52408f542bad3778e40, type: 3}
+    MapPrefab: {fileID: 2322586689317303333, guid: 7e6dc916438b998428beae7512b12c67, type: 3}
     bgmId: 102
-    BackgroundVFXColor: {r: 0.023759348, g: 0.04623359, b: 0.17735851, a: 1}
+    BackgroundVFXColor: {r: 0.1764706, g: 0.109579645, b: 0.02352941, a: 1}
   - RegionId: 4
     MapPrefab: {fileID: 1665196681240893271, guid: 99f8493b3f65a5648b5b89fda28e5875, type: 3}
     bgmId: 103
     BackgroundVFXColor: {r: 1, g: 1, b: 1, a: 1}
   - RegionId: 5
-    MapPrefab: {fileID: 5193486225382941099, guid: 8eae8cfc1ff57764aa0612c076bf8a4b, type: 3}
+    MapPrefab: {fileID: 1369400180991530330, guid: e3b48aedf5fa24d48b9e3c7352ec8ac1, type: 3}
     bgmId: 104
     BackgroundVFXColor: {r: 0, g: 0.5924529, b: 0.37173513, a: 1}

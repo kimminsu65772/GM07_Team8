@@ -36,25 +36,21 @@ public class HeroFormationManager : MonoBehaviour
     {
         if (heroCatalog == null)
         {
-            Debug.LogError("HeroCatalog가 할당되지 않았습니다.");
             return;
         }
 
         if (PlayerInfo.Instance.Heroes == null)
         {
-            Debug.LogError("저장된 영웅 데이터가 비어있습니다.");
             return;
         }
 
         if (PlayerInfo.Instance.HeroFormation == null)
         {
-            Debug.LogError("저장된 진형 데이터가 없습니다.");
             return;
         }
 
         if (PlayerInfo.Instance.HeroFormation.Slots == null)
         {
-            Debug.LogError("저장된 진형 슬롯 데이터가 비어있습니다.");
             return;
         }
         heroDataDictionary = PlayerInfo.Instance.Heroes;
@@ -76,17 +72,14 @@ public class HeroFormationManager : MonoBehaviour
             }
             if (!heroDataDictionary.TryGetValue(slot.HeroId, out HeroSaveData heroData))
             {
-                Debug.LogError($"저장 목록에 없는 영웅입니다.");
                 continue;
             }
             if (!heroCatalog.TryGetHeroEntry(slot.HeroId, out HeroEntry heroEntry))
             {
-                Debug.LogError($"HeroCatalog에서 영웅 정보를 찾을 수 없습니다: {slot.HeroId}.");
                 continue;
             }
             if (heroData.IsOwned == false)
             {
-                Debug.LogError($"미보유 영웅입니다.: {slot.HeroId}.");
                 continue;
             }
             HeroFormationRuntimeSlot runtimeSlot = new HeroFormationRuntimeSlot(slot.SlotIndex, slot.HeroId, heroData, heroEntry);
@@ -121,17 +114,14 @@ public class HeroFormationManager : MonoBehaviour
     {
         if (formationData == null || formationData.Slots == null)
         {
-            Debug.LogError("진형 데이터가 초기화되지 않았습니다.");
             return false;
         }
         if (!TryGetSlotByIndex(slotIndex, out HeroSaveSlot targetSlot))
         {
-            Debug.LogError($"해당 슬롯 인덱스를 찾을 수 없습니다: {slotIndex}.");
             return false;
         }
         if (heroId == HeroNameEnum.None)
         {
-            Debug.LogError("영웅 Id가 비어있습니다.");
             return false;
         }
         if (!heroDataDictionary.TryGetValue(heroId, out HeroSaveData heroData))
@@ -166,7 +156,6 @@ public class HeroFormationManager : MonoBehaviour
     {
         if (formationData == null || formationData.Slots == null)
         {
-            Debug.LogError("진형 데이터가 초기화되지 않았습니다.");
             return false;
         }
         foreach (HeroSaveSlot slot in formationData.Slots)
@@ -180,7 +169,6 @@ public class HeroFormationManager : MonoBehaviour
                 return true;
             }
         }
-        Debug.LogWarning($"해당 슬롯 인덱스에 배치된 영웅이 없습니다: {slotIndex}.");
         return true;
     }
 
@@ -188,7 +176,6 @@ public class HeroFormationManager : MonoBehaviour
     {
         if (heroId == HeroNameEnum.None)
         {
-            Debug.LogError("영웅 Id가 비어있습니다.");
             return false;
         }
         return runtimeSlotDictionary.ContainsKey(heroId);
@@ -201,7 +188,6 @@ public class HeroFormationManager : MonoBehaviour
 
         if (formationData == null || formationData.Slots == null)
         {
-            Debug.LogError("진형 데이터가 초기화되지 않았습니다.");
             return false;
         }
 
@@ -227,12 +213,10 @@ public class HeroFormationManager : MonoBehaviour
         slot = null;
         if (formationData == null || formationData.Slots == null)
         {
-            Debug.LogError("진형 데이터가 초기화되지 않았습니다.");
             return false;
         }
         if (heroId == HeroNameEnum.None)
         {
-            Debug.LogError("영웅 Id가 비어있습니다.");
             return false;
         }
         foreach (HeroSaveSlot candidate in formationData.Slots)

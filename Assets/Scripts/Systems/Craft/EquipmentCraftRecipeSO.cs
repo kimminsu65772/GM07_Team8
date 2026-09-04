@@ -23,21 +23,6 @@ public class EquipmentCraftRecipeSO : ScriptableObject
     public IReadOnlyList<ItemAmount> RequiredMaterials => requiredMaterials;
     public int CraftDuration => craftDurationInSeconds;
 
-    private void OnValidate()
-    {
-        if (gradeRates != null)
-        {
-            int totalWeight = 0;
-            foreach (var rate in gradeRates)
-            {
-                totalWeight += rate.Weight;
-            }
-            if (totalWeight != 100)
-            {
-                Debug.LogWarning($"가중치의 총합은 100이어야 합니다.");
-            }
-        }
-    }
 }
 
 [Serializable]

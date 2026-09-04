@@ -43,3 +43,45 @@ MonoBehaviour:
     pitchRange: {x: 1, y: 1}
     maxSimultaneous: 1
     cooldown: 0
+  - soundId: 200
+    clip: {fileID: 8300000, guid: e9ac464421730b6468def5e6e54ff006, type: 3}
+    volume: 1
+    pitchRange: {x: 1, y: 1}
+    maxSimultaneous: 1
+    cooldown: 10
+  - soundId: 201
+    clip: {fileID: 8300000, guid: 521881723d6ad264a882be7e692c0ecd, type: 3}
+    volume: 1
+    pitchRange: {x: 1, y: 1}
+    maxSimultaneous: 1
+    cooldown: 0
+  - soundId: 202
+    clip: {fileID: 8300000, guid: db7a1e9c30a6ae64981c26577235e047, type: 3}
+    volume: 1
+    pitchRange: {x: 1, y: 1}
+    maxSimultaneous: 1
+    cooldown: 0
+  - soundId: 203
+    clip: {fileID: 8300000, guid: 28c3bd340ccd01f4db8d95e8f288cd48, type: 3}
+    volume: 1
+    pitchRange: {x: 1, y: 1}
+    maxSimultaneous: 1
+    cooldown: 0
+  - soundId: 204
+    clip: {fileID: 8300000, guid: 27e04b8055f4b9446ad76ed6af2ad51f, type: 3}
+    volume: 1
+    pitchRange: {x: 1, y: 1}
+    maxSimultaneous: 1
+    cooldown: 0
+  - soundId: 300
+    clip: {fileID: 8300000, guid: 03900dffafe40408ca398948323a4f43, type: 3}
+    volume: 1
+    pitchRange: {x: 1, y: 1}
+    maxSimultaneous: 1
+    cooldown: 0
+  - soundId: 301
+    clip: {fileID: 8300000, guid: 06451c41f75e141a591a223bd0cf34c2, type: 3}
+    volume: 1
+    pitchRange: {x: 1, y: 1}
+    maxSimultaneous: 1
+    cooldown: 0

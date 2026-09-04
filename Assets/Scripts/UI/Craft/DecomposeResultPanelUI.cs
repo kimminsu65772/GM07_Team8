@@ -42,6 +42,7 @@ public class DecomposeResultPanelUI : MonoBehaviour
             index++;
         }
 
+        SoundManager.Instance.PlaySound(SoundId.DecomposeEquipment);
         ArrangeSlots(index);
     }
 
