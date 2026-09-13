@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class PoolingManager : MonoBehaviour
@@ -16,33 +16,21 @@ public class PoolingManager : MonoBehaviour
     [Header("Rapid 투사체")]
     [SerializeField] private AirshipProjectileBase rapidProjectilePrefab;
     [SerializeField, Min(0)] private int rapidInitialSize = 10;
-    
+
     [Header("Heal 투사체")]
     [SerializeField] private AirshipProjectileBase healProjectilePrefab;
     [SerializeField, Min(0)] private int healInitialSize = 5;
-
-    
 
     [Header("Freeze 명중 VFX")]
     [SerializeField] private GameObject freezeImpactVfxPrefab;
     [SerializeField, Min(0)] private int freezeImpactVfxInitialSize = 3;
 
-    private readonly List<AirshipProjectileBase> inactiveNormalProjectiles =
-        new List<AirshipProjectileBase>();
+    private GenericObjectPool<AirshipProjectileBase> normalProjectilePool;
+    private GenericObjectPool<AirshipProjectileBase> freezeProjectilePool;
+    private GenericObjectPool<AirshipProjectileBase> rapidProjectilePool;
+    private GenericObjectPool<AirshipProjectileBase> healProjectilePool;
+    private GenericObjectPool<GameObject> freezeImpactVfxPool;
 
-    private readonly List<AirshipProjectileBase> inactiveFreezeProjectiles =
-        new List<AirshipProjectileBase>();
-
-    private readonly List<AirshipProjectileBase> inactiveRapidProjectiles =
-        new List<AirshipProjectileBase>();
-
-    private readonly List<GameObject> inactiveFreezeImpactVfx =
-        new List<GameObject>();
-    private readonly List<AirshipProjectileBase> inactiveHealProjectiles =
-        new List<AirshipProjectileBase>();
-    
-    
-    
     [Space]
     [Header("영웅 투사체 1")]
     [SerializeField]
@@ -79,28 +67,11 @@ public class PoolingManager : MonoBehaviour
     [SerializeField, Min(0)]
     private int heroArrowSkillInitialSize = 3;
 
-    private readonly List<HeroAttackProjectileController>
-        inactiveHeroProjectile1 =
-            new List<HeroAttackProjectileController>();
-
-    private readonly List<HeroAttackProjectileController>
-        inactiveHeroProjectile2 =
-            new List<HeroAttackProjectileController>();
-
-    private readonly List<HeroAttackProjectileController>
-        inactiveHeroProjectile3 =
-            new List<HeroAttackProjectileController>();
-
-    private readonly List<HeroAttackProjectileController>
-        inactiveHeroArrow =
-            new List<HeroAttackProjectileController>();
-
-    private readonly List<HeroAttackProjectileController>
-        inactiveHeroArrowSkill =
-            new List<HeroAttackProjectileController>();
-
-
-
+    private GenericObjectPool<HeroAttackProjectileController> heroProjectile1Pool;
+    private GenericObjectPool<HeroAttackProjectileController> heroProjectile2Pool;
+    private GenericObjectPool<HeroAttackProjectileController> heroProjectile3Pool;
+    private GenericObjectPool<HeroAttackProjectileController> heroArrowPool;
+    private GenericObjectPool<HeroAttackProjectileController> heroArrowSkillPool;
 
     [Space]
     [Header("적 투사체")]
@@ -110,17 +81,14 @@ public class PoolingManager : MonoBehaviour
     [SerializeField, Min(0)]
     private int enemyProjectileInitialSize = 10;
 
-    private readonly List<EnemyProjectile>
-        inactiveEnemyProjectiles =
-            new List<EnemyProjectile>();
-    
+    private GenericObjectPool<EnemyProjectile> enemyProjectilePool;
+
     [Space]
     [Header("데미지 팝업")]
     [SerializeField] private DamagePopup damagePopupPrefab;
     [SerializeField, Min(0)] private int damagePopupInitialSize = 20;
 
-    private readonly List<DamagePopup> inactiveDamagePopups =
-        new List<DamagePopup>();
+    private GenericObjectPool<DamagePopup> damagePopupPool;
 
     private void Awake()
     {
@@ -133,76 +101,95 @@ public class PoolingManager : MonoBehaviour
 
         Instance = this;
 
-        PrewarmProjectile(
+        normalProjectilePool = CreateComponentPool(
             normalProjectilePrefab,
             normalInitialSize,
-            inactiveNormalProjectiles,
-            AirshipCannonType.Normal
-        );
+            "Normal 투사체 프리팹이 지정되지 않았습니다.",
+            () => CreateAirshipProjectile(
+                normalProjectilePrefab,
+                AirshipCannonType.Normal));
 
-        PrewarmProjectile(
+        freezeProjectilePool = CreateComponentPool(
             freezeProjectilePrefab,
             freezeInitialSize,
-            inactiveFreezeProjectiles,
-            AirshipCannonType.Freeze
-        );
+            "Freeze 투사체 프리팹이 지정되지 않았습니다.",
+            () => CreateAirshipProjectile(
+                freezeProjectilePrefab,
+                AirshipCannonType.Freeze));
 
-        PrewarmProjectile(
+        rapidProjectilePool = CreateComponentPool(
             rapidProjectilePrefab,
             rapidInitialSize,
-            inactiveRapidProjectiles,
-            AirshipCannonType.Rapid
-        );
-        PrewarmProjectile(
+            "Rapid 투사체 프리팹이 지정되지 않았습니다.",
+            () => CreateAirshipProjectile(
+                rapidProjectilePrefab,
+                AirshipCannonType.Rapid));
+
+        healProjectilePool = CreateComponentPool(
             healProjectilePrefab,
             healInitialSize,
-            inactiveHealProjectiles,
-            AirshipCannonType.Heal
-        );
+            "Heal 투사체 프리팹이 지정되지 않았습니다.",
+            () => CreateAirshipProjectile(
+                healProjectilePrefab,
+                AirshipCannonType.Heal));
 
-        PrewarmFreezeImpactVfx();
-        
-        
-        
-        PrewarmHeroProjectile(
+        freezeImpactVfxPool = CreateGameObjectPool(
+            freezeImpactVfxPrefab,
+            freezeImpactVfxInitialSize,
+            "Freeze 명중 VFX 프리팹이 지정되지 않았습니다.",
+            CreateFreezeImpactVfx);
+
+        heroProjectile1Pool = CreateComponentPool(
             heroProjectile1Prefab,
             heroProjectile1InitialSize,
-            inactiveHeroProjectile1,
-            HeroProjectileType.PlayerAttackProjectile1
-        );
+            "PlayerAttackProjectile1 영웅 투사체 프리팹이 없습니다.",
+            () => CreateHeroProjectile(
+                heroProjectile1Prefab,
+                HeroProjectileType.PlayerAttackProjectile1));
 
-        PrewarmHeroProjectile(
+        heroProjectile2Pool = CreateComponentPool(
             heroProjectile2Prefab,
             heroProjectile2InitialSize,
-            inactiveHeroProjectile2,
-            HeroProjectileType.PlayerAttackProjectile2
-        );
+            "PlayerAttackProjectile2 영웅 투사체 프리팹이 없습니다.",
+            () => CreateHeroProjectile(
+                heroProjectile2Prefab,
+                HeroProjectileType.PlayerAttackProjectile2));
 
-        PrewarmHeroProjectile(
+        heroProjectile3Pool = CreateComponentPool(
             heroProjectile3Prefab,
             heroProjectile3InitialSize,
-            inactiveHeroProjectile3,
-            HeroProjectileType.PlayerAttackProjectile3
-        );
+            "PlayerAttackProjectile3 영웅 투사체 프리팹이 없습니다.",
+            () => CreateHeroProjectile(
+                heroProjectile3Prefab,
+                HeroProjectileType.PlayerAttackProjectile3));
 
-        PrewarmHeroProjectile(
+        heroArrowPool = CreateComponentPool(
             heroArrowPrefab,
             heroArrowInitialSize,
-            inactiveHeroArrow,
-            HeroProjectileType.PlayerAttackArrow
-        );
+            "PlayerAttackArrow 영웅 투사체 프리팹이 없습니다.",
+            () => CreateHeroProjectile(
+                heroArrowPrefab,
+                HeroProjectileType.PlayerAttackArrow));
 
-        PrewarmHeroProjectile(
+        heroArrowSkillPool = CreateComponentPool(
             heroArrowSkillPrefab,
             heroArrowSkillInitialSize,
-            inactiveHeroArrowSkill,
-            HeroProjectileType.PlayerSkillArrow
-        );
+            "PlayerSkillArrow 영웅 투사체 프리팹이 없습니다.",
+            () => CreateHeroProjectile(
+                heroArrowSkillPrefab,
+                HeroProjectileType.PlayerSkillArrow));
 
+        enemyProjectilePool = CreateComponentPool(
+            enemyProjectilePrefab,
+            enemyProjectileInitialSize,
+            "적 투사체 프리팹이 지정되지 않았습니다.",
+            CreateEnemyProjectile);
 
-        PrewarmEnemyProjectile();
-        
-        PrewarmDamagePopup();
+        damagePopupPool = CreateComponentPool(
+            damagePopupPrefab,
+            damagePopupInitialSize,
+            "데미지 팝업 프리팹이 지정되지 않았습니다.",
+            CreateDamagePopup);
     }
 
     private void OnDestroy()
@@ -213,33 +200,67 @@ public class PoolingManager : MonoBehaviour
         }
     }
 
-    private void PrewarmProjectile(
-        AirshipProjectileBase prefab,
-        int count,
-        List<AirshipProjectileBase> pool,
-        AirshipCannonType projectileType)
+    private GenericObjectPool<T> CreateComponentPool<T>(
+        T prefab,
+        int initialSize,
+        string missingPrefabMessage,
+        Func<T> createFunc)
+        where T : Component
     {
         if (prefab == null)
         {
-            Debug.LogError(
-                $"{projectileType} 투사체 프리팹이 지정되지 않았습니다.",
-                this
-            );
-            return;
+            Debug.LogError(missingPrefabMessage, this);
+            return null;
         }
 
-        for (int i = 0; i < count; i++)
-        {
-            pool.Add(
-                CreateProjectile(
-                    prefab,
-                    projectileType
-                )
-            );
-        }
+        return CreatePool(
+            createFunc,
+            initialSize,
+            item => item.gameObject.SetActive(false),
+            item => Destroy(item.gameObject));
     }
 
-    private AirshipProjectileBase CreateProjectile(
+    private GenericObjectPool<GameObject> CreateGameObjectPool(
+        GameObject prefab,
+        int initialSize,
+        string missingPrefabMessage,
+        Func<GameObject> createFunc)
+    {
+        if (prefab == null)
+        {
+            Debug.LogError(missingPrefabMessage, this);
+            return null;
+        }
+
+        return CreatePool(
+            createFunc,
+            initialSize,
+            item => item.SetActive(false),
+            item => Destroy(item));
+    }
+
+    private GenericObjectPool<T> CreatePool<T>(
+        Func<T> createFunc,
+        int initialSize,
+        Action<T> onRelease,
+        Action<T> onDestroy)
+        where T : class
+    {
+        GenericObjectPool<T> pool = new GenericObjectPool<T>(
+            createFunc,
+            null,
+            onRelease,
+            onDestroy,
+            true,
+            initialSize,
+            int.MaxValue);
+
+        pool.Prewarm(initialSize);
+
+        return pool;
+    }
+
+    private AirshipProjectileBase CreateAirshipProjectile(
         AirshipProjectileBase prefab,
         AirshipCannonType projectileType)
     {
@@ -248,19 +269,17 @@ public class PoolingManager : MonoBehaviour
 
         projectile.SetPoolingManager(
             this,
-            projectileType
-        );
+            projectileType);
 
         projectile.gameObject.SetActive(false);
-
         return projectile;
     }
 
     public AirshipProjectileBase GetAirshipProjectile(
         AirshipCannonType projectileType)
     {
-        List<AirshipProjectileBase> pool =
-            GetProjectilePool(projectileType);
+        GenericObjectPool<AirshipProjectileBase> pool =
+            GetAirshipProjectilePool(projectileType);
 
         AirshipProjectileBase prefab =
             GetProjectilePrefab(projectileType);
@@ -269,31 +288,11 @@ public class PoolingManager : MonoBehaviour
         {
             Debug.LogError(
                 $"{projectileType} 투사체 풀 설정이 잘못되었습니다.",
-                this
-            );
+                this);
             return null;
         }
 
-        AirshipProjectileBase projectile;
-
-        if (pool.Count > 0)
-        {
-            int lastIndex = pool.Count - 1;
-
-            projectile = pool[lastIndex];
-            pool.RemoveAt(lastIndex);
-        }
-        else
-        {
-            projectile =
-                CreateProjectile(
-                    prefab,
-                    projectileType
-                );
-        }
-
-        // 위치 설정과 활성화는 Init에서 처리
-        return projectile;
+        return pool.Get();
     }
 
     public void ReleaseAirshipProjectile(
@@ -306,40 +305,38 @@ public class PoolingManager : MonoBehaviour
             return;
         }
 
-        List<AirshipProjectileBase> pool =
-            GetProjectilePool(projectileType);
+        GenericObjectPool<AirshipProjectileBase> pool =
+            GetAirshipProjectilePool(projectileType);
 
         if (pool == null)
         {
             Debug.LogError(
                 $"{projectileType} 투사체 풀을 찾을 수 없습니다.",
-                this
-            );
+                this);
 
             projectile.gameObject.SetActive(false);
             return;
         }
 
-        projectile.gameObject.SetActive(false);
-        pool.Add(projectile);
+        pool.Release(projectile);
     }
 
-    private List<AirshipProjectileBase> GetProjectilePool(
-        AirshipCannonType projectileType)
+    private GenericObjectPool<AirshipProjectileBase>
+        GetAirshipProjectilePool(AirshipCannonType projectileType)
     {
         switch (projectileType)
         {
             case AirshipCannonType.Normal:
-                return inactiveNormalProjectiles;
+                return normalProjectilePool;
 
             case AirshipCannonType.Freeze:
-                return inactiveFreezeProjectiles;
+                return freezeProjectilePool;
 
             case AirshipCannonType.Rapid:
-                return inactiveRapidProjectiles;
-            
+                return rapidProjectilePool;
+
             case AirshipCannonType.Heal:
-                return inactiveHealProjectiles;
+                return healProjectilePool;
 
             default:
                 return null;
@@ -359,7 +356,7 @@ public class PoolingManager : MonoBehaviour
 
             case AirshipCannonType.Rapid:
                 return rapidProjectilePrefab;
-            
+
             case AirshipCannonType.Heal:
                 return healProjectilePrefab;
 
@@ -376,50 +373,21 @@ public class PoolingManager : MonoBehaviour
                GetProjectilePrefab(projectileType) == expectedPrefab;
     }
 
-    private void PrewarmFreezeImpactVfx()
-    {
-        if (freezeImpactVfxPrefab == null)
-        {
-            Debug.LogError(
-                "Freeze 명중 VFX 프리팹이 지정되지 않았습니다.",
-                this
-            );
-            return;
-        }
-
-        for (int i = 0; i < freezeImpactVfxInitialSize; i++)
-        {
-            inactiveFreezeImpactVfx.Add(
-                CreateFreezeImpactVfx()
-            );
-        }
-    }
-
     private GameObject CreateFreezeImpactVfx()
     {
-        GameObject vfx =
-            Instantiate(
-                freezeImpactVfxPrefab,
-                transform
-            );
+        GameObject vfx = Instantiate(
+            freezeImpactVfxPrefab,
+            transform);
 
         VfxAnimationEventReceiver[] receivers =
-            vfx.GetComponentsInChildren<
-                VfxAnimationEventReceiver
-            >(true);
+            vfx.GetComponentsInChildren<VfxAnimationEventReceiver>(true);
 
-        foreach (
-            VfxAnimationEventReceiver receiver
-            in receivers)
+        foreach (VfxAnimationEventReceiver receiver in receivers)
         {
-            receiver.SetPoolingManager(
-                this,
-                vfx
-            );
+            receiver.SetPoolingManager(this, vfx);
         }
 
         vfx.SetActive(false);
-
         return vfx;
     }
 
@@ -427,33 +395,16 @@ public class PoolingManager : MonoBehaviour
         Vector3 position,
         Quaternion rotation)
     {
-        if (freezeImpactVfxPrefab == null)
+        if (freezeImpactVfxPool == null)
         {
             return null;
         }
 
-        GameObject vfx;
+        GameObject vfx = freezeImpactVfxPool.Get();
 
-        if (inactiveFreezeImpactVfx.Count > 0)
-        {
-            int lastIndex =
-                inactiveFreezeImpactVfx.Count - 1;
-
-            vfx = inactiveFreezeImpactVfx[lastIndex];
-            inactiveFreezeImpactVfx.RemoveAt(lastIndex);
-        }
-        else
-        {
-            vfx = CreateFreezeImpactVfx();
-        }
-
-        vfx.transform.SetPositionAndRotation(
-            position,
-            rotation
-        );
-
+        vfx.transform.SetPositionAndRotation(position, rotation);
         vfx.transform.localScale = Vector3.one;
-        vfx.gameObject.SetActive(true);
+        vfx.SetActive(true);
 
         Animator[] animators =
             vfx.GetComponentsInChildren<Animator>(true);
@@ -474,54 +425,13 @@ public class PoolingManager : MonoBehaviour
             return;
         }
 
-        vfx.SetActive(false);
-        inactiveFreezeImpactVfx.Add(vfx);
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    private void PrewarmHeroProjectile(
-    HeroAttackProjectileController prefab,
-    int count,
-    List<HeroAttackProjectileController> pool,
-    HeroProjectileType projectileType)
-    {
-        if (prefab == null)
+        if (freezeImpactVfxPool == null)
         {
-            Debug.LogError(
-                $"{projectileType} 영웅 투사체 프리팹이 없습니다.",
-                this
-            );
+            vfx.SetActive(false);
             return;
         }
 
-        for (int i = 0; i < count; i++)
-        {
-            pool.Add(
-                CreateHeroProjectile(
-                    prefab,
-                    projectileType
-                )
-            );
-        }
+        freezeImpactVfxPool.Release(vfx);
     }
 
     private HeroAttackProjectileController CreateHeroProjectile(
@@ -531,20 +441,15 @@ public class PoolingManager : MonoBehaviour
         HeroAttackProjectileController projectile =
             Instantiate(prefab, transform);
 
-        projectile.SetPoolingManager(
-            this,
-            projectileType
-        );
-
+        projectile.SetPoolingManager(this, projectileType);
         projectile.gameObject.SetActive(false);
-
         return projectile;
     }
 
     public HeroAttackProjectileController GetHeroProjectile(
         HeroProjectileType projectileType)
     {
-        List<HeroAttackProjectileController> pool =
+        GenericObjectPool<HeroAttackProjectileController> pool =
             GetHeroProjectilePool(projectileType);
 
         HeroAttackProjectileController prefab =
@@ -554,30 +459,11 @@ public class PoolingManager : MonoBehaviour
         {
             Debug.LogError(
                 $"{projectileType} 영웅 투사체 풀이 없습니다.",
-                this
-            );
+                this);
             return null;
         }
 
-        HeroAttackProjectileController projectile;
-
-        if (pool.Count > 0)
-        {
-            int lastIndex = pool.Count - 1;
-
-            projectile = pool[lastIndex];
-            pool.RemoveAt(lastIndex);
-        }
-        else
-        {
-            projectile =
-                CreateHeroProjectile(
-                    prefab,
-                    projectileType
-                );
-        }
-
-        return projectile;
+        return pool.Get();
     }
 
     public void ReleaseHeroProjectile(
@@ -590,53 +476,49 @@ public class PoolingManager : MonoBehaviour
             return;
         }
 
-        List<HeroAttackProjectileController> pool =
+        GenericObjectPool<HeroAttackProjectileController> pool =
             GetHeroProjectilePool(projectileType);
 
         if (pool == null)
         {
             Debug.LogError(
                 $"{projectileType} 영웅 투사체 반환 풀이 없습니다.",
-                this
-            );
+                this);
 
             projectile.gameObject.SetActive(false);
             return;
         }
 
-        projectile.gameObject.SetActive(false);
-        pool.Add(projectile);
+        pool.Release(projectile);
     }
 
-    private List<HeroAttackProjectileController>
-        GetHeroProjectilePool(
-            HeroProjectileType projectileType)
+    private GenericObjectPool<HeroAttackProjectileController>
+        GetHeroProjectilePool(HeroProjectileType projectileType)
     {
         switch (projectileType)
         {
             case HeroProjectileType.PlayerAttackProjectile1:
-                return inactiveHeroProjectile1;
+                return heroProjectile1Pool;
 
             case HeroProjectileType.PlayerAttackProjectile2:
-                return inactiveHeroProjectile2;
+                return heroProjectile2Pool;
 
             case HeroProjectileType.PlayerAttackProjectile3:
-                return inactiveHeroProjectile3;
+                return heroProjectile3Pool;
 
             case HeroProjectileType.PlayerAttackArrow:
-                return inactiveHeroArrow;
+                return heroArrowPool;
 
             case HeroProjectileType.PlayerSkillArrow:
-                return inactiveHeroArrowSkill;
+                return heroArrowSkillPool;
 
             default:
                 return null;
         }
     }
 
-    private HeroAttackProjectileController
-        GetHeroProjectilePrefab(
-            HeroProjectileType projectileType)
+    private HeroAttackProjectileController GetHeroProjectilePrefab(
+        HeroProjectileType projectileType)
     {
         switch (projectileType)
         {
@@ -659,89 +541,28 @@ public class PoolingManager : MonoBehaviour
                 return null;
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    private void PrewarmEnemyProjectile()
-    {
-        if (enemyProjectilePrefab == null)
-        {
-            Debug.LogError(
-                "적 투사체 프리팹이 지정되지 않았습니다.",
-                this
-            );
-            return;
-        }
-
-        for (int i = 0; i < enemyProjectileInitialSize; i++)
-        {
-            inactiveEnemyProjectiles.Add(
-                CreateEnemyProjectile()
-            );
-        }
-    }
 
     private EnemyProjectile CreateEnemyProjectile()
     {
         EnemyProjectile projectile =
-            Instantiate(
-                enemyProjectilePrefab,
-                transform
-            );
+            Instantiate(enemyProjectilePrefab, transform);
 
         projectile.SetPoolingManager(this);
         projectile.gameObject.SetActive(false);
-
         return projectile;
     }
 
     public EnemyProjectile GetEnemyProjectile()
     {
-        EnemyProjectile projectile;
-
-        if (inactiveEnemyProjectiles.Count > 0)
+        if (enemyProjectilePool == null)
         {
-            int lastIndex =
-                inactiveEnemyProjectiles.Count - 1;
-
-            projectile =
-                inactiveEnemyProjectiles[lastIndex];
-
-            inactiveEnemyProjectiles.RemoveAt(lastIndex);
-        }
-        else
-        {
-            projectile = CreateEnemyProjectile();
+            return null;
         }
 
-        return projectile;
+        return enemyProjectilePool.Get();
     }
 
-    public void ReleaseEnemyProjectile(
-        EnemyProjectile projectile)
+    public void ReleaseEnemyProjectile(EnemyProjectile projectile)
     {
         if (projectile == null ||
             !projectile.gameObject.activeSelf)
@@ -749,57 +570,22 @@ public class PoolingManager : MonoBehaviour
             return;
         }
 
-        projectile.gameObject.SetActive(false);
-        inactiveEnemyProjectiles.Add(projectile);
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    private void PrewarmDamagePopup()
-    {
-        if (damagePopupPrefab == null)
+        if (enemyProjectilePool == null)
         {
-            Debug.LogError(
-                "데미지 팝업 프리팹이 지정되지 않았습니다.",
-                this
-            );
+            projectile.gameObject.SetActive(false);
             return;
         }
 
-        for (int i = 0; i < damagePopupInitialSize; i++)
-        {
-            inactiveDamagePopups.Add(
-                CreateDamagePopup()
-            );
-        }
+        enemyProjectilePool.Release(projectile);
     }
 
     private DamagePopup CreateDamagePopup()
     {
         DamagePopup popup =
-            Instantiate(
-                damagePopupPrefab,
-                transform
-            );
+            Instantiate(damagePopupPrefab, transform);
 
         popup.SetPoolingManager(this);
         popup.gameObject.SetActive(false);
-
         return popup;
     }
 
@@ -807,42 +593,23 @@ public class PoolingManager : MonoBehaviour
         Vector3 position,
         Transform parent)
     {
-        if (damagePopupPrefab == null ||
-            parent == null)
+        if (damagePopupPool == null || parent == null)
         {
             return null;
         }
 
-        DamagePopup popup;
-
-        if (inactiveDamagePopups.Count > 0)
-        {
-            int lastIndex =
-                inactiveDamagePopups.Count - 1;
-
-            popup =
-                inactiveDamagePopups[lastIndex];
-
-            inactiveDamagePopups.RemoveAt(lastIndex);
-        }
-        else
-        {
-            popup = CreateDamagePopup();
-        }
+        DamagePopup popup = damagePopupPool.Get();
 
         popup.transform.SetParent(parent, false);
         popup.transform.SetPositionAndRotation(
             position,
-            Quaternion.identity
-        );
+            Quaternion.identity);
 
         popup.gameObject.SetActive(true);
-
         return popup;
     }
 
-    public void ReleaseDamagePopup(
-        DamagePopup popup)
+    public void ReleaseDamagePopup(DamagePopup popup)
     {
         if (popup == null ||
             !popup.gameObject.activeSelf)
@@ -850,9 +617,14 @@ public class PoolingManager : MonoBehaviour
             return;
         }
 
-        popup.gameObject.SetActive(false);
         popup.transform.SetParent(transform, false);
 
-        inactiveDamagePopups.Add(popup);
+        if (damagePopupPool == null)
+        {
+            popup.gameObject.SetActive(false);
+            return;
+        }
+
+        damagePopupPool.Release(popup);
     }
 }
