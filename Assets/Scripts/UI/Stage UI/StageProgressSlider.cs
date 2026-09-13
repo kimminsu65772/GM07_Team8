@@ -20,8 +20,7 @@ public class StageProgressSlider : MonoBehaviour
     public void UpdateSlider()
     {
         if (stageCatalog == null || stageCatalog.StageCount <= 0)
-        {
-            Debug.LogWarning("StageProgressSlider: StageCatalog가 등록되지 않았거나 스테이지가 없습니다.");
+        { 
             return;
         }
 

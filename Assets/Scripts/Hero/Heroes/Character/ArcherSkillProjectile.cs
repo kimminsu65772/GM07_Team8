@@ -24,7 +24,7 @@ public class ArcherSkillProjectile : HeroAttackProjectileController
     protected override void OnHitTarget(IDamageable enemy)
     {
         Explode();
-        if (projectileAudio != null) SoundManager.Instance.PlaySound(projectileAudio.clip, 3f);
+        if (projectileAudio != null) SoundManager.Instance.PlaySound(projectileAudio.clip, 1f);
     }
 
     protected override void OnReachTargetPosition()

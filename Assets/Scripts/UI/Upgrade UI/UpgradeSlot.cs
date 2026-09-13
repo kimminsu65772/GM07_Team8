@@ -49,22 +49,21 @@ public class UpgradeSlot : MonoBehaviour
     {
         this.controller = controller;
 
-        // 중복 등록 방지를 위해 리스너 제거 후 추가
-        upgradeButton.onClick.RemoveAllListeners();
-        upgradeButton.onClick.AddListener(OnUpgradeButtonClicked);
+        if (upgradeButton != null)
+        {
+            // RemoveAllListeners 대신 기존에 등록된 내 함수만 제거 후 다시 추가 (사운드 리스너 보존)
+            upgradeButton.onClick.RemoveListener(OnUpgradeButtonClicked);
+            upgradeButton.onClick.AddListener(OnUpgradeButtonClicked);
+        }
     }
     private void OnUpgradeButtonClicked()
     {
+        if (controller == null || upgradeToggleUI == null) return;
         int upgradeLevelCount = upgradeToggleUI.CurrentUpgradeMode;
 
-        if (controller.TryUpgrade(statType, upgradeLevelCount))
-        {
-            Debug.Log($"{statType} 업그레이드 성공!");
-        }
-        else
-        {
-            Debug.Log("재화가 부족하거나 최대 레벨입니다.");
-        }
+        // 실제로 업그레이드를 시도하는 로직
+        if (controller.TryUpgrade(statType, upgradeLevelCount)) { }
+
     }
     public void RefreshUI(AirshipUpgradeState state)
     {

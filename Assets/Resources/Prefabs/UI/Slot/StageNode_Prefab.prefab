@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1742773903933571896}
   - component: {fileID: 5837867157122184276}
   - component: {fileID: 2808492631882187535}
+  - component: {fileID: 6695107133547431999}
   m_Layer: 5
   m_Name: StageNode_Prefab
   m_TagString: Untagged
@@ -139,6 +140,21 @@ MonoBehaviour:
   slotButton: {fileID: 5837867157122184276}
   stageText: {fileID: 2781271020753231165}
   lockObject: {fileID: 6070523738421185957}
+--- !u!114 &6695107133547431999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2534856248111988145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e6aa1b609623945bd21bc0313ec9ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: 86f0b7f49a783544c9457836444642b8, type: 3}
+  soundVolume: 1
 --- !u!1 &6070523738421185957
 GameObject:
   m_ObjectHideFlags: 0

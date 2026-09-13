@@ -23,7 +23,8 @@ public class ButtonSoundPlayer : MonoBehaviour, IPointerEnterHandler
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (hoverSound != null && SoundManager.Instance != null)
+        bool isButtonInteractable = button != null && button.interactable;
+        if (hoverSound != null && SoundManager.Instance != null && isButtonInteractable)
         {
             SoundManager.Instance.PlaySound(hoverSound, soundVolume);
         }

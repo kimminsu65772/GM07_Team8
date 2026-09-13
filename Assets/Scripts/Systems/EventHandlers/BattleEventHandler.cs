@@ -36,7 +36,6 @@ public class BattleEventHandler : MonoBehaviour
         for (int i = 0; i < rewardBundle.Rewards.Length; i++)
         {
             CurrencyReward reward = rewardBundle.Rewards[i];
-            Debug.Log($"적 처치 보상: {reward.Amount} {reward.Type}");
             PlayerInfo.Instance.AddCurrency(reward.Type, reward.Amount);
         }
 
@@ -67,7 +66,6 @@ public class BattleEventHandler : MonoBehaviour
             {
                 CurrencyReward reward = rewardBundle.Rewards[i];
                 playerInfo.AddCurrency(reward.Type, reward.Amount);
-                Debug.Log($"스테이지 {clearedStageNumber} 첫 클리어 보상: {reward.Amount} {reward.Type}");
             }
             playerInfo.TryUpdateMaxClearedStage(clearedStageNumber);
         }

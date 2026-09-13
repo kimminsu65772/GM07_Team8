@@ -160,7 +160,7 @@ public class HeroAttackProjectileController : MonoBehaviour
         damageInfo = hero.Attack.GetDamageInfo(damageBonus);
         enemy.TakeDamage(damageInfo);
 
-        if (projectileAudio != null) SoundManager.Instance.PlaySound(projectileAudio.clip, 2f);
+        if (projectileAudio != null) SoundManager.Instance.PlaySound(projectileAudio.clip, 1f);
 
         ReturnToPool();
     }

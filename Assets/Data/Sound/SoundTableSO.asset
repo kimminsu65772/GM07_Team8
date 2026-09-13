@@ -85,3 +85,15 @@ MonoBehaviour:
     pitchRange: {x: 1, y: 1}
     maxSimultaneous: 1
     cooldown: 0
+  - soundId: 304
+    clip: {fileID: 8300000, guid: 9ff97c31038c84b8c835fe40190cfb73, type: 3}
+    volume: 1
+    pitchRange: {x: 1, y: 1}
+    maxSimultaneous: 1
+    cooldown: 0.5
+  - soundId: 303
+    clip: {fileID: 8300000, guid: 33a8ffe0f8b9c4bb9aac9a02b41cb60e, type: 3}
+    volume: 1
+    pitchRange: {x: 1, y: 1}
+    maxSimultaneous: 1
+    cooldown: 0

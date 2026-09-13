@@ -361,6 +361,7 @@ GameObject:
   - component: {fileID: 5348834982136913363}
   - component: {fileID: 4086160100736194199}
   - component: {fileID: 6787298917382474775}
+  - component: {fileID: 39064865869672883}
   m_Layer: 5
   m_Name: DecompositionModeButton
   m_TagString: Untagged
@@ -482,6 +483,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &39064865869672883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193079240977791804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e6aa1b609623945bd21bc0313ec9ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: f0b720ab595bf6e4dbccd582a24b863d, type: 3}
+  soundVolume: 1
 --- !u!1 &260247341117478684
 GameObject:
   m_ObjectHideFlags: 0
@@ -2558,6 +2574,7 @@ GameObject:
   - component: {fileID: 5341550642608243623}
   - component: {fileID: 4045861537361829644}
   - component: {fileID: 3630589487505940823}
+  - component: {fileID: 4295085638698656171}
   m_Layer: 0
   m_Name: EquipmentSlot(Acc)
   m_TagString: Untagged
@@ -2695,6 +2712,21 @@ MonoBehaviour:
   rareColor: {r: 0.61960787, g: 0.6784314, b: 1, a: 1}
   epicColor: {r: 0.9882353, g: 0, b: 0.9254902, a: 1}
   legendaryColor: {r: 1, g: 0, b: 0, a: 0.78431374}
+--- !u!114 &4295085638698656171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1306543876155672543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e6aa1b609623945bd21bc0313ec9ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: f0b720ab595bf6e4dbccd582a24b863d, type: 3}
+  soundVolume: 1
 --- !u!1 &1352756988475759915
 GameObject:
   m_ObjectHideFlags: 0
@@ -3164,6 +3196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToggleController
   targetUI: {fileID: 1633258832408725776}
+  runOnlyOnce: 0
 --- !u!1 &1697843992383313498
 GameObject:
   m_ObjectHideFlags: 0
@@ -3176,6 +3209,7 @@ GameObject:
   - component: {fileID: 6343395109575163523}
   - component: {fileID: 7823681614732727183}
   - component: {fileID: 1408165275583049647}
+  - component: {fileID: 5747533007011289517}
   m_Layer: 5
   m_Name: Give Button
   m_TagString: Untagged
@@ -3285,6 +3319,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5747533007011289517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697843992383313498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e6aa1b609623945bd21bc0313ec9ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: fdc2bdd83bf2344419f83de561b57526, type: 3}
+  soundVolume: 1
 --- !u!1 &1714261191663013670
 GameObject:
   m_ObjectHideFlags: 0
@@ -4529,7 +4578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
   hoverSound: {fileID: 0}
-  clickSound: {fileID: 8300000, guid: ffa19e5873495664698c65648bd9101e, type: 3}
+  clickSound: {fileID: 8300000, guid: f0b720ab595bf6e4dbccd582a24b863d, type: 3}
   soundVolume: 1
 --- !u!1 &2398928808111824430
 GameObject:
@@ -4543,6 +4592,7 @@ GameObject:
   - component: {fileID: 9004659777857372837}
   - component: {fileID: 4344950721158723236}
   - component: {fileID: 6201019736424084726}
+  - component: {fileID: 5993450568939721402}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -4676,6 +4726,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5993450568939721402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2398928808111824430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e6aa1b609623945bd21bc0313ec9ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: f0b720ab595bf6e4dbccd582a24b863d, type: 3}
+  soundVolume: 1
 --- !u!1 &2411237797395137393
 GameObject:
   m_ObjectHideFlags: 0
@@ -5311,6 +5376,7 @@ GameObject:
   - component: {fileID: 8808854683257067634}
   - component: {fileID: 3131836419812464885}
   - component: {fileID: 7050457311476504688}
+  - component: {fileID: 3064984654099039596}
   m_Layer: 0
   m_Name: EquipmentSlot(Body)
   m_TagString: Untagged
@@ -5448,6 +5514,21 @@ MonoBehaviour:
   rareColor: {r: 0.61960787, g: 0.6784314, b: 1, a: 1}
   epicColor: {r: 0.9882353, g: 0, b: 0.9254902, a: 1}
   legendaryColor: {r: 1, g: 0, b: 0, a: 0.78431374}
+--- !u!114 &3064984654099039596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2691023564911510814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e6aa1b609623945bd21bc0313ec9ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: f0b720ab595bf6e4dbccd582a24b863d, type: 3}
+  soundVolume: 1
 --- !u!1 &2709459310257155301
 GameObject:
   m_ObjectHideFlags: 0
@@ -5498,6 +5579,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToggleController
   targetUI: {fileID: 2709459310257155301}
+  runOnlyOnce: 0
 --- !u!1 &2766524329435367267
 GameObject:
   m_ObjectHideFlags: 0
@@ -5997,6 +6079,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToggleController
   targetUI: {fileID: 2878461670622152536}
+  runOnlyOnce: 0
 --- !u!1 &3056436035326474656
 GameObject:
   m_ObjectHideFlags: 0
@@ -6476,6 +6559,7 @@ GameObject:
   - component: {fileID: 2378164263825989174}
   - component: {fileID: 5207355537916548018}
   - component: {fileID: 1597217686523811067}
+  - component: {fileID: 8955683249283708204}
   m_Layer: 5
   m_Name: Equipage Button
   m_TagString: Untagged
@@ -6648,6 +6732,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToggleController
   targetUI: {fileID: 3254599773299421021}
+  runOnlyOnce: 0
+--- !u!114 &8955683249283708204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3254599773299421021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e6aa1b609623945bd21bc0313ec9ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
+  hoverSound: {fileID: 8300000, guid: 026843468c5809f40a64c089ab3782b4, type: 3}
+  clickSound: {fileID: 8300000, guid: fdc2bdd83bf2344419f83de561b57526, type: 3}
+  soundVolume: 1
 --- !u!1 &3272266106517344077
 GameObject:
   m_ObjectHideFlags: 0
@@ -6863,6 +6963,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToggleController
   targetUI: {fileID: 3328814922741268757}
+  runOnlyOnce: 0
 --- !u!1 &3336686853032786987
 GameObject:
   m_ObjectHideFlags: 0
@@ -7341,6 +7442,7 @@ GameObject:
   - component: {fileID: 3602948308903565281}
   - component: {fileID: 2483778635442871565}
   - component: {fileID: 4708926638101535073}
+  - component: {fileID: 8618603047080003963}
   m_Layer: 5
   m_Name: Installation Button
   m_TagString: Untagged
@@ -7450,6 +7552,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8618603047080003963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3714878619862156713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e6aa1b609623945bd21bc0313ec9ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: f0b720ab595bf6e4dbccd582a24b863d, type: 3}
+  soundVolume: 1
 --- !u!1 &3794111084922546855
 GameObject:
   m_ObjectHideFlags: 0
@@ -8556,6 +8673,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToggleController
   targetUI: {fileID: 4388495256266337975}
+  runOnlyOnce: 0
 --- !u!114 &1035015794047266455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10438,6 +10556,7 @@ GameObject:
   - component: {fileID: 4477950654742747317}
   - component: {fileID: 8784308219463501958}
   - component: {fileID: 4849037166099838800}
+  - component: {fileID: 4829919553765646916}
   m_Layer: 5
   m_Name: DecompositionCancelButton
   m_TagString: Untagged
@@ -10559,6 +10678,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4829919553765646916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5393559619286908225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e6aa1b609623945bd21bc0313ec9ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: f0b720ab595bf6e4dbccd582a24b863d, type: 3}
+  soundVolume: 1
 --- !u!1 &5440700767035540072
 GameObject:
   m_ObjectHideFlags: 0
@@ -10736,7 +10870,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
   hoverSound: {fileID: 0}
-  clickSound: {fileID: 8300000, guid: ffa19e5873495664698c65648bd9101e, type: 3}
+  clickSound: {fileID: 8300000, guid: f0b720ab595bf6e4dbccd582a24b863d, type: 3}
   soundVolume: 1
 --- !u!1 &5464034427935738648
 GameObject:
@@ -10751,6 +10885,7 @@ GameObject:
   - component: {fileID: 5858691949533364901}
   - component: {fileID: 8405195993256964367}
   - component: {fileID: 1596028119368690229}
+  - component: {fileID: 7066865670505043671}
   m_Layer: 0
   m_Name: EquipmentSlot(Weapon)
   m_TagString: Untagged
@@ -10888,6 +11023,21 @@ MonoBehaviour:
   rareColor: {r: 0.61960787, g: 0.6784314, b: 1, a: 1}
   epicColor: {r: 0.9882353, g: 0, b: 0.9254902, a: 1}
   legendaryColor: {r: 1, g: 0, b: 0, a: 0.78431374}
+--- !u!114 &7066865670505043671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5464034427935738648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e6aa1b609623945bd21bc0313ec9ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: f0b720ab595bf6e4dbccd582a24b863d, type: 3}
+  soundVolume: 1
 --- !u!1 &5660118370485922871
 GameObject:
   m_ObjectHideFlags: 0
@@ -11457,6 +11607,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToggleController
   targetUI: {fileID: 5797687370261091123}
+  runOnlyOnce: 0
 --- !u!114 &2977918960042042149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11718,6 +11869,7 @@ GameObject:
   - component: {fileID: 6891572250919893666}
   - component: {fileID: 6267590789123800014}
   - component: {fileID: 5063474117064899969}
+  - component: {fileID: 6513874805520486145}
   m_Layer: 5
   m_Name: HeroEquipPanel
   m_TagString: Untagged
@@ -11800,6 +11952,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToggleController
   targetUI: {fileID: 5886025150994495482}
+  runOnlyOnce: 0
 --- !u!114 &5063474117064899969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11822,6 +11975,50 @@ MonoBehaviour:
   craftUI: {fileID: 1035015794047266455}
   craftCompleteUI: {fileID: 7433387543370797782}
   equipmentSpawner: {fileID: 3819605805696011539}
+--- !u!114 &6513874805520486145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5886025150994495482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 6891572250919893666}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5898054686449679172
 GameObject:
   m_ObjectHideFlags: 0
@@ -12212,6 +12409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToggleController
   targetUI: {fileID: 5948701854837349905}
+  runOnlyOnce: 0
 --- !u!114 &8779987008196368895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12235,7 +12433,7 @@ MonoBehaviour:
   accSlot: {fileID: 3630589487505940823}
   contentRect: {fileID: 4825282376631128127}
   slotPrefab: {fileID: 3254060099694052423, guid: 34f1d11be8cabae4e93ade4b9d37a2c9, type: 3}
-  columnCount: 5
+  columnCount: 6
   cellSize: {x: 100, y: 100}
   spacing: {x: 12, y: 12}
   padding: {x: 16, y: 16}
@@ -12706,6 +12904,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToggleController
   targetUI: {fileID: 6420201856413194303}
+  runOnlyOnce: 0
 --- !u!1 &6425697299095111830
 GameObject:
   m_ObjectHideFlags: 0
@@ -13215,6 +13414,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToggleController
   targetUI: {fileID: 6632013636697476199}
+  runOnlyOnce: 0
 --- !u!1 &6743880854510733468
 GameObject:
   m_ObjectHideFlags: 0
@@ -14380,6 +14580,7 @@ GameObject:
   - component: {fileID: 2521106689933993830}
   - component: {fileID: 5394278680394093553}
   - component: {fileID: 6923279580314264267}
+  - component: {fileID: 611505585561604420}
   m_Layer: 5
   m_Name: DecompositionButton
   m_TagString: Untagged
@@ -14501,6 +14702,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &611505585561604420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7371034063846200480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e6aa1b609623945bd21bc0313ec9ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: f0b720ab595bf6e4dbccd582a24b863d, type: 3}
+  soundVolume: 1
 --- !u!1 &7453577370269062440
 GameObject:
   m_ObjectHideFlags: 0
@@ -16030,6 +16246,7 @@ GameObject:
   - component: {fileID: 698802509821990817}
   - component: {fileID: 603088319731655973}
   - component: {fileID: 2671475728736223417}
+  - component: {fileID: 6429939727707090702}
   m_Layer: 5
   m_Name: dissolution Button
   m_TagString: Untagged
@@ -16139,6 +16356,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6429939727707090702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8626028163408962474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e6aa1b609623945bd21bc0313ec9ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: f0b720ab595bf6e4dbccd582a24b863d, type: 3}
+  soundVolume: 1
 --- !u!1 &8635483506549680754
 GameObject:
   m_ObjectHideFlags: 0
@@ -16151,6 +16383,7 @@ GameObject:
   - component: {fileID: 1168296195958246237}
   - component: {fileID: 1642791434206778341}
   - component: {fileID: 3983319853722186747}
+  - component: {fileID: 1437317435130923164}
   m_Layer: 5
   m_Name: Close Button
   m_TagString: Untagged
@@ -16259,6 +16492,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1437317435130923164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8635483506549680754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e6aa1b609623945bd21bc0313ec9ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: f0b720ab595bf6e4dbccd582a24b863d, type: 3}
+  soundVolume: 1
 --- !u!1 &8642332438898161405
 GameObject:
   m_ObjectHideFlags: 0
@@ -16804,6 +17052,7 @@ GameObject:
   - component: {fileID: 7923432466202439115}
   - component: {fileID: 5661016439329563712}
   - component: {fileID: 2158915960227323200}
+  - component: {fileID: 3668391537759687208}
   m_Layer: 5
   m_Name: Craft Button
   m_TagString: Untagged
@@ -16952,6 +17201,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToggleController
   targetUI: {fileID: 8915428576338450283}
+  runOnlyOnce: 0
+--- !u!114 &3668391537759687208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8915428576338450283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e6aa1b609623945bd21bc0313ec9ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
+  hoverSound: {fileID: 8300000, guid: 026843468c5809f40a64c089ab3782b4, type: 3}
+  clickSound: {fileID: 8300000, guid: fdc2bdd83bf2344419f83de561b57526, type: 3}
+  soundVolume: 1
 --- !u!1 &9162671494539437816
 GameObject:
   m_ObjectHideFlags: 0

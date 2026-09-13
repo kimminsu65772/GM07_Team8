@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6321059012830005993}
   - component: {fileID: 2429149388614645771}
   - component: {fileID: 3254060099694052423}
+  - component: {fileID: 426712083071656654}
   m_Layer: 0
   m_Name: EquipmentSlot
   m_TagString: Untagged
@@ -147,6 +148,21 @@ MonoBehaviour:
   rareColor: {r: 0.61960787, g: 0.6784314, b: 1, a: 1}
   epicColor: {r: 0.9882353, g: 0, b: 0.9254902, a: 1}
   legendaryColor: {r: 1, g: 0, b: 0, a: 0.78431374}
+--- !u!114 &426712083071656654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 989584574640957889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e6aa1b609623945bd21bc0313ec9ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: f0b720ab595bf6e4dbccd582a24b863d, type: 3}
+  soundVolume: 1
 --- !u!1 &1032688519161113388
 GameObject:
   m_ObjectHideFlags: 0

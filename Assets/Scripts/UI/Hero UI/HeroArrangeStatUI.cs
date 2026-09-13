@@ -33,14 +33,12 @@ public class HeroArrangeStatUI : MonoBehaviour
 
         if (heroStatUIs == null)
         {
-            Debug.LogError("스탯 UI 컴포넌트가 아직 연결되지 않았습니다.");
             return;
         }
 
         if (PlayerInfo.Instance == null ||
             !PlayerInfo.Instance.TryGetHeroData(heroEntry.HeroId, out HeroSaveData heroData))
         {
-            Debug.LogWarning($"{heroEntry.HeroId}의 세이브 데이터를 찾을 수 없습니다.");
             return;
         }
 

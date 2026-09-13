@@ -39,17 +39,14 @@ public class StageMapUI : MonoBehaviour
     {
         if (stageCatalog == null)
         {
-            Debug.LogError("StageMapUI : StageCatalog가 없습니다.");
             return;
         }
         if (mapTransform == null)
         {
-            Debug.LogError("StageMapUI : Map Content Transform이 없습니다.");
             return;
         }
         if (stageSlotPrefab == null)
         {
-            Debug.LogError("StageMapUI : Stage Slot Prefab이 없습니다.");
             return;
         }
         int maxCleared = 0;
@@ -73,14 +70,12 @@ public class StageMapUI : MonoBehaviour
 
         int startStage = GetStartStage();
         int endStage = Mathf.Min(startStage + stagesPerMap - 1,totalStages);
-        Debug.Log($"[StageMapUI] MapNumber={mapNumber}, " + $"StartStage={startStage}, " + $"EndStage={endStage}, " + $"TotalStages={totalStages}");
+      
 
         for (int stageNumber = startStage; stageNumber <= endStage; stageNumber++)
         {
-            Debug.Log($"[StageMapUI] Stage {stageNumber} 생성 시도");
             if (!stageCatalog.TryGetStageData( stageNumber, out StageData stageData))
             {
-                Debug.LogWarning($"[StageMapUI] StageCatalog에 " + $"Stage {stageNumber} 데이터가 없습니다.");
                 continue;
             }
 
@@ -92,7 +87,6 @@ public class StageMapUI : MonoBehaviour
 
             if (mapSlot == null)
             {
-                Debug.LogError("StageButton 프리팹에 StageMapSlot이 없습니다.");
                 Destroy(slotObj);
                 continue;
             }

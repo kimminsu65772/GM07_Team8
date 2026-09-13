@@ -33,7 +33,7 @@ public class HeroArrangeUIController : MonoBehaviour
     {
         if (heroArrangeSlots != null && heroArrangeSlots.Length > MaxHeroSlots)
         {
-            Debug.LogWarning($"영웅 배치 슬롯은 최대 {MaxHeroSlots}개까지만 설정할 수 있습니다. 현재 설정된 슬롯 수: {heroArrangeSlots.Length}");
+           
         }
     }
 
@@ -70,7 +70,6 @@ public class HeroArrangeUIController : MonoBehaviour
     {
         if (slotIndex >= GetUnlockedSlotCount())
         {
-            Debug.LogWarning($"{slotIndex}번 슬롯은 아직 잠겨있습니다!");
             return;
         }
         currentSelectedSlotIndex = slotIndex;
@@ -105,8 +104,6 @@ public class HeroArrangeUIController : MonoBehaviour
 
         bool result = HeroFormationManager.Instance.ClearSlot(slotIndex);
         if (!result) return;
-
-        Debug.Log($"슬롯 {slotIndex}이 성공적으로 비워졌습니다.");
         ResetSelectionState();
         RefreshUI();
     }
@@ -115,25 +112,20 @@ public class HeroArrangeUIController : MonoBehaviour
     {
         if (currentSelectedSlotIndex == -1)
         {
-            Debug.LogWarning("먼저 영웅을 배치할 비행선 슬롯을 선택해주세요!");
             return;
         }
 
         if (HeroFormationManager.Instance == null)
         {
-            Debug.LogError("캐싱된 HeroFormationManager가 없습니다.");
             return;
         }
 
         bool result = HeroFormationManager.Instance.TrySetHeroToSlot(currentSelectedSlotIndex, heroId);
 
         if (!result)
-        {
-            Debug.LogWarning($"영웅 {heroId}를 슬롯 {currentSelectedSlotIndex}에 배치할 수 없습니다.");
+        {          
             return;
         }
-
-        Debug.Log($"슬롯 {currentSelectedSlotIndex}에 영웅 {heroId} 배치 완료!");
 
         ResetSelectionState();
         RefreshUI();

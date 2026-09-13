@@ -7,11 +7,25 @@ public class UpgradeUIController : MonoBehaviour
     [SerializeField] private UpgradeToggleUI toggleUI;
     [SerializeField] private List<UpgradeSlot> slots;
 
+    private void OnEnable()
+    {
+        if (toggleUI != null)
+        {
+            toggleUI.OnModeChanged += HandleModeChanged;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (toggleUI != null)
+        {
+            toggleUI.OnModeChanged -= HandleModeChanged;
+        }
+    }
     private void Start()
     {
         if (upgradeController == null)
         {
-            Debug.LogError("UpgradeUIController: upgradeController가 연결되지 않았습니다!");
             return;
         }
         upgradeController.Init();
